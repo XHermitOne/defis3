@@ -27,37 +27,35 @@ import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
-#Спецификация метода
-SPC_IC_MTH={
-    'name':'default',
-    'type':'icMth',
-    'description':'',
-    'body':None,
-    'parameters':'',
-    }
+# Спецификация метода
+SPC_IC_MTH = {'name': 'default',
+              'description': '',
+              'body': None,
+              'parameters': '',
+              }
 
 #   Тип компонента
-ic_class_type = None #icDefInf._icServiceType
+ic_class_type = None
 
 #   Имя класса
 ic_class_name = 'icMth'
 
 #   Описание стилей компонента
-ic_class_styles = {'DEFAULT':0}
+ic_class_styles = {'DEFAULT': 0}
 
 #   Спецификация на ресурсное описание класса
-ic_class_spc = {'__events__': {},
+ic_class_spc = {'__styles__': ic_class_styles,
+                '__events__': {},
                 'type': 'Method',
                 'name': 'default',
-                '_uuid':None,
+                '_uuid': None,
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type',
-                                        'description',
-                                        'parameters'],
-                                  },
-                '__parent__':SPC_IC_MTH,
+                                                            'description',
+                                                            'parameters'],
+                                   },
+                '__parent__': SPC_IC_MTH,
                 }
                     
-ic_class_spc['__styles__'] = ic_class_styles
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
@@ -65,7 +63,7 @@ ic_class_pic = '@common.imgEdtMethod'
 ic_class_pic2 = '@common.imgEdtMethod'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.user.ic_mth_wrp.doMethod-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.ic_mth_wrp.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -76,8 +74,8 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0,0,0,1)
+__version__ = (0, 1, 1, 2)
+
 
 class icMethod(icwidget.icSimple):
     pass
-

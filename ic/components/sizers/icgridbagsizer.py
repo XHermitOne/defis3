@@ -72,7 +72,7 @@ ic_class_pic = '@common.imgEdtFlexGridSizer'
 ic_class_pic2 = '@common.imgEdtFlexGridSizer'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.sizers.icgridbagsizer.icGridBagSizer-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.sizers.icgridbagsizer.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = None

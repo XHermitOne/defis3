@@ -165,7 +165,7 @@ ic_class_pic = '@common.imgEdtTextField'
 ic_class_pic2 = '@common.imgEdtTextField'
 
 #   Путь до файла документации
-ic_class_doc = None
+ic_class_doc = 'ic/doc/_build/html/ic.components.ictextfield.html'
 
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = []
@@ -175,7 +175,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 1, 2)
 
 #   Код спец. кнопок, которые не обрабатываются при форматировании теста по шаблону
 KEYTEMPLATE = [wx.WXK_LEFT, wx.WXK_RIGHT, wx.WXK_BACK, wx.WXK_HOME, wx.WXK_DELETE, wx.WXK_END,
@@ -191,6 +191,7 @@ class icTextField(icWidget, wx.TextCtrl):
                  bCounter=False, progressDlg=None):
         """
         Конструктор для создания icTextField.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -488,6 +489,7 @@ class icTextField(icWidget, wx.TextCtrl):
     def CtrlValue(self, value=None):
         """
         Контроль значения.
+
         :rtype: C{bool}
         :return: Возращает признак, разрещающий или запрещающий установить значение.
         """
@@ -575,6 +577,7 @@ class icTextField(icWidget, wx.TextCtrl):
         """
         Функция читает значение поля и удаляет символы форматирования
         шаблона вывода.
+
         :return: Возвращает значение поля без символов форматирования.
         :rtype: C{string}
         """
@@ -605,6 +608,7 @@ class icTextField(icWidget, wx.TextCtrl):
         """
         Устанавливает значение поля, признак изменения, а также форматирует
         текст по шаблону вывода.
+
         :type value:
         :param value:
         :type prz:  C{int}
@@ -684,6 +688,7 @@ class icTextField(icWidget, wx.TextCtrl):
     def UpdateDataDB(self, db_name=None, bRestore=False):
         """
         Обновляем данные в базе данных.
+
         :type db_name: C{String}
         :param db_name: Имя источника данных.
         :type bRestore: C{bool}
@@ -728,6 +733,7 @@ class icTextField(icWidget, wx.TextCtrl):
         """
         Обновляет данные в текстовом поле (если компонент привязан к
         источнику данных).
+
         :type db_name: C{String}
         :param db_name: Имя источника данных.
         :type bFromBuff: C{bool}

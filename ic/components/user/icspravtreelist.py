@@ -89,7 +89,7 @@ ic_class_pic = '@common.imgEdtTreeListCtrl'
 ic_class_pic2 = '@common.imgEdtTreeListCtrl'
 
 #   Путь до файла документации
-ic_class_doc = 'ic.components.user.icspravtreelist.SpravTreeList-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.icspravtreelist.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -100,7 +100,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 
 class SpravTreeList(icwidget.icWidget,
@@ -398,6 +398,7 @@ class SpravTreeList(icwidget.icWidget,
     def getDataTab(self, CurItem_=None):
         """
         Получить таблицу записей всех элементов.
+
         :param CurItem_: Текущий обработываемый узел дерева.
             Если None, то корневой элемент.
         :return: Список записей дочерних элементов или None в случае ошибки.

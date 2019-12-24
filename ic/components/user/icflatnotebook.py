@@ -122,7 +122,7 @@ ic_class_pic = '@common.imgEdtNotebook'
 ic_class_pic2 = '@common.imgEdtNotebook'
 
 #   Путь до файла документации
-ic_class_doc = 'doc/public/icflatnotebook.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.icflatnotebook.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -133,7 +133,7 @@ ic_can_contain = ['Window', 'Panel', 'ScrolledWindow', 'SplitterWindow', 'Notebo
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 2)
 
 
 class icFlatNotebook(icwidget.icWidget, fnb.FlatNotebook):
@@ -151,7 +151,6 @@ class icFlatNotebook(icwidget.icWidget, fnb.FlatNotebook):
         - B{colorFrom=(200,200,200)}: Цвет1 градиентной заливки активной страницы.
         - B{colorTo=(200,200,200)}: Цвет2 градиентной заливки активной страницы.
     """
-
     component_spc = ic_class_spc
     
     def __init__(self, parent, id, component, logType=0, evalSpace=None,
@@ -370,7 +369,7 @@ return [bmpfunc.crealeLibraryBitmap('schema.png'), bmpfunc.crealeLibraryBitmap('
     frame.Show(True)
     
     app.MainLoop()
-    
+
+
 if __name__ == '__main__':
     test()
-

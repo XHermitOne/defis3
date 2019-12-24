@@ -80,7 +80,7 @@ ic_class_pic = '@common.imgEdtStaticText'
 ic_class_pic2 = '@common.imgEdtStaticText'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.custom.icstatictext.icStaticText-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.custom.icstatictext.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = []
@@ -90,7 +90,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (1, 0, 0, 4)
+__version__ = (1, 1, 1, 1)
 
 
 class icStaticText(icWidget, wx.StaticText):

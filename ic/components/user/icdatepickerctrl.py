@@ -72,7 +72,7 @@ ic_class_pic = '@common.imgEdtCalendar'
 ic_class_pic2 = '@common.imgEdtCalendar'
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.icdatepickerctrl.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -83,12 +83,13 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icDatePickerCtrl(icwidget.icWidget, wx.adv.DatePickerCtrl):
     """
     Описание пользовательского компонента.
+
     :type component_spc: C{dictionary}
     :cvar component_spc: Спецификация компонента.
         - B{type='DatePickerCtrl'}:
@@ -101,6 +102,7 @@ class icDatePickerCtrl(icwidget.icWidget, wx.adv.DatePickerCtrl):
                  bCounter=False, progressDlg=None):
         """
         Конструктор базового класса пользовательских компонентов.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -163,6 +165,7 @@ class icDatePickerCtrl(icwidget.icWidget, wx.adv.DatePickerCtrl):
     def SetStrDate(self, StrDate_):
         """
         Установить дату. Дата - строка в формате yyyy.mm.dd.
+
         :return: True - значение установилось, False - значение не установилось.
         """
         if (not isinstance(StrDate_, str)) or (not StrDate_):
@@ -207,7 +210,6 @@ def test(par=0):
     :type par: C{int}
     :param par: Тип консоли.
     """
-    
     import ic.components.ictestapp as ictestapp
     
     app = ictestapp.TestApp(par)

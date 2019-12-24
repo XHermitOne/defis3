@@ -19,6 +19,7 @@
     компонент (ic_can_contain = -1).
 
 Перья:
+
 :var BLACK_DASHED_PEN: Черный пунктир
 :var BLACK_PEN: Черный
 :var CYAN_PEN: Голубой
@@ -30,6 +31,7 @@
 :var WHITE_PEN: Белый
 
 Заливки:
+
 :var BLACK_BRUSH: Черная
 :var BLUE_BRUSH: Синяя
 :var CYAN_BRUSH: Голубая
@@ -41,6 +43,7 @@
 :var WHITE_BRUSH: Белая
 
 Стрелки:
+
 :var ARROW_HOLLOW_CIRCLE: Пустой круг
 :var ARROW_FILLED_CIRCLE: Заполненный круг
 :var ARROW_ARROW: Простая стрелка
@@ -100,7 +103,7 @@ ic_class_pic = common.imgEdtDiagram
 ic_class_pic2 = common.imgEdtDiagram
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.icsimpleoglviewer.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -111,7 +114,7 @@ ic_can_contain = None
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # Функции редактирования
@@ -142,7 +145,6 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
 
 
 # --- Константы ---
-
 # Размеры фигуры по умолчанию
 DEFAULT_OGL_SHAPE_WIDTH = 150
 DEFAULT_OGL_SHAPE_HEIGHT = 70
@@ -198,7 +200,6 @@ class icDividedShape(parentModule.DividedShape):
     """
     Фигура с разделенными регионами.
     """
-
     def __init__(self, id, width, height, canvas=None):
         """
         Конструктор.
@@ -240,7 +241,6 @@ class icDividedShape(parentModule.DividedShape):
 class icShapeEvtHandler(parentModule.ShapeEvtHandler):
     """
     """
-
     def __init__(self, *args, **kwargs):
         parentModule.ShapeEvtHandler.__init__(self)
 
@@ -448,6 +448,7 @@ class icSimpleOGLViewer(icwidget.icWidget, parentModule.ShapeCanvas):
     def genAutoLayoutPosXY(self, ShapeAttrs_):
         """
         Генерация следующего месторасположения фигуры.
+
         :return: Возвращает кортеж координат фигуры на канве.
         """
         try:
@@ -726,6 +727,7 @@ class icSimpleOGLViewer(icwidget.icWidget, parentModule.ShapeCanvas):
     def _genLineName(self, Line_):
         """
         Генерация имени линии по ее данным.
+
         :param Line_: Данные, описывающие линию.
         """
         if 'name' in Line_:
@@ -739,6 +741,7 @@ class icSimpleOGLViewer(icwidget.icWidget, parentModule.ShapeCanvas):
     def addDiagram(self, Diagram_, ReCreate_=False):
         """
         Добавить диаграмму.
+
         :param Diagram_: Словарно-списковая структура диаграммы.
         :param ReCreate_: Пересоздать элементы, если они уже есть?
         """
@@ -932,4 +935,3 @@ def test():
 
 if __name__ == '__main__':
     test()
-

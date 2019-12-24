@@ -84,7 +84,7 @@ ic_class_pic = '@common.imgEdtScrolledWindow'
 ic_class_pic2 = '@common.imgEdtScrolledWindow'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.icscrolledwindow.icScrolledWindow-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.icscrolledwindow.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = -1
@@ -94,7 +94,7 @@ ic_can_contain = -1
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBarTool', 'Separator', 'GridCell']
 
 #   Версия компонента
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 1, 2)
 
 
 class icScrolledWindow(icWidget, wx.ScrolledWindow):
@@ -118,6 +118,7 @@ class icScrolledWindow(icWidget, wx.ScrolledWindow):
                  evalSpace=None, bCounter=False, progressDlg=None, *arg, **kwarg):
         """
         Конструктор.
+
         :type parent: C{wxWindow}
         :param parent: Указатель на родительское окно.
         :type id: C{int}

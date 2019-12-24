@@ -80,7 +80,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('three_tags.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('three_tags.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.ic_text_indicator.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -91,7 +91,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icTextIndicator(icwidget.icWidget, wx.StaticText):
@@ -151,6 +151,7 @@ class icTextIndicator(icwidget.icWidget, wx.StaticText):
     def getIndicatorLabel(self, value=None):
         """
         Получить текущую надпись индикатора, соответствующую значению.
+
         :param value: Текущее обрабатываемое значение.
         """
         try:
@@ -215,6 +216,7 @@ class icTextIndicator(icwidget.icWidget, wx.StaticText):
     def getIndicatorFG(self, value=None):
         """
         Получить текущий цвет текста индикатора, соответствующий значению.
+
         :param value: Текущее обрабатываемое значение.
         """
         try:
@@ -247,6 +249,7 @@ class icTextIndicator(icwidget.icWidget, wx.StaticText):
     def getIndicatorBG(self, value=None):
         """
         Получить текущий цвет фона индикатора, соответствующий значению.
+
         :param value: Текущее обрабатываемое значение.
         """
         try:

@@ -70,7 +70,6 @@ SPC_IC_SIMPLEGRID = {'col_count': 2,    # Количество колонок
                      }
 
 # --- Описание компонента для редактора ресурса ---
-
 #   Тип компонента
 ic_class_type = icDefInf._icComboType
 
@@ -132,7 +131,7 @@ ic_class_pic = '@common.imgEdtGrid'
 ic_class_pic2 = '@common.imgEdtGrid'
 
 #   Путь до файла документации
-ic_class_doc = 'public/icsimplegrid.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.icsimplegrid.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -143,7 +142,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 3)
+__version__ = (0, 1, 1, 4)
 
 
 # --- Классы ---
@@ -151,7 +150,6 @@ class icSimpleImageRenderer(parentModule.PyGridCellRenderer):
     """
     Рендерер для отображений образов.
     """
-
     def __init__(self, *Images_):
         """
         Конструктор.
@@ -196,6 +194,7 @@ class icSimpleGrid(icwidget.icWidget,
                    glr.GridWithLabelRenderersMixin):
     """
     Описание пользовательского компонента.
+
     :type component_spc: C{dictionary}
     :cvar component_spc: Спецификация компонента.
         - B{child=[]}:
@@ -208,6 +207,7 @@ class icSimpleGrid(icwidget.icWidget,
                  bCounter=False, progressDlg=None):
         """
         Конструктор базового класса пользовательских компонентов.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -312,6 +312,7 @@ class icSimpleGrid(icwidget.icWidget,
     def setCellImg(self, row, col, img):
         """
         Установить образ в ячейку.
+
         :param row: Строка ячейки.
         :param col: Колонка ячейки.
         :param img: Объект образа.
@@ -322,6 +323,7 @@ class icSimpleGrid(icwidget.icWidget,
     def delCellImg(self, row, col):
         """
         Удалить образ из ячейки.
+
         :param row: Строка ячейки.
         :param col: Колонка ячейки.
         """
@@ -330,6 +332,7 @@ class icSimpleGrid(icwidget.icWidget,
     def getTable(self):
         """
         Представить данные в гриде в виде таблицы.
+
         :return: Список кортежей строк или None в случае ошибки.
         """
         table = []
@@ -345,6 +348,7 @@ class icSimpleGrid(icwidget.icWidget,
     def reCreateGrid(self, row_count, col_count):
         """
         Пересоздать грид.
+
         :param row_count: Количество строк.
         :param col_count: Количество колонок.
         """
@@ -370,6 +374,7 @@ class icSimpleGrid(icwidget.icWidget,
     def setTable(self, table, row_labels=None, col_labels=None):
         """
         Установить таблицу в грид.
+
         :param table: Таблица, представляется в виде списка кортежей.
             По строкам.
         :param row_labels: Список надписей строк.
@@ -416,6 +421,7 @@ class icSimpleGrid(icwidget.icWidget,
     def setRowLabels(self, row_labels):
         """
         Установить надписи строк грида.
+
         :param row_labels: Список надписей строк.
         """
         row_count = self.GetNumberRows()
@@ -428,6 +434,7 @@ class icSimpleGrid(icwidget.icWidget,
     def setColLabels(self, col_labels):
         """
         Установить надписи колонок грида.
+
         :param col_labels: Список надписей колонок.
         """
         col_count = self.GetNumberCols()
@@ -440,6 +447,7 @@ class icSimpleGrid(icwidget.icWidget,
     def setWidthCols(self, width_cols):
         """
         Установить размеры/ширину колонок грида.
+
         :param width_cols: Список размеров колонок. Список целых чисел.
         """
         col_count = self.GetNumberCols()
@@ -452,6 +460,7 @@ class icSimpleGrid(icwidget.icWidget,
     def setHeightRows(self, height_rows):
         """
         Установить размеры/высоту строк грида.
+
         :param height_rows: Список размеров строк. Список целых чисел.
         """
         row_count = self.GetNumberRows()
@@ -464,6 +473,7 @@ class icSimpleGrid(icwidget.icWidget,
     def setRow(self, row, *args):
         """
         Установить значения в строку.
+
         :param row: Индекс строки.
         """
         row_count = self.GetNumberRows()
@@ -487,6 +497,7 @@ class icSimpleGrid(icwidget.icWidget,
     def deleteRow(self, row=-1, bAutoSure=True):
         """
         Удалить строку.
+
         :param row: Индекс строки.
         :param bAutoSure: Автоматическое подтверждение удаления.
         """
@@ -503,6 +514,7 @@ class icSimpleGrid(icwidget.icWidget,
     def deleteCurRow(self, bAutoSure=True):
         """
         Удалить текущую строку.
+
         :param bAutoSure: Автоматическое подтверждение удаления.
         """
         cur_row = self.GetGridCursorRow()
@@ -545,6 +557,7 @@ class icSimpleGrid(icwidget.icWidget,
 def test(par=0):
     """
     Тестируем пользовательский класс.
+
     :type par: C{int}
     :param par: Тип консоли.
     """

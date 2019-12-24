@@ -86,7 +86,7 @@ ic_class_pic = '@common.imgEdtChoice'
 ic_class_pic2 = '@common.imgEdtChoice'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.custom.iccombobox.icComboBox-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.custom.iccombobox.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = []
@@ -96,7 +96,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (1, 0, 0, 5)
+__version__ = (1, 1, 1, 1)
 
                                     
 class icComboBox(icWidget, wx.ComboBox):

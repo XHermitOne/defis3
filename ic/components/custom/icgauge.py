@@ -55,7 +55,7 @@ ic_class_pic = '@common.imgEdtGauge'
 ic_class_pic2 = '@common.imgEdtGauge'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.custom.icgauge.icGauge-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.custom.icgauge.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = []
@@ -65,7 +65,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (1, 0, 0, 4)
+__version__ = (1, 1, 1, 1)
 
 
 class icGauge(icWidget, wx.Gauge):

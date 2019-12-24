@@ -72,7 +72,7 @@ ic_class_pic = '@common.imgEdtChoice'
 ic_class_pic2 = '@common.imgEdtChoice'
 
 #   Путь до файла документации
-ic_class_doc = None
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.iccolourcombobox.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -83,12 +83,13 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icColourComboBox(icwidget.icWidget, wx.ComboCtrl):
     """
     КОМБОБОКС ВЫБОРА ЦВЕТА.
+
     :type component_spc: C{dictionary}
     :cvar component_spc: Спецификация компонента.
         - B{type='ColourComboBox'}:
@@ -101,6 +102,7 @@ class icColourComboBox(icwidget.icWidget, wx.ComboCtrl):
                  bCounter=False, progressDlg=None):
         """
         Конструктор базового класса пользовательских компонентов.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -197,19 +199,20 @@ class icColourComboBox(icwidget.icWidget, wx.ComboCtrl):
             return colour        
         return None
 
-    def setSelectedColour(self, Colour_):
+    def setSelectedColour(self, colour):
         """
         Выбрать в комбобоксе цвет.
-        :param Colour_: Цвет. Может задаваться как кортежем (R,G,B) или
+        
+        :param colour: Цвет. Может задаваться как кортежем (R,G,B) или
             объектом wx.Colour.
         """
-        if Colour_ is None:
+        if colour is None:
             self.SetValue('')
             self.SetBackgroundColour(wx.SYS_COLOUR_BACKGROUND)
         else:
-            colour = str(Colour_)
+            colour = str(colour)
             self.SetValue(colour)
-            self.SetBackgroundColour(Colour_)
+            self.SetBackgroundColour(colour)
 
 
 def test(par=0):

@@ -128,7 +128,7 @@ ic_class_pic = '@common.imgEdtHeadCell'
 ic_class_pic2 = '@common.imgEdtHeadCell'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.custom.icheadcell.icHeadCell-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.custom.icheadcell.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = None

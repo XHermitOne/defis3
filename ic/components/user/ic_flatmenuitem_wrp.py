@@ -97,7 +97,7 @@ ic_class_pic = '@common.imgEdtMenuItem'
 ic_class_pic2 = '@common.imgEdtMenuItem'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.user.ic_flatmenuitem_wrp.icFlatMenuItem-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.ic_flatmenuitem_wrp.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -108,7 +108,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # Функции редактирования
@@ -213,7 +213,7 @@ class icFlatMenuItem(icwidget.icWidget, icflatmenuitem.icFlatMenuItemPrototype):
             menu.GetParent().Bind(flatmenu.EVT_FLAT_MENU_SELECTED, self.OnSelected, id=id)
             # menu.Bind(flatmenu.EVT_FLAT_MENU_SELECTED, self.onSelected, id=id)
 
-    def appendIntoParent(self, Parent_):
+    def appendIntoParent(self, parent_menu):
         """
         Добавить пункт в родительское меню.
         """
@@ -223,14 +223,14 @@ class icFlatMenuItem(icwidget.icWidget, icflatmenuitem.icFlatMenuItemPrototype):
             # то не добавляем его в родительское меню
             return
 
-        if Parent_:
-            if issubclass(Parent_.__class__, icflatmenu.icFlatMenuPrototype):
+        if parent_menu:
+            if issubclass(parent_menu.__class__, icflatmenu.icFlatMenuPrototype):
                 # Добавляем в выпадающее меню
                 kind = self.getKind()
                 if kind == wx.ITEM_NORMAL:
-                    Parent_.AppendItem(self)
+                    parent_menu.AppendItem(self)
                 elif kind == wx.ITEM_SEPARATOR:
-                    Parent_.AppendSeparator()
+                    parent_menu.AppendSeparator()
                 elif kind == wx.ITEM_CHECK:
                     pass
                 elif kind == wx.ITEM_RADIO:

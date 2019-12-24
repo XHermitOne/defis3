@@ -124,7 +124,7 @@ ic_class_pic = '@common.imgEdtNavigator'
 ic_class_pic2 = '@common.imgEdtNavigator'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.icdatasetnavigator.icDatasetNavigator-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.icdatasetnavigator.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = []
@@ -134,7 +134,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (1, 1, 1, 2)
+__version__ = (1, 1, 1, 3)
 
 
 # --- Функции редактирования

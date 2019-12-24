@@ -137,7 +137,7 @@ ic_class_pic = '@common.imgEdtListDataset'
 ic_class_pic2 = '@common.imgEdtListDataset'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.iclistdataset.icListDataset-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.iclistdataset.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = ['GridCell', 'DataLink']
@@ -146,14 +146,13 @@ ic_can_contain = ['GridCell', 'DataLink']
 #   список ic_can_contain
 ic_can_not_contain = None
 
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 1, 2)
 
 
 class icListDataset(icwidget.icWidget, wx.ListCtrl):
     """
     Объект не редактируемой таблицы данных.
     """
-
     def RefreshData(self, data=None):
         """
         Функция обновляет данные в таблице.
@@ -217,6 +216,7 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
         """
         Конструктор для создания icListDataset - многоколоночный список для
         просмотра табличных данных.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -385,6 +385,7 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
     def getNameValue(self, col_name, row=None):
         """
         Функция возвращает значение ячейки по номеру строки и имени поля.
+
         :param col_name: Имя колонки.
         :type col_name: C{int}
         :param row: Номер стоки. Если номер строки не задан, то значение берется
@@ -409,6 +410,7 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
     def OnGetItemText(self, item, col):
         """
         Определяет текст определенной ячейки.
+
         :type item: C{int}
         :param item: Номер строки.
         :type col:  C{int}
@@ -464,6 +466,7 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
     def SetCursor(self, row, col=-1):
         """
         Устанавливает курсор в нужную позицию.
+
         :type row: C{int}
         :param row: Номер записи.
         :type col: C{int}
@@ -497,6 +500,7 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
     def SetFilter(self, clsName, flt=None, isUpdSelf=False):
         """
         Устанавливаем фильтр на нужный объект данных.
+
         :type clsName: C{string}
         :param clsName: Имя класса данных на который устанавливается фильтр.
         :type flt: C{string | dictionary}
@@ -536,6 +540,7 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
     def SetFilterField(self, clsName, fieldName, row):
         """
         Устанавливаем фильтр на объект группы (связь один ко многим).
+
         :type clsName: C{string}
         :param clsName:  Имя класса данных, который фильтруется
         :type fieldName: C{string}

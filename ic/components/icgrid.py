@@ -267,7 +267,7 @@ SPC_IC_CELL = {'type': 'GridCell',
                }
 
 #   Версия компонента
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 1, 2)
 
 
 # Функции редактирования
@@ -312,6 +312,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
 def getIdAlignment(horiz, vert):
     """
     Функция определяет идентификатор выравнивания по имени.
+
     :param horiz: Название горизонтального выравнивания ('left', 'right', 'centre').
     :type horiz: C{string}
     :param vert: Название вертикального выравнивания ('top', 'bottom', 'centre')
@@ -353,6 +354,7 @@ class icGrid(icwidget.icWidget, grid.Grid,
                  evalSpace=None, bCounter=False, progressDlg=None):
         """
         Конструктор для создания icGrid.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -637,6 +639,7 @@ class icGrid(icwidget.icWidget, grid.Grid,
     def setHeader(self, header, bAuto=False, bHideOldHead=False):
         """
         Связывает шапку с гридом.
+
         :type bAuto: C{bool}
         :param bAuto: Признак автоматического создания стандартной шапки грида.
         :type bHideOldHead: C{bool}

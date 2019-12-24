@@ -90,7 +90,7 @@ ic_class_pic = '@common.imgEdtSQLDB'
 ic_class_pic2 = '@common.imgEdtSQLDB'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.user.ic_postgres_wrp.icMySQL-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.ic_mysql_wrp.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -101,7 +101,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icMySQL(icwidget.icSimple, icdb.icSQLAlchemyDB):
@@ -115,6 +115,7 @@ class icMySQL(icwidget.icSimple, icdb.icSQLAlchemyDB):
                  bCounter=False, progressDlg=None):
         """
         Конструктор.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно
         :type id: C{int}

@@ -51,7 +51,7 @@ ic_class_pic = '@common.imgEdtSizerSpacer'
 ic_class_pic2 = '@common.imgEdtSizerSpacer'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.sizers.icspacesizer.icSpaceSizer-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.sizers.icspacesizer.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = []

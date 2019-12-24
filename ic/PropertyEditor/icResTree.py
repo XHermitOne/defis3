@@ -756,23 +756,23 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
                 return True
         return False
 
-    def findItem(self, prnt, findStr):
+    def findItem(self, parent_item, findStr):
         """
         Ищет в ресурсном описании формы подстроку текста.
 
-        :type prnt: C{TreeCtrlItemId}
-        :param prnt: Узел, с которого ведется поиск.
+        :type parent_item: C{TreeCtrlItemId}
+        :param parent_item: Узел, с которого ведется поиск.
         :type findStr: C{string}
         :param findStr: Текст, который ищется в описании.
         :rtype: C{bool}
         :return: Признак успешного поиска.
         """
         # Начинаем вести рекурсивный поиск
-        if not prnt:
+        if not parent_item:
             return False
 
         if not self.lastfindItem:
-            child, ck = self.GetFirstChild(prnt)
+            child, ck = self.GetFirstChild(parent_item)
 
             if child.IsOk():
                 if self.findInItem(child, findStr):
@@ -796,7 +796,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
 
         # Создаем список копируемых элементов
         while 1:
-            child, ck = self.GetNextChild(prnt, ck)
+            child, ck = self.GetNextChild(parent_item, ck)
 
             if child.IsOk():
                 if self.findInItem(child, findStr):
@@ -899,16 +899,21 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         try:
             doc_path = os.path.dirname(resource.icGetICPath())
             from ic.components import icIEHtmlWin
-            # Старый способ
-            if 'docstr' in data:
-                fileDoc = os.path.join(doc_path, data['docstr'])
-            elif '__doc__' in data and data['__doc__']:
-                fileDoc = os.path.join(doc_path, data['__doc__'])
-            else:
-                html_filename = 'ic.components.ic'+data['type'].lower()+'-module.html'
-                fileDoc = os.path.join(doc_path, html_filename)
 
-            print(fileDoc)
+            # Файл помощи пытаемся найти в модуле компонента
+            obj_type = data.get('type')
+            module = GetObjectModule(obj_type)
+            html_filename = ''
+            if module:
+                try:
+                    html_filename = getattr(module, 'ic_class_doc')
+                except:
+                    log.warning(u'Не определен файл документа в модуле компонента <%s>' % module.__file__)
+            else:
+                html_filename = 'ic.components.ic'+data['type'].lower()+'.html'
+            fileDoc = os.path.join(doc_path, html_filename)
+
+            log.debug(u'Файл помощи <%s>' % fileDoc)
             if os.path.isfile(fileDoc):
                 if wx.Platform == '__WXMSW__':
                     icIEHtmlWin.startMiniHtmlBrows(fileDoc)
@@ -1887,6 +1892,12 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         self.toolbar.AddTool(id, u'ResModule', common.imgEdtResModule, shortHelp=u'Модуль ресурса')
         self.Bind(wx.EVT_TOOL, self.OnPyScript, id=id)
 
+        self.toolbar.AddSeparator()
+
+        id = icwidget.icNewId()
+        self.toolbar.AddTool(id, u'Help', common.imgHelp, shortHelp=u'Помощь...')
+        self.Bind(wx.EVT_TOOL, self.onHelp, id=id)
+
         self.toolbar.Realize()
 
         # Редактор свойств
@@ -2429,9 +2440,9 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         res_name = None
         if py_filename is None:
             if self.file and '.py' in self.file:
-                py_filename = os.path.normpath(self.file)   # .replace('\\', '/')
+                py_filename = os.path.normpath(self.file)
             elif self.file:
-                res_name = os.path.normpath(self.file)  # .replace('\\', '/')
+                res_name = os.path.normpath(self.file)
                 py_filename = None
 
         # log.debug(u'Открытие файла модуля <%s> ресурса <%s>' % (py_filename, res_name))
@@ -2696,6 +2707,14 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         sz = event.GetSize()
         h = self.GetSashPosition()
         self.notebook.GetPropertyEditor().Refresh()
+        event.Skip()
+
+    def onHelp(self, event):
+        """
+        Обработчик кнопки <Помощь...>
+        """
+        # Определяем тип выбранного компонента
+        self.tree.HelpItem()
         event.Skip()
 
     def RefreshTree(self):

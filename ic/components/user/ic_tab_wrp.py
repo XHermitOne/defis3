@@ -97,7 +97,7 @@ ic_class_pic = '@common.imgEdtTable'
 ic_class_pic2 = '@common.imgEdtTable'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.user.ic_tab_wrp.icTable-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.ic_tab_wrp.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -108,7 +108,7 @@ ic_can_contain = ['Field', 'Link']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 2, 4)
+__version__ = (0, 1, 2, 5)
 
 # ВНИМАНИЕ! Для таблиц хранения справочников создадим
 # предварительно заполненную спецификацию
@@ -227,6 +227,7 @@ class icTable(icwidget.icSimple, icsqlalchemy.icSQLAlchemyDataClass):
     def TestComponentResource(res, context, parent, *arg, **kwarg):
         """
         Функция тестирования компонента таблицы в режиме редактора ресурса.
+
         :param res:
         :param context:
         :param parent:

@@ -109,7 +109,7 @@ ic_class_pic = '@common.imgEdtSpinner'
 ic_class_pic2 = '@common.imgEdtSpinner'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.custom.icspinner.icSpinner-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.custom.icspinner.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = []

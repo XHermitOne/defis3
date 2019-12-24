@@ -7,7 +7,7 @@
 
 import wx
 
-__version__ = (0, 0, 0, 4)
+__version__ = (0, 1, 1, 2)
 
 #   *** Идентификаторы для события icKeyDownEvent ***
 icEVT_KEY_DOWN_IC = wx.NewEventType()
@@ -56,7 +56,6 @@ class icGridDestroyEvent(wx.PyEvent):
     """ 
     Используется для передачи сообщения гриду о том, что ему пора разрушаться.
     """
-
     def __init__(self, eventType, id):
         wx.PyEvent.__init__(self, id, eventType)
         #   Пользовательские данные
@@ -73,7 +72,6 @@ class icDlgPreDestroyEvent(wx.PyEvent):
     """ 
     Используется для разрушения диалогов.
     """
-
     def __init__(self, eventType, id):
         wx.PyEvent.__init__(self, id, eventType)
         #   Пользовательские данные
@@ -130,7 +128,6 @@ EVT_GRID_POST_SELECT = wx.PyEventBinder(icEVT_GRID_POST_SELECT)
 class icGridPostSelectEvent(wx.PyEvent):
     """
     """
-
     def __init__(self, eventType, id):
         wx.PyEvent.__init__(self, id, eventType)
         #   Пользовательские данные
@@ -152,7 +149,6 @@ EVT_POST_INIT = wx.PyEventBinder(icEVT_POST_INIT)
 class icPostInitEvent(wx.PyEvent):
     """
     """
-
     def __init__(self, eventType, id):
         wx.PyEvent.__init__(self, id, eventType)
         #   Пользовательские данные
@@ -175,7 +171,6 @@ class icLabelChangeEvent(wx.PyEvent):
     """
     Сообщение, на изменение надписи визуального компонента.
     """
-
     def __init__(self, eventType, id):
         wx.PyEvent.__init__(self, id, eventType)
         #   Пользовательские данные

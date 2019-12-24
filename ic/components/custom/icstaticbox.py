@@ -64,7 +64,7 @@ ic_class_pic = '@common.imgEdtStaticBox'
 ic_class_pic2 = '@common.imgEdtStaticBox'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.custom.icstaticbox.icStaticBox-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.custom.icstaticbox.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = []

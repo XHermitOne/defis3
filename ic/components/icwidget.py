@@ -264,6 +264,7 @@ def setHelpStringWin(win):
     global icHelpStringWin
     icHelpStringWin = win
 
+
 #   Типы редактируемый представлений компонентов
 #   Текущий выбранный компонент
 icSelectedShapeType = 1

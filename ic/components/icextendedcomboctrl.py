@@ -8,7 +8,7 @@
 # --- Подключение библиотек ---
 import wx
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # --- Описание классов ---
@@ -16,7 +16,6 @@ class icExtendedComboCtrlPrototype(wx.ComboCtrl):
     """
     Прототип расширеннного комбинированнного редактора.
     """
-
     def __init__(self, *args, **kwargs):
         """
         Конструктор.
@@ -77,7 +76,6 @@ class icExtendedComboCtrl(icExtendedComboCtrlPrototype):
     """
     Расширеннный комбинированнный редактор.
     """
-
     def __init__(self, *args, **kwargs):
         """
         Конструктор.
@@ -89,7 +87,6 @@ class icGridDatasetComboCtrl(icExtendedComboCtrlPrototype):
     """
     Расширеннный комбинированнный редактор.
     """
-
     def __init__(self, *args, **kwargs):
         """
         Конструктор.

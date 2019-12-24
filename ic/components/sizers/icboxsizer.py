@@ -134,7 +134,7 @@ ic_class_pic = '@common.imgEdtBoxSizer'
 ic_class_pic2 = '@common.imgEdtBoxSizer'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.sizers.icboxsizer.icBoxSizer-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.sizers.icboxsizer.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = None
@@ -144,7 +144,7 @@ ic_can_contain = None
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBarTool', 'Separator', 'GridCell']
 
 #   Версия компонента
-__version__ = (1, 1, 2, 2)
+__version__ = (1, 1, 2, 3)
 
 
 class icBoxSizer(icwidget.icSizer, wx.BoxSizer):

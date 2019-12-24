@@ -3,6 +3,7 @@
 
 """
 Индикатор состояний.
+
 Класс пользовательского визуального компонента.
 
 :type ic_user_name: C{string}
@@ -76,7 +77,7 @@ ic_class_pic = '@common.imgEdtImage'
 ic_class_pic2 = '@common.imgEdtImage'
 
 #   Путь до файла документации
-ic_class_doc = None
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.urstateindicator.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = []
@@ -86,7 +87,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 2)
 
 
 class StateIndicator(icwidget.icWidget, parentModule.GenBitmapTextButton):

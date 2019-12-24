@@ -36,11 +36,11 @@ from .icwidget import icWidget, SPC_IC_WIDGET
 
 _ = wx.GetTranslation
 
-SPC_IC_HTML_PANEL = {'type':'Panel',
-                     'name':'defaultWindow',
+SPC_IC_HTML_PANEL = {'type': 'Panel',
+                     'name': 'defaultWindow',
 
-                     'position':(-1,-1),
-                     'size':(-1,-1),
+                     'position': (-1, -1),
+                     'size': (-1, -1),
                      'foregroundColor':None,
                      'backgroundColor':None,
                      'file': None,
@@ -49,7 +49,7 @@ SPC_IC_HTML_PANEL = {'type':'Panel',
                      '__parent__': SPC_IC_WIDGET,
                      }
 
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 2)
 
 
 class icHtmlPanel(icWidget, wx.Panel):
@@ -61,6 +61,7 @@ class icHtmlPanel(icWidget, wx.Panel):
                  bCounter=False, progressDlg=None):
         """
         Конструктор для создания icHtmlPanel.
+
         :type parent: C{wxWindow}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -126,9 +127,10 @@ def test(par=0):
     app = TestApp(par)
     frame = wx.Frame(None, -1, 'icHtmlPanel Test')
     win = icHtmlPanel(frame, -1, {'file': 'C:\Python22\epydoc\html\ic.components.icgrid.html',
-                                   'keyDown': 'print(\'keyDown in icHtmlPanel\')'})
+                                  'keyDown': 'print(\'keyDown in icHtmlPanel\')'})
     frame.Show(True)
     app.MainLoop()
+
 
 if __name__ == '__main__':
     test()

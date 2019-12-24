@@ -61,7 +61,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('ui-check-boxes-list.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('ui-check-boxes-list.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.icchecklistctrl.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -72,7 +72,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icCheckListCtrl(icwidget.icWidget, wx.ListCtrl,
@@ -80,6 +80,7 @@ class icCheckListCtrl(icwidget.icWidget, wx.ListCtrl,
     """
     Класс многоколоночного списка с возможностью отметки строки.
     Описание пользовательского компонента.
+
     :type component_spc: C{dictionary}
     :cvar component_spc: Спецификация компонента.
         - B{type='TreeList'}:
@@ -95,6 +96,7 @@ class icCheckListCtrl(icwidget.icWidget, wx.ListCtrl,
                  bCounter=False, progressDlg=None):
         """
         Конструктор базового класса пользовательских компонентов.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -147,6 +149,7 @@ class icCheckListCtrl(icwidget.icWidget, wx.ListCtrl,
     def OnCheckItem(self, index_item, flag):
         """
         This is called by the base class when an item is checked/unchecked.
+
         :param index_item: Индекс элемента списка.
         :param flag: Вкл. или выкл. элемент списка.
         :return:

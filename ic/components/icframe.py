@@ -4,6 +4,7 @@
 """
 Обкладка для класса wxFrame. Генерирут объект по ресурсному описанию.
 Содержит описание класса icFrame, который по ресурсному описанию создает фрэймовое окно.
+
 :type SPC_IC_FRAME: C{dictionary}
 :var SPC_IC_FRAME: Спецификация на ресурсное описание окна. Описание ключей SPC_IC_FRAME:
     - B{name = 'default'}: Имя окна.
@@ -107,7 +108,7 @@ ic_class_pic = '@common.imgEdtFrame'
 ic_class_pic2 = '@common.imgEdtFrame'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.icframe.icFrame-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.icframe.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = -1
@@ -117,7 +118,7 @@ ic_can_contain = -1
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBarTool', 'Separator', 'GridCell']
 
 #   Версия компонента
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 1, 2)
 
 
 # ---------- Классы --------------
@@ -151,6 +152,7 @@ class icFrame(icwidget.icWidget, wx.Frame):
                  evalSpace=None, bCounter=False, progressDlg=None, *arg, **kwarg):
         """
         Конструктор для создания icFrame
+
         :type parent: C{wxWindow}
         :param parent: Указатель на родительское окно
         :type id: C{int}

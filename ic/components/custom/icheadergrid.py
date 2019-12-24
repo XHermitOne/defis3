@@ -3,6 +3,7 @@
 
 """
 Класс описания сложной шапки.
+
 Модуль содержит описания класса сложной шапки для гридов, которая может
 состоять из нескольких рядов ячеек (в том числе и объедененных). Шапка
 сделана на основе контейнера wx.GridBagSizer.
@@ -80,7 +81,7 @@ ic_class_pic = '@common.imgEdtHeader'
 ic_class_pic2 = '@common.imgEdtHeader'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.custom.icheadergrid.icHeader-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.custom.icheadergrid.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = ['HeadCell']

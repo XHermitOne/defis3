@@ -69,7 +69,7 @@ ic_class_pic = '@common.imgEdtMenu'
 ic_class_pic2 = '@common.imgEdtMenu'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.user.ic_flatmenu_wrp.icFlatMenu-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.ic_flatmenu_wrp.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -80,7 +80,7 @@ ic_can_contain = ['FlatMenu', 'FlatMenuItem']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icFlatMenu(icwidget.icWidget, icflatmenu.icFlatMenuPrototype):
@@ -136,15 +136,15 @@ class icFlatMenu(icwidget.icWidget, icflatmenu.icFlatMenuPrototype):
         """
         return self.getICAttr('label')
     
-    def appendIntoParent(self, Parent_):
+    def appendIntoParent(self, parent):
         """
         Добавить меню в родительское меню.
         """
-        if Parent_:
-            if issubclass(Parent_.__class__, icflatmenubar.icFlatMenuBarPrototype):
+        if parent:
+            if issubclass(parent.__class__, icflatmenubar.icFlatMenuBarPrototype):
                 # Добавляем в горизонтальное меню
                 label = self.getLabel()
-                Parent_.Append(self, label)
-            elif issubclass(Parent_.__class__, icflatmenu.icFlatMenuPrototype):
+                parent.Append(self, label)
+            elif issubclass(parent.__class__, icflatmenu.icFlatMenuPrototype):
                 # Добавляем в выпадающее меню
-                Parent_.appendMenu(self)
+                parent.appendMenu(self)

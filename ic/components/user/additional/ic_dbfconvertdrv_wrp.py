@@ -19,7 +19,6 @@
     компонент (ic_can_contain = -1).
 """
 
-#import wx
 from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
@@ -35,28 +34,26 @@ ic_class_type = icDefInf._icDatasetType
 ic_class_name = 'icDBFConvertDriver'
 
 #   Описание стилей компонента
-ic_class_styles = {'DEFAULT':0}
+ic_class_styles = {'DEFAULT': 0}
 
-#--- Спецификация на ресурсное описание класса ---
-ic_class_spc = {'__events__': {}, 
+# --- Спецификация на ресурсное описание класса ---
+ic_class_spc = {'__styles__': ic_class_styles,
+                '__events__': {},
                 'child': [], 
                 'type': 'DBFConvertDriver', 
                 'name': 'default', 
-                'activate':1,
-                'init_expr':None,
-                '_uuid':None,
+                'activate': True,
+                'init_expr': None,
+                '_uuid': None,
 
-                'dbf_file':None, #Имя DBF файла источника данных
-                'dbf_field': None, #Имя поля DBF файла источника данных
+                'dbf_file': None,   # Имя DBF файла источника данных
+                'dbf_field': None,  # Имя поля DBF файла источника данных
                 
-                '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['description','dbf_field'],
+                '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['description', 'dbf_field'],
                                    },
-                '__lists__':{
-                    },
-                '__parent__':icconvertdriver.SPC_IC_DBFCONVERTDRIVER, 
+                '__lists__': {},
+                '__parent__': icconvertdriver.SPC_IC_DBFCONVERTDRIVER,
                 }
-                    
-ic_class_spc['__styles__'] = ic_class_styles
 
 #   Имя иконки класса, которые располагаются в директории 
 #   ic/components/user/images
@@ -64,7 +61,7 @@ ic_class_pic = '@common.imgEdtODBC'
 ic_class_pic2 = '@common.imgEdtODBC'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.user.ic_dbfconvertdrv_wrp.icDBFConvertDriver-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.ic_dbfconvertdrv_wrp.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -75,17 +72,18 @@ ic_can_contain = ['ConvertField']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0,0,0,1)
+__version__ = (0, 1, 1, 2)
 
-class icDBFConvertDriver(icwidget.icSimple,icconvertdriver.icDBFConvertDriverPrototype):
+
+class icDBFConvertDriver(icwidget.icSimple, icconvertdriver.icDBFConvertDriverPrototype):
     """
     Драйвер конвертера данных из DBF файлов.
     """
-    #Спецификаци компонента
+    # Спецификаци компонента
     component_spc = ic_class_spc
     
-    def __init__(self, parent, id=-1, component=None, logType = 0, evalSpace = None,
-                        bCounter=False, progressDlg=None):
+    def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None,
+                 bCounter=False, progressDlg=None):
         """
         Конструктор.
 
@@ -107,6 +105,6 @@ class icDBFConvertDriver(icwidget.icSimple,icconvertdriver.icDBFConvertDriverPro
         :param progressDlg: Указатель на идикатор создания формы.
         """
         component = util.icSpcDefStruct(self.component_spc, component)
-        icwidget.icSimple.__init__(self,parent,id,component,logType,evalSpace)
-        icconvertdriver.icDBFConvertDriverPrototype.__init__(self,component)
+        icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
+        icconvertdriver.icDBFConvertDriverPrototype.__init__(self, component)
 

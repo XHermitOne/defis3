@@ -136,7 +136,7 @@ ic_class_pic = '@common.imgEdtMainWin'
 ic_class_pic2 = '@common.imgEdtMainWin'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.user.ic_auimainwin_wrp.icAUIMainWindow-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.ic_auimainwin_wrp.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -147,11 +147,10 @@ ic_can_contain = ['AUIPane']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
+
 
 # Функции редактирования
-
-
 def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):
     """
     Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
@@ -218,7 +217,7 @@ class icAUIMainWindow(icwidget.icSimple, icAUImainwin.icAUIMainWinPrototype):
         :param progressDlg: Указатель на идикатор создания формы.
         """
         component = util.icSpcDefStruct(self.component_spc, component)
-        icwidget.icSimple.__init__(self,parent, id, component, logType, evalSpace)
+        icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
         icAUImainwin.icAUIMainWinPrototype.__init__(self, component)
 
         #   Создаем дочерние компоненты

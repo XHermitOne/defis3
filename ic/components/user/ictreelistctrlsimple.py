@@ -3,6 +3,7 @@
 
 """
 Класс пользовательского визуального компонента.
+
 Компонент древовидного представления данных.
 Работает с простой словарно-списковой структурой:
 {
@@ -97,7 +98,7 @@ ic_class_pic = '@common.imgEdtTreeListCtrl'
 ic_class_pic2 = '@common.imgEdtTreeListCtrl'
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.ictreelistctrlsimple.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -108,7 +109,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 
 class icTreeListCtrlSimple(icwidget.icWidget,
@@ -199,6 +200,7 @@ class icTreeListCtrlSimple(icwidget.icWidget,
     def getTitleRoot(self):
         """
         Имя самого главного узла.
+
         :return: Возвращает всегда строку.
         """
         return str(self.getICAttr('titleRoot'))
@@ -274,6 +276,7 @@ class icTreeListCtrlSimple(icwidget.icWidget,
     def _isChildrenRes(self, Res_):
         """
         Есть ли в описании ресурса описание дочерних элементов?
+
         :param Res_: Ресурс.
         :return: Возвращает True/False.
         """
@@ -288,6 +291,7 @@ class icTreeListCtrlSimple(icwidget.icWidget,
     def _getPicturesId(self, Res_):
         """
         Определение картинок для изобращения узла по ресурсу этого узла.
+
         :param Res_: Ресурс узла.
         :return: Кортеж из 2-х элементов - идентификаторов картинок.
         """
@@ -299,6 +303,7 @@ class icTreeListCtrlSimple(icwidget.icWidget,
     def setItemRecord(self, Item_, Record_):
         """
         Установить список записи на узле.
+
         :param Item_: ID узла у которого устанавливается запись.
         :param Record_: Запись узла. Список.
         """
@@ -310,6 +315,7 @@ class icTreeListCtrlSimple(icwidget.icWidget,
     def getItemRecord(self, Item_):
         """
         Список записи на узле.
+
         :param Item_: ID узла у которого устанавливается запись.
         :return: Возвращает список строк записи узла.
             Или None в случае ошибки.
@@ -327,6 +333,7 @@ class icTreeListCtrlSimple(icwidget.icWidget,
     def getSelectionRecord(self):
         """
         Список записи выбранного узла.
+
         :return: Возвращает список строк записи узла.
             Или None в случае ошибки.
         """
@@ -336,6 +343,7 @@ class icTreeListCtrlSimple(icwidget.icWidget,
     def setLabelCols(self, LabelCols_):
         """
         Установить надписи колонок.
+
         :param LabelCols_: Надписи колонок. Список строк.
         :return: Возвращает результат выполнения функции True/False.
         """
@@ -418,6 +426,7 @@ class icTreeListCtrlSimple(icwidget.icWidget,
     def selectItemPath(self, ItemPath_, CurItem_=None):
         """
         Выбрать элемент по пути.
+
         :param ItemPath_: Путь до элемента.
         :param CurItem_: Текущий элемент поиска. 
             Если None, то поиск начиниется с корня.
@@ -435,6 +444,7 @@ class icTreeListCtrlSimple(icwidget.icWidget,
     def getItemPathLabel(self, Item_, Path_=None):
         """
         Путь до элемента. Путь - список имен элементов.
+
         :param Item_: Элемент дерева.
         :param Path_: Текущий заполненный путь.
         """
@@ -457,6 +467,7 @@ class icTreeListCtrlSimple(icwidget.icWidget,
     def getItemChildren(self, Item_=None):
         """
         Список дочерних элементов узла дерева.
+
         :param Item_: Узел/элемент дерева. Если None, то корневой элемент.
         :return: Список дочерних элементов узла дерева
             или None в случае ошибки.

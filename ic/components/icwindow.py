@@ -91,7 +91,7 @@ ic_class_pic = '@common.imgEdtWindow'
 ic_class_pic2 = '@common.imgEdtWindow'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.icwindow.icWindow-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.icwindow.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = -1
@@ -101,7 +101,7 @@ ic_can_contain = -1
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBarTool', 'Separator', 'GridCell']
 
 #   Версия компонента
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 1, 2)
 
 
 class icWindow(icWidget, wx.Window):

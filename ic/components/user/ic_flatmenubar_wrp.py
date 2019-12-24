@@ -89,7 +89,7 @@ ic_class_pic = '@common.imgEdtMenuBar'
 ic_class_pic2 = '@common.imgEdtMenuBar'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.user.ic_flatmenubar_wrp.icFlatMenuBar-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.ic_flatmenubar_wrp.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -100,11 +100,10 @@ ic_can_contain = ['FlatMenu', 'FlatMenuTool']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
+
 
 # Функции редактирования
-
-
 def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):
     """
     Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
@@ -212,7 +211,7 @@ class icFlatMenuBar(icwidget.icWidget, icflatmenubar.icFlatMenuBarPrototype):
         prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
                              bCounter=bCounter, progressDlg=progressDlg)
                             
-    def appendMenuBar(self, MenuBar_, bCounter=False, progressDlg=None):
+    def appendMenuBar(self, menubar, bCounter=False, progressDlg=None):
         """
         Добавить/Объединить два горизонтальных меню.
         """

@@ -99,7 +99,7 @@ ic_class_pic = '@common.imgEdtNotebook'
 ic_class_pic2 = '@common.imgEdtNotebook'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.custom.icnotebook.icNotebook-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.custom.icnotebook.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = ['Window', 'Panel', 'ScrolledPanel',

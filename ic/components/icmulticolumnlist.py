@@ -88,7 +88,7 @@ ic_class_pic = '@common.imgEdtMCList'
 ic_class_pic2 = '@common.imgEdtMCList'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.icmulticolumnlist.icMultiColumnList-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.icmulticolumnlist.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = []
@@ -98,7 +98,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 1, 2)
 
 
 class icMultiColumnList(icWidget, wx.ListCtrl):
@@ -106,11 +106,11 @@ class icMultiColumnList(icWidget, wx.ListCtrl):
     Класс icMulticolumnList реализует интерфейс для обработки многоколоночного
     списка как обкладку над компонентом wx.ListCtrl.
     """
-
     def __init__(self, parent, id, component={}, logType=0, evalSpace={},
                  bCounter=False, progressDlg=None):
         """
         Конструктор для создания MultiColumnList.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -165,6 +165,7 @@ class icMultiColumnList(icWidget, wx.ListCtrl):
     def appendStringRec(self, *StringRec_):
         """
         Добавить запись строк.
+
         :param StringRec_: Запись из строк.
         :return: Возвращает индекс добавленной записи.
         """
@@ -180,6 +181,7 @@ class icMultiColumnList(icWidget, wx.ListCtrl):
     def getStringsByCol(self, *Columns_):
         """
         Получить список строк по коолнкам.
+
         :param Columns_: Номера колонок.
         :return: Список кортежей строк, если задано несколько колонок.
             Список строк,  если задана одна колонка.
@@ -206,6 +208,7 @@ class icMultiColumnList(icWidget, wx.ListCtrl):
     def moveStringRec(self, Index_=-1, Step_=1):
         """
         Передвинуть запись в списке.
+
         :param Index_: Номер записи. Если -1, то имеется в виду текущая.
         :param Step_: На сколько позиций передвинуть. 
             Если <0, то движение к началу.
@@ -247,6 +250,7 @@ class icMultiColumnList(icWidget, wx.ListCtrl):
     def focusRec(self, Index_):
         """
         Переместить фокус/выделение строки/записи.
+
         :param Index_: Номер записи.
         """
         Index_ = min(self.GetItemCount()-1, max(0, Index_))
@@ -260,6 +264,7 @@ class icMultiColumnList(icWidget, wx.ListCtrl):
     def selectRec(self, Index_, SelectOn_=True):
         """
         Выделить строку/запись с индексом.
+
         :param Index_: Номер записи.
         :param SelectOn_: Вкл/Выкл выделение.
         """

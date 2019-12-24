@@ -27,7 +27,7 @@ from ic.dlg.msgbox import MsgBox
 from ic.utils.util import icSpcDefStruct
 from . import icwidget as icwidget
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 SPC_IC_FONT = {'type': 'Font',
                'name': 'defaultFont',
@@ -45,6 +45,7 @@ ICFontStyle = ['regular', 'bold', 'italic', 'boldItalic']
 def getICFamily(font):
     """
     Функция возвращает название группы шрифта.
+
     :type font: C{wx.Font}
     :param font: Указатель на нужный объект.
     :rtype: C{String}
@@ -66,6 +67,7 @@ def getICFamily(font):
 def getICFontStyle(font):
     """
     Функция возвращает название стиля шрифта.
+
     :type font: C{wx.Font}
     :param font: Указатель на нужный объект.
     :rtype: C{String}
@@ -100,6 +102,7 @@ class icFont(wx.Font):
     def _familyId(self, name):
         """
         По названию определяет тип шрифта
+
         :param name: Имя типа шрифта из ресурса.
         :type name: C{string}
         :return: Определяет wxPython идентификатор типа шрифта ('wx.DEFAULT', 'wx.DECORATIVE', 'wx.ROMAN', 'wx.SCRIPT', 'wx.SWISS', 'wx.MODERN')
@@ -115,7 +118,9 @@ class icFont(wx.Font):
             return wx.FONTFAMILY_DEFAULT
 
     def _styleId(self, name):
-        """ По названию определяет стиль шрифта
+        """
+        По названию определяет стиль шрифта
+
         :param name: Имя стиля из ресурса.
         :type name: C{string}
         :return: Определяет стиль и толщину шрифта
@@ -139,6 +144,7 @@ class icFont(wx.Font):
     def bool_underline(self, underline):
         """
         Преобразование подчеркивания в логическую переменную.
+
         :param underline:
         :return:
         """

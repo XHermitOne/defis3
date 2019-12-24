@@ -45,9 +45,7 @@ ic_class_type = icDefInf._icComboType
 ic_class_name = 'icSimpleGroupListView'
 
 #   Описание стилей компонента
-ic_class_styles = {# 'DEFAULT': 0,
-                   # wx.ListCtrl styles
-                   'LC_LIST': wx.LC_LIST,
+ic_class_styles = {'LC_LIST': wx.LC_LIST,
                    'LC_REPORT': wx.LC_REPORT,
                    'LC_VIRTUAL': wx.LC_VIRTUAL,
                    'LC_ICON': wx.LC_ICON,
@@ -137,7 +135,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('table-heatmap.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('table-heatmap.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.icsimplegrplistview.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -148,7 +146,7 @@ ic_can_contain = ['GridCell']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # Функции редактирования
@@ -309,6 +307,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
     def setColumnsSpc(self, *Columns_):
         """
         Создание колонок грида по описанию.
+
         :param Columns_: Описание колонок.
         """
         columns = []
@@ -346,6 +345,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
     def create_getColGroupKey_function(self, column):
         """
         Создание функции получения ключа колонки.
+
         :param column: Структура описания колонки.
         """
         get_grp_key = column.get('get_grp_key', None)
@@ -353,6 +353,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
             def getColGroupKey(RECORD):
                 """
                 Получить ключ группы колонки.
+
                 :param RECORD: Словарь записи.
                 """
                 result = util.ic_eval(get_grp_key, evalSpace=locals())
@@ -375,6 +376,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
             def convertColGroupKey(GROUP_KEY):
                 """
                 Преобразовать данный ключ группы в строку заголовка группы колонки.
+
                 :param GROUP_KEY: Ключ группы.
                 """
                 result = util.ic_eval(get_grp_title, evalSpace=locals())
@@ -391,6 +393,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
     def getDatasetFromDataSource(self, data_source=None, data_src_filter=None):
         """
         Получить набор данных из источника данных.
+
         :param data_source: Указание источника данных.
             Может указываться как паспорт или объект.
         :param data_src_filter: Дополнительный фильтр источника данных.
@@ -420,6 +423,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
             дополнительные объекты:
                 DATASET - список записей.
                 RECORD - словарь текущей обрабатываемой записи.
+
         :param data_src_filter: Дополнительный фильтр источника данных.
         """
         if DatasetList_ is None:
@@ -460,7 +464,8 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
 
     def refreshDataset(self, data_src_filter=None):
         """
-        Обновить набор данныхю
+        Обновить набор данных.
+
         :param data_src_filter: Дополнительный фильтр источника данных.
         """
         return self.setDataset(data_src_filter=data_src_filter)
@@ -519,6 +524,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
         Определить UUID выбранного объекта.
         Мнемоническое правило расположения UUID объекта в наборе записей:
         Поле UUIDа находится всегда последней колонкой и не выводится на экран.
+
         :return: Возвращает uuid выбранного объекта или None если 
         объект не выбран.
         """
@@ -539,6 +545,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
     def rowFormatterFunction(self, list_item, record):
         """
         Функция раскраски строк списка.
+
         :param list_item: Объект wx.ListItem строки списка.
         :param record: Словарь записи.
         """

@@ -90,7 +90,7 @@ ic_class_pic = '@common.imgEdtSignal'
 ic_class_pic2 = '@common.imgEdtSignal'
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.ic_wx_signal.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -101,7 +101,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 3)
+__version__ = (0, 1, 1, 2)
 
 
 class icWxSignal(icwidget.icSimple, parentModule.icWxEvtSignalSrc):
@@ -115,7 +115,6 @@ class icWxSignal(icwidget.icSimple, parentModule.icWxEvtSignalSrc):
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
     
     def __init__(self, parent, id, component, logType=0, evalSpace=None,

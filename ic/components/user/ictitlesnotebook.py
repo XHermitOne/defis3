@@ -3,6 +3,7 @@
 
 """
 Набор закладок.
+
 Класс реализует набор закладок, между которыми можно переключаться. К закладке
 можно привязать визуалльный компонет (ф-ия ConnectObjToTitle). При выборе данной
 закладки компонент будет отображаться при выборе других закладок исчезать. К
@@ -87,7 +88,7 @@ ic_class_pic = '@common.imgEdtNotebook'
 ic_class_pic2 = '@common.imgEdtNotebook'
 
 #   Путь до файла документации
-ic_class_doc = None
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.ictitlesnotebook.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -98,7 +99,7 @@ ic_can_contain = None
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBarTool', 'DatasetNavigator', 'GridCell']
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 2)
 
 #   Некоторые размеры панели
 
@@ -132,10 +133,10 @@ class icTitle:
     """
     Класс представления закладки.
     """
-
     def __init__(self, title, size, st, img=None, descr=''):
         """
         Конструктор.
+
         :type title: C{string}
         :param title: Заголовок закладки.
         :type size: C{wx.Size}
@@ -159,6 +160,7 @@ class icTitle:
     def Show(self, bShow=True, activeTitle=None):
         """
         Показывает или скрывает компоненты привязанные к закладке.
+
         :type bShow: C{bool}
         :param bShow: Призка, который определяет скрывать или показывать компоненты.
         :type activeTitle: C{icTitle}
@@ -238,6 +240,7 @@ class icTitle:
 class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
     """
     Описание пользовательского компонента.
+
     :type component_spc: C{dictionary}
     :cvar component_spc: Спецификация компонента.
         - B{name='default'}:
@@ -258,6 +261,7 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
                  bCounter=False, progressDlg=None):
         """
         Конструктор базового класса пользовательских компонентов.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -401,6 +405,7 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
     def RemoveTitleObjects(self, indx=-1):
         """
         Удаляет все объекты с закладки.
+
         :type indx: C{int}
         :param indx: Индекс закладки. Если -1, то компоненты удаляются из текущей
             закладки.
@@ -419,6 +424,7 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
     def ConnectObjToTitle(self, indx, obj):
         """
         Привязывает объект к нужной странице.
+
         :type indx: C{int}
         :param indx: Индекс закладки.
         """
@@ -445,6 +451,7 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
     def IsVisible(self, indx):
         """
         Возвращет признак видимости нужной закладки.
+
         :type indx: C{int}
         :param indx: Индекс закладки.
         """
@@ -478,6 +485,7 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
     def AddTitle(self, title, descr='', img=None):
         """
         Добавления закладки в панель.
+
         :type title: C{string}
         :param title: Заголовок закладки.
         :type descr: C{string}
@@ -513,6 +521,7 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
     def GetTitle(self, indx):
         """
         Возвращет ссылку на нужную закладку.
+
         :type indx: C{int}
         :param indx: Индекс закладки.
         """
@@ -531,6 +540,7 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
     def SelectTitle(self, indx=-1):
         """
         Выбирает нужную закладку в качестве текущей.
+
         :type indx: C{int}
         :param indx: Индекс закладки.
         """
@@ -686,6 +696,7 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
     def DrawActiveTitle(self, dc, obj, w, typeTitle=0):
         """
         Рисует активную закладку.
+
         :type typeTitle: C{int}
         :param typeTitle: Тип закладки: 0 - стандартная, 1 - квадратная,
             2 - квадратная с градиентной заливкой.
@@ -750,6 +761,7 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
     def Draw(self, dc):
         """
         Функция рисует ячейку.
+
         :type dc: C{wx.DC}
         :param dc: Контекст устройства.
         """
@@ -864,8 +876,9 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
         для всех объектов неактивной страницы органайзера этот признак будет устана-
         вливаться в False. Для компонента 'icNotebook' эта функция переопределена
         т. к. только на активной странице компоненты видимы.
-        :type bVisual: C{bool}
-        :param bVisual: Признак обновления представления объекта данных.
+
+        :type bVisible: C{bool}
+        :param bVisible: Признак обновления представления объекта данных.
         :type lst: C{list}
         :param lst: Список видимых объектов.
         :rtype: C{list}
@@ -903,6 +916,7 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
 def test(par=0):
     """
     Тестируем пользовательский класс.
+
     :type par: C{int}
     :param par: Тип консоли.
     """

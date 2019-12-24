@@ -71,7 +71,7 @@ ic_class_pic = '@common.imgEdtDBGrid'
 ic_class_pic2 = '@common.imgEdtDBGrid'
 
 #   Путь до файла документации
-ic_class_doc = None
+ic_class_doc = 'ic/doc/_build/html/ic.components.icgriddataset.html'
 
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = ['GridCell']
@@ -81,7 +81,7 @@ ic_can_contain = ['GridCell']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (1, 1, 1, 2)
+__version__ = (1, 1, 1, 3)
 
 #   Атрибуты редактируемых ячеек
 icAttrEditCell = {'backgroundColor': (255, 255, 255),
@@ -120,6 +120,7 @@ def cmpRows(x, y):
 def getAttrKey(attrRes):
     """
     Формирует ключ аттрибута.
+
     :type attrRes: C{dictionary}
     :param attrRes: Описание аттрибута ячейки.
     """
@@ -135,6 +136,7 @@ def getAttrKey(attrRes):
 def getAttrBuff(attrRes):
     """
     Достает нужный аттрибут ячееки.
+
     :type attrRes: C{dictionary}
     :param attrRes: Описание аттрибута ячейки.
     """
@@ -153,6 +155,7 @@ def getAttrBuff(attrRes):
 def setAttrBuff(attrRes, attr):
     """
     Кладет в буфер атрибут ячейки грида.
+
     :type attrRes: C{dictionary}
     :param attrRes: Описание аттрибута ячейки.
     """
@@ -166,6 +169,7 @@ def setAttrBuff(attrRes, attr):
 def createAttr(attrRes):
     """
     Создает атрибут ячейки.
+
     :type attrRes: C{dictionary}
     :param attrRes: Описание аттрибута ячейки.
     """
@@ -204,6 +208,7 @@ def iter_rowcol(gridData, lstBgColor, lstTextColor=None):
     """
     Функция возвращает атрибут ячейки в зависимости от номера строки. Цвета
     задает параметр lstColor.
+
     :type gridData: C{icGridDatasetData}
     :param gridData: Указатель на объект данных грида.
     :type lstBgColor: C{dictionary}
@@ -234,6 +239,7 @@ def iter_rowcol(gridData, lstBgColor, lstTextColor=None):
 def GetColFromName(cols, name):
     """
     По имени колонки определяет ее реальный номер в гриде.
+
     :param cols: Описание колонок
     :type cols: C{list}
     :param name: Имя колонки
@@ -261,7 +267,9 @@ class icGridDatasetData(wx.grid.GridTableBase):
     def GetDataCol(self, col):
         """
         Функция находит фактический номер колонки в источнике данных,
-        поскольку в описании ресурса могут быть скрытые колонки (['attr'] == 'UV')
+        поскольку в описании ресурса могут быть скрытые колонки
+        (['attr'] == 'UV')
+
         :param col: Номер колонки
         :type col: C{int}
         :return: Возвращает соответствующий номер колонки в источнике данных.
@@ -284,6 +292,7 @@ class icGridDatasetData(wx.grid.GridTableBase):
         Функция подготавливает данные, которые будут отображаться в гриде. Если
         внешний объект данных не определен, то будет использоваться внутренний объект
         данных icSimpleDataset.
+
         :param cols: Описание колонок.
         :type cols: C{list}
         :param dataset: Указатель на объект данных, если он известен.
@@ -328,6 +337,7 @@ class icGridDatasetData(wx.grid.GridTableBase):
     def defDataType(self, col):
         """
         Определяет типы форматов ячеек определенной колонки.
+
         :param col: Словарь описывающий параметры колонки.
         :type col: C{dictionary}
         :return: Возвращает тип ячейки.
@@ -352,6 +362,7 @@ class icGridDatasetData(wx.grid.GridTableBase):
     def __init__(self, logType, _grid, cols, link_res=None, evalSpace=None, dataset=None):
         """
         Конструктор объекта описания данных.
+
         :param logType: Тип доступа к логу.
         :type logType: C{int}
         :param grid: Окно грида.
@@ -427,6 +438,7 @@ class icGridDatasetData(wx.grid.GridTableBase):
     def IsChanged(self, row=None):
         """
         Проверяем произошли ли изменения в гриде или нет.
+
         :type row: C{int}
         :param row: Номер строки.
         """
@@ -439,6 +451,7 @@ class icGridDatasetData(wx.grid.GridTableBase):
     def Update(self, row=None, bAsk=False):
         """
         Сохраняет буфер строки в базе.
+
         :type row: C{int}
         :param row: Номер строки.
         :return: Возвращает код контроля.
@@ -507,7 +520,9 @@ class icGridDatasetData(wx.grid.GridTableBase):
 
     def UpdateCell(self, row, col, value):
         """
-        Вызывается методом SetValue для обнавления значения поля в источнике данных.
+        Вызывается методом SetValue для обнавления значения поля
+        в источнике данных.
+
         :param row: Номер стоки.
         :type row: C{int}
         :param col: Номер колонки.
@@ -615,6 +630,7 @@ class icGridDatasetData(wx.grid.GridTableBase):
         """
         Вызывается при добавлении новой записи. Запускается функция инициализации
         значений ячеек строки, а затем записвается в источник данных
+
         :param row: Номер стоки
         :type row: C{int}
         :param col: Номер колонки
@@ -730,6 +746,7 @@ class icGridDatasetData(wx.grid.GridTableBase):
     def IsEmptyCell(self, row, col):
         """
         Определяет пустая ли ячейка
+
         :param row: Номер стоки
         :type row: C{int}
         :param col: Номер колонки
@@ -749,7 +766,9 @@ class icGridDatasetData(wx.grid.GridTableBase):
     def GetValue(self, row, col):
         """
         Функция возвращает значение ячейки. Позволяет организовать виртуальный грид.
-        Данные грузятся не сразу в компонент, а подгружаются по мере необходимость.
+        Данные грузятся не сразу в компонент,
+        а подгружаются по мере необходимость.
+
         :param row: Номер стоки
         :type row: C{int}
         :param col: Номер колонки
@@ -814,6 +833,7 @@ class icGridDatasetData(wx.grid.GridTableBase):
         """
         Функция преобразует значения ячеек к нужному виду и записывает в
         источник данных.
+
         :param row: Номер стоки
         :type row: C{int}
         :param col: Номер колонки
@@ -841,6 +861,7 @@ class icGridDatasetData(wx.grid.GridTableBase):
     def DeleteRows(self, row, num=1, bAsk=True):
         """
         Функция вызывает метод хранилища данных для удаления записи
+
         :param row: Номер стоки.
         :type row: C{int}
         :param num: Количество строк.
@@ -894,6 +915,7 @@ class icGridDatasetData(wx.grid.GridTableBase):
         """
         Called when the grid needs to display labels.
         Функция возвращает подпись колонки.
+
         :param col: Номер колонки
         :type col: C{int}
         :return: Возвращает подпись колонки.
@@ -912,6 +934,7 @@ class icGridDatasetData(wx.grid.GridTableBase):
         default, doesn't necessarily have to be the same type used
         nativly by the editor/renderer if they know how to convert.
         Функция возвращает тип ячейки.
+
         :param row: Номер стоки
         :type row: C{int}
         :param col: Номер колонки
@@ -928,6 +951,7 @@ class icGridDatasetData(wx.grid.GridTableBase):
         in the grid.
         Функция возвращает признак того, что данная ячейка содержит значение
         определенного типа.
+
         :param row: Номер стоки
         :type row: C{int}
         :param col: Номер колонки
@@ -943,6 +967,7 @@ class icGridDatasetData(wx.grid.GridTableBase):
     def CanSetValueAs(self, row, col, typeName):
         """
         Проверяет можно ли записать в ячейку значение определенного типа
+
         :param row: Номер стоки
         :type row: C{int}
         :param col: Номер колонки
@@ -957,6 +982,7 @@ class icGridDatasetData(wx.grid.GridTableBase):
     def GetAttr(self, row, col, par):
         """
         Определяет аттрибуты ячейки
+
         :param row: Номер записи
         :type row: C{int}
         :param col: Номер колонки
@@ -1024,7 +1050,6 @@ class icGridDataset(icGrid):
     который осуществляет взаимодействие с таблицей данных, которая в свою очередь устанавливает
     соединение с конкретным источником данных.
     """
-
     edt_resource_manager = None
     
     @staticmethod
@@ -1124,6 +1149,7 @@ class icGridDataset(icGrid):
     def __init__(self, parent, id, res, logType=0, evalSpace=None, bCounter=False, progressDlg=None, data=None):
         """
         Конструктор класса.
+
         :param parent: Указатель на подительское окно. Обязательный параметр.
         :type parent: C{wx.Windows}
         :param id: Идентификатор компонента.
@@ -1237,6 +1263,7 @@ class icGridDataset(icGrid):
     def AddAssociation(self, key_tuple, val_tuple, bPublicAssc=True):
         """
         Добавляет новую ассоциацию в грид.
+
         :type key_tuple: C{tuple}
         :param key_tuple: Ключевые поля ассоциации.
         :type val_tuple: C{tuple}
@@ -1277,6 +1304,7 @@ class icGridDataset(icGrid):
     def getNameValue(self, col_name, row=None):
         """
         Функция возвращает значение ячейки по номеру строки и имени поля.
+
         :param col_name: Имя колонки.
         :type col_name: C{int}
         :param row: Номер стоки. Если номер строки не задан, то значение берется из
@@ -1297,6 +1325,7 @@ class icGridDataset(icGrid):
     def setNameValue(self, col_name, val, row=None):
         """
         Функция записывает значение ячейки по номеру строки и имени поля.
+
         :param col_name: Имя колонки.
         :type col_name: C{int}
         :param val: Значение.
@@ -1317,6 +1346,7 @@ class icGridDataset(icGrid):
     def setColLabels(self, labelsDct):
         """
         Устанавливает новые значения заголовков колонок.
+
         :type lebelsDct: C{dictionary}
         :param labelDct: Словарь замен. Ключи - имена полей грида, значения -
             новые заголовки. Значения могут быть вычисляемыми.
@@ -1341,6 +1371,7 @@ class icGridDataset(icGrid):
     def SortCol(self, col, direction=None):
         """
         Функция сортирует заданную колонку.
+
         :type col: C{int}
         :param col: Номер колонки.
         :type direction: C{int}
@@ -1586,6 +1617,7 @@ class icGridDataset(icGrid):
         Отлавливаем сообщение на создание редактора, чтобы перенаправить обработку в свою функцию.
         Сообщение на создание редактора всегда генерируется после обработки
         события <EVT_GRID_EDITOR_SHOWN> в функции OnShownEditor().
+
         :param event: Обработчик событий
         :type event: C{wx.grid.GridEvent}
         """
@@ -1657,6 +1689,7 @@ class icGridDataset(icGrid):
     def OnKeyDownEditor(self, event):
         """
         Функция обработки нажатия клавиши в редакторе (компонент wx.TextCtrl).
+
         :param event: Обработчик событий
         :type event: C{wx.CommandEvent}
         """
@@ -1716,6 +1749,7 @@ class icGridDataset(icGrid):
     def OnHiddenEditor(self, event):
         """
         Обработка сообщения о закрытии редактра
+
         :param event: Обработчик событий
         :type event: C{wx.grid.GridEvent}
         """
@@ -1837,6 +1871,7 @@ class icGridDataset(icGrid):
     def OnKeyDown(self, event):
         """
         Обработка нажатия клавиш в гриде.
+
         :param event: Обработчик событий
         :type event: C{wx.grid.GridEvent}
         """
@@ -1961,6 +1996,7 @@ class icGridDataset(icGrid):
     def SetCursor(self, row, col=-1):
         """
         Устанавливает курсор в нужную позицию.
+
         :type row: C{int}
         :param row: Номер записи.
         :type col: C{int}
@@ -1998,6 +2034,7 @@ class icGridDataset(icGrid):
     def UpdateDataDB(self, db_name=None, bRestore=False):
         """
         Обновляем данные в базе данных.
+
         :type db_name: C{String}
         :param db_name: Имя источника данных.
         :type bRestore: C{bool}
@@ -2018,7 +2055,9 @@ class icGridDataset(icGrid):
 
     def UpdateViewFromDB(self, db_name=None):
         """
-        Обновляет данные в текстовом поле после изменения курсора в источнике данных.
+        Обновляет данные в текстовом поле после изменения курсора
+        в источнике данных.
+
         :type db_name: C{String}
         :param db_name: Имя объекта данных.
         """
@@ -2033,6 +2072,7 @@ class icGridDataset(icGrid):
     def UpdateDataView(self, db_name):
         """
         Обновляет вид грида после изменения размеров таблицы данных.
+
         :type db_name: C{String}
         :param db_name: Имя объекта данных.
         """
@@ -2055,6 +2095,7 @@ class icGridDataset(icGrid):
     def AddRows(self, num=1, bAddData=True):
         """
         Добавляет несколько рядов в грид.
+
         :type num: C{int}
         :param num: Количество добавляемых рядов.
         :type bAddData: C{bool}
@@ -2081,6 +2122,7 @@ class icGridDataset(icGrid):
     def DelRows(self, cur, num=1):
         """
         Удаляет несколько рядов из грида.
+
         :type cur: C{int}
         :param cur: Номер строки, которую надо удалить .
         :type num: C{int}
@@ -2169,6 +2211,7 @@ class icGridDataset(icGrid):
     def SetFilter(self, clsName, flt=None, isUpdSelf=False, bReplNames=True):
         """
         Устанавливаем фильтр на нужный объект данных.
+
         :type clsName: C{string}
         :param clsName: Имя класса данных на который устанавливается фильтр.
         :type filter: C{string | dictionary}
@@ -2220,6 +2263,7 @@ class icGridDataset(icGrid):
     def SetFilterField(self, clsName, fieldName, value=None, bReplNames=True):
         """
         Устанавливаем фильтр на объект группы (связь один ко многим).
+
         :type clsName: C{string}
         :param clsName:  Имя класса данных, который фильтруется
         :type fieldName: C{string}
@@ -2270,6 +2314,7 @@ class icGridDataset(icGrid):
 def defColDBDescription(col):
     """
     По описанию колонки грида генерирует описание поля базы данных.
+
     :type col: C{Dictionary}
     :param col: Ресурсное описание колонки грида.
     :rtype: C{Dictionary}
@@ -2298,6 +2343,7 @@ def defColDBDescription(col):
 def createSimpleGrid(parent, *columns):
     """
     Создание простого грида (c icSimpleDataset).
+
     :param parent: Родительское wx.Window.
     :param columns: Описания колонок в формате:
         {'name': Латинское наименование колонки.

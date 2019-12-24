@@ -125,7 +125,7 @@ ic_class_pic = '@common.imgEdtToolBar'
 ic_class_pic2 = '@common.imgEdtToolBar'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.custom.ictoolbar.icToolBar-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.custom.ictoolbar.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = None

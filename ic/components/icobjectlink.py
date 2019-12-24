@@ -3,6 +3,7 @@
 
 """
 Ссылка/связь с объектом.
+
 Компонент имеет следующие атрибуты:
     object - Паспорт объекта-источника сборки
     res_replace - Словарь изменения ресурса объекта-источника
@@ -82,7 +83,7 @@ ic_class_pic = '@common.imgEdtObjLink'
 ic_class_pic2 = '@common.imgEdtObjLink'
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'ic/doc/_build/html/ic.components.icobjectlink.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -93,7 +94,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # Функции редактирования
@@ -135,6 +136,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
 class icObjectLink(parentModule.icBase):
     """
     Описание пользовательского компонента.
+
     :type component_spc: C{dictionary}
     :cvar component_spc: Спецификация компонента.
         - B{type='defaultType'}:
@@ -145,6 +147,7 @@ class icObjectLink(parentModule.icBase):
     def __init__(self, parent, id, component, logType=0, evalSpace=None, *arg, **kwarg):
         """
         Конструктор пользовательского компонента.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -183,6 +186,7 @@ class icObjectLink(parentModule.icBase):
     def do_replacement(self, res, replacement_dct=None):
         """
         Произвести замены в ресурсе.
+
         :param res: Ресурс объекта.
         :param replacement_dct: Словарь замен.
         :return: Ресурс с произведенными заменами
@@ -213,6 +217,7 @@ class icObjectLink(parentModule.icBase):
     def get_replacement_dct(self, res=None):
         """
         Получить словарь замен ресурса перед сборкой связанного объекта.
+
         :param res: Ресурс.
         :return: Словарь замен.
         """
@@ -248,6 +253,7 @@ class icObjectLink(parentModule.icBase):
 def test(par=0):
     """
     Тестируем пользовательский класс.
+
     :type par: C{int}
     :param par: Тип консоли.
     """

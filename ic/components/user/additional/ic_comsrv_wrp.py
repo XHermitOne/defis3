@@ -35,24 +35,24 @@ ic_class_type = icDefInf._icDatasetType
 ic_class_name = 'icCOMServer'
 
 #   Описание стилей компонента
-ic_class_styles = {'DEFAULT':0}
+ic_class_styles = {'DEFAULT': 0}
 
 #   Спецификация на ресурсное описание класса
-ic_class_spc = {'__events__': {}, 
+ic_class_spc = {'__styles__': ic_class_styles,
+                '__events__': {},
                 'type': ic_comsrv.COMSRV_TYPE, 
                 'name': 'default', 
-                'activate':1,
-                'init_expr':None,
-                'app_link':None, #Указание связи с объектом приложения
-                'connection_string':None, #Указание связи с БД в случае с 1С.
-                '_uuid':None,
-                '__lists__':{'app_link':[ic_comsrv.COM_EXCEL_APP_LNK,ic_comsrv.COM_1CV8_APP_LNK]},
+                'activate': True,
+                'init_expr': None,
+                'app_link': None,   # Указание связи с объектом приложения
+                'connection_string': None,  # Указание связи с БД в случае с 1С.
+                '_uuid': None,
+                '__lists__': {'app_link': [ic_comsrv.COM_EXCEL_APP_LNK,
+                                           ic_comsrv.COM_1CV8_APP_LNK]},
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type'],
-                    icDefInf.EDT_CHOICE:['app_link']},
-                '__parent__':ic_comsrv.SPC_IC_COMSRV, 
+                                   icDefInf.EDT_CHOICE: ['app_link']},
+                '__parent__': ic_comsrv.SPC_IC_COMSRV,
                }
-                    
-ic_class_spc['__styles__'] = ic_class_styles
 
 #   Имя иконки класса, которые располагаются в директории 
 #   ic/components/user/images
@@ -60,7 +60,7 @@ ic_class_pic = '@common.imgEdtCOMSrv'
 ic_class_pic2 = '@common.imgEdtCOMSrv'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.user.ic_comsrv_wrp.icCOMServer-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.ic_comsrv_wrp.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -71,17 +71,18 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0,0,0,1)
+__version__ = (0, 1, 1, 2)
+
 
 class icCOMServer(icwidget.icSimple, ic_comsrv.icCOMServerProto):
     """
     Источник данных COM сервер.
     """
-    #Спецификаци компонента
+    # Спецификаци компонента
     component_spc = ic_class_spc
     
-    def __init__(self, parent, id=-1, component=None, logType = 0, evalSpace = None,
-                        bCounter=False, progressDlg=None):
+    def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None,
+                 bCounter=False, progressDlg=None):
         """
         Конструктор.
 

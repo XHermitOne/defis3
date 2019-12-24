@@ -39,9 +39,12 @@ ic_class_name = 'Indicator'
 ic_class_styles = None
 
 #   Спецификация на ресурсное описание класса
-ic_class_spc = {'__events__': {'keyDown': ('wx.EVT_KEY_DOWN', 'OnKeyDown', False)}, 'type': 'defaultType', 'name': 'default', 'label': ''}
-                    
-ic_class_spc['__styles__'] = ic_class_styles
+ic_class_spc = {'__styles__': ic_class_styles,
+                '__events__': {'keyDown': ('wx.EVT_KEY_DOWN', 'OnKeyDown', False),
+                               },
+                'type': 'defaultType',
+                'name': 'default',
+                'label': ''}
 
 #   Имя иконки класса, которые располагаются в директории 
 #   ic/components/user/images
@@ -49,7 +52,7 @@ ic_class_pic = '@common.imgEdtImage'
 ic_class_pic2 = '@common.imgEdtImage'
 
 #   Путь до файла документации
-ic_class_doc = 'public/icurindicator.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.icindicatorEx.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = []
@@ -59,7 +62,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 2)
 
 
 class Indicator(icwidget.icWidget, parentModule.GenBitmapTextButton):
@@ -74,7 +77,6 @@ class Indicator(icwidget.icWidget, parentModule.GenBitmapTextButton):
         - B{label=''}:
 
     """
-
     component_spc = ic_class_spc
     
     def __init__(self, parent, id, component, logType=0, evalSpace={},
@@ -170,6 +172,7 @@ def test(par=0):
     
     frame.Show(True)
     app.MainLoop()
-    
+
+
 if __name__ == '__main__':
     test()

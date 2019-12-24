@@ -53,7 +53,7 @@ ic_class_pic = '@common.imgEdtStaticLine'
 ic_class_pic2 = '@common.imgEdtStaticLine'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.custom.icstaticline.icStaticLine-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.custom.icstaticline.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = []

@@ -30,7 +30,7 @@ from ic.dlg import dlgfunc
 import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
-from ic.kernel import io_prnt
+from ic.log import log
 
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 
@@ -91,7 +91,7 @@ ic_class_pic = '@common.imgEdtTBTool'
 ic_class_pic2 = '@common.imgEdtTBTool'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.user.ic_flatmenutool_wrp.icFlatMenuTool-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.ic_flatmenutool_wrp.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -102,7 +102,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 3)
+__version__ = (0, 1, 1, 2)
 
 
 # Функции редактирования
@@ -200,14 +200,14 @@ class icFlatMenuTool(icwidget.icSimple, icflatmenutool.icFlatMenuToolPrototype):
             # Добавить пункт в родительское меню
             self.appendIntoParent(parent)
 
-    def appendIntoParent(self, Parent_):
+    def appendIntoParent(self, parent_menu):
         """
         Добавить пункт в родительское меню.
         """
-        if Parent_:
-            if issubclass(Parent_.__class__, icflatmenubar.icFlatMenuBarPrototype):
+        if parent_menu:
+            if issubclass(parent_menu.__class__, icflatmenubar.icFlatMenuBarPrototype):
                 # Добавляем в горизонтальное меню
-                Parent_.appendTool(self)
+                parent_menu.appendTool(self)
                 
     def OnSelected(self, event):
         """

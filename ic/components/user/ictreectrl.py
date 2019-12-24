@@ -92,7 +92,7 @@ ic_class_pic = '@common.imgEdtTreeListCtrl'
 ic_class_pic2 = '@common.imgEdtTreeListCtrl'
 
 #   Путь до файла документации
-ic_class_doc = 'public/ictreectrl.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.ictreectrl.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -103,7 +103,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class treeItemData:
@@ -193,6 +193,7 @@ class icTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl,
     def getTitleRoot(self):
         """
         Надпись корневого элемента.
+
         :return:
         """
         return self.getICAttr('titleRoot')
@@ -200,6 +201,7 @@ class icTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl,
     def setTree(self, tree_data, label=None, expand_root=True, expand_all=False):
         """
         Установить данные дерева.
+
         :param tree_data: Данные дерева:
             Каждый узел дерева - словарь.
             Дочерние элементы находяться в ключе '__children__' в виде списка.
@@ -223,6 +225,7 @@ class icTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl,
     def setItemColour(self, fg_colour=None, bg_colour=None, requirement=None):
         """
         Установить цвет элементов дерева в контроле по определенному условию.
+
         :param fg_colour: Цвет текста, если условие выполненно.
         :param bg_colour: Цвет фона, если условие выполненно.
         :param requirement: lambda выражение, формата:
@@ -239,6 +242,7 @@ class icTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl,
     def setItemData(self, item, data):
         """
         Привязать данные к элементу дерева.
+
         :param item: Элемент дерева.
         :param data: Прикрепляемые данные.
         """
@@ -247,6 +251,7 @@ class icTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl,
     def getItemData(self, item):
         """
         Получить прикрепленные данные к элементу дерева.
+
         :param item: Элемент дерева.
         :return: Прикрепленные данные к элементу дерева или None в случае ошибки.
         """
@@ -258,6 +263,7 @@ class icTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl,
     def findItem(self, requirement=None):
         """
         Поиск элемента дерева по требованию.
+
         :param requirement: lambda выражение, формата:
             lambda item: ...
             Которое возвращает True/False.

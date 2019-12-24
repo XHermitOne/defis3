@@ -25,12 +25,13 @@ ic_class_spc = {'name': 'default',
 parentClass = getattr(parentModule, parentModule.ic_class_name)
 
 #   Component version
-__version__ = (1, 0, 0, 3)
+__version__ = (1, 1, 1, 2)
 
 
 class CImageList(wx.ImageList, parentClass):
     """
     User component class.
+
     :type component_spc: C{dictionary}
     :cvar component_spc: Specification.
         - B{type='defaultType'}:

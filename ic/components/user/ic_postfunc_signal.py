@@ -83,7 +83,7 @@ ic_class_pic = '@common.imgEdtSignal'
 ic_class_pic2 = '@common.imgEdtSignal'
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.ic_postfunc_wrp.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -109,7 +109,6 @@ class icPostFuncSignal(icwidget.icSimple, parentModule.icPostFuncSrc):
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
     
     def __init__(self, parent, id, component, logType=0, evalSpace=None,

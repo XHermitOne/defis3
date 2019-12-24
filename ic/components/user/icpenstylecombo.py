@@ -67,7 +67,7 @@ ic_class_spc = {'type': 'PenStyleComboBox',
 
                 'font': {},
                 'position': (-1, -1),
-                'size': (-1,-1),
+                'size': (-1, -1),
                 'items': ICPenStylesDefault,
                 'foregroundColor': (0, 0, 0),
                 'backgroundColor': (255, 255, 255),
@@ -87,7 +87,7 @@ ic_class_pic = '@common.imgEdtChoice'
 ic_class_pic2 = '@common.imgEdtChoice'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.user.icpenstylecombo.icPenStyleComboBox-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.icpenstylecombo.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -98,12 +98,13 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icPenStyleComboBox(icwidget.icWidget, wx.adv.OwnerDrawnComboBox):
     """
     КОМБОБОКС СТИЛЯ ЛИНИИ.
+
     :type component_spc: C{dictionary}
     :cvar component_spc: Спецификация компонента.
         - B{type='DatePickerCtrl'}:
@@ -116,6 +117,7 @@ class icPenStyleComboBox(icwidget.icWidget, wx.adv.OwnerDrawnComboBox):
                  bCounter=False, progressDlg=None):
         """
         Конструктор базового класса пользовательских компонентов.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -236,6 +238,7 @@ class icPenStyleComboBox(icwidget.icWidget, wx.adv.OwnerDrawnComboBox):
     def setSelectedStyle(self, PenStyle_):
         """
         Выбрать в комбобоксе стиль.
+
         :param PenStyle_: Стиль линии, например wx.SOLID.
         """
         item_values = [list(item.values())[0] for item in self.items]

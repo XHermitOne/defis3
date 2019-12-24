@@ -35,28 +35,28 @@ ic_class_type = icDefInf._icDatasetType
 ic_class_name = 'icCOMClient'
 
 #   Описание стилей компонента
-ic_class_styles = {'DEFAULT':0}
+ic_class_styles = {'DEFAULT': 0}
 
 #   Спецификация на ресурсное описание класса
-ic_class_spc = {'__events__': {}, 
+ic_class_spc = {
+                '__styles__': ic_class_styles,
+                '__events__': {},
                 'type': ic_comclient.COMCLIENT_TYPE, 
                 'name': 'default', 
-                'activate':1,
-                'init_expr':None,
-                '_uuid':None,
+                'activate': True,
+                'init_expr': None,
+                '_uuid': None,
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type']}, 
-                '__parent__':ic_comclient.SPC_IC_COMCLIENT, 
+                '__parent__': ic_comclient.SPC_IC_COMCLIENT,
                }
                     
-ic_class_spc['__styles__'] = ic_class_styles
-
-#   Имя иконки класса, которые располагаются в директории 
+#   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
 ic_class_pic = '@common.imgEdtCOMClient'
 ic_class_pic2 = '@common.imgEdtCOMClient'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.user.ic_comclient_wrp.icCOMClient-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.ic_comclient_wrp.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -67,17 +67,18 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0,0,0,1)
+__version__ = (0, 1, 1, 2)
+
 
 class icCOMClient(icwidget.icSimple, ic_comclient.icCOMClientProto):
     """
     COM клиент.
     """
-    #Спецификаци компонента
+    # Спецификаци компонента
     component_spc = ic_class_spc
     
-    def __init__(self, parent, id=-1, component=None, logType = 0, evalSpace = None,
-                        bCounter=False, progressDlg=None):
+    def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None,
+                 bCounter=False, progressDlg=None):
         """
         Конструктор.
 
@@ -99,16 +100,16 @@ class icCOMClient(icwidget.icSimple, ic_comclient.icCOMClientProto):
         :param progressDlg: Указатель на идикатор создания формы.
         """
         component = util.icSpcDefStruct(self.component_spc, component)
-        icwidget.icSimple.__init__(self,parent,id,component,logType,evalSpace)
+        icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
         ic_comclient.icCOMClientProto.__init__(self, component)
 
-    def getData(self,*args,**kwargs):
+    def getData(self, *args, **kwargs):
         """
         Функция получения данных из COM сервера.
         """
         return self.getICAttr('get_data')
         
-    def setData(self,*args,**kwargs):
+    def setData(self, *args, **kwargs):
         """
         Функция сохранения данных в COM сервере.
         """

@@ -63,7 +63,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('database_table.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('database_table.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.icrecordset.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -74,7 +74,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # Функции редактирования
@@ -118,6 +118,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
 class icRecordset(icwidget.icSimple, parentModule.icSQLAlchemyDataSet):
     """
     Описание пользовательского компонента.
+
     :type component_spc: C{dictionary}
     :cvar component_spc: Спецификация компонента.
         
@@ -132,6 +133,7 @@ class icRecordset(icwidget.icSimple, parentModule.icSQLAlchemyDataSet):
                  bCounter=False, progressDlg=None):
         """
         Конструктор базового класса пользовательских компонентов.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -176,6 +178,7 @@ class icRecordset(icwidget.icSimple, parentModule.icSQLAlchemyDataSet):
 def test(par=0):
     """
     Тестируем пользовательский класс.
+
     :type par: C{int}
     :param par: Тип консоли.
     """

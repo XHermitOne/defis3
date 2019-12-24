@@ -99,7 +99,7 @@ ic_class_pic = '@common.imgEdtFrame'
 ic_class_pic2 = '@common.imgEdtFrame'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.user.ic_auipane_wrp.icAUIPane-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.ic_auipane_wrp.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -110,7 +110,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):
@@ -162,7 +162,7 @@ class icAUIPane(icwidget.icSimple, icAUIpane.icAUIPanePrototype):
     # Спецификаци компонента
     component_spc = ic_class_spc
     
-    def __init__(self, parent, id=-1, component=None, logType = 0, evalSpace = None,
+    def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None,
                  bCounter=False, progressDlg=None):
         """
         Конструктор.

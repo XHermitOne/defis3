@@ -82,6 +82,9 @@ SPC_IC_TOGGLE_IMGBUTTON = {'type': 'ImageButton',
                            '__parent__': SPC_IC_WIDGET,
                            }
 
+#   Путь до файла документации
+ic_class_doc = 'ic/doc/_build/html/ic.components.custom.ictoggleimagebutton.html'
+
 
 class icToggleImageButton(icWidget, buttons.ThemedGenBitmapTextToggleButton):
     """

@@ -80,7 +80,7 @@ ic_class_pic = '@common.imgEdtRadioButton'
 ic_class_pic2 = '@common.imgEdtRadioButton'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.custom.icradiogroup.icRadioGroup-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.custom.icradiogroup.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = []

@@ -55,7 +55,7 @@ ic_class_pic = '@common.imgEdtImport'
 ic_class_pic2 = '@common.imgEdtImport'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.icimport.icImport-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.icimport.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = []
@@ -65,7 +65,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 1, 2)
 
 
 class icImport(icwidget.icBase):
@@ -76,6 +76,7 @@ class icImport(icwidget.icBase):
                  bCounter=False, progressDlg=None, isDebug=False):
         """
         Конструктор для создания объекта icImport.
+
         :type parent: C{wxWindow}
         :param parent: Указатель на родительское окно.
         :type id: C{int}

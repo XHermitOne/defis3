@@ -76,7 +76,7 @@ ic_class_pic = '@common.imgEdtTreeCheckCtrl'
 ic_class_pic2 = '@common.imgEdtTreeCheckCtrl'
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.icmultichecktreelistctrl.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -87,7 +87,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # --- Constants ---
 GREY_ITEM_TEXT_COLOR = wx.Colour(192, 192, 192)
@@ -105,6 +105,7 @@ CHECK_NOBOLD_ID = 2
 class icMultiCheckTreeListCtrl(icsimpletreelistctrl.icSimpleTreeListCtrl):
     """
     Описание пользовательского компонента.
+
     :type component_spc: C{dictionary}
     :cvar component_spc: Спецификация компонента.
         - B{type='TreeList'}:
@@ -120,6 +121,7 @@ class icMultiCheckTreeListCtrl(icsimpletreelistctrl.icSimpleTreeListCtrl):
                  bCounter=False, progressDlg=None):
         """
         Конструктор базового класса пользовательских компонентов.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -326,6 +328,7 @@ def test(par=0):
 
     frame.Show(True)
     app.MainLoop()
+
 
 if __name__ == '__main__':
     test()

@@ -88,7 +88,7 @@ ic_class_pic = '@common.imgEdtGauge'
 ic_class_pic2 = '@common.imgEdtGauge'
 
 #   Путь до файла документации
-ic_class_doc = 'public/icurindicator.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.icindicator.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -99,12 +99,13 @@ ic_can_contain = None
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBarTool', 'DatasetNavigator', 'GridCell']
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class IndicatorState(parentModule.icHeadCell):
     """
     Описание пользовательского компонента.
+
     :type component_spc: C{dictionary}
     :cvar component_spc: Спецификация компонента.
         - B{name='default'}:
@@ -121,6 +122,7 @@ class IndicatorState(parentModule.icHeadCell):
                  bCounter=False, progressDlg=None):
         """
         Конструктор базового класса пользовательских компонентов.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -196,6 +198,7 @@ class IndicatorState(parentModule.icHeadCell):
     def SetState(self, state):
         """
         Устанавливает нужное состояние компонента.
+
         :type state: C{int}
         :param state: Нужное состояние.
         :rtype: C{bool}
@@ -239,6 +242,7 @@ class IndicatorState(parentModule.icHeadCell):
     def SetNextState(self):
         """
         Устанавливает следующее состояние.
+
         :rtype: C{bool}
         :return: Признак успешного завершения.
         """
@@ -252,6 +256,7 @@ class IndicatorState(parentModule.icHeadCell):
     def SetStateValue(self, value):
         """
         Устанавливавет состояние по значению.
+        
         :type value: C{float}
         :param value: Значение по которому определяется состояние.
         :rtype: C{bool}

@@ -119,7 +119,7 @@ ic_class_pic = '@common.imgEdtButton'
 ic_class_pic2 = '@common.imgEdtButton'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.custom.icbutton.icButton-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.custom.icbutton.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -130,7 +130,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (1, 0, 0, 6)
+__version__ = (1, 1, 1, 1)
 
 # EDITOR_FUNCS_BLOCK
 

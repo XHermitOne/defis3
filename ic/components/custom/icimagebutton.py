@@ -110,7 +110,7 @@ ic_class_pic = '@common.imgEdtImgButton'
 ic_class_pic2 = '@common.imgEdtImgButton'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.custom.icimagebutton.icImageButton-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.custom.icimagebutton.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = []

@@ -73,7 +73,7 @@ ic_class_pic = '@common.imgEdtQuery'
 ic_class_pic2 = '@common.imgEdtQuery'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.user.ic_convertquery_wrp.icConvertQuery-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.ic_convertquery_wrp.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -84,7 +84,7 @@ ic_can_contain = ['ConvertField', 'DBFConvertDriver']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icConvertQuery(icwidget.icSimple, icconvertquery.icConvertQueryPrototype):

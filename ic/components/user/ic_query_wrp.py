@@ -90,7 +90,7 @@ ic_class_pic = '@common.imgEdtQuery'
 ic_class_pic2 = '@common.imgEdtQuery'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.user.ic_query_wrp.icQuery-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.ic_query_wrp.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -101,7 +101,7 @@ ic_can_contain = ['Field']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 
 # --- Функции редактирования ---
@@ -154,6 +154,7 @@ class icQuery(icquery.icQueryProto, icwidget.icSimple):
     def TestComponentResource(res, context, parent, *arg, **kwarg):
         """
         Функция тестирования компонента SQL запроса в режиме редактора ресурса.
+
         :param res:
         :param context:
         :param parent:

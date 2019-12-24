@@ -64,7 +64,7 @@ ic_class_pic = '@common.imgEdtMenuBar'
 ic_class_pic2 = '@common.imgEdtMenuBar'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.user.ic_menubar_wrp.icMenuBar-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.ic_menubar_wrp.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -75,7 +75,7 @@ ic_can_contain = ['Menu']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icMenuBar(icwidget.icWidget, icmenubar.icMenuBar):

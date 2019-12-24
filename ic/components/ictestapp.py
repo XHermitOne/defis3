@@ -8,14 +8,13 @@
 import wx
 from ic.imglib import common
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class TestApp(wx.App):
     """
     Тестовое приложение.
     """
-
     def OnInit(self):
         """
         Обработчик инициализации приложения.

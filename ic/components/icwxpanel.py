@@ -3,7 +3,8 @@
 
 """
 Обкладка для класса wxPanel.
-Модуль содержит класс icwxPanel, который по ресурсному описанию создает окно (wxPanel).
+Модуль содержит класс icWXPanel, который по ресурсному описанию создает окно (wxPanel).
+
 :type SPC_IC_PANEL: C{dictionary}
 :var SPC_IC_PANEL: Спецификация на ресурсное описание окна. Ключи SPC_IC_PANEL:
 
@@ -83,7 +84,7 @@ ic_class_pic = '@common.imgEdtPanel'
 ic_class_pic2 = '@common.imgEdtPanel'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.icwxpanel.icWXPanel-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.icwxpanel.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = -1
@@ -93,7 +94,7 @@ ic_can_contain = -1
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBarTool', 'Separator', 'GridCell']
 
 #   Версия компонента
-__version__ = (1, 1, 1, 2)
+__version__ = (1, 1, 1, 3)
 
 DESIGN_BORDER_CLR = (112, 146, 190)
 

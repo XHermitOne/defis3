@@ -78,7 +78,7 @@ ic_class_pic = '@common.imgEdtStaticBoxSizer'
 ic_class_pic2 = '@common.imgEdtStaticBoxSizer'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.sizersr.icstaticboxsizer.icStaticBoxSizer-class.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.sizers.icstaticboxsizer.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = None

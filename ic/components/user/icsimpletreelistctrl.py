@@ -3,6 +3,7 @@
 
 """
 Класс пользовательского визуального компонента.
+
 Компонент древовидного представления данных.
 Работает с простой словарно-списковой структурой:
 [
@@ -118,7 +119,7 @@ ic_class_pic = '@common.imgEdtTreeListCtrl'
 ic_class_pic2 = '@common.imgEdtTreeListCtrl'
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.icsimpletreelistctrl.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -129,7 +130,7 @@ ic_can_contain = ['StaticText']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 WAIT_LOAD_LABEL = u'Загрузка...'
 DEFAULT = 'default'
@@ -166,6 +167,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
                            listctrl_manager.icListCtrlManager):
     """
     Описание пользовательского компонента.
+
     :type component_spc: C{dictionary}
     :cvar component_spc: Спецификация компонента.
         - B{type='TreeList'}:
@@ -181,6 +183,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
                  bCounter=False, progressDlg=None):
         """
         Конструктор базового класса пользовательских компонентов.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -287,6 +290,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
     def getTitleRoot(self):
         """
         Имя самого главного узла.
+
         :return: Возвращает всегда строку.
         """
         return str(self.getICAttr('titleRoot'))
@@ -307,6 +311,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
     def getItemLabelByRecord(self, record):
         """
         Определеить надпись элемента дерева по данным привязанным к элементу.
+
         :param record: Запись, прикрепленная к элементу дерева.
         :return: Надпись элемента дерева.
         """
@@ -315,6 +320,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
     def setRowColourLines(self, evenBackgroundColour=DEFAULT, oddBackgroundColour=DEFAULT):
         """
         Раскрасить четные и не четные строки.
+
         :param evenBackgroundColour: Цвет фона четных строк.
         :param oddBackgroundColour: Цвет фона нечетных строк.
         :return: True/False.
@@ -324,6 +330,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
     def setItemColour(self, fg_colour=None, bg_colour=None, requirement=None):
         """
         Установить цвет элементов дерева в контроле по определенному условию.
+
         :param fg_colour: Цвет текста, если условие выполненно.
         :param bg_colour: Цвет фона, если условие выполненно.
         :param requirement: lambda выражение, формата:
@@ -362,6 +369,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
     def _isChildrenRes(self, Res_):
         """
         Есть ли в описании ресурса описание дочерних элементов?
+
         :param Res_: Ресурс.
         :return: Возвращает True/False.
         """
@@ -372,6 +380,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
     def _getPicturesId(self, Res_):
         """
         Определение картинок для изобращения узла по ресурсу этого узла.
+
         :param Res_: Ресурс узла.
         :return: Кортеж из 2-х элементов - идентификаторов картинок.
         """
@@ -383,6 +392,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
     def setItemRecord(self, Item_, Record_):
         """
         Установить список записи на узле.
+
         :param Item_: ID узла у которого устанавливается запись.
         :param Record_: Запись узла. Список.
         """
@@ -396,6 +406,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
     def getItemRecord(self, Item_):
         """
         Список записи на узле.
+
         :param Item_: ID узла у которого устанавливается запись.
         :return: Возвращает список строк записи узла.
             Или None в случае ошибки.
@@ -415,6 +426,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
     def getSelectionRecord(self):
         """
         Список записи выбранного узла.
+
         :return: Возвращает список строк записи узла.
             Или None в случае ошибки.
         """
@@ -424,6 +436,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
     def setLabelCols(self, LabelCols_):
         """
         Установить надписи колонок.
+
         :param LabelCols_: Надписи колонок. Список строк.
         :return: Возвращает результат выполнения функции True/False.
         """
@@ -543,6 +556,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
     def selectItemPath(self, ItemPath_, CurItem_=None):
         """
         Выбрать элемент по пути.
+
         :param ItemPath_: Путь до элемента.
         :param CurItem_: Текущий элемент поиска. 
             Если None, то поиск начиниется с корня.
@@ -564,6 +578,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
     def getItemPathLabel(self, Item_, Path_=None):
         """
         Путь до элемента. Путь - список имен элементов.
+
         :param Item_: Элемент дерева.
         :param Path_: Текущий заполненный путь.
         """
@@ -586,6 +601,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
     def findItemColumnString(self, string, curItem=None, columns=None, curColIdx=0, bILike=True):
         """
         Функция ищет подстроку в массиве данных.
+
         :type string: C{string}
         :param string: Строка поиска
         :type curItem: C{int}
@@ -666,6 +682,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
     def selectFindItemColumn(self, string, columns=None, bILike=True):
         """
         Поиск и выделение пункта по строке.
+
         :type string: C{string}
         :param string: Строка поиска
         :type columns: C{list}
@@ -701,6 +718,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
         """
         Функция ищет подстроку в массиве данных. Поиск производится по
         надписям элементов.
+
         :type string: C{string}
         :param string: Строка поиска
         :type curItem: C{int}
@@ -784,6 +802,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
         """
         Поиск и выделение пункта по строке. Поиск производится по
         надписям элементов.
+
         :type string: C{string}
         :param string: Строка поиска
         :type bILike: C{bool}
@@ -822,6 +841,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
         В последующих версиях wxPython убрали функции SetItemData и GetItemData
         из TreeListCtrl.
         Эти методы заменяют их.
+
         :param item: Элемент дерева.
         :param data: Прикрепляемые данные.
         """
@@ -832,6 +852,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
         Получить прикрепленные данные к элементу дерева.
         В последующих версиях wxPython убрали функции SetItemData и GetItemData
         из TreeListCtrl.
+
         :param item: Элемент дерева.
         :return: Прикрепленные данные к элементу дерева или None в случае ошибки.
         """
@@ -933,6 +954,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
     def LoadData(self, func=None, *arg, **kwarg):
         """
         Функция загрузки данных.
+
         :param func: Функция загрузки данных, которая должна вернуть словарно-
             списковую структуру, описывающую дерево. 
         """
@@ -943,6 +965,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
     def LoadData2(self, func=None, view_func=None, *arg, **kwarg):
         """
         Функция загрузки данных.
+
         :param func: Функция загрузки данных, которая должна вернуть словарно-
             списковую структуру, описывающую дерево. 
         """
@@ -989,6 +1012,7 @@ def __view_data(obj):
 def test(par=0):
     """
     Тестируем пользовательский класс.
+
     :type par: C{int}
     :param par: Тип консоли.
     """
