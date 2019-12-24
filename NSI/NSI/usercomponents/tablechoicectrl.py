@@ -89,7 +89,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('ic_table_combobox.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('ic_table_combobox.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'NSI/doc/_build/html/NSI.usercomponents.tablechoicectrl.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -100,7 +100,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
 
 
 # Функции редактирования
@@ -127,7 +127,8 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('Table', 'Query'):
-                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является ТАБЛИЧНЫМ ОБЪЕКТОМ.', parent)
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
+                                       u'Выбранный объект не является ТАБЛИЧНЫМ ОБЪЕКТОМ.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         elif ret in (None, ''):
@@ -200,6 +201,7 @@ class icTableChoiceCtrl(parentModule.icTableChoiceCtrlProto, icwidget.icWidget):
     def createTableSrcData(self, table_psp=None, **kwargs):
         """
         Создать табличный объект-источник данных по его паспорту.
+
         :param table_psp: Паспорт табличного объекта-источника данных.
             Если не определен паспорт, то берется из ресурсного описания.
         :param kwargs: Дополнительные параметры.
@@ -216,6 +218,7 @@ class icTableChoiceCtrl(parentModule.icTableChoiceCtrlProto, icwidget.icWidget):
     def refresh_choices(self, **kwargs):
         """
         Обновить список выбора.
+
         :param kwargs: Дополнительные параметры.
             Дополноительные параметры для генерации исполняемого текста
             SQL запроса например.
@@ -237,6 +240,7 @@ class icTableChoiceCtrl(parentModule.icTableChoiceCtrlProto, icwidget.icWidget):
     def isLabelFunc(self):
         """
         Определена функция получения надписи элемента списка?
+
         :return: True/False.
         """
         return self.isICAttrValue('get_label')
@@ -270,6 +274,7 @@ class icTableChoiceCtrl(parentModule.icTableChoiceCtrlProto, icwidget.icWidget):
     def isFilterFunc(self):
         """
         Определена функция дополнительной фильтрации табличных данных?
+
         :return: True/False.
         """
         return self.isICAttrValue('get_filter')

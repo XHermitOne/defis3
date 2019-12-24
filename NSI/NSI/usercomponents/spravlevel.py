@@ -3,6 +3,7 @@
 
 """
 Уровень иерархии справочников.
+
 Класс пользовательского компонента УРОВНЯ ИЕРАРХИИ СПРАВОЧНИКОВ.
 
 :type ic_user_name: C{string}
@@ -93,7 +94,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('book-open-bookmark.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('book-open-bookmark.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'NSI/doc/_build/html/NSI.usercomponents.spravlevel.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -104,7 +105,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icSpravLevel(icwidget.icSimple, parentModule.icSpravLevelProto):
@@ -122,6 +123,7 @@ class icSpravLevel(icwidget.icSimple, parentModule.icSpravLevelProto):
                  bCounter=False, progressDlg=None):
         """
         Конструктор базового класса пользовательских компонентов.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type id: C{int}

@@ -3,6 +3,7 @@
 
 """
 Реквизит связи с объектом-ссылка/справочником системы NSI.
+
 Класс пользовательского компонента РЕКВИЗИТ СВЯЗИ С ОБЪЕКТОМ-ССЫЛКА/СПРАВОЧНИКОМ.
 
 :type ic_user_name: C{string}
@@ -92,7 +93,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('tag-label.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('tag-label.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'NSI/doc/_build/html/NSI.usercomponents.refnsirequisite.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -103,7 +104,7 @@ ic_can_contain = None
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # Функции редактирования

@@ -3,6 +3,7 @@
 
 """
 Менеджер справочной системы.
+
 Класс пользовательского компонента МЕНЕДЖЕРА СПРАВОЧНОЙ СИСТЕМЫ.
 
 :type ic_user_name: C{string}
@@ -68,7 +69,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('books.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('books.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'NSI/doc/_build/html/NSI.usercomponents.spravmanager.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -79,7 +80,7 @@ ic_can_contain = ['DBConstants', 'DBEnum', 'Sprav', 'DBCalendar', 'RefObject']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icSpravManager(icwidget.icSimple, parentModule.icSpravManagerProto):

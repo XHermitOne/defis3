@@ -16,7 +16,6 @@ from ic.bitmap import bmpfunc
 from ic.components import icwidget
 import ic.components.icResourceParser as prs
 
-# from NSI.nsi_sys import nsi_images
 import NSI.nsi_sys.icspravsinglelevelchoicectrl as parentModule
 
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
@@ -64,7 +63,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('ic_nsi_combo_ctrl.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('ic_nsi_combo_ctrl.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'NSI/doc/_build/html/NSI.usercomponents.spravsinglelevelchoicectrl.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -75,7 +74,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # Функции редактирования
@@ -102,8 +101,8 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('Sprav', 'RefObject'):
-                dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                                   u'Выбранный объект не является Справочником.', parent)
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
+                                       u'Выбранный объект не является Справочником.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         elif ret in (None, ''):

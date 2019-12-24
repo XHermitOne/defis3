@@ -3,6 +3,7 @@
 
 """
 Справочник.
+
 Класс пользовательского компонента СПРАВОЧНИК.
 
 :type ic_user_name: C{string}
@@ -99,7 +100,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('address-book-blue.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('address-book-blue.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'NSI/doc/_build/html/NSI.usercomponents.sprav.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -110,7 +111,7 @@ ic_can_contain = ['SpravLevel']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 2, 2)
+__version__ = (0, 1, 2, 3)
 
 # Функции редактирования
 
@@ -138,7 +139,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('PostgreSQLDB', 'SQLiteDB'):
-                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является БД.', parent)
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!', u'Выбранный объект не является БД.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         elif ret in (None, ''):
@@ -149,7 +150,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('Table',):
-                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является таблицей.', parent)
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!', u'Выбранный объект не является таблицей.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 
@@ -181,6 +182,7 @@ class icSprav(icwidget.icSimple, parentModule.icSpravProto):
     def TestComponentResource(res, context, parent, *arg, **kwarg):
         """
         Функция тестирования компонента таблицы в режиме редактора ресурса.
+
         :param res:
         :param context:
         :param parent:
@@ -341,7 +343,7 @@ class icSprav(icwidget.icSimple, parentModule.icSpravProto):
         choice_form = self.getICAttr('choice_form')
         if choice_form is None:
             dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                            u'В справочнике [%s] не определена форма выбора.' % self.name)
+                               u'В справочнике [%s] не определена форма выбора.' % self.name)
         return choice_form
 
     def getEditFormName(self):
@@ -351,7 +353,7 @@ class icSprav(icwidget.icSimple, parentModule.icSpravProto):
         edit_form = self.getICAttr('edit_form')
         if edit_form is None:
             dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                            u'В справочнике [%s] не определена форма редактирования.' % self.name)
+                               u'В справочнике [%s] не определена форма редактирования.' % self.name)
         return edit_form
 
     def getChoiceFormPsp(self):
@@ -369,6 +371,7 @@ class icSprav(icwidget.icSimple, parentModule.icSpravProto):
     def canEdit(self):
         """
         Проверка возможности редактирования справочника.
+
         :return: True - Зарегистрированный в программе пользователь может редактировать справочник,
             False - не может
         """

@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-#<< Типовой шаблон пользовательского компонента >>
-
 """
 Перечисления, хранящиеся в БД.
+
 Класс пользовательского компонента ПЕРЕЧИСЛЕНИЯ.
 
 :type ic_user_name: C{string}
@@ -29,10 +28,9 @@ from ic.dlg import dlgfunc
 from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
-# from ic.imglib import common
-# from NSI.nsi_sys import nsi_img
 from ic.bitmap import bmpfunc
 from ic.PropertyEditor import icDefInf
+from ic.utils import coderror
 
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 
@@ -82,7 +80,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('sort_price.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('sort_price.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'NSI/doc/_build/html/NSI.usercomponents.dbenum.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -93,7 +91,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 
 # Функции редактирования
@@ -121,7 +119,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt.GetPropertyGrid().GetView()
             if not ret[0][0] in ('PostgreSQLDB', 'SQLiteDB'):
-                msgbox.MsgBox(parent, u'Выбранный объект не является БД.')
+                dlgfunc.openWarningBox(u'ОШИБКА', u'Выбранный объект не является БД.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
     elif attr in ('table',):
@@ -130,7 +128,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt.GetPropertyGrid().GetView()
             if not ret[0][0] in ('Table',):
-                msgbox.MsgBox(parent, u'Выбранный объект не является таблицей.')
+                dlgfunc.openWarningBox(u'ОШИБКА', u'Выбранный объект не является таблицей.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 
@@ -280,7 +278,7 @@ class icDBEnum(icwidget.icSimple, parentModule.icDBEnumProto):
         choice_form = self.getICAttr('choice_form')
         if choice_form is None:
             dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                            u'В справочнике %s не определена форма выбора' % self.name)
+                               u'В справочнике %s не определена форма выбора' % self.name)
         return choice_form
 
     def getEditFormName(self):
@@ -290,7 +288,7 @@ class icDBEnum(icwidget.icSimple, parentModule.icDBEnumProto):
         edit_form = self.getICAttr('edit_form')
         if edit_form is None:
             dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                            u'В справочнике %s не определена форма редактирования.' % self.name)
+                               u'В справочнике %s не определена форма редактирования.' % self.name)
         return edit_form
         
     def getChoiceFormPsp(self):

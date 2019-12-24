@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-#<< Типовой шаблон пользовательского компонента >>
-
 """
 Календарь/Календарный график.
+
 Класс пользовательского компонента КАЛЕНДАРЬ/КАЛЕНДАРНЫЙ ГРАФИК.
 
 :type ic_user_name: C{string}
@@ -30,6 +29,7 @@ from ic.components import icwidget
 from ic.utils import util
 from ic.bitmap import bmpfunc
 import ic.components.icResourceParser as prs
+from ic.utils import coderror
 
 from ic.PropertyEditor import icDefInf
 
@@ -81,7 +81,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('calendar-day.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('calendar-day.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'NSI/doc/_build/html/NSI.usercomponents.dbcalendar.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -92,7 +92,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # Функции редактирования
@@ -119,8 +119,8 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         ret = str_to_val_user_property(attr, value, propEdt)
         if ret:
             parent = propEdt.GetPropertyGrid().GetView()
-            if not ret[0][0] in ('PostgreSQLDB',' SQLiteDB'):
-                msgbox.MsgBox(parent, u'Выбранный объект не является БД.')
+            if not ret[0][0] in ('PostgreSQLDB', ' SQLiteDB'):
+                dlgfunc.openWarningBox(u'ОШИБКА', u'Выбранный объект не является БД.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
     elif attr in ('table',):
@@ -129,7 +129,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt.GetPropertyGrid().GetView()
             if not ret[0][0] in ('Table',):
-                msgbox.MsgBox(parent, u'Выбранный объект не является таблицей.')
+                dlgfunc.openWarningBox(u'ОШИБКА', u'Выбранный объект не является таблицей.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 
@@ -246,7 +246,7 @@ class icDBCalendar(icwidget.icSimple, parentModule.icDBCalendarProto):
         """
         Имя БД.
         """
-        db_psp=self.getICAttr('db')
+        db_psp = self.getICAttr('db')
         if db_psp:
             return db_psp[0][1]
         return None
@@ -255,7 +255,7 @@ class icDBCalendar(icwidget.icSimple, parentModule.icDBCalendarProto):
         """
         Имя объекта хранения/Таблицы.
         """
-        tab_psp=self.getICAttr('table')
+        tab_psp = self.getICAttr('table')
         if tab_psp:
             return tab_psp[0][1]
         return None
@@ -291,7 +291,7 @@ class icDBCalendar(icwidget.icSimple, parentModule.icDBCalendarProto):
         choice_form = self.getICAttr('choice_form')
         if choice_form is None:
             dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                            u'В справочнике %s не определена форма выбора.' % self.name)
+                               u'В справочнике %s не определена форма выбора.' % self.name)
         return choice_form
 
     def getEditFormName(self):
@@ -301,7 +301,7 @@ class icDBCalendar(icwidget.icSimple, parentModule.icDBCalendarProto):
         edit_form = self.getICAttr('edit_form')
         if edit_form is None:
             dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                            u'В справочнике %s не определена форма редактирования.' % self.name)
+                               u'В справочнике %s не определена форма редактирования.' % self.name)
         return edit_form
         
     def getChoiceFormPsp(self):
