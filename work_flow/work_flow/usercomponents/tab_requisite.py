@@ -43,66 +43,65 @@ ic_class_name = 'icTABRequisite'
 ic_class_styles = {'DEFAULT': 0}
 
 # --- Спецификация на ресурсное описание класса ---
-ic_class_spc = dict({'type': 'TABRequisite',
-                     'name': 'default',
-                     'child': [],
-                     'activate': True,
-                     'init_expr': None,
-                     '_uuid': None,
+ic_class_spc = {'type': 'TABRequisite',
+                'name': 'default',
+                'child': [],
+                'activate': True,
+                'init_expr': None,
+                '_uuid': None,
 
-                     # --- Свойства генерации контролов редактирования/просмотра ---
-                     'grp_title': u'',  # Реквизиты могут группироваться по страницам
-                                        # Страницы различаются только по русским заголовкам.
-                                        # Если заголовок страницы не определен, то
-                                        # считается что реквизит располагается на главной
-                                        # странице 'Основные'
+                # --- Свойства генерации контролов редактирования/просмотра ---
+                'grp_title': u'',  # Реквизиты могут группироваться по страницам
+                                   # Страницы различаются только по русским заголовкам.
+                                   # Если заголовок страницы не определен, то
+                                   # считается что реквизит располагается на главной
+                                   # странице 'Основные'
                         
-                     'label': u'',  # Надпись реквизита
-                                    # Если надпись пустая, то берется вместо надписи описание (description)
+                'label': u'',  # Надпись реквизита
+                               # Если надпись пустая, то берется вместо надписи описание (description)
     
-                     'is_init': True,   # Реквизит является инициализируемым пользователем
-                     'is_view': True,   # Реквизит можно просматривать на форме просмотра
-                     'is_edit': True,   # Реквизит можно редактировать на форме редактировать
-                     'is_search': False,  # Реквизит можно задавать в качестве критерия поиска объекта
+                'is_init': True,   # Реквизит является инициализируемым пользователем
+                'is_view': True,   # Реквизит можно просматривать на форме просмотра
+                'is_edit': True,   # Реквизит можно редактировать на форме редактировать
+                'is_search': False,  # Реквизит можно задавать в качестве критерия поиска объекта
 
-                     # --- Ссылка на объект справочника ---
-                     'table': None,     # Паспорт таблицы хранения, если None то генерируется по имени реквизита
+                # --- Ссылка на объект справочника ---
+                'table': None,     # Паспорт таблицы хранения, если None то генерируется по имени реквизита
 
-                     '__attr_types__': {0: ['name', 'type'],
-                                        icDefInf.EDT_TEXTFIELD: ['description', 'grp_title', 'label'],
-                                        icDefInf.EDT_TEXTLIST: ['init_users', 'edit_users', 'view_users',
-                                                                'print_users', 'del_users', 'send_users'],
-                                        icDefInf.EDT_CHECK_BOX: ['activate', 'is_init', 'is_view', 'is_edit',
-                                                                 'is_search'],
-                                        icDefInf.EDT_USER_PROPERTY: ['table'],
-                                        },
-                     '__events__': {'init': (None, None, False),
-                                    'ctrl': (None, None, False),
-                                    'del': (None, None, False),
-                                    'post_init': (None, None, False),
-                                    'post_ctrl': (None, None, False),
-                                    'post_del': (None, None, False),
-                                    },
-                     '__parent__': parentModule.SPC_IC_TAB_REQUISITE,
-                     '__attr_hlp__': {'grp_title': u'Заголовок страницы',
-                                      'label': u'Надпись реквизита',
-                                      'is_init': u'Реквизит является инициализируемым пользователем',
-                                      'is_view': u'Реквизит можно просматривать на форме просмотра',
-                                      'is_edit': u'Реквизит можно редактировать на форме редактировать',
-                                      'is_search': u'Реквизит можно задавать в качестве критерия поиска объекта',
-                                      'table': u'Паспорт таблицы хранения, если None то генерируется по имени реквизита',
-                                      },
-                     })
+                '__styles__': ic_class_styles,
+                '__attr_types__': {0: ['name', 'type'],
+                                   icDefInf.EDT_TEXTFIELD: ['description', 'grp_title', 'label'],
+                                   icDefInf.EDT_TEXTLIST: ['init_users', 'edit_users', 'view_users',
+                                                           'print_users', 'del_users', 'send_users'],
+                                   icDefInf.EDT_CHECK_BOX: ['activate', 'is_init', 'is_view', 'is_edit',
+                                                            'is_search'],
+                                   icDefInf.EDT_USER_PROPERTY: ['table'],
+                                   },
+                '__events__': {'init': (None, None, False),
+                               'ctrl': (None, None, False),
+                               'del': (None, None, False),
+                               'post_init': (None, None, False),
+                               'post_ctrl': (None, None, False),
+                               'post_del': (None, None, False),
+                               },
+                '__parent__': parentModule.SPC_IC_TAB_REQUISITE,
+                '__attr_hlp__': {'grp_title': u'Заголовок страницы',
+                                 'label': u'Надпись реквизита',
+                                 'is_init': u'Реквизит является инициализируемым пользователем',
+                                 'is_view': u'Реквизит можно просматривать на форме просмотра',
+                                 'is_edit': u'Реквизит можно редактировать на форме редактировать',
+                                 'is_search': u'Реквизит можно задавать в качестве критерия поиска объекта',
+                                 'table': u'Паспорт таблицы хранения, если None то генерируется по имени реквизита',
+                                 },
+                }
                     
-ic_class_spc['__styles__'] = ic_class_styles
-
-#   Имя иконки класса, которые располагаются в директории 
+#   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
 ic_class_pic = bmpfunc.createLibraryBitmap('tags-label.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('tags-label.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'work_flow/doc/_build/html/work_flow.usercomponents.tab_requisite.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -113,7 +112,7 @@ ic_can_contain = ['Requisite', 'NSIRequisite']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 
 # Функции редактирования
@@ -140,8 +139,8 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt.GetPropertyGrid().GetView()
             if not ret[0][0] in ('Table',):
-                dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                                   u'Выбранный объект не является ТАБЛИЦЕЙ.', parent)
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
+                                       u'Выбранный объект не является ТАБЛИЦЕЙ.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 
@@ -166,7 +165,6 @@ class icTABRequisite(parentModule.icTABRequisiteProto,
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
     
     def __init__(self, parent, id, component, logType=0, evalSpace=None,

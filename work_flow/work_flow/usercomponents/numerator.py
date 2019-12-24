@@ -3,6 +3,7 @@
 
 """
 Нумератор.
+
 Класс пользовательского компонента НУМЕРАТОР.
 
 Порядок работы с нумератором:
@@ -55,46 +56,46 @@ ic_class_name = 'icNumerator'
 ic_class_styles = {'DEFAULT': 0}
 
 # --- Спецификация на ресурсное описание класса ---
-ic_class_spc = dict({'type': 'Numerator',
-                     'name': 'default',
-                     'child': [],
-                     '__events__': {},
-                     'activate': True,
-                     'init_expr': None,
+ic_class_spc = {'type': 'Numerator',
+                'name': 'default',
+                'child': [],
+                'activate': True,
+                'init_expr': None,
 
-                     # БД хранения данных
-                     'db': None,
+                # БД хранения данных
+                'db': None,
 
-                     # Имя таблицы нумератора
-                     'numerator_table': 'numerator_tab',
+                # Имя таблицы нумератора
+                'numerator_table': 'numerator_tab',
 
-                     # Формат номер-кода
-                     'num_code_fmt': parentModule.DEFAULT_NUM_CODE_FMT,
+                # Формат номер-кода
+                'num_code_fmt': parentModule.DEFAULT_NUM_CODE_FMT,
 
-                     # Проверить уникальность номер-кода?
-                     'check_unique': False,
+                # Проверить уникальность номер-кода?
+                'check_unique': False,
 
-                     # Системное время используем?
-                     'use_sys_dt': True,
+                # Системное время используем?
+                'use_sys_dt': True,
 
-                     '_uuid': None,
-                     '__attr_types__': {0: ['name', 'type'],
-                                        icDefInf.EDT_TEXTFIELD: ['description',
-                                                                 'numerator_table',
-                                                                 'num_code_fmt'],
-                                        icDefInf.EDT_CHECK_BOX: ['check_unique', 'use_sys_dt'],
-                                        icDefInf.EDT_USER_PROPERTY: ['db'],
-                                        },
-                     '__parent__': icwidget.SPC_IC_SIMPLE,
-                     '__attr_hlp__': {'db': u'БД хранения данных',
-                                      'numerator_table': u'Имя таблицы нумератора',
-                                      'num_code_fmt': u'Формат номер-кода',
-                                      'check_unique': u'Проверить уникальность номер-кода?',
-                                      'use_sys_dt': u'Системное время используем?',
-                                      },
-                     })
-                    
-ic_class_spc['__styles__'] = ic_class_styles
+                '_uuid': None,
+
+                '__events__': {},
+                '__styles__': ic_class_styles,
+                '__attr_types__': {0: ['name', 'type'],
+                                   icDefInf.EDT_TEXTFIELD: ['description',
+                                                            'numerator_table',
+                                                            'num_code_fmt'],
+                                   icDefInf.EDT_CHECK_BOX: ['check_unique', 'use_sys_dt'],
+                                   icDefInf.EDT_USER_PROPERTY: ['db'],
+                                   },
+                '__parent__': icwidget.SPC_IC_SIMPLE,
+                '__attr_hlp__': {'db': u'БД хранения данных',
+                                 'numerator_table': u'Имя таблицы нумератора',
+                                 'num_code_fmt': u'Формат номер-кода',
+                                 'check_unique': u'Проверить уникальность номер-кода?',
+                                 'use_sys_dt': u'Системное время используем?',
+                                 },
+                }
 
 #   Имя иконки класса, которые располагаются в директории 
 #   ic/components/user/images
@@ -102,7 +103,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('ui-paginator.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('ui-paginator.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'work_flow/doc/_build/html/work_flow.usercomponents.numerator.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -113,7 +114,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # Словарь конвертации типов значений реквизитов ресурса
 # к типу полей таблиц регистра накопления
@@ -144,7 +145,8 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('PostgreSQLDB', 'SQLiteDB'):
-                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является БД.', parent)
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
+                                       u'Выбранный объект не является БД.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 
@@ -282,6 +284,7 @@ class icNumerator(icwidget.icSimple, parentModule.icNumerator):
         Но метод можно переопределить.
         В качестве актуального года берется программный/операционный год.
         А если он не определен, то берем системный.
+
         :return: Значение года системы.
         """
         if self.getUseSysDT():

@@ -46,7 +46,6 @@ from . import requisite
 from . import nsi_requisite
 
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
-# from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportListUserEdt as pspListEdt
 
 #   Тип компонента
 ic_class_type = icDefInf._icUserType
@@ -106,129 +105,129 @@ ic_user_requisite_spc['label'] = u'Пользователь'
 ic_user_requisite_spc['default'] = u'@ic.engine.glob_functions.getCurUserName()'
 
 # Спецификация объекта
-ic_class_spc = dict({'type': 'StateObj',
-                     'name': 'default',
-                     'child': [ic_state_requisite_spc,
-                               ic_num_requisite_spc,
-                               ic_dt_create_requisite_spc,
-                               ic_dt_state_requisite_spc,
-                               ic_comp_requisite_spc,
-                               ic_user_requisite_spc],
-                     'activate': 1,
-                     'init_expr': None,
+ic_class_spc = {'type': 'StateObj',
+                'name': 'default',
+                'child': [ic_state_requisite_spc,
+                          ic_num_requisite_spc,
+                          ic_dt_create_requisite_spc,
+                          ic_dt_state_requisite_spc,
+                          ic_comp_requisite_spc,
+                          ic_user_requisite_spc],
+                'activate': True,
+                'init_expr': None,
 
-                     'db': None,        # БД хранения данных
+                'db': None,        # БД хранения данных
 
-                     # Автоматически создавать компоненты группировки в формах
-                     'auto_group': False,
+                # Автоматически создавать компоненты группировки в формах
+                'auto_group': False,
 
-                     # Формы управления/взаимодействия с объектом(ами)
-                     # Если форма не определена, то она генерируется при первом запуске,
-                     # добавляется в проект и затем используется.
-                     'init_form': None,     # Форма/Визард для создания/инициализации
-                     'edit_form': None,     # Форма для редактирования
-                     'view_form': None,     # Форма для просмотра
-                     'search_form': None,   # Форма поиска бизнес объекта по значениям его атрибутов
-                     'choice_form': None,   # Форма выбора бизнес объекта
+                # Формы управления/взаимодействия с объектом(ами)
+                # Если форма не определена, то она генерируется при первом запуске,
+                # добавляется в проект и затем используется.
+                'init_form': None,     # Форма/Визард для создания/инициализации
+                'edit_form': None,     # Форма для редактирования
+                'view_form': None,     # Форма для просмотра
+                'search_form': None,   # Форма поиска бизнес объекта по значениям его атрибутов
+                'choice_form': None,   # Форма выбора бизнес объекта
 
-                     'report': None,        # Отчет для распечатки
+                'report': None,        # Отчет для распечатки
 
-                     'prototype': None,     # Прототип, у которого наследуются реквизиты/атрибуты
+                'prototype': None,     # Прототип, у которого наследуются реквизиты/атрибуты
 
-                     # Дополнительные свойства управления генерацией
-                     'is_page_grp_init': False,  # Производить группировку реквизитов по страницам/
-                                                 # или выводить все реквизиты одним списком на форме инициализации?
-                     'is_page_grp_edit': True,   # Производить группировку реквизитов по страницам/
-                                                 # или выводить все реквизиты одним списком на форме редактирования?
-                     'is_page_grp_view': True,   # Производить группировку реквизитов по страницам/
-                                                 # или выводить все реквизиты одним списком на форме просмотра?
-                     'is_page_grp_search': True,  # Производить группировку реквизитов по страницам/
-                                                  # или выводить все реквизиты одним списком на форме поиска?
+                # Дополнительные свойства управления генерацией
+                'is_page_grp_init': False,  # Производить группировку реквизитов по страницам/
+                                            # или выводить все реквизиты одним списком на форме инициализации?
+                'is_page_grp_edit': True,   # Производить группировку реквизитов по страницам/
+                                            # или выводить все реквизиты одним списком на форме редактирования?
+                'is_page_grp_view': True,   # Производить группировку реквизитов по страницам/
+                                            # или выводить все реквизиты одним списком на форме просмотра?
+                'is_page_grp_search': True,  # Производить группировку реквизитов по страницам/
+                                             # или выводить все реквизиты одним списком на форме поиска?
     
-                     'do_init': None,    # Функция инициализации
-                     'do_edit': None,    # Функция редактирования
-                     'do_view': None,    # Функция просмотра
-                     'do_search': None,  # Функция поиска
-                     'do_choice': None,  # Функция выбора
+                'do_init': None,    # Функция инициализации
+                'do_edit': None,    # Функция редактирования
+                'do_view': None,    # Функция просмотра
+                'do_search': None,  # Функция поиска
+                'do_choice': None,  # Функция выбора
 
-                     'valid_init': None,    # Функция валидации при инициализации
-                     'valid_edit': None,    # Функция валидации при редактировании
-                     'valid_del': None,     # Функция валидации при удалении
+                'valid_init': None,    # Функция валидации при инициализации
+                'valid_edit': None,    # Функция валидации при редактировании
+                'valid_del': None,     # Функция валидации при удалении
 
-                     'history': None,   # История хранения изменений состояния объекта
+                'history': None,   # История хранения изменений состояния объекта
     
-                     # Обработчик события смены состояния объекта
-                     'on_change_state': None,
+                # Обработчик события смены состояния объекта
+                'on_change_state': None,
 
-                     '_uuid': None,
-                     '__attr_types__': {0: ['name', 'type'],
-                                        icDefInf.EDT_TEXTFIELD: ['description'],
-                                        icDefInf.EDT_PY_SCRIPT: ['report', 'do_init', 'do_edit',
-                                                                 'do_view', 'do_search', 'do_choice',
-                                                                 'valid_init', 'valid_edit', 'valid_del',
-                                                                 'on_change_state'],
-                                        icDefInf.EDT_TEXTLIST: ['init_users', 'edit_users', 'view_users', 'print_users',
-                                                                'del_users', 'send_users'],
-                                        icDefInf.EDT_USER_PROPERTY: ['db', 'init_form', 'edit_form',
-                                                                     'view_form', 'search_form', 'choice_form',
-                                                                     'prototype', 'history'],
-                                        icDefInf.EDT_CHECK_BOX: ['is_page_grp_init', 'is_page_grp_edit',
-                                                                 'is_page_grp_view', 'is_page_grp_search',
-                                                                 'auto_group'],
-                                        },
-                     '__events__': {'init': (None, None, False),
-                                    'ctrl': (None, None, False),
-                                    'del': (None, None, False),
-                                    'post_init': (None, None, False),
-                                    'post_ctrl': (None, None, False),
-                                    'post_del': (None, None, False),
+                '_uuid': None,
 
-                                    'do_init': (None, 'doInit', False),
-                                    'do_edit': (None, 'doEdit', False),
-                                    'do_view': (None, 'doView', False),
-                                    'do_search': (None, 'doSearch', False),
-                                    'do_choice': (None, 'doChoice', False),
-                                    'valid_init': (None, 'validInit', False),
-                                    'valid_edit': (None, 'validEdit', False),
-                                    'valid_del': (None, 'validDel', False),
-                                    'on_change_state': (None, 'doOnChangeState', False),
-                                    },
-                     '__parent__': parentModule.SPC_IC_STATEOBJ,
-                     '__attr_hlp__': {'db': u'БД хранения данных',
-                                      'auto_group': u'Автоматически создавать компоненты группировки в формах',
-                                      'init_form': u'Форма/Визард для создания/инициализации',
-                                      'edit_form': u'Форма для редактирования',
-                                      'view_form': u'Форма для просмотра',
-                                      'search_form': u'Форма поиска бизнес объекта по значениям его атрибутов',
-                                      'choice_form': u'Форма выбора бизнес объекта',
-                                      'report': u'Отчет для распечатки',
-                                      'prototype': u'Прототип, у которого наследуются реквизиты/атрибуты',
-                                      'is_page_grp_init': u'Производить группировку реквизитов по страницам/или выводить все реквизиты одним списком на форме инициализации?',
-                                      'is_page_grp_edit': u'Производить группировку реквизитов по страницам/или выводить все реквизиты одним списком на форме редактирования?',
-                                      'is_page_grp_view': u'Производить группировку реквизитов по страницам/или выводить все реквизиты одним списком на форме просмотра?',
-                                      'is_page_grp_search': u'Производить группировку реквизитов по страницам/или выводить все реквизиты одним списком на форме поиска?',
-                                      'do_init': u'Функция инициализации',
-                                      'do_edit': u'Функция редактирования',
-                                      'do_view': u'Функция просмотра',
-                                      'do_search': u'Функция поиска',
-                                      'do_choice': u'Функция выбора',
-                                      'valid_init': u'Функция валидации при инициализации',
-                                      'valid_edit': u'Функция валидации при редактировании',
-                                      'valid_del': u'Функция валидации при удалении',
-                                      'history': u'История хранения изменений состояния объекта',
-                                      'on_change_state': u'Обработчик события смены состояния объекта',
-                                      },
-                     })
+                '__styles__': ic_class_styles,
+                '__attr_types__': {0: ['name', 'type'],
+                                   icDefInf.EDT_TEXTFIELD: ['description'],
+                                   icDefInf.EDT_PY_SCRIPT: ['report', 'do_init', 'do_edit',
+                                                            'do_view', 'do_search', 'do_choice',
+                                                            'valid_init', 'valid_edit', 'valid_del',
+                                                            'on_change_state'],
+                                   icDefInf.EDT_TEXTLIST: ['init_users', 'edit_users', 'view_users', 'print_users',
+                                                           'del_users', 'send_users'],
+                                   icDefInf.EDT_USER_PROPERTY: ['db', 'init_form', 'edit_form',
+                                                                'view_form', 'search_form', 'choice_form',
+                                                                'prototype', 'history'],
+                                   icDefInf.EDT_CHECK_BOX: ['is_page_grp_init', 'is_page_grp_edit',
+                                                            'is_page_grp_view', 'is_page_grp_search',
+                                                            'auto_group'],
+                                   },
+                '__events__': {'init': (None, None, False),
+                               'ctrl': (None, None, False),
+                               'del': (None, None, False),
+                               'post_init': (None, None, False),
+                               'post_ctrl': (None, None, False),
+                               'post_del': (None, None, False),
+
+                               'do_init': (None, 'doInit', False),
+                               'do_edit': (None, 'doEdit', False),
+                               'do_view': (None, 'doView', False),
+                               'do_search': (None, 'doSearch', False),
+                               'do_choice': (None, 'doChoice', False),
+                               'valid_init': (None, 'validInit', False),
+                               'valid_edit': (None, 'validEdit', False),
+                               'valid_del': (None, 'validDel', False),
+                               'on_change_state': (None, 'doOnChangeState', False),
+                               },
+                '__parent__': parentModule.SPC_IC_STATEOBJ,
+                '__attr_hlp__': {'db': u'БД хранения данных',
+                                 'auto_group': u'Автоматически создавать компоненты группировки в формах',
+                                 'init_form': u'Форма/Визард для создания/инициализации',
+                                 'edit_form': u'Форма для редактирования',
+                                 'view_form': u'Форма для просмотра',
+                                 'search_form': u'Форма поиска бизнес объекта по значениям его атрибутов',
+                                 'choice_form': u'Форма выбора бизнес объекта',
+                                 'report': u'Отчет для распечатки',
+                                 'prototype': u'Прототип, у которого наследуются реквизиты/атрибуты',
+                                 'is_page_grp_init': u'Производить группировку реквизитов по страницам/или выводить все реквизиты одним списком на форме инициализации?',
+                                 'is_page_grp_edit': u'Производить группировку реквизитов по страницам/или выводить все реквизиты одним списком на форме редактирования?',
+                                 'is_page_grp_view': u'Производить группировку реквизитов по страницам/или выводить все реквизиты одним списком на форме просмотра?',
+                                 'is_page_grp_search': u'Производить группировку реквизитов по страницам/или выводить все реквизиты одним списком на форме поиска?',
+                                 'do_init': u'Функция инициализации',
+                                 'do_edit': u'Функция редактирования',
+                                 'do_view': u'Функция просмотра',
+                                 'do_search': u'Функция поиска',
+                                 'do_choice': u'Функция выбора',
+                                 'valid_init': u'Функция валидации при инициализации',
+                                 'valid_edit': u'Функция валидации при редактировании',
+                                 'valid_del': u'Функция валидации при удалении',
+                                 'history': u'История хранения изменений состояния объекта',
+                                 'on_change_state': u'Обработчик события смены состояния объекта',
+                                 },
+                }
                     
-ic_class_spc['__styles__'] = ic_class_styles
-
-#   Имя иконки класса, которые располагаются в директории 
+#   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
 ic_class_pic = bmpfunc.createLibraryBitmap('box--exclamation.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('box--exclamation.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'work_flow/doc/_build/html/work_flow.usercomponents.stateobj.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -239,11 +238,10 @@ ic_can_contain = ['Requisite', 'NSIRequisite', 'TABRequisite', 'OBJRequisite']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
+
 
 # Функции редактирования
-
-
 def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):
     """
     Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
@@ -269,21 +267,23 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
             # parent = propEdt.GetPropertyGrid().GetView()
             parent = propEdt
             if not ret[0][0] in ('PostgreSQLDB', 'SQLiteDB'):
-                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является БД.', parent)
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
+                                       u'Выбранный объект не является БД.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         else:
             # Не определена БД
             parent = propEdt
-            dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                            u'Свойство <%s> обязательно должно быть определено для этого объекта.' % attr, parent)
+            dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
+                                   u'Свойство <%s> обязательно должно быть определено для этого объекта.' % attr, parent)
             
     elif attr in ('init_form', 'edit_form', 'view_form', 'search_form', 'choice_form'):
         ret = str_to_val_user_property(attr, value, propEdt)
         if ret:
             parent = propEdt
             if not ret[0][0] in ('Dialog', 'Frame', 'Panel', 'ScrolledWindow'):
-                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является формой.', parent)
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
+                                       u'Выбранный объект не является формой.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
     elif attr in ('prototype',):
@@ -291,7 +291,8 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('BusinessObj',):
-                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является БИЗНЕС-ОБЪЕКТОМ.', parent)
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
+                                       u'Выбранный объект не является БИЗНЕС-ОБЪЕКТОМ.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
     elif attr in ('history',):
@@ -299,7 +300,8 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('ObjHistory',):
-                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является ИСТОРИЕЙ БИЗНЕС-ОБЪЕКТА.', parent)
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
+                                       u'Выбранный объект не является ИСТОРИЕЙ БИЗНЕС-ОБЪЕКТА.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 
@@ -316,6 +318,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
 class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     """
     Бизнес-объект имеющий состояние.
+
     :type component_spc: C{dictionary}
     :cvar component_spc: Спецификация компонента.
         
@@ -329,6 +332,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def TestComponentResource(res, context, parent, *arg, **kwarg):
         """
         Функция тестирования компонента таблицы в режиме редактора ресурса.
+
         :param res:
         :param context:
         :param parent:
@@ -551,6 +555,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def doInit(self, *args, **kwargs):
         """
         Функция инициализации.
+
         :return: Объект функции инициализации,
             или None если не определена.
         """
@@ -568,6 +573,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def doEdit(self, *args, **kwargs):
         """
         Функция редактирования.
+
         :return: Объект функции редактирования,
             или None если не определена.
         """
@@ -585,6 +591,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def doView(self, *args, **kwargs):
         """
         Функция просмотра.
+
         :return: Объект функции просмотра,
             или None если не определена.
         """
@@ -602,6 +609,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def doSearch(self, *args, **kwargs):
         """
         Функция поиска.
+
         :return: Объект функции поиска,
             или None если не определена.
         """
@@ -619,6 +627,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def doChoice(self, *args, **kwargs):
         """
         Функция выбора.
+
         :return: Объект функции выбора,
             или None если не определена.
         """
@@ -636,6 +645,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def isDoInit(self):
         """
         Определена функция инициализации?
+
         :return: True/False.
         """
         return self.isICAttrValue('do_init')
@@ -643,6 +653,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def isDoEdit(self):
         """
         Определена функция редактирования?
+
         :return: True/False.
         """
         return self.isICAttrValue('do_edit')
@@ -650,6 +661,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def isDoView(self):
         """
         Определена функция просмотра?
+
         :return: True/False.
         """
         return self.isICAttrValue('do_view')
@@ -657,6 +669,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def isDoSearch(self):
         """
         Определена функция поиска?
+
         :return: True/False.
         """
         return self.isICAttrValue('do_search')
@@ -664,6 +677,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def isDoChoice(self):
         """
         Определена функция выбора?
+
         :return: True/False.
         """
         return self.isICAttrValue('do_choice')
@@ -671,6 +685,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def validInit(self, *args, **kwargs):
         """
         Функция валидации при инициализации.
+
         :return: True/False.
         """
         # Если функция валидации не определена,
@@ -692,6 +707,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def isValidInit(self):
         """
         Определена функция валидации при инициализации?
+
         :return: True/False.
         """
         return self.isICAttrValue('valid_init')
@@ -699,6 +715,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def validEdit(self, *args, **kwargs):
         """
         Функция валидации при редактировании.
+
         :return: True/False.
         """
         # Если функция валидации не определена,
@@ -721,6 +738,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def isValidEdit(self):
         """
         Определена функция валидации при редактировании?
+
         :return: True/False.
         """
         return self.isICAttrValue('valid_edit')
@@ -728,6 +746,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def validDel(self, *args, **kwargs):
         """
         Функция валидации при удалении.
+
         :return: True/False.
         """
         # Если функция валидации не определена,
@@ -752,6 +771,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def isValidDel(self):
         """
         Определена функция валидации при удалении?
+
         :return: True/False.
         """
         return self.isICAttrValue('valid_del')
@@ -765,6 +785,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def doOnChangeState(self):
         """
         Функция обработчика смены состояния.
+
         :return: True/False.
         """
         context = self.GetContext()

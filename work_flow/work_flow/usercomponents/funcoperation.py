@@ -41,36 +41,35 @@ ic_class_name = 'icFuncOperation'
 ic_class_styles = {'DEFAULT': 0}
 
 # --- Спецификация на ресурсное описание класса ---
-ic_class_spc = dict({'type': 'FuncOperation',
-                     'name': 'default',
-                     'child': [],
-                     'activate': True,
-                     'init_expr': None,
-                     '_uuid': None,
+ic_class_spc = {'type': 'FuncOperation',
+                'name': 'default',
+                'child': [],
+                'activate': True,
+                'init_expr': None,
+                '_uuid': None,
 
-                     'prev_do': None,  # Скрипт, запускаемый перед выполнением операции
-                     'post_do': None,  # Скрипт, запускаемый после выполнения операции
-                     'prev_undo': None,  # Скрипт, запускаемый перед выполнением отмены операции
-                     'post_undo': None,  # Скрипт, запускаемый после выполнения отмены операции
+                'prev_do': None,  # Скрипт, запускаемый перед выполнением операции
+                'post_do': None,  # Скрипт, запускаемый после выполнения операции
+                'prev_undo': None,  # Скрипт, запускаемый перед выполнением отмены операции
+                'post_undo': None,  # Скрипт, запускаемый после выполнения отмены операции
 
-                     'do_func': None,  # Функция выполнения операции
-                     'undo_func': None,  # Функция выполнения отмены операции
+                'do_func': None,  # Функция выполнения операции
+                'undo_func': None,  # Функция выполнения отмены операции
 
-                     '__attr_types__': {0: ['name', 'type'],
-                                        icDefInf.EDT_TEXTFIELD: ['description', 'operation_table'],
-                                        },
-                     '__events__': {},
-                     '__parent__': parentModule.SPC_IC_FUNCOPERATION,
-                     '__attr_hlp__': {'prev_do': u'Скрипт, запускаемый перед выполнением операции',
-                                      'post_do': u'Скрипт, запускаемый после выполнения операции',
-                                      'prev_undo': u'Скрипт, запускаемый перед выполнением отмены операции',
-                                      'post_undo': u'Скрипт, запускаемый после выполнения отмены операции',
-                                      'do_func': u'Функция выполнения операции',
-                                      'undo_func': u'Функция выполнения отмены операции',
-                                      },
-                     })
-                    
-ic_class_spc['__styles__'] = ic_class_styles
+                '__styles__': ic_class_styles,
+                '__attr_types__': {0: ['name', 'type'],
+                                   icDefInf.EDT_TEXTFIELD: ['description', 'operation_table'],
+                                   },
+                '__events__': {},
+                '__parent__': parentModule.SPC_IC_FUNCOPERATION,
+                '__attr_hlp__': {'prev_do': u'Скрипт, запускаемый перед выполнением операции',
+                                 'post_do': u'Скрипт, запускаемый после выполнения операции',
+                                 'prev_undo': u'Скрипт, запускаемый перед выполнением отмены операции',
+                                 'post_undo': u'Скрипт, запускаемый после выполнения отмены операции',
+                                 'do_func': u'Функция выполнения операции',
+                                 'undo_func': u'Функция выполнения отмены операции',
+                                 },
+                }
 
 #   Имя иконки класса, которые располагаются в директории 
 #   ic/components/user/images
@@ -78,7 +77,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('gear.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('gear.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'work_flow/doc/_build/html/work_flow.usercomponents.funcoperation.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -89,7 +88,7 @@ ic_can_contain = None
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icFuncOperation(icwidget.icSimple, parentModule.icFuncOperationProto):
@@ -113,7 +112,6 @@ class icFuncOperation(icwidget.icSimple, parentModule.icFuncOperationProto):
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
     
     def __init__(self, parent, id, component, logType=0, evalSpace=None,
@@ -166,6 +164,7 @@ class icFuncOperation(icwidget.icSimple, parentModule.icFuncOperationProto):
     def is_do_func(self):
         """
         Определена функция <do_func>?
+
         :return: True/False.
         """
         return self.isICAttrValue('do_func')
@@ -173,6 +172,7 @@ class icFuncOperation(icwidget.icSimple, parentModule.icFuncOperationProto):
     def do(self):
         """
         Запуск выполнения операции.
+
         :return: True/False.
         """
         # Если функция не определена, то и не выполнять
@@ -204,6 +204,7 @@ class icFuncOperation(icwidget.icSimple, parentModule.icFuncOperationProto):
     def is_undo_func(self):
         """
         Определена функция <undo_func>?
+
         :return: True/False.
         """
         return self.isICAttrValue('undo_func')
@@ -211,6 +212,7 @@ class icFuncOperation(icwidget.icSimple, parentModule.icFuncOperationProto):
     def undo(self):
         """
         Запуск выполнения отмены операции.
+
         :return: True/False.
         """
         # Если функция не определена, то и не выполнять

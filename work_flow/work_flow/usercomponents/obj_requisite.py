@@ -41,94 +41,93 @@ ic_class_name = 'icOBJRequisite'
 ic_class_styles = {'DEFAULT': 0}
 
 # --- Спецификация на ресурсное описание класса ---
-ic_class_spc = dict({'type': 'OBJRequisite',
-                     'name': 'default',
-                     'child': [],
-                     'activate': 1,
-                     'init_expr': None,
-                     '_uuid': None,
+ic_class_spc = {'type': 'OBJRequisite',
+                'name': 'default',
+                'child': [],
+                'activate': True,
+                'init_expr': None,
+                '_uuid': None,
 
-                     # Свойства генерации контролов редактирования/просмотра
-                     'grp_title': u'',      # Реквизиты могут группироваться по страницам
-                                            # Страницы различаются только по русским заголовкам.
-                                            # Если заголовок страницы не определен, то
-                                            # считается что реквизит располагается на главной
-                                            # странице 'Основные'
+                # Свойства генерации контролов редактирования/просмотра
+                'grp_title': u'',      # Реквизиты могут группироваться по страницам
+                                       # Страницы различаются только по русским заголовкам.
+                                       # Если заголовок страницы не определен, то
+                                       # считается что реквизит располагается на главной
+                                       # странице 'Основные'
 
-                     'label': u'',      # Надпись реквизита
-                                        # Если надпись пустая, то берется вместо надписи описание (description)
+                'label': u'',      # Надпись реквизита
+                                   # Если надпись пустая, то берется вместо надписи описание (description)
 
-                     'is_init': True,   # Реквизит является инициализируемым пользователем
-                     'is_view': True,   # Реквизит можно просматривать на форме просмотра
-                     'is_edit': True,   # Реквизит можно редактировать на форме редактировать
-                     'is_search': True,  # Реквизит можно задавать в качестве критерия поиска объекта
+                'is_init': True,   # Реквизит является инициализируемым пользователем
+                'is_view': True,   # Реквизит можно просматривать на форме просмотра
+                'is_edit': True,   # Реквизит можно редактировать на форме редактировать
+                'is_search': True,  # Реквизит можно задавать в качестве критерия поиска объекта
 
-                     'id_attr': True,   # Реквизит является идентифицирующим объект каким-то либо образом
-                                        # Реквизит, у которого True будет добавляться в
-                                        # гриды объектов  в виде колонки
-                     'is_description': False,   # Реквизит является описательным
+                'id_attr': True,   # Реквизит является идентифицирующим объект каким-то либо образом
+                                   # Реквизит, у которого True будет добавляться в
+                                   # гриды объектов  в виде колонки
+                'is_description': False,   # Реквизит является описательным
 
-                     # Свойства генерации полей хранения
+                # Свойства генерации полей хранения
 
-                     'fields': None,  # Соответствие полей таблицы и справочника,
-                                      # в котором храниться значения реквизита (словарь)
-                     'defaults': None,  # Значения по умолчанию (словарь)
-                     'field': None,     # Поле кода справочника
+                'fields': None,  # Соответствие полей таблицы и справочника,
+                                 # в котором храниться значения реквизита (словарь)
+                'defaults': None,  # Значения по умолчанию (словарь)
+                'field': None,     # Поле кода справочника
 
-                     'set_value': None,  # Функционал, исполняемый при установке значения реквизита
-                     'get_value': None,  # Функционал, исполняемый при получениии значения реквизита
+                'set_value': None,  # Функционал, исполняемый при установке значения реквизита
+                'get_value': None,  # Функционал, исполняемый при получениии значения реквизита
 
-                     # Ссылка на объект справочника
-                     'obj_psp': None,  # Бизнес объект/документ
-                     'auto_set': True,  # Признак автоматического заполнения полей при редактировании
+                # Ссылка на объект справочника
+                'obj_psp': None,  # Бизнес объект/документ
+                'auto_set': True,  # Признак автоматического заполнения полей при редактировании
 
-                     '__attr_types__': {0: ['name', 'type'],
-                                        icDefInf.EDT_TEXTFIELD: ['description', 'grp_title', 'label', 'field'],
-                                        icDefInf.EDT_TEXTLIST: ['init_users', 'edit_users', 'view_users', 'print_users',
-                                                                'del_users', 'send_users'],
-                                        icDefInf.EDT_TEXTDICT: ['fields', 'defaults'],
-                                        icDefInf.EDT_CHECK_BOX: ['auto_set', 'is_init', 'is_view', 'is_edit',
-                                                                 'is_search', 'id_attr', 'is_description'],
-                                         icDefInf.EDT_USER_PROPERTY: ['obj_psp'],
-                                        },
-                     '__events__': {'init': (None, None, False),
-                                    'ctrl': (None, None, False),
-                                    'del': (None, None, False),
-                                    'post_init': (None, None, False),
-                                    'post_ctrl': (None, None, False),
-                                    'post_del': (None, None, False),
+                '__styles__': ic_class_styles,
+                '__attr_types__': {0: ['name', 'type'],
+                                   icDefInf.EDT_TEXTFIELD: ['description', 'grp_title', 'label', 'field'],
+                                   icDefInf.EDT_TEXTLIST: ['init_users', 'edit_users', 'view_users', 'print_users',
+                                                           'del_users', 'send_users'],
+                                   icDefInf.EDT_TEXTDICT: ['fields', 'defaults'],
+                                   icDefInf.EDT_CHECK_BOX: ['auto_set', 'is_init', 'is_view', 'is_edit',
+                                                            'is_search', 'id_attr', 'is_description'],
+                                   icDefInf.EDT_USER_PROPERTY: ['obj_psp'],
+                                   },
+                '__events__': {'init': (None, None, False),
+                               'ctrl': (None, None, False),
+                               'del': (None, None, False),
+                               'post_init': (None, None, False),
+                               'post_ctrl': (None, None, False),
+                               'post_del': (None, None, False),
 
-                                    'set_value': (None, None, False),
-                                    'get_value': (None, None, False),
-                                    },
-                     '__parent__': parentModule.SPC_IC_OBJ_REQUISITE,
-                     '__attr_hlp__': {'grp_title': u'Заголовок страницы',
-                                      'label': u'Надпись реквизита',
-                                      'is_init': u'Реквизит является инициализируемым пользователем',
-                                      'is_view': u'Реквизит можно просматривать на форме просмотра',
-                                      'is_edit': u'Реквизит можно редактировать на форме редактировать',
-                                      'is_search': u'Реквизит можно задавать в качестве критерия поиска объекта',
-                                      'id_attr': u'Реквизит является идентифицирующим объект каким-то либо образом',
-                                      'is_description': u'Реквизит является описательным',
-                                      'fields': u'Соответствие полей таблицы и справочника, в котором храниться значения реквизита (словарь)',
-                                      'defaults': u'Значения по умолчанию (словарь)',
-                                      'field': u'Поле кода справочника',
-                                      'set_value': u'Функционал, исполняемый при установке значения реквизита',
-                                      'get_value': u'Функционал, исполняемый при получениии значения реквизита',
-                                      'obj_psp': u'Бизнес объект/документ',
-                                      'auto_set': u'Признак автоматического заполнения полей при редактировании',
-                                      },
-                     })
+                               'set_value': (None, None, False),
+                               'get_value': (None, None, False),
+                               },
+                '__parent__': parentModule.SPC_IC_OBJ_REQUISITE,
+                '__attr_hlp__': {'grp_title': u'Заголовок страницы',
+                                 'label': u'Надпись реквизита',
+                                 'is_init': u'Реквизит является инициализируемым пользователем',
+                                 'is_view': u'Реквизит можно просматривать на форме просмотра',
+                                 'is_edit': u'Реквизит можно редактировать на форме редактировать',
+                                 'is_search': u'Реквизит можно задавать в качестве критерия поиска объекта',
+                                 'id_attr': u'Реквизит является идентифицирующим объект каким-то либо образом',
+                                 'is_description': u'Реквизит является описательным',
+                                 'fields': u'Соответствие полей таблицы и справочника, в котором храниться значения реквизита (словарь)',
+                                 'defaults': u'Значения по умолчанию (словарь)',
+                                 'field': u'Поле кода справочника',
+                                 'set_value': u'Функционал, исполняемый при установке значения реквизита',
+                                 'get_value': u'Функционал, исполняемый при получениии значения реквизита',
+                                 'obj_psp': u'Бизнес объект/документ',
+                                 'auto_set': u'Признак автоматического заполнения полей при редактировании',
+                                 },
+                }
                     
-ic_class_spc['__styles__'] = ic_class_styles
-
-#   Имя иконки класса, которые располагаются в директории 
+#   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
 ic_class_pic = bmpfunc.createLibraryBitmap('tag--arrow.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('tag--arrow.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'work_flow/doc/_build/html/work_flow.usercomponents.obj_requisite.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -139,11 +138,10 @@ ic_can_contain = None
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
+
 
 # Функции редактирования
-
-
 def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):
     """
     Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
@@ -167,7 +165,8 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if ret[0][0] not in ('BusinessObj', 'StateObj', 'Document'):
-                dlgfunc.openWarningBox(u'ОШИБКА', u'Выбранный объект не является Бизнес-объектом/Документом.', parent)
+                dlgfunc.openWarningBox(u'ОШИБКА',
+                                       u'Выбранный объект не является Бизнес-объектом/Документом.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 

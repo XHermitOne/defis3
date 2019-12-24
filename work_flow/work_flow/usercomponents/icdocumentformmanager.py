@@ -23,24 +23,23 @@ ic_class_name = 'icDocumentFormManager'
 ic_class_styles = {'DEFAULT': 0}
 
 #   Спецификация на ресурсное описание класса
-ic_class_spc = dict({'type': 'DocumentFormManager',
-                     'name': 'default',
-                     'child': [],
-                     'activate': True,
-                     'init_expr': None,
-                     '_uuid': None,
+ic_class_spc = {'type': 'DocumentFormManager',
+                'name': 'default',
+                'child': [],
+                'activate': True,
+                'init_expr': None,
+                '_uuid': None,
 
-                     '__attr_types__': {0: ['name', 'type'],
-                                        icDefInf.EDT_TEXTFIELD: ['description'],
-                                        icDefInf.EDT_USER_PROPERTY: ['document', 'list_ctrl'],
-                                        icDefInf.EDT_PY_SCRIPT: ['columns'],
-                                        },
-                     '__events__': {},
-                     '__parent__': parentModule.SPC_IC_DOCUMENT_FORM_MANAGER,
-                     '__attr_hlp__': {},
-                     })
-
-ic_class_spc['__styles__'] = ic_class_styles
+                '__styles__': ic_class_styles,
+                '__attr_types__': {0: ['name', 'type'],
+                                   icDefInf.EDT_TEXTFIELD: ['description'],
+                                   icDefInf.EDT_USER_PROPERTY: ['document', 'list_ctrl'],
+                                   icDefInf.EDT_PY_SCRIPT: ['columns'],
+                                   },
+                '__events__': {},
+                '__parent__': parentModule.SPC_IC_DOCUMENT_FORM_MANAGER,
+                '__attr_hlp__': {},
+                }
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
@@ -48,7 +47,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('ic_box_doc_form.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('ic_box_doc_form.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'work_flow/doc/_build/html/work_flow.usercomponents.icdocumentformmanager.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -59,7 +58,7 @@ ic_can_contain = None
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # Функции редактирования
 get_user_property_editor = icdocumentfiltermanager.get_user_property_editor
@@ -71,6 +70,7 @@ class icDocumentFormManager(icdocumentfiltermanager.icDocumentFilterManager,
                               parentModule.icDocumentFormManagerProto):
     """
     Компонент менеджера управления фильтрацией и сортировкой документов.
+
     :type component_spc: C{dictionary}
     :cvar component_spc: Спецификация компонента.
 

@@ -3,6 +3,7 @@
 
 """
 Регистр накопления
+
 Класс пользовательского компонента РЕГИСТР НАКОПЛЕНИЯ.
 
 Порядок работы с регистром накопления:
@@ -55,45 +56,44 @@ ic_class_name = 'icAccumulateRegistry'
 ic_class_styles = {'DEFAULT': 0}
 
 # --- Спецификация на ресурсное описание класса ---
-ic_class_spc = dict({'type': 'AccumulatingRegistry',
-                     'name': 'default',
-                     'child': [],
-                     '__events__': {},
-                     'activate': True,
-                     'init_expr': None,
+ic_class_spc = {'type': 'AccumulatingRegistry',
+                'name': 'default',
+                'child': [],
+                'activate': True,
+                'init_expr': None,
 
-                     # БД хранения данных
-                     'db': None,
+                # БД хранения данных
+                'db': None,
 
-                     # Список имен реквизитов измерений
-                     'dimension_requisites': [],
-                     # Список имен реквизитов ресурсов
-                     'resource_requisites': [],
+                # Список имен реквизитов измерений
+                'dimension_requisites': [],
+                # Список имен реквизитов ресурсов
+                'resource_requisites': [],
 
-                     # Имя таблицы операций движения
-                     'operation_table': 'operation_tab',
+                # Имя таблицы операций движения
+                'operation_table': 'operation_tab',
 
-                     # Имя таблицы итогов
-                     'result_table': 'result_tab',
+                # Имя таблицы итогов
+                'result_table': 'result_tab',
 
-                     '_uuid': None,
-                     '__attr_types__': {0: ['name', 'type'],
-                                        icDefInf.EDT_TEXTFIELD: ['description',
-                                                                 'operation_table', 'result_table'],
-                                        icDefInf.EDT_USER_PROPERTY: ['db'],
-                                        icDefInf.EDT_TEXTLIST: ['dimension_requisites',
-                                                                'resource_requisites'],
-                                        },
-                     '__parent__': parentModule.SPC_IC_ACCUMULATE_REGISTRY,
-                     '__attr_hlp__': {'db': u'БД хранения данных',
-                                      'dimension_requisites': u'Список имен реквизитов измерений',
-                                      'resource_requisites': u'Список имен реквизитов ресурсов',
-                                      'operation_table': u'Имя таблицы операций движения',
-                                      'result_table': u'Имя таблицы итогов',
-                                      },
-                     })
-                    
-ic_class_spc['__styles__'] = ic_class_styles
+                '_uuid': None,
+                '__styles__': ic_class_styles,
+                '__events__': {},
+                '__attr_types__': {0: ['name', 'type'],
+                                   icDefInf.EDT_TEXTFIELD: ['description',
+                                                            'operation_table', 'result_table'],
+                                   icDefInf.EDT_USER_PROPERTY: ['db'],
+                                   icDefInf.EDT_TEXTLIST: ['dimension_requisites',
+                                                           'resource_requisites'],
+                                   },
+                '__parent__': parentModule.SPC_IC_ACCUMULATE_REGISTRY,
+                '__attr_hlp__': {'db': u'БД хранения данных',
+                                 'dimension_requisites': u'Список имен реквизитов измерений',
+                                 'resource_requisites': u'Список имен реквизитов ресурсов',
+                                 'operation_table': u'Имя таблицы операций движения',
+                                 'result_table': u'Имя таблицы итогов',
+                                 },
+                }
 
 #   Имя иконки класса, которые располагаются в директории 
 #   ic/components/user/images
@@ -101,7 +101,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('table_sum.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('table_sum.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'work_flow/doc/_build/html/work_flow.usercomponents.acc_registry.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -112,7 +112,7 @@ ic_can_contain = ['Requisite', 'NSIRequisite', 'OBJRequisite']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # Словарь конвертации типов значений реквизитов ресурса
 # к типу полей таблиц регистра накопления
@@ -143,7 +143,8 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('PostgreSQLDB', 'SQLiteDB'):
-                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является БД.', parent)
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
+                                       u'Выбранный объект не является БД.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 
@@ -169,7 +170,6 @@ class icAccumulateRegistry(icwidget.icSimple,
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
     
     def __init__(self, parent, id=-1, component=None, logType=0,

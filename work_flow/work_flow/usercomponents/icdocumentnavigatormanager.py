@@ -92,31 +92,29 @@ ic_class_name = 'icDocumentNavigatorManager'
 ic_class_styles = {'DEFAULT': 0}
 
 #   Спецификация на ресурсное описание класса
-ic_class_spc = dict({'type': 'DocumentNavigatorManager',
-                     'name': 'default',
-                     'child': [],
-                     'activate': True,
-                     'init_expr': None,
-                     '_uuid': None,
+ic_class_spc = {'type': 'DocumentNavigatorManager',
+                'name': 'default',
+                'child': [],
+                'activate': True,
+                'init_expr': None,
+                '_uuid': None,
 
-                     'document': None,
-                     'list_ctrl': None,
-                     'columns': None,
-
-                     '__attr_types__': {0: ['name', 'type'],
-                                        icDefInf.EDT_TEXTFIELD: ['description'],
-                                        icDefInf.EDT_USER_PROPERTY: ['document', 'list_ctrl'],
-                                        icDefInf.EDT_PY_SCRIPT: ['columns'],
-                                        },
-                     '__events__': {},
-                     '__parent__': parentModule.SPC_IC_DOCUMENT_NAVIGATOR_MANAGER,
-                     '__attr_hlp__': {'document': u'Документ, обрабатываемый менеджером',
-                                      'list_ctrl': u'Объект спискового контрола для отображения списка документов',
-                                      'columns': u'Список колонок спискового контрола'
-                                      },
-                     })
-
-ic_class_spc['__styles__'] = ic_class_styles
+                'document': None,
+                'list_ctrl': None,
+                'columns': None,
+                '__styles__': ic_class_styles,
+                '__attr_types__': {0: ['name', 'type'],
+                                   icDefInf.EDT_TEXTFIELD: ['description'],
+                                   icDefInf.EDT_USER_PROPERTY: ['document', 'list_ctrl'],
+                                   icDefInf.EDT_PY_SCRIPT: ['columns'],
+                                   },
+                '__events__': {},
+                '__parent__': parentModule.SPC_IC_DOCUMENT_NAVIGATOR_MANAGER,
+                '__attr_hlp__': {'document': u'Документ, обрабатываемый менеджером',
+                                 'list_ctrl': u'Объект спискового контрола для отображения списка документов',
+                                 'columns': u'Список колонок спискового контрола'
+                                 },
+                }
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
@@ -124,7 +122,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('ic_box_doc_navigator.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('ic_box_doc_navigator.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'work_flow/doc/_build/html/work_flow.usercomponents.icdocumentnavigatormanager.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -135,7 +133,7 @@ ic_can_contain = None
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
 
 
 # Функции редактирования
@@ -162,20 +160,22 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('Document', 'NodeDocument', 'BusinessObj', 'StateObj'):
-                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является документом/бизнес объектом.', parent)
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
+                                       u'Выбранный объект не является документом/бизнес объектом.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         else:
             # Не определена БД
             parent = propEdt
-            dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                               u'Свойство <%s> обязательно должно быть определено для этого объекта.' % attr, parent)
+            dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
+                                   u'Свойство <%s> обязательно должно быть определено для этого объекта.' % attr, parent)
     elif attr in ('list_ctrl',):
         ret = str_to_val_user_property(attr, value, propEdt)
         if ret:
             parent = propEdt
             if not ret[0][0] in ('ListCtrl', 'Grid'):
-                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является списковым контролом', parent)
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
+                                       u'Выбранный объект не является списковым контролом', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 
@@ -192,6 +192,7 @@ class icDocumentNavigatorManager(icwidget.icSimple,
                                  parentModule.icDocumentNavigatorManagerProto):
     """
     Компонент менеджера навигации документов.
+
     :type component_spc: C{dictionary}
     :cvar component_spc: Спецификация компонента.
 

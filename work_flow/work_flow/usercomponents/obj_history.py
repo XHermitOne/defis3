@@ -3,6 +3,7 @@
 
 """
 ИСТОРИЯ БИЗНЕС-ОБЪЕКТА (Регистр/реестр бизнес объектов).
+
 Класс пользовательского компонента ИСТОРИЯ БИЗНЕС-ОБЪЕКТ.
 
 Порядок работы с регистром:
@@ -54,44 +55,44 @@ ic_class_name = 'icObjHistory'
 ic_class_styles = {'DEFAULT': 0}
 
 # --- Спецификация на ресурсное описание класса ---
-ic_class_spc = dict({'type': 'ObjHistory',
-                     'name': 'default',
-                     'child': [],
-                     '__events__': {},
-                     'activate': True,
-                     'init_expr': None,
+ic_class_spc = {'type': 'ObjHistory',
+                'name': 'default',
+                'child': [],
+                'activate': True,
+                'init_expr': None,
 
-                     # БД хранения данных
-                     'db': None,
+                # БД хранения данных
+                'db': None,
 
-                     # Имя таблицы операций движения
-                     'operation_table': 'operation_object',
+                # Имя таблицы операций движения
+                'operation_table': 'operation_object',
 
-                     # Имя таблицы объектов
-                     'obj_table': 'object_tab',
+                # Имя таблицы объектов
+                'obj_table': 'object_tab',
 
-                     '_uuid': None,
-                     '__attr_types__': {0: ['name', 'type'],
-                                        icDefInf.EDT_TEXTFIELD: ['description',
-                                                                 'operation_table', 'obj_table'],
-                                        icDefInf.EDT_USER_PROPERTY: ['db'],
-                                        },
-                     '__parent__': parentModule.SPC_IC_OBJECT_REGISTRY,
-                     '__attr_hlp__': {'db': u'БД хранения данных',
-                                      'operation_table': u'Имя таблицы операций движения',
-                                      'obj_table': u'Имя таблицы объектов',
-                                      },
-                     })
+                '_uuid': None,
+
+                '__styles__': ic_class_styles,
+                '__events__': {},
+                '__attr_types__': {0: ['name', 'type'],
+                                   icDefInf.EDT_TEXTFIELD: ['description',
+                                                            'operation_table', 'obj_table'],
+                                   icDefInf.EDT_USER_PROPERTY: ['db'],
+                                   },
+                '__parent__': parentModule.SPC_IC_OBJECT_REGISTRY,
+                '__attr_hlp__': {'db': u'БД хранения данных',
+                                 'operation_table': u'Имя таблицы операций движения',
+                                 'obj_table': u'Имя таблицы объектов',
+                                 },
+                }
                     
-ic_class_spc['__styles__'] = ic_class_styles
-
-#   Имя иконки класса, которые располагаются в директории 
+#   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
 ic_class_pic = bmpfunc.createLibraryBitmap('clock-history-frame.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('clock-history-frame.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'work_flow/doc/_build/html/work_flow.usercomponents.obj_history.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -102,7 +103,7 @@ ic_can_contain = ['Requisite', 'NSIRequisite', 'OBJRequisite']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # Словарь конвертации типов значений реквизитов ресурса
 # к типу полей таблиц регистра накопления
@@ -133,7 +134,8 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('PostgreSQLDB', 'SQLiteDB'):
-                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является БД.', parent)
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
+                                       u'Выбранный объект не является БД.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 
@@ -157,7 +159,6 @@ class icObjHistory(icwidget.icSimple, parentModule.icObjectRegistryProto):
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
     
     def __init__(self, parent, id=-1, component=None, logType=0,

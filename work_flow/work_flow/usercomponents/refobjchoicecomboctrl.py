@@ -50,25 +50,25 @@ ic_class_name = 'icRefObjChoiceComboCtrl'
 ic_class_styles = ICComboCtrlStyle
 
 # Спецификация на ресурсное описание класса
-ic_class_spc = dict({'type': 'RefObjChoiceComboCtrl',
-                     'name': 'default',
-                     'activate': True,
-                     'init_expr': None,
-                     '_uuid': None,
-                     'child': [],
+ic_class_spc = {'type': 'RefObjChoiceComboCtrl',
+                'name': 'default',
+                'activate': True,
+                'init_expr': None,
+                '_uuid': None,
+                'child': [],
 
-                     'obj_psp': None,   # Паспорт объекта-источника данных
+                'obj_psp': None,   # Паспорт объекта-источника данных
 
-                     '__attr_types__': {0: ['name', 'type'],
-                                        icDefInf.EDT_TEXTFIELD: ['description'],
-                                        icDefInf.EDT_USER_PROPERTY: ['obj_psp'],
-                                        },
-                     '__events__': {},
-                     '__styles__': ic_class_styles,
-                     '__parent__': parentModule.SPC_IC_REFOBJCHOICECOMBOCTRL,
-                     '__attr_hlp__': {'obj_psp': u'Паспорт объекта-источника данных',
-                                      },
-                     })
+                '__attr_types__': {0: ['name', 'type'],
+                                   icDefInf.EDT_TEXTFIELD: ['description'],
+                                   icDefInf.EDT_USER_PROPERTY: ['obj_psp'],
+                                   },
+                '__events__': {},
+                '__styles__': ic_class_styles,
+                '__parent__': parentModule.SPC_IC_REFOBJCHOICECOMBOCTRL,
+                '__attr_hlp__': {'obj_psp': u'Паспорт объекта-источника данных',
+                                 },
+                }
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
@@ -76,7 +76,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('ic_obj_combo_ctrl.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('ic_obj_combo_ctrl.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'work_flow/doc/_build/html/work_flow.usercomponents.refobjchoicecomboctrl.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -87,11 +87,10 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
+
 
 # Функции редактирования
-
-
 def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):
     """
     Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
@@ -116,7 +115,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
             parent = propEdt
             if not ret[0][0] in ('BusinessObj', 'Document'):
                 dlgfunc.openWarningBox(u'ОШИБКА',
-                                    u'Выбранный объект не является бизнес объектом/документом.', parent)
+                                       u'Выбранный объект не является бизнес объектом/документом.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         elif ret in (None, ''):
@@ -142,7 +141,6 @@ class icRefObjChoiceComboCtrl(parentModule.icRefObjChoiceComboCtrlProto, icwidge
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
 
     def __init__(self, parent, id, component, logType=0, evalSpace=None,
