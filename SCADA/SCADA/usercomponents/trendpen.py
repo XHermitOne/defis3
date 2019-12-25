@@ -69,7 +69,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('chart_line_edit.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('chart_line_edit.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'SCADA/doc/_build/html/SCADA.usercomponents.trendpen.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -80,7 +80,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 2)
 
 
 # Функции редактирования
@@ -107,8 +107,8 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('SQLWideHistory',):
-                dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                                u'Выбранный объект не является Источником исторических данных.', parent)
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
+                                       u'Выбранный объект не является Источником исторических данных.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         elif ret in (None, ''):

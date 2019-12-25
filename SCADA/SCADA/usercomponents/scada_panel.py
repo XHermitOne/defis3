@@ -63,7 +63,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('control_panel.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('control_panel.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'SCADA/doc/_build/html/SCADA.usercomponents.scada_panel.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -74,7 +74,7 @@ ic_can_contain = -1
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBarTool', 'Separator', 'GridCell']
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # Функции редактирования
@@ -185,6 +185,7 @@ class icSCADAPanel(icwxpanel.icWXPanel, scada_form_manager.icSCADAFormManager):
     def getScanClassPsp(self):
         """
         Паспорт класса сканирования данных SCADA.
+
         :return: Паспорт или None в случае ошибки.
         """
         return self.getICAttr('scan_class')
@@ -192,6 +193,7 @@ class icSCADAPanel(icwxpanel.icWXPanel, scada_form_manager.icSCADAFormManager):
     def getScanClass(self, scan_class_psp=None):
         """
         Объект класса сканирования данных SCADA.
+
         :param scan_class_psp: Паспорт класса сканирования данных SCADA.
             Если не определено, то задается функцией self.getScanClassPsp.
         :return: Объект класса сканирования данных SCADA или
@@ -213,6 +215,7 @@ class icSCADAPanel(icwxpanel.icWXPanel, scada_form_manager.icSCADAFormManager):
     def initScanTick(self):
         """
         Инициализация периода сканирования по классу сканирования.
+
         :return: Период сканирования или None в случае ошибки.
         """
         scan_class = self.getScanClass()
@@ -223,6 +226,7 @@ class icSCADAPanel(icwxpanel.icWXPanel, scada_form_manager.icSCADAFormManager):
     def createEngines(self):
         """
         Создать список движков.
+
         :return: Список движков.
         """
         kernel = self.GetKernel()
@@ -232,6 +236,7 @@ class icSCADAPanel(icwxpanel.icWXPanel, scada_form_manager.icSCADAFormManager):
     def init(self):
         """
         Полная инициализация объекта.
+
         :return: True/False.
         """
         # Создать список движков

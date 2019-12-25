@@ -52,7 +52,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('chart_organisation.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('chart_organisation.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'SCADA/doc/_build/html/SCADA.usercomponents.mnemo_scheme.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в дпнном компоненте
@@ -64,7 +64,7 @@ ic_can_contain = ['MnemoAnchor', 'TextField', 'StaticText', 'StaticBitmap', 'Spe
 ic_can_not_contain = []
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 DEFAULT_TEST_WIDTH = 800
 DEFAULT_TEST_HEIGHT = 600

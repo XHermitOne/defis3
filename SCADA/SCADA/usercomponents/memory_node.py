@@ -58,7 +58,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('memory.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('memory.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'SCADA/doc/_build/html/SCADA.usercomponents.memory_node.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -69,7 +69,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icMemoryNode(icwidget.icSimple, node.icSCADANodeProto):
@@ -83,7 +83,6 @@ class icMemoryNode(icwidget.icSimple, node.icSCADANodeProto):
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
 
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None,
@@ -123,6 +122,7 @@ class icMemoryNode(icwidget.icSimple, node.icSCADANodeProto):
         ВНИМАНИЕ! Все блоки кода вычисляемых тегов выполняются в контексте
         Memory узла. Поэтому все функции расчетов необходимо расмолагать
         в менеджере Memory Node.
+
         :param expression: Выполняемое выражение.
         :param environment: Дополнительное окружение выполнения выражения.
             Если не определено, то берется автоматически заполняемое при
@@ -154,6 +154,7 @@ class icMemoryNode(icwidget.icSimple, node.icSCADANodeProto):
     def read_value(self, address):
         """
         Чтение значения по адресу.
+
         :param address: Адрес значения в узле.
             В качестве адреса используется блок кода для вычисления значения тега.
         :return: Запрашиваемое значение или None в случае ошибки чтения.
@@ -163,6 +164,7 @@ class icMemoryNode(icwidget.icSimple, node.icSCADANodeProto):
     def read_values(self, addresses):
         """
         Чтение значений по адресам.
+
         :param addresses: Список адресов значений в узле.
             В качестве адреса используется блок кода для вычисления значения тега.
         :return: Список запрашиваемых значений или None в случае ошибки чтения.
@@ -172,6 +174,7 @@ class icMemoryNode(icwidget.icSimple, node.icSCADANodeProto):
     def readTags(self, *tags):
         """
         Прочитать список тегов.
+
         :param tags: Список объектов тегов.
         :return: True/False.
         """

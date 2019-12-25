@@ -52,7 +52,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('chart_curve_edit.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('chart_curve_edit.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'SCADA/doc/_build/html/SCADA.usercomponents.gnuplot_trend_navigator.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -63,7 +63,7 @@ ic_can_contain = ['TrendPen']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
 
 
 class icGnuplotTrendNavigator(icwidget.icWidget,
@@ -154,6 +154,7 @@ class icGnuplotTrendNavigator(icwidget.icWidget,
     def setPens(self, pens):
         """
         Установить перья тренда.
+
         :param pens: Описания перьев.
         :return: True/False.
         """
@@ -176,6 +177,7 @@ class icGnuplotTrendNavigator(icwidget.icWidget,
     def loadTrendSplitterSashPos(self, is_update_size=True):
         """
         Загрузить позицию сплиттера разделения легенды и тренда.
+
         :param is_update_size: Произвести обновление размера?
         """
         save_data = self.load_ext_data(self.name)

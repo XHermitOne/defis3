@@ -57,7 +57,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('tag_yellow.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('tag_yellow.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'SCADA/doc/_build/html/SCADA.usercomponents.bool_tag.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -68,7 +68,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # Функции редактирования
@@ -95,8 +95,8 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('OPCNode', 'MemoryNode'):
-                dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                                u'Выбранный объект не является узлом/контроллером SCADA.', parent)
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
+                                       u'Выбранный объект не является узлом/контроллером SCADA.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         elif ret in (None, ''):
@@ -106,8 +106,8 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('ScanClass',):
-                dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                                u'Выбранный объект не является КЛАССОМ СКАНИРОВАНИЯ.', parent)
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
+                                       u'Выбранный объект не является КЛАССОМ СКАНИРОВАНИЯ.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         elif ret in (None, ''):
@@ -133,7 +133,6 @@ class icBoolSCADATag(scada_tag.icSCADATagProto, icwidget.icSimple):
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
 
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None,
@@ -166,6 +165,7 @@ class icBoolSCADATag(scada_tag.icSCADATagProto, icwidget.icSimple):
     def getNodePsp(self):
         """
         Паспорт узла-источника данных SCADA.
+
         :return: Паспорт или None в случае ошибки.
         """
         return self.getICAttr('node')
@@ -173,6 +173,7 @@ class icBoolSCADATag(scada_tag.icSCADATagProto, icwidget.icSimple):
     def getNode(self, node_psp=None):
         """
         Объект узла-источника данных SCADA.
+
         :param node_psp: Паспорт узла-источника данных SCADA.
             Если не определено, то задается функцией self.getNodePsp.
         :return: Объект узла-источника данных SCADA или
@@ -194,6 +195,7 @@ class icBoolSCADATag(scada_tag.icSCADATagProto, icwidget.icSimple):
     def getScanClassPsp(self):
         """
         Паспорт класса сканирования данных SCADA.
+
         :return: Паспорт или None в случае ошибки.
         """
         return self.getICAttr('scan_class')
@@ -201,6 +203,7 @@ class icBoolSCADATag(scada_tag.icSCADATagProto, icwidget.icSimple):
     def getScanClass(self, scan_class_psp=None):
         """
         Объект класса сканирования данных SCADA.
+
         :param scan_class_psp: Паспорт класса сканирования данных SCADA.
             Если не определено, то задается функцией self.getScanClassPsp.
         :return: Объект класса сканирования данных SCADA или
@@ -231,6 +234,7 @@ class icBoolSCADATag(scada_tag.icSCADATagProto, icwidget.icSimple):
     def normValueInto(self, value):
         """
         Преобразование типа значения для установки внутреннего значения.
+
         :param value: Текущее значение тега.
         :return: Преобразованное значение.
         """
@@ -243,6 +247,7 @@ class icBoolSCADATag(scada_tag.icSCADATagProto, icwidget.icSimple):
     def normValueOut(self, value):
         """
         Преобразование типа значения для получения из внутреннего значения.
+
         :param value: Текущее значение тега.
         :return: Преобразованное значение.
         """

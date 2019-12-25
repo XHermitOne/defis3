@@ -68,7 +68,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('flag.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('flag.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'SCADA/doc/_build/html/SCADA.usercomponents.scada_event.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -79,7 +79,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # Функции редактирования
@@ -106,8 +106,8 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('ScanClass',):
-                dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                                u'Выбранный объект не является КЛАССОМ СКАНИРОВАНИЯ.', parent)
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
+                                       u'Выбранный объект не является КЛАССОМ СКАНИРОВАНИЯ.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         elif ret in (None, ''):
@@ -133,7 +133,6 @@ class icSCADAEvent(icwidget.icSimple):
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
 
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None,
@@ -181,6 +180,7 @@ class icSCADAEvent(icwidget.icSimple):
     def doExpression(self):
         """
         Выполнить и проверить выполнение условия возникновения события.
+
         :return: True/False.
         """
         context = self.GetContext()
@@ -200,6 +200,7 @@ class icSCADAEvent(icwidget.icSimple):
     def Enable(self, enable=True):
         """
         Вкл./ Выкл. обработки события.
+
         :param enable: Признак Вкл./ Выкл. обработки события.
         """
         self.enable = enable
@@ -207,6 +208,7 @@ class icSCADAEvent(icwidget.icSimple):
     def do(self):
         """
         Проверить и обработать событие.
+
         :return: True/False.
         """
         if not self.enable:
@@ -224,6 +226,7 @@ class icSCADAEvent(icwidget.icSimple):
     def getScanClassPsp(self):
         """
         Паспорт класса сканирования данных SCADA.
+
         :return: Паспорт или None в случае ошибки.
         """
         return self.getICAttr('scan_class')
@@ -231,6 +234,7 @@ class icSCADAEvent(icwidget.icSimple):
     def getScanClass(self, scan_class_psp=None):
         """
         Объект класса сканирования данных SCADA.
+
         :param scan_class_psp: Паспорт класса сканирования данных SCADA.
             Если не определено, то задается функцией self.getScanClassPsp.
         :return: Объект класса сканирования данных SCADA или

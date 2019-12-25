@@ -69,7 +69,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('clock-history-frame.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('clock-history-frame.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'SCADA/doc/_build/html/SCADA.usercomponents.sql_wide_history.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -80,7 +80,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 3, 1)
+__version__ = (0, 1, 3, 2)
 
 
 # Функции редактирования
@@ -107,8 +107,8 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('Table',):
-                dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                                   u'Выбранный объект не является Таблицей.', parent)
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
+                                       u'Выбранный объект не является Таблицей.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         elif ret in (None, ''):

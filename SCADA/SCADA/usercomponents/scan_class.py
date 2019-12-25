@@ -55,7 +55,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('file_start_workflow.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('file_start_workflow.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'SCADA/doc/_build/html/SCADA.usercomponents.scan_class.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -66,7 +66,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icScanClass(icwidget.icSimple):
@@ -80,7 +80,6 @@ class icScanClass(icwidget.icSimple):
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
 
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None,
@@ -120,6 +119,7 @@ class icScanClass(icwidget.icSimple):
     def isOverTick(self, cur_time=None):
         """
         Проверка на окончание текущего периода сканирования
+
         :param cur_time: Текущее проверяемое время.
             Если текущее время не определено, то берется time.time()
         :return: True - очередной период сканирования закончен/ False - период сканирования не закончен.
@@ -143,6 +143,7 @@ class icScanClass(icwidget.icSimple):
     def getTick(self):
         """
         Значение периода сканирования в секундах.
+
         :return: Значение периода сканирования в секундах.
         """
         return self.tick

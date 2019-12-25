@@ -70,7 +70,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('action_log.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('action_log.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'SCADA/doc/_build/html/SCADA.usercomponents.gnuplot_trend.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -81,7 +81,7 @@ ic_can_contain = ['TrendPen']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
 
 
 class icGnuplotTrend(icwidget.icWidget,
@@ -164,6 +164,7 @@ class icGnuplotTrend(icwidget.icWidget,
     def setPens(self, pens):
         """
         Установить перья тренда.
+
         :param pens: Описания перьев.
         :return: True/False.
         """

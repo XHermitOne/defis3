@@ -46,7 +46,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('bell_error.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('bell_error.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'SCADA/doc/_build/html/SCADA.usercomponents.scada_alarm.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -57,7 +57,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icSCADAAlarm(icwidget.icSimple):
@@ -71,7 +71,6 @@ class icSCADAAlarm(icwidget.icSimple):
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
 
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None,

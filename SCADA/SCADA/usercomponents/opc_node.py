@@ -64,7 +64,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('network-server.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('network-server.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'SCADA/doc/_build/html/SCADA.usercomponents.opc_node.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -75,7 +75,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icOPCNode(icwidget.icSimple, node.icSCADANodeProto):
@@ -89,7 +89,6 @@ class icOPCNode(icwidget.icSimple, node.icSCADANodeProto):
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
 
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None,
@@ -135,6 +134,7 @@ class icOPCNode(icwidget.icSimple, node.icSCADANodeProto):
     def is_localhost(self, host=None):
         """
         Проверка указан ли хост как localhost.
+
         :param host: Указанный хост.
         :return: True - localhost/False-нет.
         """
@@ -143,6 +143,7 @@ class icOPCNode(icwidget.icSimple, node.icSCADANodeProto):
     def connect(self, host=None, opc_server=None):
         """
         Создание объекта OPC клиента.
+
         :param host: Хост OPC сервера для возможности удаленного подключения (через DCOM) к OPC серверу.
             Если не определен, то берется из описания компонента.
         :param opc_server: Имя OPC сервера.
@@ -185,6 +186,7 @@ class icOPCNode(icwidget.icSimple, node.icSCADANodeProto):
     def disconnect(self, opc_client=None):
         """
         Закрыть соединение.
+
         :param opc_client: Объект OPC клиента.
         :return: True/False.
         """
@@ -233,6 +235,7 @@ class icOPCNode(icwidget.icSimple, node.icSCADANodeProto):
     def read_value(self, address):
         """
         Чтение значения по адресу.
+
         :param address: Адрес значения в узле.
         :return: Запрашиваемое значение или None в случае ошибки чтения.
         """
@@ -264,6 +267,7 @@ class icOPCNode(icwidget.icSimple, node.icSCADANodeProto):
     def read_values(self, addresses):
         """
         Чтение значений по адресам.
+
         :param addresses: Список адресов значений в узле.
         :return: Список запрашиваемых значений или None в случае ошибки чтения.
         """
@@ -295,6 +299,7 @@ class icOPCNode(icwidget.icSimple, node.icSCADANodeProto):
     def readTags(self, *tags):
         """
         Прочитать список тегов.
+
         :param tags: Список объектов тегов.
         :return: True/False.
         """
@@ -323,6 +328,7 @@ class icOPCNode(icwidget.icSimple, node.icSCADANodeProto):
     # def write_value(self, address, value):
     #     """
     #     Запись значения по адресу.
+    #
     #     :param address: Адрес значения в узле.
     #     :param value: Записываемое значение.
     #     :return: True - запись прошла успешно/False - ошибка.

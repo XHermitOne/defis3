@@ -67,7 +67,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('chart_line.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('chart_line.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'SCADA/doc/_build/html/SCADA.usercomponents.mpl_trend.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -78,14 +78,13 @@ ic_can_contain = ['TrendPen']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
 
 
 class icMPLTrendProto(wx.Panel, trend_proto.icTrendProto):
     """
     Базовый класс временного графика. Тренд.
     """
-
     def __init__(self, *args, **kwargs):
         """
         Конструктор.
@@ -149,6 +148,7 @@ class icMPLTrendProto(wx.Panel, trend_proto.icTrendProto):
     def draw(self, redraw=True):
         """
         Основной метод отрисовки тренда.
+
         :param redraw: Принудительная прорисовка.
         """
         pens = self.getPens()
@@ -199,7 +199,6 @@ class icMPLTrend(icwidget.icWidget, icMPLTrendProto):
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
 
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None,

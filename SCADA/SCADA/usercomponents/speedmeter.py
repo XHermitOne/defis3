@@ -140,7 +140,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('dashboard.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('dashboard.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'SCADA/doc/_build/html/SCADA.usercomponents.speedmeter.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -151,7 +151,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 
 class icSpeedmeter(icwidget.icWidget, parentModule.SpeedMeter):
@@ -306,99 +306,99 @@ class icSpeedmeter(icwidget.icWidget, parentModule.SpeedMeter):
         
         self.setValue(self.value)
         
-    def setAngleRange(self, Start_, End_):
+    def setAngleRange(self, start_degree, end_degree):
         """
         Установить сектор поля.
 
-        :param Start_: Начальная граница сектора в градусах.
-        :param End_: Конечная граница в градусах.
+        :param start_degree: Начальная граница сектора в градусах.
+        :param end_degree: Конечная граница в градусах.
         """
         # Перевод в радианы
-        start_rad = (float(Start_)*pi) / 180.0
-        end_rad = (float(End_)*pi) / 180.0
+        start_rad = (float(start_degree) * pi) / 180.0
+        end_rad = (float(end_degree) * pi) / 180.0
         return self.SetAngleRange(start_rad, end_rad)
         
-    def setIntervals(self, Intervals_):
+    def setIntervals(self, intervals):
         """
         Установка мажорной шкалы в градусах.
         """
-        if Intervals_:
-            # intervals = map(lambda interval: (float(interval)*pi)/180,list(Intervals_))
-            # intervals = [(float(interval)*pi) / 180.0 for interval in list(Intervals_)]
-            intervals = Intervals_
+        if intervals:
+            # intervals = map(lambda interval: (float(interval)*pi)/180,list(intervals))
+            # intervals = [(float(interval)*pi) / 180.0 for interval in list(intervals)]
+            # intervals = intervals
             return self.SetIntervals(intervals)
         
-    def setIntervalColors(self, IntervalColors_):
+    def setIntervalColors(self, interval_colors):
         """
         Установка цветов секторов мажорной шкалы.
         """
-        if IntervalColors_:
-            self.SetIntervalColours(IntervalColors_)
+        if interval_colors:
+            self.SetIntervalColours(interval_colors)
 
-    def setTicks(self, Ticks_):
+    def setTicks(self, ticks):
         """
         Надписи мажорной шкалы.
         """
-        if Ticks_:
-            # ticks=map(lambda tick: str(tick),Ticks_)
-            ticks = [str(tick) for tick in Ticks_]
-            self.SetTicks(ticks)
+        if ticks:
+            # ticks=map(lambda tick: str(tick),ticks)
+            str_ticks = [str(tick) for tick in ticks]
+            self.SetTicks(str_ticks)
             
-    def setTicksColor(self, Color_):
+    def setTicksColor(self, colour):
         """
         Цвет шкалы.
         """
-        if Color_:
-            color = wx.Colour(*Color_)
-            self.SetTicksColour(color)
+        if colour:
+            wx_colour = wx.Colour(*colour)
+            self.SetTicksColour(wx_colour)
 
-    def setTicksFont(self, Font_):
+    def setTicksFont(self, font):
         """
         Шрифт текста мажорной шкалы.
         """
-        if Font_:
-            font = icfont.icFont(Font_)
-            self.SetTicksFont(font)
+        if font:
+            fnt = icfont.icFont(font)
+            self.SetTicksFont(fnt)
         
-    def setSecondTicksCount(self, TicksCount_):
+    def setSecondTicksCount(self, ticks_count):
         """
         Установить количество штрихов минорной шкалы внутри одного деления мажорной.
         """
-        ticks_count = int(TicksCount_)
-        if ticks_count >= 0:
-            self.SetNumberOfSecondaryTicks(ticks_count)
+        int_ticks_count = int(ticks_count)
+        if int_ticks_count >= 0:
+            self.SetNumberOfSecondaryTicks(int_ticks_count)
 
-    def setMiddleTxt(self, Text_):
+    def setMiddleTxt(self, text):
         """
         Текст в центре поля.
         """
-        if Text_ is not None:
-            self.SetMiddleText(str(Text_))
+        if text is not None:
+            self.SetMiddleText(str(text))
             
-    def setMiddleTxtColor(self, Color_):
+    def setMiddleTxtColor(self, colour):
         """
         Цвет текста в центре поля.
         """
-        if Color_:
-            color = wx.Colour(*Color_)
-            self.SetMiddleTextColour(color)
+        if colour:
+            wx_colour = wx.Colour(*colour)
+            self.SetMiddleTextColour(wx_colour)
             
-    def setMiddleTxtFont(self, Font_):
+    def setMiddleTxtFont(self, font):
         """
         Шрифт текста в центре поля.
         """
-        if Font_:
-            font = icfont.icFont(Font_)
-            self.SetMiddleTextFont(font)
+        if font:
+            fnt = icfont.icFont(font)
+            self.SetMiddleTextFont(fnt)
             
-    def setMiddleIcon(self, ICOFileName_):
+    def setMiddleIcon(self, ico_filename):
         """
         Иконка в центре поля.
 
-        :param ICOFileName_: Имя файла *.ico.
+        :param ico_filename: Имя файла *.ico.
         """
-        if ICOFileName_:
-            ico_file_name = filefunc.get_absolute_path(ICOFileName_)
+        if ico_filename:
+            ico_file_name = filefunc.get_absolute_path(ico_filename)
             if os.path.exists(ico_file_name):
                 icon = wx.Icon(ico_file_name, wx.BITMAP_TYPE_ICO)
                 icon.SetWidth(24)
@@ -410,81 +410,81 @@ class icSpeedmeter(icwidget.icWidget, parentModule.SpeedMeter):
             else:
                 log.warning(u'Компонент Speedmeter. Файл иконки <%s> не существует' % ico_file_name)
         
-    def setHandColor(self, Color_):
+    def setHandColor(self, colour):
         """
         Цвет стрелки.
         """
-        if Color_:
-            color = wx.Colour(*Color_)
-            self.SetHandColour(color)
+        if colour:
+            wx_colour = wx.Colour(*colour)
+            self.SetHandColour(wx_colour)
         
-    def setHandStyle(self, HandStyle_):
+    def setHandStyle(self, hand_style):
         """
         Стиль стрелки.
         """
-        if HandStyle_:
-            self.SetHandStyle(HandStyle_)
+        if hand_style:
+            self.SetHandStyle(hand_style)
             
-    def setBackgroundColor(self, Color_):
+    def setBackgroundColor(self, colour):
         """
         Цвет фона.
         """
-        if Color_:
-            color = wx.Colour(*Color_)
-            self.SetSpeedBackground(color)
+        if colour:
+            wx_colour = wx.Colour(*colour)
+            self.SetSpeedBackground(wx_colour)
     
-    def setExternalArc(self, IsExternalArc_=True):
+    def setExternalArc(self, is_external_arc=True):
         """
         Установить окантовку поля.
         """
-        self.DrawExternalArc(bool(IsExternalArc_))
+        self.DrawExternalArc(bool(is_external_arc))
         
-    def setArcColor(self, Color_):
+    def setArcColor(self, colour):
         """
         Цвет окантовки.
         """
-        if Color_:
-            color = wx.Colour(*Color_)
-            self.SetArcColour(color)
+        if colour:
+            wx_colour = wx.Colour(*colour)
+            self.SetArcColour(wx_colour)
         
-    def setShadowColor(self, Color_):
+    def setShadowColor(self, colour):
         """
         Цвет тени.
         """
-        if Color_:
-            color = wx.Colour(*Color_)
-            self.SetShadowColour(color)
+        if colour:
+            wx_colour = wx.Colour(*colour)
+            self.SetShadowColour(wx_colour)
         
-    def setFillerColor(self, Color_):
+    def setFillerColor(self, colour):
         """
         Цвет следа.
         """
-        if Color_:
-            color = wx.Colour(*Color_)
-            self.SetFillerColour(color)
+        if colour:
+            wx_colour = wx.Colour(*colour)
+            self.SetFillerColour(wx_colour)
 
-    def setFirstGradientColor(self, Color_):
+    def setFirstGradientColor(self, colour):
         """
         Первый цвет градиентной заливки.
         """
-        if Color_:
-            color = wx.Colour(*Color_)
-            self.SetFirstGradientColour(color)
+        if colour:
+            wx_colour = wx.Colour(*colour)
+            self.SetFirstGradientColour(wx_colour)
         
-    def setSecondGradientColor(self, Color_):
+    def setSecondGradientColor(self, colour):
         """
         Втоорой цвет градиентной заливки.
         """
-        if Color_:
-            color = wx.Colour(*Color_)
-            self.SetSecondGradientColour(color)
+        if colour:
+            wx_colour = wx.Colour(*colour)
+            self.SetSecondGradientColour(wx_colour)
             
-    def setDirection(self, Direction_):
+    def setDirection(self, direction):
         """
         Направление.
         """
-        if Direction_:
-            self.SetDirection(Direction_)
+        if direction:
+            self.SetDirection(direction)
             
     setValue = parentModule.SpeedMeter.SetSpeedValue
 
