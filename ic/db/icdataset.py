@@ -122,7 +122,7 @@ ic_class_pic = '@common.imgEdtDataLink'
 ic_class_pic2 = '@common.imgEdtDataLink'
 
 #   Путь до файла документации
-ic_class_doc = None
+ic_class_doc = 'ic/doc/_build/html/ic.db.icdataset.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = []
@@ -132,7 +132,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 1, 2)
 
 
 # Функции редактирования
@@ -510,7 +510,6 @@ class icDataLink(icwidget.icSimple):
     """
     Класс объекта ссылки на ресурсное описание.
     """
-    
     def __init__(self, component={}, logType=0, evalSpace=None, bDefSearch=True, fltDict=None):
         """
         Конструктор для создания ссылки.

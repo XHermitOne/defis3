@@ -50,8 +50,8 @@ ic_class_spc = {'type': 'Trend',
                 '__events__': {'onDrawCursor': ('DRAW_CURSOR', 'draw_cursor', False),
                                'onMouseLeftDown': ('MOUSE_LEFT_DOWN', 'onMouseLeftDown', False)},
                 '__attr_types__': {0: ['name', 'type'],
-                                   icDefInf.EDT_CHECK_BOX: ['wxAgg']}}
-                    
+                                   icDefInf.EDT_CHECK_BOX: ['wxAgg']},
+                }
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
@@ -59,7 +59,7 @@ ic_class_pic = '@common.imgEdtTrend'
 ic_class_pic2 = '@common.imgEdtTrend'
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.additional.icplotter.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -70,7 +70,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icPloter(icwidget.icWidget, parentModule.icPlotPanel):
@@ -196,7 +196,7 @@ def test(par=0):
     
     p1 = win.subplot.bar(ind, menMeans,   width, color='r', yerr=womenStd)
     p2 = win.subplot.bar(ind, womenMeans, width, color='y',
-             bottom=menMeans, yerr=menStd)
+                         bottom=menMeans, yerr=menStd)
     win.subplot.set_xticks(ind+width)
     win.subplot.set_xticklabels(('G1', 'G2', 'G3', 'G4', 'G5'))
     
