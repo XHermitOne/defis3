@@ -159,6 +159,11 @@ id_dict = {'EDT_TEXTFIELD': EDT_TEXTFIELD,
            'EDT_DIR': EDT_DIR,
            }
 
+
+# Список имен редакторов
+PROPERTY_EDITOR_NAMES = list(id_dict.keys())
+PROPERTY_EDITOR_NAMES.sort()
+
 # Словарь описания флагов (flag) сайзеров
 ICSizerFlag = {'TOP': wx.TOP,
                'BOTTOM': wx.BOTTOM,

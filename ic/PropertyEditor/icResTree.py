@@ -1880,13 +1880,13 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         # Кнопка для вызова графического редактора
         id = icwidget.icNewId()
         self.toolbar.AddTool(id, u'Design', common.imgDesigner, shortHelp=u'Дизайнер')
-        self.Bind(wx.EVT_TOOL, self.OnGraphEditor, id=id)
+        self.Bind(wx.EVT_TOOL, self.onOpenGraphEditor, id=id)
 
         # Кнопка для генерации пользовательского класса
         id = icwidget.icNewId()
         self.toolbar.AddTool(id, u'NewComponent', common.imgEdtComponent,
                              shortHelp=u'Создать пользовательский компонент')
-        self.Bind(wx.EVT_TOOL, self.OnUserClass, id=id)
+        self.Bind(wx.EVT_TOOL, self.onCreateCustomComponent, id=id)
 
         id = icwidget.icNewId()
         self.toolbar.AddTool(id, u'ResModule', common.imgEdtResModule, shortHelp=u'Модуль ресурса')
@@ -1934,7 +1934,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             self.tree.SelectItem(self.tree._lastTreeId)
 
         # Пользоваетльское событие для вызова графического редактора
-        self.Bind(icEvents.EVT_POST_INIT, self.OnGraphEditor)
+        self.Bind(icEvents.EVT_POST_INIT, self.onOpenGraphEditor)
 
     def SetSingleMode(self, mode=True):
         """
@@ -2486,7 +2486,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         else:
             log.warning(u'Не определен объект IDE для открытия файла <%s>' % fl)
 
-    def OnGraphEditor(self, event):
+    def onOpenGraphEditor(self, event):
         """
         Обработка нажатия кнопки вызова графического редактора.
         """
@@ -2526,13 +2526,18 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             mgr.GetPane(u'DefisToolPanel').Show()
             mgr.Update()
 
-    def OnUserClass(self, event):
+    def onCreateCustomComponent(self, event):
         """
         Генерирует пользовательский компонент.
         """
         if self.isToggleEnable():
-            import ic.components.icUserClassCreator as ur
-            ur.RunWizard(self)
+            # Старая версия визарда
+            # from ic.components import icUserClassCreator
+            # icUserClassCreator.RunWizard(self)
+            # Новая версия визарда
+            from ic.editor import create_component_wizard
+            create_component_wizard.show_create_component_wizard(parent=self)
+
             #   Обновляем информацию о компонентах системы
             InitObjectsInfo()
 

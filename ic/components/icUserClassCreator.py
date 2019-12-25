@@ -17,7 +17,7 @@ import ic.dlg.msgbox as msg
 from ic.utils import resfunc
 from ic.log import log
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 _ = wx.GetTranslation
 
@@ -49,6 +49,7 @@ closeTag = '$'
 def ReplaceTag(templ, pos, tag, text):
     """
     Заменяет в шаблоне тэг на нужный текст.
+
     :type templ: C{string}
     :param templ: Шаблона.
     :type pos: C{int}
@@ -92,6 +93,7 @@ def findOpenTag(templ, pos):
 def CreatUserClass(discr, file_templ=None):
     """
     По описанию генерируется модуль с пользовательским классом.
+
     :type discr: C{dictionary}
     :param discr: Структура описания класса пользователя.
     :type file_templ: C{string}

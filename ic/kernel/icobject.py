@@ -18,7 +18,7 @@ from ic.log import log
 from ic.utils import wxfunc
 
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 
 def check_wx_dead_object(func):

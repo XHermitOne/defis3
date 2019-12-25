@@ -12,6 +12,8 @@ import wx.adv
 import wx.adv
 import wx.propgrid as pg
 
+from ic.bitmap import bmpfunc
+
 ###########################################################################
 ## Class icCreateComponentWizardProto
 ###########################################################################
@@ -19,12 +21,12 @@ import wx.propgrid as pg
 class icCreateComponentWizardProto ( wx.adv.Wizard ):
 	
 	def __init__( self, parent ):
-		wx.adv.Wizard.__init__ ( self, parent, id = wx.ID_ANY, title = u"Мастер создания компонента", bitmap = wx.Bitmap( u"../imglib/common/py_component_wizard.png", wx.BITMAP_TYPE_ANY ), pos = wx.DefaultPosition, style = wx.DEFAULT_DIALOG_STYLE|wx.STAY_ON_TOP )
+		wx.adv.Wizard.__init__ ( self, parent, id = wx.ID_ANY, title = u"Мастер создания компонента", bitmap = bmpfunc.createLibraryBitmap( "py_component_wizard.png"), pos = wx.DefaultPosition, style = wx.DEFAULT_DIALOG_STYLE|wx.STAY_ON_TOP )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		self.m_pages = []
 		
-		self.base_wizPage = wx.adv.WizardPageSimple( self , None, None, wx.Bitmap( u"../imglib/common/py_component_wizard.png", wx.BITMAP_TYPE_ANY ) )
+		self.base_wizPage = wx.adv.WizardPageSimple( self , None, None, bmpfunc.createLibraryBitmap( "py_component_wizard.png") )
 		self.add_page( self.base_wizPage )
 		
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
@@ -47,7 +49,7 @@ class icCreateComponentWizardProto ( wx.adv.Wizard ):
 		self.m_staticline2 = wx.StaticLine( self.base_wizPage, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
 		bSizer1.Add( self.m_staticline2, 0, wx.EXPAND |wx.ALL, 5 )
 		
-		self.attr_propertyGrid = pg.PropertyGrid(self.base_wizPage, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.propgrid.PG_DEFAULT_STYLE)
+		self.attr_propertyGrid = pg.PropertyGrid(self.base_wizPage, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.propgrid.PG_DEFAULT_STYLE|wx.propgrid.PG_SPLITTER_AUTO_CENTER)
 		self.name_propertyGridItem = self.attr_propertyGrid.Append( pg.StringProperty( u"(*) Имя класса", u"(*) Имя класса" ) ) 
 		self.module_propertyGridItem = self.attr_propertyGrid.Append( pg.StringProperty( u"(*) Имя модуля", u"(*) Имя модуля" ) ) 
 		self.description_propertyGridItem = self.attr_propertyGrid.Append( pg.StringProperty( u"Описание", u"Описание" ) ) 
@@ -70,7 +72,7 @@ class icCreateComponentWizardProto ( wx.adv.Wizard ):
 		self.base_wizPage.SetSizer( bSizer1 )
 		self.base_wizPage.Layout()
 		bSizer1.Fit( self.base_wizPage )
-		self.attr_wizPage = wx.adv.WizardPageSimple( self , None, None, wx.Bitmap( u"../imglib/common/py_component_wizard.png", wx.BITMAP_TYPE_ANY ) )
+		self.attr_wizPage = wx.adv.WizardPageSimple( self , None, None, bmpfunc.createLibraryBitmap( "py_component_wizard.png") )
 		self.add_page( self.attr_wizPage )
 		
 		bSizer2 = wx.BoxSizer( wx.VERTICAL )
@@ -98,7 +100,9 @@ class icCreateComponentWizardProto ( wx.adv.Wizard ):
 		
 		self.del_attr_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_DEL_BOOKMARK, wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, u"Удалить", wx.EmptyString, None ) 
 		
-		self.undo_attr_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_UNDO, wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, u"Отменить", wx.EmptyString, None ) 
+		self.ctrl_toolBar.AddSeparator()
+		
+		self.edit_attr_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-edit", wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, u"Редактировать", u"Редактировать", None ) 
 		
 		self.ctrl_toolBar.Realize() 
 		
@@ -117,7 +121,7 @@ class icCreateComponentWizardProto ( wx.adv.Wizard ):
 		self.attr_wizPage.SetSizer( bSizer2 )
 		self.attr_wizPage.Layout()
 		bSizer2.Fit( self.attr_wizPage )
-		self.event_wizPage = wx.adv.WizardPageSimple( self , None, None, wx.Bitmap( u"../imglib/common/py_component_wizard.png", wx.BITMAP_TYPE_ANY ) )
+		self.event_wizPage = wx.adv.WizardPageSimple( self , None, None, bmpfunc.createLibraryBitmap( "py_component_wizard.png") )
 		self.add_page( self.event_wizPage )
 		
 		bSizer3 = wx.BoxSizer( wx.VERTICAL )
@@ -137,7 +141,7 @@ class icCreateComponentWizardProto ( wx.adv.Wizard ):
 		
 		bSizer3.Add( self.m_staticText8, 0, wx.ALL|wx.EXPAND, 5 )
 		
-		self.m_staticText81 = wx.StaticText( self.event_wizPage, wx.ID_ANY, u"Пример: keyDown | wx.EVT_KEY_DOWN | onKeyDown | ", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText81 = wx.StaticText( self.event_wizPage, wx.ID_ANY, u"Пример: keyDown | wx.EVT_KEY_DOWN | onKeyDown ", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText81.Wrap( -1 )
 		self.m_staticText81.SetFont( wx.Font( 11, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, "Sans" ) )
 		
@@ -163,7 +167,9 @@ class icCreateComponentWizardProto ( wx.adv.Wizard ):
 		
 		self.del_event_tool = self.event_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_DEL_BOOKMARK, wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, u"Удалить", wx.EmptyString, None ) 
 		
-		self.undo_event_tool = self.event_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_UNDO, wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, u"Отменить", wx.EmptyString, None ) 
+		self.event_toolBar.AddSeparator()
+		
+		self.edit_event_tool = self.event_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-edit", wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, u"Редактировать", u"Редактировать", None ) 
 		
 		self.event_toolBar.Realize() 
 		
@@ -176,7 +182,7 @@ class icCreateComponentWizardProto ( wx.adv.Wizard ):
 		self.event_wizPage.SetSizer( bSizer3 )
 		self.event_wizPage.Layout()
 		bSizer3.Fit( self.event_wizPage )
-		self.gen_wizPage = wx.adv.WizardPageSimple( self , None, None, wx.Bitmap( u"../imglib/common/py_component_wizard.png", wx.BITMAP_TYPE_ANY ) )
+		self.gen_wizPage = wx.adv.WizardPageSimple( self , None, None, bmpfunc.createLibraryBitmap( "py_component_wizard.png") )
 		self.add_page( self.gen_wizPage )
 		
 		bSizer4 = wx.BoxSizer( wx.VERTICAL )
@@ -205,10 +211,6 @@ class icCreateComponentWizardProto ( wx.adv.Wizard ):
 		
 		bSizer4.Add( self.modulename_staticText, 0, wx.ALL|wx.EXPAND, 5 )
 		
-		# WARNING: wxPython code generation isn't supported for this widget yet.
-		self.source_scintilla = wx.Window( self.gen_wizPage )
-		bSizer4.Add( self.source_scintilla, 1, wx.EXPAND |wx.ALL, 5 )
-		
 		
 		self.gen_wizPage.SetSizer( bSizer4 )
 		self.gen_wizPage.Layout()
@@ -217,12 +219,15 @@ class icCreateComponentWizardProto ( wx.adv.Wizard ):
 		
 		
 		# Connect Events
+		self.Bind( wx.adv.EVT_WIZARD_FINISHED, self.onCreateComponentWizardFinished )
+		self.Bind( wx.adv.EVT_WIZARD_PAGE_CHANGED, self.onCreateComponentWizardPageChanged )
+		self.attr_propertyGrid.Bind( pg.EVT_PG_CHANGED, self.onAttrPropertyGridChanged )
 		self.Bind( wx.EVT_TOOL, self.onAddAttrToolClicked, id = self.add_attr_tool.GetId() )
 		self.Bind( wx.EVT_TOOL, self.onDelAttrToolClicked, id = self.del_attr_tool.GetId() )
-		self.Bind( wx.EVT_TOOL, self.onUndoAttrToolClicked, id = self.undo_attr_tool.GetId() )
+		self.Bind( wx.EVT_TOOL, self.onEditAttrToolClicked, id = self.edit_attr_tool.GetId() )
 		self.Bind( wx.EVT_TOOL, self.onAddEventToolClicked, id = self.add_event_tool.GetId() )
 		self.Bind( wx.EVT_TOOL, self.onDelEventToolClicked, id = self.del_event_tool.GetId() )
-		self.Bind( wx.EVT_TOOL, self.onUndoEventToolClicked, id = self.undo_event_tool.GetId() )
+		self.Bind( wx.EVT_TOOL, self.onEditEventToolClicked, id = self.edit_event_tool.GetId() )
 	def add_page(self, page):
 		if self.m_pages:
 			previous_page = self.m_pages[-1]
@@ -235,13 +240,22 @@ class icCreateComponentWizardProto ( wx.adv.Wizard ):
 	
 	
 	# Virtual event handlers, overide them in your derived class
+	def onCreateComponentWizardFinished( self, event ):
+		event.Skip()
+	
+	def onCreateComponentWizardPageChanged( self, event ):
+		event.Skip()
+	
+	def onAttrPropertyGridChanged( self, event ):
+		event.Skip()
+	
 	def onAddAttrToolClicked( self, event ):
 		event.Skip()
 	
 	def onDelAttrToolClicked( self, event ):
 		event.Skip()
 	
-	def onUndoAttrToolClicked( self, event ):
+	def onEditAttrToolClicked( self, event ):
 		event.Skip()
 	
 	def onAddEventToolClicked( self, event ):
@@ -250,7 +264,186 @@ class icCreateComponentWizardProto ( wx.adv.Wizard ):
 	def onDelEventToolClicked( self, event ):
 		event.Skip()
 	
-	def onUndoEventToolClicked( self, event ):
+	def onEditEventToolClicked( self, event ):
+		event.Skip()
+	
+
+###########################################################################
+## Class icEditAttrDialogProto
+###########################################################################
+
+class icEditAttrDialogProto ( wx.Dialog ):
+	
+	def __init__( self, parent ):
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Атрибут", pos = wx.DefaultPosition, size = wx.Size( 712,225 ), style = wx.DEFAULT_DIALOG_STYLE )
+		
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+		
+		bSizer5 = wx.BoxSizer( wx.VERTICAL )
+		
+		bSizer6 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.m_staticText14 = wx.StaticText( self, wx.ID_ANY, u"Наименование:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText14.Wrap( -1 )
+		bSizer6.Add( self.m_staticText14, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		self.name_textCtrl = wx.TextCtrl( self, wx.ID_ANY, u"attr_name", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer6.Add( self.name_textCtrl, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		
+		bSizer5.Add( bSizer6, 1, wx.EXPAND, 5 )
+		
+		bSizer7 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.m_staticText15 = wx.StaticText( self, wx.ID_ANY, u"Редактор:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText15.Wrap( -1 )
+		bSizer7.Add( self.m_staticText15, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		editor_choiceChoices = []
+		self.editor_choice = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, editor_choiceChoices, 0 )
+		self.editor_choice.SetSelection( 0 )
+		bSizer7.Add( self.editor_choice, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		
+		bSizer5.Add( bSizer7, 1, wx.EXPAND, 5 )
+		
+		bSizer8 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.m_staticText16 = wx.StaticText( self, wx.ID_ANY, u"Значение по умолчанию:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText16.Wrap( -1 )
+		bSizer8.Add( self.m_staticText16, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		self.default_textCtrl = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer8.Add( self.default_textCtrl, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		
+		bSizer5.Add( bSizer8, 1, wx.EXPAND, 5 )
+		
+		bSizer9 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.cancel_button = wx.Button( self, wx.ID_ANY, u"Отмена", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer9.Add( self.cancel_button, 0, wx.ALL, 5 )
+		
+		self.ok_button = wx.Button( self, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.ok_button.SetDefault() 
+		bSizer9.Add( self.ok_button, 0, wx.ALL, 5 )
+		
+		
+		bSizer5.Add( bSizer9, 1, wx.ALIGN_RIGHT, 5 )
+		
+		
+		self.SetSizer( bSizer5 )
+		self.Layout()
+		
+		self.Centre( wx.BOTH )
+		
+		# Connect Events
+		self.cancel_button.Bind( wx.EVT_BUTTON, self.onCancelButtonClick )
+		self.ok_button.Bind( wx.EVT_BUTTON, self.onOkButtonClick )
+	
+	def __del__( self ):
+		pass
+	
+	
+	# Virtual event handlers, overide them in your derived class
+	def onCancelButtonClick( self, event ):
+		event.Skip()
+	
+	def onOkButtonClick( self, event ):
+		event.Skip()
+	
+
+###########################################################################
+## Class icEditEventDialogProto
+###########################################################################
+
+class icEditEventDialogProto ( wx.Dialog ):
+	
+	def __init__( self, parent ):
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Событие", pos = wx.DefaultPosition, size = wx.Size( 712,219 ), style = wx.DEFAULT_DIALOG_STYLE )
+		
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+		
+		bSizer5 = wx.BoxSizer( wx.VERTICAL )
+		
+		bSizer6 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.m_staticText14 = wx.StaticText( self, wx.ID_ANY, u"Наименование:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText14.Wrap( -1 )
+		bSizer6.Add( self.m_staticText14, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		self.name_textCtrl = wx.TextCtrl( self, wx.ID_ANY, u"attr_name", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer6.Add( self.name_textCtrl, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		
+		bSizer5.Add( bSizer6, 1, wx.EXPAND, 5 )
+		
+		bSizer7 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.event_checkBox = wx.CheckBox( self, wx.ID_ANY, u"Событие:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer7.Add( self.event_checkBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		event_choiceChoices = []
+		self.event_choice = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, event_choiceChoices, 0 )
+		self.event_choice.SetSelection( 0 )
+		self.event_choice.Enable( False )
+		
+		bSizer7.Add( self.event_choice, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		
+		bSizer5.Add( bSizer7, 1, wx.EXPAND, 5 )
+		
+		bSizer8 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.m_staticText16 = wx.StaticText( self, wx.ID_ANY, u"Функция-обработчик:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText16.Wrap( -1 )
+		bSizer8.Add( self.m_staticText16, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		self.func_name_textCtrl = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer8.Add( self.func_name_textCtrl, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		
+		bSizer5.Add( bSizer8, 1, wx.EXPAND, 5 )
+		
+		bSizer9 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.cancel_button = wx.Button( self, wx.ID_ANY, u"Отмена", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer9.Add( self.cancel_button, 0, wx.ALL, 5 )
+		
+		self.ok_button = wx.Button( self, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.ok_button.SetDefault() 
+		bSizer9.Add( self.ok_button, 0, wx.ALL, 5 )
+		
+		
+		bSizer5.Add( bSizer9, 1, wx.ALIGN_RIGHT, 5 )
+		
+		
+		self.SetSizer( bSizer5 )
+		self.Layout()
+		
+		self.Centre( wx.BOTH )
+		
+		# Connect Events
+		self.name_textCtrl.Bind( wx.EVT_TEXT, self.onEventNameText )
+		self.event_checkBox.Bind( wx.EVT_CHECKBOX, self.onEventCheckBox )
+		self.cancel_button.Bind( wx.EVT_BUTTON, self.onCancelButtonClick )
+		self.ok_button.Bind( wx.EVT_BUTTON, self.onOkButtonClick )
+	
+	def __del__( self ):
+		pass
+	
+	
+	# Virtual event handlers, overide them in your derived class
+	def onEventNameText( self, event ):
+		event.Skip()
+	
+	def onEventCheckBox( self, event ):
+		event.Skip()
+	
+	def onCancelButtonClick( self, event ):
+		event.Skip()
+	
+	def onOkButtonClick( self, event ):
 		event.Skip()
 	
 
