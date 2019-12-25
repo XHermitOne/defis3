@@ -178,12 +178,47 @@ class icObjectPassport(icBasePassport):
     id = property(get_id)
     uuid = property(get_uuid)
 
+    def to_dict(self):
+        """
+        Получить паспорт в виде словаря.
+
+        :return: Паспорт в виде словаря.
+        """
+        return dict(type=self.type, name=self.name, interface=self.interface,
+                    mod=self.mod, subsys=self.subsys, id=self.id, uuid=self.uuid)
+
+    def from_dict(self, passport_dict):
+        """
+        Сохранить паспорт из словаря.
+
+        :param passport_dict: Паспорт в виде словаря.
+        :return: True/False.
+        """
+        result = True
+        if not isinstance(passport_dict, dict):
+            try:
+                passport_dict = dict(passport_dict)
+            except:
+                log.fatal(u'Ошибка типа паспорта в виде словаря')
+                passport_dict = dict()
+                result = False
+
+        self.type = passport_dict.get('type')
+        self.name = passport_dict.get('name')
+        self.interface = passport_dict.get('interface')
+        self.mod = passport_dict.get('mod')
+        self.subsys = passport_dict.get('subsys')
+        self.id = passport_dict.get('id')
+        self.uuid = passport_dict.get('uuid')
+
+        return result
+
 
 def getResPSP(resName, subsys=None, comp_interface=None):
     """
     Генрирует паспорт корневого объекта ресурса.
     """
-    return icObjectPassport((None,None, comp_interface, resName, subsys))
+    return icObjectPassport((None, None, comp_interface, resName, subsys))
 
 
 def deco_func(func, pre=None, post=None):
