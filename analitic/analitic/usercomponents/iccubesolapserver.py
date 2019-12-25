@@ -73,7 +73,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('server_components.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('server_components.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'analitic/doc/_build/html/analitic.usercomponents.iccubesolapserver.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -84,7 +84,7 @@ ic_can_contain = ['Cube']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # Функции редактирования
@@ -111,8 +111,8 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in icdb.DB_TYPES:
-                dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                                u'Выбранный объект не является объектом БД.', parent)
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
+                                       u'Выбранный объект не является объектом БД.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         elif ret in (None, ''):
@@ -137,7 +137,9 @@ class icCubesOLAPServer(icwidget.icSimple,
     @staticmethod
     def TestComponentResource(res, context, parent, *arg, **kwarg):
         """
-        Функция тестирования компонента OLAP Сервер движка Cubes в режиме редактора ресурса.
+        Функция тестирования компонента OLAP
+        Сервер движка Cubes в режиме редактора ресурса.
+
         :param res:
         :param context:
         :param parent:

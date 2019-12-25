@@ -47,7 +47,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('node-select-all.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('node-select-all.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'analitic/doc/_build/html/analitic.usercomponents.iccubedimensionhierarchy.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -58,7 +58,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # Функции редактирования

@@ -85,7 +85,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('wxtreectrl.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('wxtreectrl.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'analitic/doc/_build/html/analitic.usercomponents.icolapquerytreectrl.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -96,7 +96,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # Функции редактирования
@@ -125,7 +125,8 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             # parent = propEdt
             if not ret[0][0] in ('CubesOLAPServer',):
-                dlgfunc.openWarningBox(u'ОШИБКА', u'Выбранный объект не является OLAP СЕРВЕРОМ.')
+                dlgfunc.openWarningBox(u'ОШИБКА',
+                                       u'Выбранный объект не является OLAP СЕРВЕРОМ.')
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 
@@ -201,6 +202,7 @@ class icOLAPQueryTreeCtrl(icwidget.icWidget,
         Это уникальный идентификатор паспорта компонента.
         Не изменяемый в зависимости от редактирования т.к.
         паспорт не меняется.
+
         :return: UUID строка контрольной суммы паспорта.
         """
         if self._widget_psp_uuid:
