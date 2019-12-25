@@ -24,6 +24,7 @@ import wx
 
 from ic.components import icwidget
 from ic.utils import util
+from ic.dlg import dlgfunc
 import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
@@ -69,7 +70,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('folder.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('folder-open.png')
 
 #   Путь до файла документации
-ic_class_doc = 'doc/public/catalog.html'
+ic_class_doc = 'ic/doc/_build/html/ic.components.user.ic_catalog_wrp.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -80,7 +81,7 @@ ic_can_contain = None   # ['ObjectCatalogItem', 'FolderCatalogItem']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # Функции редактирования
@@ -96,7 +97,7 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
         lst = iccatalog.catalog_type_dct.keys()
         lst.sort()
         ret = multiChoiceEdt.get_user_property_editor(value, pos, size, style, propEdt,
-            title=_('Catalog types'), edt_txt=_('Select types:'),choice=lst)        
+                                                      title=u'Типы каталогов', edt_txt=u'Выберите тип:', choice=lst)
 
     if not ret:
         return value
@@ -114,7 +115,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         ret = str_to_val_user_property(attr, value, propEdt)
         if ret:
             if not ret[0][0] in icsqlalchemy.DB_TYPES:
-                msgbox.MsgBox(parent, _('Object is not DB source (*.src).'))
+                dlgfunc.openWarningBox(u'ОШИБКА', u'Объект не является БД', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return ret
     elif attr in ('catalog_types',):
@@ -126,7 +127,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
             lst = iccatalog.catalog_type_dct.keys()
             for el in tps:
                 if el not in lst:
-                    msgbox.MsgBox(parent, _('Type <%s> is not registered catalog item.' % el))
+                    dlgfunc.openWarningBox(u'ОШИБКА', u'Тип <%s> не зарегистрирован как элемент каталога' % el, parent)
                     return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         else:
@@ -148,6 +149,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
 class Catalog(icwidget.icWidget, parentModule.icDBCatalog):
     """
     Описание пользовательского компонента.
+
     :type component_spc: C{dictionary}
     :cvar component_spc: Спецификация компонента.
         
@@ -165,6 +167,7 @@ class Catalog(icwidget.icWidget, parentModule.icDBCatalog):
                  bCounter=False, progressDlg=None):
         """
         Конструктор пользовательского компонента.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -217,6 +220,7 @@ class Catalog(icwidget.icWidget, parentModule.icDBCatalog):
 def test(par=0):
     """ 
     Тестируем пользовательский класс.
+
     :type par: C{int}
     :param par: Тип консоли.
     """

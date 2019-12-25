@@ -61,7 +61,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('chart_organisation.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('chart_organisation.png')
 
 #   Путь до файла документации
-ic_class_doc = 'doc/public/icplanmodifmanager.html'
+ic_class_doc = 'plan/doc/_build/html/plan.usercomponents.icplanmodifmanager.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -72,7 +72,7 @@ ic_can_contain = ['PlanModif']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):

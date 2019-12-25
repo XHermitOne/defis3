@@ -72,7 +72,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('chart-up-color.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('chart-up-color.png')
 
 #   Путь до файла документации
-ic_class_doc = 'doc/public/icplan.html'
+ic_class_doc = 'plan/doc/_build/html/plan.usercomponents.icplan.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -83,7 +83,7 @@ ic_can_contain = ['MetaItem', 'MetaConst', 'MetaAttr']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # Функции редактирования свойств
