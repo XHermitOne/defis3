@@ -19,7 +19,8 @@
     компонент (ic_can_contain = -1).
 """
 
-import wx,wx.aui
+import wx
+import wx.aui
 from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs

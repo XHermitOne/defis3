@@ -1463,6 +1463,50 @@ class icSimple(icobject.icObject):
         """
         return False
 
+    def createAttributes(self, component_spc=None):
+        """
+        По спецификации  компонента создаем соответствующие
+        атрибуты (кроме служебных атрибутов).
+
+        :param component_spc: Спецификация компонента.
+            Если не определена, то берется из ресурса компонента.
+        :return: True/False.
+        """
+        if component_spc:
+            component_spc = self.resource
+        if component_spc:
+            #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
+            attr_names = [attr_name for attr_name in component_spc.keys() if not attr_name.startswith('__')]
+
+            for attr_name in attr_names:
+                setattr(self, attr_name, component_spc[attr_name])
+            return True
+        return False
+
+    def createChildren(self, children=None, bCounter=False, progressDlg=None):
+        """
+        Функция создает дочерние объекты,
+        которые содержаться в данном компоненте.
+
+        :param children: Список спецификаций дочерних объектов.
+            Если не определен список, то берется из ресурса компонента.
+        :type bCounter: C{bool}
+        :param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
+            для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
+            общего количества объектов.
+        :type progressDlg: C{wx.ProgressDialog}
+        :param progressDlg: Указатель на идикатор создания формы.
+        :return:
+        """
+        if children is None:
+            children = self.resource.get('child', [])
+        if children:
+            import ic.components.icResourceParser as prs
+            return prs.icResourceParser(self, children,
+                                        None, evalSpace=self.evalSpace,
+                                        bCounter=bCounter, progressDlg=progressDlg)
+        return self
+
 
 class icBase(icSimple, icShape):
     """

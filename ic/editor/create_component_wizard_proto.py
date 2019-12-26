@@ -21,12 +21,12 @@ from ic.bitmap import bmpfunc
 class icCreateComponentWizardProto ( wx.adv.Wizard ):
 	
 	def __init__( self, parent ):
-		wx.adv.Wizard.__init__ ( self, parent, id = wx.ID_ANY, title = u"Мастер создания компонента", bitmap = bmpfunc.createLibraryBitmap( "py_component_wizard.png"), pos = wx.DefaultPosition, style = wx.DEFAULT_DIALOG_STYLE|wx.STAY_ON_TOP )
+		wx.adv.Wizard.__init__ ( self, parent, id = wx.ID_ANY, title = u"Мастер создания компонента", bitmap = bmpfunc.createLibraryBitmap('py_component_wizard.png'), pos = wx.DefaultPosition, style = wx.DEFAULT_DIALOG_STYLE|wx.STAY_ON_TOP )
 		
 		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		self.m_pages = []
 		
-		self.base_wizPage = wx.adv.WizardPageSimple( self , None, None, bmpfunc.createLibraryBitmap( "py_component_wizard.png") )
+		self.base_wizPage = wx.adv.WizardPageSimple( self , None, None, bmpfunc.createLibraryBitmap('py_component_wizard.png') )
 		self.add_page( self.base_wizPage )
 		
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
@@ -56,7 +56,8 @@ class icCreateComponentWizardProto ( wx.adv.Wizard ):
 		self.author_propertyGridItem = self.attr_propertyGrid.Append( pg.StringProperty( u"Автор", u"Автор" ) ) 
 		self.copyright_propertyGridItem = self.attr_propertyGrid.Append( pg.StringProperty( u"Копирайт", u"Копирайт" ) ) 
 		self.parentmodule_propertyGridItem = self.attr_propertyGrid.Append( pg.FileProperty( u"(*) Родительский модуль", u"(*) Родительский модуль" ) ) 
-		self.parentclass_propertyGridItem = self.attr_propertyGrid.Append( pg.StringProperty( u"(*) Родительский класс", u"(*) Родительский класс" ) ) 
+		self.parentclass_propertyGridItem = self.attr_propertyGrid.Append( pg.EditEnumProperty( u"(*) Родительский класс", u"(*) Родительский класс" ) ) 
+		self.widget_propertyGridItem = self.attr_propertyGrid.Append( pg.BoolProperty( u"Виджет (видимый компонент)", u"Виджет (видимый компонент)" ) ) 
 		self.icon_propertyGridItem = self.attr_propertyGrid.Append( pg.ImageFileProperty( u"Иконка", u"Иконка" ) ) 
 		self.docfile_propertyGridItem = self.attr_propertyGrid.Append( pg.FileProperty( u"Файл документации", u"Файл документации" ) ) 
 		bSizer1.Add( self.attr_propertyGrid, 1, wx.ALL|wx.EXPAND, 5 )
@@ -72,7 +73,7 @@ class icCreateComponentWizardProto ( wx.adv.Wizard ):
 		self.base_wizPage.SetSizer( bSizer1 )
 		self.base_wizPage.Layout()
 		bSizer1.Fit( self.base_wizPage )
-		self.attr_wizPage = wx.adv.WizardPageSimple( self , None, None, bmpfunc.createLibraryBitmap( "py_component_wizard.png") )
+		self.attr_wizPage = wx.adv.WizardPageSimple( self , None, None, bmpfunc.createLibraryBitmap('py_component_wizard.png') )
 		self.add_page( self.attr_wizPage )
 		
 		bSizer2 = wx.BoxSizer( wx.VERTICAL )
@@ -111,17 +112,11 @@ class icCreateComponentWizardProto ( wx.adv.Wizard ):
 		self.attr_listCtrl = wx.ListCtrl( self.attr_wizPage, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LC_REPORT|wx.LC_SINGLE_SEL )
 		bSizer2.Add( self.attr_listCtrl, 1, wx.ALL|wx.EXPAND, 5 )
 		
-		self.m_staticline6 = wx.StaticLine( self.attr_wizPage, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
-		bSizer2.Add( self.m_staticline6, 0, wx.EXPAND |wx.ALL, 5 )
-		
-		self.container_checkBox = wx.CheckBox( self.attr_wizPage, wx.ID_ANY, u"Признак контейнера", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer2.Add( self.container_checkBox, 0, wx.ALL|wx.EXPAND, 5 )
-		
 		
 		self.attr_wizPage.SetSizer( bSizer2 )
 		self.attr_wizPage.Layout()
 		bSizer2.Fit( self.attr_wizPage )
-		self.event_wizPage = wx.adv.WizardPageSimple( self , None, None, bmpfunc.createLibraryBitmap( "py_component_wizard.png") )
+		self.event_wizPage = wx.adv.WizardPageSimple( self , None, None, bmpfunc.createLibraryBitmap('py_component_wizard.png') )
 		self.add_page( self.event_wizPage )
 		
 		bSizer3 = wx.BoxSizer( wx.VERTICAL )
@@ -182,7 +177,7 @@ class icCreateComponentWizardProto ( wx.adv.Wizard ):
 		self.event_wizPage.SetSizer( bSizer3 )
 		self.event_wizPage.Layout()
 		bSizer3.Fit( self.event_wizPage )
-		self.gen_wizPage = wx.adv.WizardPageSimple( self , None, None, bmpfunc.createLibraryBitmap( "py_component_wizard.png") )
+		self.gen_wizPage = wx.adv.WizardPageSimple( self , None, None, bmpfunc.createLibraryBitmap('py_component_wizard.png') )
 		self.add_page( self.gen_wizPage )
 		
 		bSizer4 = wx.BoxSizer( wx.VERTICAL )
@@ -275,7 +270,7 @@ class icCreateComponentWizardProto ( wx.adv.Wizard ):
 class icEditAttrDialogProto ( wx.Dialog ):
 	
 	def __init__( self, parent ):
-		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Атрибут", pos = wx.DefaultPosition, size = wx.Size( 712,225 ), style = wx.DEFAULT_DIALOG_STYLE )
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Атрибут", pos = wx.DefaultPosition, size = wx.Size( 712,304 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
 		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
@@ -319,6 +314,18 @@ class icEditAttrDialogProto ( wx.Dialog ):
 		
 		bSizer5.Add( bSizer8, 1, wx.EXPAND, 5 )
 		
+		bSizer15 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.m_staticText19 = wx.StaticText( self, wx.ID_ANY, u"Описание:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText19.Wrap( -1 )
+		bSizer15.Add( self.m_staticText19, 0, wx.ALL, 5 )
+		
+		self.description_textCtrl = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer15.Add( self.description_textCtrl, 0, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		bSizer5.Add( bSizer15, 1, wx.EXPAND, 5 )
+		
 		bSizer9 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		self.cancel_button = wx.Button( self, wx.ID_ANY, u"Отмена", wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -360,7 +367,7 @@ class icEditAttrDialogProto ( wx.Dialog ):
 class icEditEventDialogProto ( wx.Dialog ):
 	
 	def __init__( self, parent ):
-		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Событие", pos = wx.DefaultPosition, size = wx.Size( 712,219 ), style = wx.DEFAULT_DIALOG_STYLE )
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Событие", pos = wx.DefaultPosition, size = wx.Size( 712,298 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
 		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
@@ -404,6 +411,18 @@ class icEditEventDialogProto ( wx.Dialog ):
 		
 		
 		bSizer5.Add( bSizer8, 1, wx.EXPAND, 5 )
+		
+		bSizer15 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.m_staticText19 = wx.StaticText( self, wx.ID_ANY, u"Описание:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText19.Wrap( -1 )
+		bSizer15.Add( self.m_staticText19, 0, wx.ALL, 5 )
+		
+		self.description_textCtrl = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer15.Add( self.description_textCtrl, 0, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		bSizer5.Add( bSizer15, 1, wx.EXPAND, 5 )
 		
 		bSizer9 = wx.BoxSizer( wx.HORIZONTAL )
 		
