@@ -243,26 +243,17 @@ class icDialog(icWidget, wx.Dialog):
 
         #   Создаем дочерние компоненты
         self.Freeze()
-        # self.childCreator(bCounter, progressDlg)
         self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
         self.Thaw()
-        
+
+        if not self.evalSpace['_root_obj']:
+            self.evalSpace['_root_obj'] = self
+
         if component.get('show', '1') in ('True', 'true', 1):
             self.Show(True)
 
         if component.get('fit', None):
             self.Fit()
-
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        if self.child:
-            if not self.evalSpace['_root_obj']:
-                self.evalSpace['_root_obj'] = self
-
-            self.GetKernel().parse_resource(self, self.child, None, context=self.evalSpace,
-                                            bCounter=bCounter, progressDlg=progressDlg)
 
     def GetResult(self):
         """

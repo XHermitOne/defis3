@@ -154,16 +154,8 @@ class StateIndicator(icwidget.icWidget, parentModule.GenBitmapTextButton):
         self.BindICEvt()
         
         #   Создаем дочерние компоненты
-        self.childCreator(bCounter, progressDlg)
-        
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        if self.child:
-            self.GetKernel().parse_resource(self, self.child, None, context=self.evalSpace,
-                                            bCounter=bCounter, progressDlg=progressDlg)
-      
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
+
     #   Обработчики событий
     def OnLeft_DWN(self, event):
         """

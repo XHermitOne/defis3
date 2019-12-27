@@ -159,19 +159,12 @@ class icScrolledWindow(icWidget, wx.ScrolledWindow):
         self.SetScrollRate(sx, sy)
         self.EnableScrolling(bx, by)
         self.BindICEvt()
-        #   Создаем дочерние компоненты
-        # self.childCreator(bCounter, progressDlg)
-        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        if self.child:
-            if not self.evalSpace['_root_obj']:
-                self.evalSpace['_root_obj'] = self
-            self.GetKernel().parse_resource(self, self.child, None, context=self.evalSpace,
-                                            bCounter=bCounter, progressDlg=progressDlg)
+        if not self.evalSpace['_root_obj']:
+            self.evalSpace['_root_obj'] = self
+
+        #   Создаем дочерние компоненты
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
     def DestroyWin(self):
         """

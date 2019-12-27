@@ -241,13 +241,6 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
         """
         return self._data_src_obj
 
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        return prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
-                                    bCounter=bCounter, progressDlg=progressDlg)
-
     def _str2unicode(self, Value_):
         """
         Приведение всех надписей к юникоду.

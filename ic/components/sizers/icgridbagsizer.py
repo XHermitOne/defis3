@@ -24,9 +24,9 @@
 import wx
 from ic.utils.util import icSpcDefStruct
 from ic.components.icwidget import icSizer, icParentShapeType, icSelectedShapeType, SPC_IC_SIZER
-from ic.log.iclog import MsgLastError, LogLastError
+# from ic.log.iclog import MsgLastError, LogLastError
 from ic.PropertyEditor import icDefInf
-from ic.kernel import io_prnt
+from ic.log import log
 from ic.imglib import common
 
 
@@ -128,8 +128,7 @@ class icGridBagSizer(icSizer, wx.GridBagSizer):
         self.sizeCols = []
         self.sizeRows = []
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+        self.childCreator(bCounter, progressDlg)
 
         #   Устанавливаем колонки и ряды, которые подстраивают
         #   свои размеры под размеры родительского окна
@@ -155,7 +154,7 @@ class icGridBagSizer(icSizer, wx.GridBagSizer):
         """
         Функция создает объекты, которые содержаться в данном компоненте.
         """
-        if self.child:
+        if 'child' in self.resource:
             if not self.evalSpace['_root_obj']:
                 self.evalSpace['_root_obj'] = self
                 parent = self.evalSpace['_main_parent'] or self
@@ -163,7 +162,7 @@ class icGridBagSizer(icSizer, wx.GridBagSizer):
                 parent = self.parent
 
             kernel = self.GetKernel()
-            kernel.parse_resource(parent, self.child, self, context=self.evalSpace,
+            kernel.parse_resource(parent, self.resource['child'], self, context=self.evalSpace,
                                   bCounter=bCounter, progressDlg=progressDlg)
             try:
                 if not self.parent_sizer:
@@ -261,7 +260,7 @@ class icGridBagSizer(icSizer, wx.GridBagSizer):
                     elif obj.flag != wx.EXPAND:
                         self.SetItemMinSize(obj, obj.size)
                 except:
-                    LogLastError('reconstruct Error')
+                    log.fatal('reconstruct Error')
             else:
                 self.objectList.append(obj)
                 

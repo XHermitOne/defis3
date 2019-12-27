@@ -34,7 +34,6 @@ import ic.components.user.ic_obj_storage_wrp as ic_obj_storage
 import ic.components.user.ic_menubar_wrp as ic_menubar_wrp
 import ic.components.user.ic_flatmenubar_wrp as ic_flatmenubar_wrp
 from ic.components.user import ic_flatmenu_wrp
-import ic.components.user.ic_mth_wrp as ic_mth
 
 from . import prj_node
 from . import menuPrjNode
@@ -952,25 +951,6 @@ class icPrjTemplate(icPrjResource):
         self.img = imglib.imgEdtTemplate
         # Шаблон для заполнения по умолчанию
         self.template = None
-
-
-class icPrjMethod(icPrjResource):
-    """
-    Метод.
-    """
-    def __init__(self, parent=None):
-        """
-        Конструктор.
-        """
-        icPrjResource.__init__(self, parent)
-        self.description = u'Метод'
-        self.name = 'new_method'
-        self.enable = False     # Выключить методы для использования
-        self.typ = 'mth'
-        self.img = imglib.imgEdtMethod
-
-        # Шаблон для заполнения по умолчанию
-        self.template = ic_mth.ic_class_spc
 
 
 class icPrjMetaDataRes(icPrjResource):

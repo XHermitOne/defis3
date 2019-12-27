@@ -318,7 +318,6 @@ class icHeadCell(icwidget.icWidget, wx.Control):
         self.setRoundCorners(((component.get('roundConer', None) or []) + [0] * 4)[:4])
 
         #   Создаем дочерние компоненты
-        self.child = component['child']
         self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
     def setButtonStyle(self, style=True):

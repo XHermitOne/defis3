@@ -150,15 +150,4 @@ class icChangeAttrSignal(icwidget.icSimple,parentModule.icChangedAttrSrc):
         parentModule.icChangedAttrSrc.__init__(self, pasport, self.eval_attr('attr_name'))
 
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
-        
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        if self.child:
-            prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
-                                 bCounter=bCounter, progressDlg=progressDlg)
-      
-    #   Обработчики событий
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)

@@ -110,7 +110,7 @@ class icImageLibrary(icwidget.icSimple, parentModule.icImageLibraryPrototype):
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
         parentModule.icImageLibraryPrototype.__init__(self)
-        # self.childCreator(bCounter, progressDlg)
+
         self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
         
         for idx, el in enumerate(self.resource['child']):
@@ -134,10 +134,3 @@ class icImageLibrary(icwidget.icSimple, parentModule.icImageLibraryPrototype):
         Заменяется на метод wx.ImageList.
         """
         return None
-
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
-                             bCounter=bCounter, progressDlg=progressDlg)

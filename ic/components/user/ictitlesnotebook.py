@@ -369,7 +369,7 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
         
         #   Создаем дочерние компоненты
         if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+            self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
             #   Привязвыаем объекты к панели закладок
             for indx, spc in enumerate(self.child):
                 try:
@@ -392,14 +392,6 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
         event.Layout()
         event.Skip()
         
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        if self.child:
-            prs.icResourceParser(self.clientPanel, self.child, None, evalSpace=self.evalSpace,
-                                 bCounter=bCounter, progressDlg=progressDlg)
-
     def RemoveTitleObjects(self, indx=-1):
         """
         Удаляет все объекты с закладки.

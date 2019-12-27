@@ -34,7 +34,6 @@ nodeReg = {'pro': prj_root.icPrjRoot,  # Проект
            '__py__': prj_module.icPrjModules,  # Модули
            'py': prj_module.icPrjModule,  # Модуль
            'ftl': prj_resource.icPrjTemplate,  # Шаблон
-           'mth': prj_resource.icPrjMethod,  # Метод
            'mtd': prj_resource.icPrjMetaDataRes,  # Дерево метакомпонент/Метаданные
            '__imp__': ImpNode.icPrjImportSystems,  # Импортируемы подсистемы
            'imp': ImpNode.icPrjImportSys,  # Импортируемая подсистема

@@ -225,22 +225,11 @@ class icWX_SignalType(icwidget.icSimple):
             self.receiver = icobject.icObjectPassport(*self.receiver)
             
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        if self.child:
-            prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
-                                 bCounter=bCounter, progressDlg=progressDlg)
-      
     def getEvtId(self):
         """
         Возвращет идентификатор сообщения.
         """
         exec('from %s import %s as event_id' % (self.lib, self.wx_signal_type))
         return event_id
-        
-    #   Обработчики событий

@@ -202,15 +202,8 @@ class icFlatMenuBar(icwidget.icWidget, icflatmenubar.icFlatMenuBarPrototype):
                     w += dw
             self.SetSize(wx.Size(w, -1))
 
-        self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
-    def childCreator(self, bCounter=False, progressDlg=None):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
-                             bCounter=bCounter, progressDlg=progressDlg)
-                            
     def appendMenuBar(self, menubar, bCounter=False, progressDlg=None):
         """
         Добавить/Объединить два горизонтальных меню.

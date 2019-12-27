@@ -46,11 +46,11 @@ ic_class_styles = {'DEFAULT': 0}
 # --- Спецификация на ресурсное описание класса ---
 ic_class_spc = {'type': 'SimpleObjectGrid',
                 'name': 'default',
-                'description':None,
+                'description': None,
                 'child': [],
                 'activate': True,
-                'init_expr':None,
-                '_uuid':None,
+                'init_expr': None,
+                '_uuid': None,
     
                 'selected': None,   # Выбор элемента
                 'activated': None,  # Активация элемента
@@ -167,13 +167,6 @@ class icSimpleObjectGrid(icwidget.icWidget, parentModule.GroupListView):
 
         self.SetFocus()
         
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        return prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
-                                    bCounter=bCounter, progressDlg=progressDlg)
-
     def _str2unicode(self, Value_):
         """
         Приведение всех надписей к юникоду.

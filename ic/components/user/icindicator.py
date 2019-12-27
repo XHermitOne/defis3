@@ -190,8 +190,8 @@ class IndicatorState(parentModule.icHeadCell):
         self.BindICEvt()
 
         #   Создаем дочерние компоненты
-        self.childCreator(bCounter, progressDlg)
-        
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
+
     def SetState(self, state):
         """
         Устанавливает нужное состояние компонента.
@@ -276,16 +276,7 @@ class IndicatorState(parentModule.icHeadCell):
         """
         return self._oldState
         
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        if self.child:
-            self.GetKernel().parse_resource(self, self.child, None, context=self.evalSpace,
-                                            bCounter=bCounter, progressDlg=progressDlg)
-      
     #   Обработчики событий
-    
     def OnMouseClick(self, event):
         """
         Обработчик события wx.EVT_LEFT_UP, атрибут=mouseClick.

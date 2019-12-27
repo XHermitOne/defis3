@@ -356,17 +356,6 @@ class icTreeListCtrlSimple(icwidget.icWidget,
             ic_log.icLogErr(u'ОШИБКА компонента %s метода setLabelCols' % self.name)
             return False
         
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        if self.IsSizer() and self.child:
-            prs.icResourceParser(self.parent, self.child, self, evalSpace=self.evalSpace,
-                                 bCounter=bCounter, progressDlg=progressDlg)
-        elif self.child:
-            prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
-                                 bCounter=bCounter, progressDlg=progressDlg)
-                                
     def getElementName(self, res, indx):
         """
         Возвращает имя элемента списка.

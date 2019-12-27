@@ -236,14 +236,6 @@ class icAUIMainWindow(icwidget.icSimple, icAUImainwin.icAUIMainWinPrototype):
         if component.get('init_expr', None):
             self.eval_attr('init_expr')        
 
-    def _childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        return prs.icResourceParser(self, self.resource['child'], 
-                                    None, evalSpace=self.evalSpace,
-                                    bCounter=bCounter, progressDlg=progressDlg)
-
     def childCreator(self, child):
         """
         Функция создает объекты, которые содержаться в данном компоненте.

@@ -177,24 +177,12 @@ class icWXPanel(icWidget, wx.Panel):
         if (self.context['__runtime_mode'] == util.IC_RUNTIME_MODE_EDITOR and
            ('_root_obj' in self.context and self.context['_root_obj'] is None)):
             self.setEditorMode()
-            
-        #   Создаем дочерние компоненты
-        # self.childCreator(bCounter, progressDlg)
-        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        if self.child:
-            if '_root_obj' not in self.evalSpace or not self.evalSpace['_root_obj']:
-                self.evalSpace['_root_obj'] = self
-            kernel = self.GetKernel()
-            if kernel:
-                kernel.parse_resource(self, self.child, None, context=self.evalSpace,
-                                      bCounter=bCounter, progressDlg=progressDlg)
-            else:
-                log.warning(u'Не определено ядро для <%s>' % self.getName())
+        if '_root_obj' not in self.evalSpace or not self.evalSpace['_root_obj']:
+            self.evalSpace['_root_obj'] = self
+
+        #   Создаем дочерние компоненты
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
     def destroyWin(self):
         """

@@ -119,5 +119,3 @@ class icWX_Binder(icwidget.icSimple):
 
         #   Создаем дочерние компоненты
         self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
-
-    #   Обработчики событий

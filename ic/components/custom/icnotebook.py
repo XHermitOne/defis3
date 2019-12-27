@@ -180,7 +180,7 @@ class icNotebook(icwidget.icWidget, wx.Notebook):
         self.BindICEvt()
 
         #   Создаем дочерние компоненты
-        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
+        self.childCreator(bCounter=bCounter, progressDlg=progressDlg)
 
         # После создания страниц надо выбрать страницу
         self.SetSelection(self.firstSel)
@@ -206,8 +206,8 @@ class icNotebook(icwidget.icWidget, wx.Notebook):
         """
         Функция создает объекты, которые содержаться в данном компоненте.
         """
-        if self.child:
-            self.GetKernel().parse_resource(self, self.child, None, context=self.evalSpace,
+        if 'child' in self.resource:
+            self.GetKernel().parse_resource(self, self.resource['child'], None, context=self.evalSpace,
                                             bCounter=bCounter, progressDlg=progressDlg)
             
             #   Добавляем компоненты в книгу

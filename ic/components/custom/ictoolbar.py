@@ -279,17 +279,15 @@ class icToolBar(icwidget.icWidget, wx.ToolBar):
         self._tool_name_id = {}
 
         #   Создаем дочерние компоненты
-        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
-        # if 'child' in component:
-        #     self.childCreator(bCounter, progressDlg)
+        self.childCreator(bCounter, progressDlg)
         
     def childCreator(self, bCounter, progressDlg):
         """
         Функция создает объекты, которые содержаться в данном компоненте.
         """
-        if self.child:
+        if 'child' in self.resource:
             indx = 0
-            for el in self.child:
+            for el in self.resource['child']:
                 if not el['activate'] in (0, '0', None, 'None', 'False', 'false'):
                     if el['type'] == 'ToolBarTool':
                         img_indx = el.get('img_indx', -1)

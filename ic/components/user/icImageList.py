@@ -52,13 +52,6 @@ class CImageList(wx.ImageList, parentClass):
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
         self.createAttributes(component)
 
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
-                             bCounter=bCounter, progressDlg=progressDlg)
-
 
 def test(par=0):
     """

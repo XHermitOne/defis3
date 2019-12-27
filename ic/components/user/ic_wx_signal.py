@@ -156,5 +156,3 @@ class icWxSignal(icwidget.icSimple, parentModule.icWxEvtSignalSrc):
 
         #   Создаем дочерние компоненты
         self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
-
-    #   Обработчики событий

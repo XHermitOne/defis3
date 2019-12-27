@@ -167,15 +167,15 @@ class icHeader(icwidget.icBase, wx.ScrolledWindow):
         self.maxCol = 0
         
         #   Создаем дочерние компоненты
-        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
+        self.childCreator(bCounter=bCounter, progressDlg=progressDlg)
 
     def childCreator(self, bCounter, progressDlg):
         """
         Функция создает объекты, которые содержаться в данном компоненте.
         """
-        if self.child:
+        if 'child' in self.resource:
             kernel = self.GetKernel()
-            kernel.parse_resource(self, self.child, None, context=self.evalSpace,
+            kernel.parse_resource(self, self.resource['child'], None, context=self.evalSpace,
                                   bCounter=bCounter, progressDlg=progressDlg)
 
             for el in self.component_lst:

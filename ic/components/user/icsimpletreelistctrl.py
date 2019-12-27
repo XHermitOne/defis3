@@ -269,8 +269,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
         self.textload.Show(False)
         
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+        self.childCreator(bCounter, progressDlg)
             
     def begin_load(self):
         self.Enable(False)
@@ -455,12 +454,13 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
         """
         Функция создает объекты, которые содержаться в данном компоненте.
         """
-        if self.IsSizer() and self.child:
-            prs.icResourceParser(self.parent, self.child, self, evalSpace=self.evalSpace,
-                                 bCounter=bCounter, progressDlg=progressDlg)
-        elif self.child:
-            prs.icResourceParser(self._main_win, self.child, None, evalSpace=self.evalSpace,
-                                 bCounter=bCounter, progressDlg=progressDlg)
+        if 'child' in self.resource:
+            if self.IsSizer():
+                prs.icResourceParser(self.parent, self.resource['child'], self, evalSpace=self.evalSpace,
+                                     bCounter=bCounter, progressDlg=progressDlg)
+            else:
+                prs.icResourceParser(self._main_win, self.resource['child'], None, evalSpace=self.evalSpace,
+                                     bCounter=bCounter, progressDlg=progressDlg)
                                 
     def getElementName(self, res, indx):
         """

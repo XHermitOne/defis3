@@ -197,22 +197,20 @@ class Catalog(icwidget.icWidget, parentModule.icDBCatalog):
         parentModule.icDBCatalog.__init__(self, src=component['sourcePsp'], table=component['table'])
         
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+        self.childCreator(bCounter, progressDlg)
         
     def childCreator(self, bCounter, progressDlg):
         """
         Функция создает объекты, которые содержаться в данном компоненте.
         """
-        if self.IsSizer() and self.child:
-            prs.icResourceParser(self.parent, self.child, self, evalSpace=self.evalSpace,
-                                 bCounter=bCounter, progressDlg=progressDlg)
-        elif self.child:
-            prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
-                                 bCounter=bCounter, progressDlg=progressDlg)
+        if 'child' in self.resource:
+            if self.IsSizer():
+                prs.icResourceParser(self.parent, self.resource['child'], self, evalSpace=self.evalSpace,
+                                     bCounter=bCounter, progressDlg=progressDlg)
+            elif self.child:
+                prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
+                                     bCounter=bCounter, progressDlg=progressDlg)
       
-    #   Обработчики событий
-
 
 def test(par=0):
     """ 

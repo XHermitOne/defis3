@@ -376,13 +376,6 @@ class icSimpleOGLViewer(icwidget.icWidget, parentModule.ShapeCanvas):
         # Текущая выделенная фигура
         self.selected_shape = None
 
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        return prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
-                                    bCounter=bCounter, progressDlg=progressDlg)
-
     def _init_ogl_default(self):
         """
         Инициализация внутренних объектов компонента и установка значений по умолчанию.

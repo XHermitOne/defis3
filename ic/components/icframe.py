@@ -127,7 +127,6 @@ class icFrame(icwidget.icWidget, wx.Frame):
     Класс icFrame реализует интерфейс для создания окна класса wxFrame через
     ресурсное описание.
     """
-
     @staticmethod
     def GetDesigner():
         """
@@ -208,6 +207,9 @@ class icFrame(icwidget.icWidget, wx.Frame):
         self.Bind(wx.EVT_SET_FOCUS, self.OnSetFocus)
         self.Bind(wx.EVT_KILL_FOCUS, self.OnKillFocus)
         self.BindICEvt()
+
+        if not self.evalSpace['_root_obj']:
+            self.evalSpace['_root_obj'] = self
 
         #   Создаем дочерние компоненты
         self.createChildren(bCounter=bCounter, progressDlg=progressDlg)

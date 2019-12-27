@@ -122,8 +122,7 @@ class icConnection(icwidget.icSimple, parentModule.icConnection):
 
         # ВНИМАНИЕ!!! Сначала нужно создать все сигналы и слоты
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
         #   !!! Конструктор наследуемого класса !!!
         #   Необходимо вставить реальные параметры конструкора.
@@ -148,11 +147,3 @@ class icConnection(icwidget.icSimple, parentModule.icConnection):
             kernel.add_connection_lst([self])
         else:
             log.warning(u'Ядро системы не инициализировано')
-
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        if self.child:
-            prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
-                                 bCounter=bCounter, progressDlg=progressDlg)

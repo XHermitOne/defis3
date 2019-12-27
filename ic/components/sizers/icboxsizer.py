@@ -61,7 +61,6 @@
 import wx
 from ic.utils.util import icSpcDefStruct
 from ic.components import icwidget
-import ic.kernel.io_prnt as io_prnt
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
@@ -182,10 +181,8 @@ class icBoxSizer(icwidget.icSizer, wx.BoxSizer):
 
         self.objectList = []
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
-        # self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
-        
+        self.childCreator(bCounter, progressDlg)
+
         if parent:
             import ic.utils.graphicUtils as grph
             parent_bgr = parent.GetBackgroundColour()
@@ -197,7 +194,7 @@ class icBoxSizer(icwidget.icSizer, wx.BoxSizer):
         """
         Функция создает объекты, которые содержаться в данном компоненте.
         """
-        if self.child:
+        if 'child' in self.resource:
             if '_root_obj' not in self.evalSpace or not self.evalSpace['_root_obj']:
                 self.evalSpace['_root_obj'] = self
                 parent = self
@@ -205,7 +202,7 @@ class icBoxSizer(icwidget.icSizer, wx.BoxSizer):
                 parent = self.parent
 
             kernel = self.GetKernel()
-            kernel.parse_resource(parent, self.child, self, context=self.evalSpace,
+            kernel.parse_resource(parent, self.resource['child'], self, context=self.evalSpace,
                                   bCounter=bCounter, progressDlg=progressDlg)
 
             # Добавляем в сайзер дочерние элементы
@@ -221,7 +218,7 @@ class icBoxSizer(icwidget.icSizer, wx.BoxSizer):
                         parent.EnableScrolling(*self.enableScr)
                         self.SetVirtualSizeHints(parent)
             except:
-                log.error(u'Ошибка при привязке сайзера')
+                log.fatal(u'Ошибка при привязке сайзера')
 
     def drawShape(self, dc=None):
         """

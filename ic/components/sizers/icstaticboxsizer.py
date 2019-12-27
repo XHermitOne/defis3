@@ -132,8 +132,7 @@ class icStaticBoxSizer(icwidget.icSizer, wx.StaticBoxSizer):
         self.objectList = []
 
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+        self.childCreator(bCounter, progressDlg)
 
         if parent:
             import ic.utils.graphicUtils as grph
@@ -146,7 +145,7 @@ class icStaticBoxSizer(icwidget.icSizer, wx.StaticBoxSizer):
         """
         Функция создает объекты, которые содержаться в данном компоненте.
         """
-        if self.child:
+        if 'child' in self.resource:
             if not self.evalSpace['_root_obj']:
                 self.evalSpace['_root_obj'] = self
                 parent = self
@@ -154,7 +153,7 @@ class icStaticBoxSizer(icwidget.icSizer, wx.StaticBoxSizer):
                 parent = self.parent
 
             kernel = self.GetKernel()
-            kernel.parse_resource(parent, self.child, self, context=self.evalSpace,
+            kernel.parse_resource(parent, self.resource['child'], self, context=self.evalSpace,
                                   bCounter=bCounter, progressDlg=progressDlg)
 
             # Добавляем в сайзер дочерние элементы

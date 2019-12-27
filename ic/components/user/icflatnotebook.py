@@ -220,9 +220,8 @@ class icFlatNotebook(icwidget.icWidget, fnb.FlatNotebook):
         self.BindICEvt()
 
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
-        
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
+
         #   Добавляем компоненты в книгу
         self.addChildsToNotebook()
         
@@ -302,14 +301,6 @@ class icFlatNotebook(icwidget.icWidget, fnb.FlatNotebook):
         self.AddPage(win, caption, True, image)
         self._newPageCounter = self._newPageCounter + 1
         
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        if self.child:
-            prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
-                                 bCounter=bCounter, progressDlg=progressDlg)
-
     def CreatePage(self, caption):
         """
         Создает пустую страницу.
