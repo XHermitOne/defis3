@@ -194,8 +194,9 @@ class icSplitter(icWidget, wx.SplitterWindow):
         if component['win2']:
             self.child.append(component['win2'])
         
-        self.childCreator(bCounter, progressDlg)
-        
+        # self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
+
         # Вспомогательные атрибуты
         self._toggle_win1 = False
         self._toggle_win2 = False

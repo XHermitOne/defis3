@@ -125,10 +125,7 @@ class icGnuplotTrend(icwidget.icWidget,
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = [x for x in component.keys() if not x.startswith('__')]
-
-        for key in lst_keys:
-            setattr(self, key, component[key])
+        self.createAttributes(component)
 
         #   !!! Конструктор наследуемого класса !!!
         #   Необходимо вставить реальные параметры конструкора.
@@ -136,7 +133,7 @@ class icGnuplotTrend(icwidget.icWidget,
         gnuplot_trend_proto.icGnuplotTrendProto.__init__(self, parent)
 
         #   Создаем дочерние компоненты
-        self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
         # Инициализация внутренного состояния контрола:
 
@@ -153,13 +150,6 @@ class icGnuplotTrend(icwidget.icWidget,
 
         # отрисовать в соответствии с внутренним состоянием
         # self.draw()
-
-    def childCreator(self, bCounter=False, progressDlg=None):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        return prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
-                                    bCounter=bCounter, progressDlg=progressDlg)
 
     def setPens(self, pens):
         """

@@ -162,10 +162,8 @@ class icObjectLink(parentModule.icBase):
         component = util.icSpcDefStruct(self.component_spc, component)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = [x for x in component.keys() if not x.startswith('__')]
-        for key in lst_keys:
-            setattr(self, key, component[key])
-        
+        self.createAttributes(component)
+
         parentModule.icBase.__init__(self, parent, id, component, logType, evalSpace)
         # !!! Компонент создается в своем контексте
 

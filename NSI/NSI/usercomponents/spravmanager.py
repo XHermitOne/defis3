@@ -128,8 +128,7 @@ class icSpravManager(icwidget.icSimple, parentModule.icSpravManagerProto):
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+        self.childCreator(bCounter, progressDlg)
         
     # Установка ограничения администрирования/редактирования справочников
     security.declareProtected('sprav_admin', 'admin')
@@ -141,6 +140,9 @@ class icSpravManager(icwidget.icSimple, parentModule.icSpravManagerProto):
         """
         Функция создает объекты, которые содержаться в данном компоненте.
         """
+        if 'child' not in self.resource:
+            return
+
         prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
                              bCounter=bCounter, progressDlg=progressDlg)
 

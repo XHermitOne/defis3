@@ -101,13 +101,5 @@ class icMetaConst(icwidget.icSimple, metaconst.icMetaConstPrototype):
         metaconst.icMetaConstPrototype.__init__(self, component)
 
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
-        
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
-                             bCounter=bCounter, progressDlg=progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 

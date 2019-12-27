@@ -155,10 +155,7 @@ class icTreeListCtrlSimple(icwidget.icWidget,
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = [x for x in component.keys() if x.find('__') != 0]
-        
-        for key in lst_keys:
-            setattr(self, key, component[key])
+        self.createAttributes(component)
 
         parentModule.TreeListCtrl.__init__(self, parent, id, self.position, self.size,
                                            style=self.style)

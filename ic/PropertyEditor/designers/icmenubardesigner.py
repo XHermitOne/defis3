@@ -61,7 +61,7 @@ class icMenuBarDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesig
         self.sizer = wx.BoxSizer(wx.HORIZONTAL)
         
         # Создание дочерних дизайнеров
-        children = self.childCreator(bCounter, progressDlg)
+        children = self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
         if children:
             for child in children:
                 self.sizer.Add(child, 0, wx.ALIGN_LEFT)
@@ -71,17 +71,6 @@ class icMenuBarDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesig
         self.SetSizer(self.sizer)
         self.SetAutoLayout(1)
         self.sizer.Fit(self)
-
-    def childCreator(self, bCounter, progressDlg):
-        """ 
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        if self.child:
-            if not self.evalSpace['_root_obj']:
-                self.evalSpace['_root_obj'] = self
-            self.GetKernel().parse_resource(self, self.child, None, context=self.evalSpace,
-                                            bCounter=bCounter, progressDlg=progressDlg)
-            return self.get_children_lst()
 
     def setEditorMode(self):
         """ 

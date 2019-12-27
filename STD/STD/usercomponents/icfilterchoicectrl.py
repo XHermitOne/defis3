@@ -101,8 +101,7 @@ class icFilterChoiceCtrl(icwidget.icWidget,
 
         parentModule.icFilterChoiceCtrlProto.__init__(self, parent, id)
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        for key in [x for x in component.keys() if not x.startswith('__')]:
-            setattr(self, key, component[key])
+        self.createAttributes(component)
 
         self._filter_filename = self.getICAttr('save_filename')
         self._environment = self.getICAttr('get_env')

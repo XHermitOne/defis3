@@ -83,8 +83,7 @@ class icYearChoiceCtrl(parentModule.icChoice):
         parentModule.icChoice.__init__(self, parent, id, component, logType, evalSpace,
                                        bCounter, progressDlg)
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        for key in [x for x in component.keys() if not x.startswith('__')]:
-            setattr(self, key, component[key])
+        self.createAttributes(component)
 
         if self.is_now:
             now_year = str(self.get_now_year())

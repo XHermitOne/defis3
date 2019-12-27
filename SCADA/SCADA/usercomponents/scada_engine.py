@@ -125,13 +125,10 @@ class icSCADAEngine(icwidget.icSimple):
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = [x for x in component.keys() if not x.startswith('__')]
-
-        for key in lst_keys:
-            setattr(self, key, component[key])
+        self.createAttributes(component)
 
         #   Создаем дочерние компоненты
-        self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
         # Словарь классов сканирования для обработки в цикле
         # {паспорт класс сканирования: объект класса сканирования,...}
@@ -155,13 +152,6 @@ class icSCADAEngine(icwidget.icSimple):
         self._tags_cache = None
         self._events_cache = None
         self._alarms_cache = None
-
-    def childCreator(self, bCounter=False, progressDlg=None):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        return prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
-                                    bCounter=bCounter, progressDlg=progressDlg)
 
     def getChildrenTags(self):
         """

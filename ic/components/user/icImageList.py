@@ -50,9 +50,8 @@ class CImageList(wx.ImageList, parentClass):
         parentClass.__init__(self, parent, id, component, logType, evalSpace,
                              bCounter, progressDlg)
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        for key in [x for x in component.keys() if not x.startswith('__')]:
-            setattr(self, key, component[key])
-   
+        self.createAttributes(component)
+
     def childCreator(self, bCounter, progressDlg):
         """
         Функция создает объекты, которые содержаться в данном компоненте.

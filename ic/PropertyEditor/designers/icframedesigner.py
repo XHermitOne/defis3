@@ -73,7 +73,7 @@ class icFrameDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesigne
         # Запрещаем перемещать панель
         self.bMoveObj = False
 
-        child = self.childCreator(bCounter, progressDlg)
+        child = self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
         if child:
             self.sizer.Add(child, 1, wx.EXPAND)
         
@@ -86,18 +86,6 @@ class icFrameDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesigne
         
         self.border_pen = wx.Pen(wx.Colour(*icwxpanel.DESIGN_BORDER_CLR))
         
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        if self.child:
-            self.context.clear_spc_structs()
-            if not self.context['_root_obj']:
-                self.context['_root_obj'] = self
-            self.GetKernel().parse_resource(self, self.child, self.sizer, context=self.context,
-                                            bCounter=bCounter, progressDlg=progressDlg)
-            return self.context.FindObject(self.child[0]['type'], self.child[0]['name'])
-
     def setTitle(self, title):
         """
         Устанавливает заголовок окна.

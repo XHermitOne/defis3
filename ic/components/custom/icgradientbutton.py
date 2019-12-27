@@ -163,10 +163,9 @@ class icGRButton(icwidget.icWidget, GB.GradientButton):
     
         component = util.icSpcDefStruct(SPC_IC_GRBUTTON, component)
         component['font'] = util.icSpcDefStruct(SPC_IC_FONT, component['font'])
-        
-        for key in [x for x in component.keys() if not x.startswith('__') ]:
-            setattr(self, key, component[key])
-        
+
+        self.createAttributes(component)
+
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
         self.label = self.getICAttr('label')
         

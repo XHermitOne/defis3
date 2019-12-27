@@ -213,25 +213,13 @@ class icPlanModif(icwidget.icSimple):
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = filter(lambda x: x.find('__') != 0, component.keys())
-
-        for key in lst_keys:
-            setattr(self, key, component[key])
+        self.createAttributes(component)
 
         #   Регистрация обработчиков событий
         # self.BindICEvt()
 
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
-
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        if self.child:
-            prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
-                                 bCounter=bCounter, progressDlg=progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
     #   Обработчики событий
 

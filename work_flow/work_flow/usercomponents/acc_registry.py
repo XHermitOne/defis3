@@ -208,14 +208,10 @@ class icAccumulateRegistry(icwidget.icSimple,
         
         # --- Свойства компонента ---
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = [name for name in component.keys() if not name.startswith('__')]
-        
-        for key in lst_keys:
-            setattr(self, key, component[key])
+        self.createAttributes(component)
 
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
         # Определить измерения и ресурсы регистра накопления
         dimension_requisite_names = self.getDimensionRequisiteNames()
@@ -240,16 +236,6 @@ class icAccumulateRegistry(icwidget.icSimple,
             requisite_type = REQUISITE_VAL_TYPE_TRANSLATE.get(requisite.getTypeValue(), 'text')
             self.append_extended_requisite(requisite_name, requisite_type)
 
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        for child_res in self.resource['child']:
-            prs.icBuildObject(self, child_res, evalSpace=self.evalSpace,
-                              bIndicator=progressDlg)
-                
-    #   Обработчики событий
-    
     #   Свойства
     def getDBPsp(self):
         """

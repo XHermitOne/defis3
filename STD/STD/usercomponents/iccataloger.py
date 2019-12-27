@@ -86,12 +86,10 @@ class icCataloger(icwidget.icSimple, parentModule.icCatalogerProto):
         parentModule.icCatalogerProto.__init__(self)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        for key in [x for x in component.keys() if not x.startswith('__')]:
-            setattr(self, key, component[key])
+        self.createAttributes(component)
 
         # Создаем дочерние компоненты
-        if 'child' in component:
-            level = self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
         # Список уровней физического каталога
         self.physic_catalog = self.get_children_lst()
@@ -103,13 +101,6 @@ class icCataloger(icwidget.icSimple, parentModule.icCatalogerProto):
 
         # Определить физическую папку размещения каталога
         self.physic_catalog_folder = self.getFolder()
-
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        return prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
-                                    bCounter=bCounter, progressDlg=progressDlg)
 
     def getFolder(self):
         """

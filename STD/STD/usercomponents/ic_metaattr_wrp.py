@@ -102,12 +102,4 @@ class icMetaAttr(icwidget.icSimple, metaattr.icMetaAttrPrototype):
         metaattr.icMetaAttrPrototype.__init__(self, component)
 
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
-        
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
-                             bCounter=bCounter, progressDlg=progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)

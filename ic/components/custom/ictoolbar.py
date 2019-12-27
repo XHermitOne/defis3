@@ -279,8 +279,9 @@ class icToolBar(icwidget.icWidget, wx.ToolBar):
         self._tool_name_id = {}
 
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
+        # if 'child' in component:
+        #     self.childCreator(bCounter, progressDlg)
         
     def childCreator(self, bCounter, progressDlg):
         """

@@ -184,6 +184,7 @@ class icBoxSizer(icwidget.icSizer, wx.BoxSizer):
         #   Создаем дочерние компоненты
         if 'child' in component:
             self.childCreator(bCounter, progressDlg)
+        # self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
         
         if parent:
             import ic.utils.graphicUtils as grph

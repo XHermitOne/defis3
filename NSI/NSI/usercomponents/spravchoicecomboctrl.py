@@ -189,8 +189,7 @@ class icSpravChoiceComboCtrl(parentModule.icSpravChoiceComboCtrlProto, icwidget.
         self.setSearchFieldnames(self.getSearchFieldnames())
 
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
         # self.Bind(wx.EVT_TEXT, self.onSelect, id=id)
         self.BindICEvt()
@@ -212,13 +211,6 @@ class icSpravChoiceComboCtrl(parentModule.icSpravChoiceComboCtrlProto, icwidget.
         Имена полей для поиска.
         """
         return self.getICAttr('search_fields')
-
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
-                             bCounter=bCounter, progressDlg=progressDlg)
 
     def onSelect(self, event):
         """

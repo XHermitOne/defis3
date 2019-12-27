@@ -192,8 +192,7 @@ class icSpravMultipleChoiceComboCtrl(parentModule.icSpravMultipleChoiceComboCtrl
         self.setSearchFieldnames(self.getSearchFieldnames())
 
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
         self.BindICEvt()
 
@@ -214,13 +213,6 @@ class icSpravMultipleChoiceComboCtrl(parentModule.icSpravMultipleChoiceComboCtrl
         Имена полей для поиска.
         """
         return self.getICAttr('search_fields')
-
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
-                             bCounter=bCounter, progressDlg=progressDlg)
 
     def onSelect(self, event):
         """

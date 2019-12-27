@@ -161,7 +161,8 @@ class icScrolledPanel(icWidget, wx.lib.scrolledpanel.ScrolledPanel):
         self.EnableScrolling(bx, by)
         self.BindICEvt()
         #   Создаем дочерние компоненты
-        self.childCreator(bCounter, progressDlg)
+        # self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
     def childCreator(self, bCounter, progressDlg):
         """

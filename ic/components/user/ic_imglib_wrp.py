@@ -110,7 +110,8 @@ class icImageLibrary(icwidget.icSimple, parentModule.icImageLibraryPrototype):
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
         parentModule.icImageLibraryPrototype.__init__(self)
-        self.childCreator(bCounter, progressDlg)
+        # self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
         
         for idx, el in enumerate(self.resource['child']):
             img = self.GetChildByName(el['name']).getBitmap()

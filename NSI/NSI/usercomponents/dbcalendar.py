@@ -191,9 +191,8 @@ class icDBCalendar(icwidget.icSimple, parentModule.icDBCalendarProto):
         #   Создаем дочерние компоненты
         component = self.addCalendarLevelsSPC(component)
         
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
-        
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
+
     def addCalendarLevelsSPC(self, component_spc):
         """
         Сразу задается структура календаря из 3-х уровней: Год, Месяц, Число.
@@ -221,13 +220,6 @@ class icDBCalendar(icwidget.icSimple, parentModule.icDBCalendarProto):
         component_spc['child'] = [year_spc, month_spc, day_spc]
         return component_spc
         
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
-                             bCounter=bCounter, progressDlg=progressDlg)
-      
     def getLevelCount(self):
         """
         Количество уровней.

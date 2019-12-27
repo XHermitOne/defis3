@@ -188,8 +188,7 @@ class icMetaTreeListCtrl(parentModule.icMetaTreeListCtrlProto, icwidget.icWidget
         self.setMetaTree(metatree)
 
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
         # Кеш новых элементов.
         # Содержит в себе соответствие
@@ -203,13 +202,6 @@ class icMetaTreeListCtrl(parentModule.icMetaTreeListCtrlProto, icwidget.icWidget
         self.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.onItemActivated)
         self.Bind(wx.EVT_TREE_ITEM_RIGHT_CLICK, self.onItemRightClick)
         self.BindICEvt()
-
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
-                             bCounter=bCounter, progressDlg=progressDlg)
 
     def getMetaTreePsp(self):
         """

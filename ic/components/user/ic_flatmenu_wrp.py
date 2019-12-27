@@ -117,19 +117,12 @@ class icFlatMenu(icwidget.icWidget, icflatmenu.icFlatMenuPrototype):
         
         icflatmenu.icFlatMenuPrototype.__init__(self, parent)
 
-        self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
         
         if parent:
             # Добавить меню в родительское меню
             self.appendIntoParent(parent)
 
-    def childCreator(self, bCounter, progressDlg):
-        """ 
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
-                             bCounter=bCounter, progressDlg=progressDlg)
-                            
     def getLabel(self):
         """
         Надпись.

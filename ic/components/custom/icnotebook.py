@@ -180,7 +180,7 @@ class icNotebook(icwidget.icWidget, wx.Notebook):
         self.BindICEvt()
 
         #   Создаем дочерние компоненты
-        self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
         # После создания страниц надо выбрать страницу
         self.SetSelection(self.firstSel)

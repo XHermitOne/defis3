@@ -213,13 +213,10 @@ class icWX_SignalType(icwidget.icSimple):
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         
-        #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = [x for x in component.keys() if x.find('__') != 0]
-        
-        for key in lst_keys:
-            setattr(self, key, component[key])
-        
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
+
+        #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
+        self.createAttributes(component)
 
         # Превращаем картежи в паспорта
         if self.src:

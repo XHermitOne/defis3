@@ -177,10 +177,7 @@ class icMnemoScheme(icwxpanel.icWXPanel, mnemoscheme.icMnemoSchemeProto):
         mnemoscheme.icMnemoSchemeProto.__init__(self)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = [x for x in component.keys() if not x.startswith('__')]
-
-        for key in lst_keys:
-            setattr(self, key, component[key])
+        self.createAttributes(component)
 
         self.setSVGBackground(self.svg_background, bAutoDraw=False)
         self.setSVGSize(self.svg_width, self.svg_height)

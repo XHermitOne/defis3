@@ -295,14 +295,10 @@ class icBusinessObj(parentModule.icBusinessObjProto, icwidget.icSimple):
         
         # Свойства компонента
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = [x for x in component.keys() if x.find('__') != 0]
-        
-        for key in lst_keys:
-            setattr(self, key, component[key])
+        self.createAttributes(component)
 
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
         self.requisites = dict([(requisite.name, requisite) for requisite in self.getAllRequisites()])
     
         # Создать таблицу хранения документа
@@ -313,15 +309,6 @@ class icBusinessObj(parentModule.icBusinessObjProto, icwidget.icSimple):
         # Установить ораничения количества, если они есть
         self.setLimit(int(self.limit) if hasattr(self, 'limit') and getattr(self, 'limit') else None)
         
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        return prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
-                                    bCounter=bCounter, progressDlg=progressDlg)
-      
-    #   Обработчики событий
-    
     #   Свойства
     def getInitFormPsp(self):
         """

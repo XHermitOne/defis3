@@ -1403,20 +1403,8 @@ class icBackgroundFDialog(icwidget.icSimple, wx.Frame):
         self.SetStatusBar(self.statusBar)
         self.Bind(wx.EVT_CLOSE, self.OnClose)
         # Создаем дочерние компоненты
-        self.childCreator(False, None)
+        self.createChildren(bCounter=False, progressDlg=None)
 
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        if self.child:
-            prnt = self.GetEditorPanel()
-            if not self.evalSpace['_root_obj']:
-                self.evalSpace['_root_obj'] = prnt
-
-            self.GetKernel().parse_resource(prnt, self.child, None, context=self.evalSpace,
-                                            bCounter=bCounter, progressDlg=progressDlg)
-        
     def CreateToolPanel(self, ObjectsInfo=None):
         """
         Создаем панель инструментов.
@@ -1503,17 +1491,7 @@ class icBackgroundFrame(icBackground, icwidget.icSimple, wx.Frame):
         # Обработчики событий
         BindEditorEvent(self)
         # Создаем дочерние компоненты
-        self.childCreator(False, None)
-
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        if self.child:
-            if not self.evalSpace['_root_obj']:
-                self.evalSpace['_root_obj'] = self
-            self.GetKernel().parse_resource(self, self.child, None, context=self.evalSpace,
-                                            bCounter=bCounter, progressDlg=progressDlg)
+        self.createChildren(bCounter=False, progressDlg=None)
 
     def CreateToolPanel(self, ObjectsInfo=None):
         """

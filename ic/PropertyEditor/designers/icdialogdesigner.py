@@ -84,7 +84,7 @@ class icDialogDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesign
         except:
             pass
             
-        child = self.childCreator(bCounter, progressDlg)
+        child = self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
         self.SetSizer(self.sizer)
         self.SetAutoLayout(1)
@@ -96,17 +96,6 @@ class icDialogDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesign
         # 
         self.border_pen = wx.Pen(wx.Colour(*icwxpanel.DESIGN_BORDER_CLR))
         
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        if self.child:
-            if not self.context['_root_obj']:
-                self.context['_root_obj'] = self.panel
-            self.GetKernel().parse_resource(self.panel, self.child, None, context=self.context,
-                                            bCounter=bCounter, progressDlg=progressDlg)
-            return self.context.FindObject(self.child[0]['type'], self.child[0]['name'])
-
     def SetTitle(self, title):
         """
         Устанавливает заголовок окна.

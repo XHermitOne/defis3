@@ -231,10 +231,7 @@ class icNSIRequisite(parentModule.icNSIRequisiteProto, icwidget.icSimple):
         
         # Свойства компонента
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = [x for x in component.keys() if x.find('__') != 0]
-        
-        for key in lst_keys:
-            setattr(self, key, component[key])
+        self.createAttributes(component)
 
     def getFields(self):
         """

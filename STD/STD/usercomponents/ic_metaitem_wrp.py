@@ -138,18 +138,10 @@ class icMetaItem(icwidget.icSimple, metaitem.icMetaItemEngine):
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace, bGenUUID=False)
 
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
         metaitem.icMetaItemEngine.__init__(self, parent, component)
         
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
-                             bCounter=bCounter, progressDlg=progressDlg)
-
     def onInit(self, event=None):
         """
         Выполнения блока кода - обработчика события.

@@ -66,5 +66,4 @@ class icSequenceListBox(sequence_list_box_ctrl.icSequenceListBox,
         sequence_list_box_ctrl.icSequenceListBox.__init__(self, parent)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        for key in [x for x in component.keys() if not x.startswith('__')]:
-            setattr(self, key, component[key])
+        self.createAttributes(component)

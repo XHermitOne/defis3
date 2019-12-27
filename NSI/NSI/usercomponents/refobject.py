@@ -193,8 +193,7 @@ class icRefObject(icwidget.icSimple, parentModule.icRefObjectProto):
             self.description = component['description']
 
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
     # Установка ограничения редактирования справочника
     security.declareProtected('refobj_edit', 'edit')
@@ -204,13 +203,6 @@ class icRefObject(icwidget.icSimple, parentModule.icRefObjectProto):
 
     # Другое наименование метода
     edit = Edit
-
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
-                             bCounter=bCounter, progressDlg=progressDlg)
 
     def getLevelCount(self):
         """

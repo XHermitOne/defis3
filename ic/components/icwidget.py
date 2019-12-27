@@ -886,9 +886,7 @@ class icSimple(icobject.icObject):
         return self._manager_class
 
     def set_resource_property(self):
-        lst_keys = [x for x in self.resource.keys() if not x.startswith('__')]
-        for key in lst_keys:
-            setattr(self, key, self.resource[key])
+        self.createAttributes(self.resource)
 
     def init_res_module(self):
         """
@@ -1474,6 +1472,7 @@ class icSimple(icobject.icObject):
         """
         if component_spc:
             component_spc = self.resource
+
         if component_spc:
             #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
             attr_names = [attr_name for attr_name in component_spc.keys() if not attr_name.startswith('__')]
@@ -1496,16 +1495,16 @@ class icSimple(icobject.icObject):
             общего количества объектов.
         :type progressDlg: C{wx.ProgressDialog}
         :param progressDlg: Указатель на идикатор создания формы.
-        :return:
+        :return: Список созданных дочерних элементов или None в случае ошибки.
         """
         if children is None:
             children = self.resource.get('child', [])
         if children:
             import ic.components.icResourceParser as prs
-            return prs.icResourceParser(self, children,
-                                        None, evalSpace=self.evalSpace,
-                                        bCounter=bCounter, progressDlg=progressDlg)
-        return self
+            prs.icResourceParser(self, children,
+                                 None, evalSpace=self.evalSpace,
+                                 bCounter=bCounter, progressDlg=progressDlg)
+        return self.component_lst
 
 
 class icBase(icSimple, icShape):

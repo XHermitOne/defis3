@@ -243,7 +243,8 @@ class icDialog(icWidget, wx.Dialog):
 
         #   Создаем дочерние компоненты
         self.Freeze()
-        self.childCreator(bCounter, progressDlg)
+        # self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
         self.Thaw()
         
         if component.get('show', '1') in ('True', 'true', 1):

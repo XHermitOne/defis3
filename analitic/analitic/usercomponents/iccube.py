@@ -99,15 +99,7 @@ class icCube(icwidget.icSimple, cube_proto.icCubeProto):
 
         cube_proto.icCubeProto.__init__(self)
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
-
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        return prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
-                                    bCounter=bCounter, progressDlg=progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
     def getTableName(self):
         """

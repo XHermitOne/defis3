@@ -167,9 +167,8 @@ class icHeader(icwidget.icBase, wx.ScrolledWindow):
         self.maxCol = 0
         
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
-        
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
+
     def childCreator(self, bCounter, progressDlg):
         """
         Функция создает объекты, которые содержаться в данном компоненте.
@@ -181,7 +180,7 @@ class icHeader(icwidget.icBase, wx.ScrolledWindow):
 
             for el in self.component_lst:
                 self.addCell(el)
-        
+
     def connectGrid(self, grid, bAuto=False, bHideOldHead=False):
         """
         Присоединяет грид к шапке.

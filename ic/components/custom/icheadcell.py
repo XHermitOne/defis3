@@ -319,16 +319,7 @@ class icHeadCell(icwidget.icWidget, wx.Control):
 
         #   Создаем дочерние компоненты
         self.child = component['child']
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
-
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        if self.child:
-            self.GetKernel().parse_resource(self, self.child, None, context=self.evalSpace,
-                                            bCounter=bCounter, progressDlg=progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
     def setButtonStyle(self, style=True):
         """

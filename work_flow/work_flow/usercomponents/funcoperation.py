@@ -141,17 +141,8 @@ class icFuncOperation(icwidget.icSimple, parentModule.icFuncOperationProto):
 
         parentModule.icFuncOperationProto.__init__(self, parent)
         
-        # --- Свойства компонента ---
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
-        
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
-                             bCounter=bCounter, progressDlg=progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
     def getName(self):
         """

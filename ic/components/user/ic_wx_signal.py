@@ -143,11 +143,8 @@ class icWxSignal(icwidget.icSimple, parentModule.icWxEvtSignalSrc):
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = [x for x in component.keys() if x.find('__') != 0]
-        
-        for key in lst_keys:
-            setattr(self, key, component[key])
-        
+        self.createAttributes(component)
+
         #   !!! Конструктор наследуемого класса !!!
         #   Необходимо вставить реальные параметры конструкора.
         #   На этапе генерации их не всегда можно определить.
@@ -158,15 +155,6 @@ class icWxSignal(icwidget.icSimple, parentModule.icWxEvtSignalSrc):
         parentModule.icWxEvtSignalSrc.__init__(self, passport, self.countAttr('wx_event'))
 
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
-        
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        if self.child:
-            prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
-                                bCounter=bCounter, progressDlg=progressDlg)
-      
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
+
     #   Обработчики событий

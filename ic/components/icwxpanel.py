@@ -179,7 +179,8 @@ class icWXPanel(icWidget, wx.Panel):
             self.setEditorMode()
             
         #   Создаем дочерние компоненты
-        self.childCreator(bCounter, progressDlg)
+        # self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
     def childCreator(self, bCounter, progressDlg):
         """

@@ -73,8 +73,7 @@ class icCatalogLevel(icwidget.icSimple, parentModule.icCatalogLevelProto):
         parentModule.icCatalogLevelProto.__init__(self)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        for key in [x for x in component.keys() if not x.startswith('__')]:
-            setattr(self, key, component[key])
+        self.createAttributes(component)
 
         if self.isGetFolderNameFunc():
             self._get_folder_name_func = self.getFolderNameFunc

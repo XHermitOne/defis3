@@ -113,24 +113,11 @@ class icWX_Binder(icwidget.icSimple):
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         
-        #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = [x for x in component.keys() if x.find('__') != 0]
-        
-        for key in lst_keys:
-            setattr(self, key, component[key])
-        
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
-        
-        #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+        #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
+        self.createAttributes(component)
 
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        if self.child:
-            prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
-                                 bCounter=bCounter, progressDlg=progressDlg)
-      
+        #   Создаем дочерние компоненты
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
+
     #   Обработчики событий

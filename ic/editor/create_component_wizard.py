@@ -33,10 +33,13 @@ __version__ = (0, 1, 1, 1)
 DEFAULT_WIZARD_WIDTH = 800
 DEFAULT_WIZARD_HEIGHT = 600
 
+# Формат имени файла документации компонента подсистемы
 DOC_FILENAME_FMT = '%s/doc/_build/html/%s.usercomponents.%s.html'
 
-DEFAULT_SYS_COMPONENT_DOC_FILENAME = 'ic/doc/_build/html/ic.components.user.%s.html'
+# Формат имени файла документации общесистемного компонента
+DEFAULT_SYS_COMPONENT_DOC_FILENAME_FMT = 'ic/doc/_build/html/ic.components.user.%s.html'
 
+# Стандартный шаблон модуля компонента
 COMPONENT_MODULE_FMT = '''#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -566,7 +569,7 @@ class icCreateComponentWizard(create_component_wizard_proto.icCreateComponentWiz
                 prj_name = glob_functions.getPrjName()
                 if prj_name is None:
                     # Если проект не определен, то считаем что это общесистемный компонент
-                    doc_filename = DEFAULT_SYS_COMPONENT_DOC_FILENAME % module_name
+                    doc_filename = DEFAULT_SYS_COMPONENT_DOC_FILENAME_FMT % module_name
                 else:
                     doc_filename = DOC_FILENAME_FMT % (prj_name, prj_name, module_name)
                 self.docfile_propertyGridItem.SetValue(doc_filename)
@@ -623,7 +626,7 @@ class icCreateComponentWizard(create_component_wizard_proto.icCreateComponentWiz
         event_dict = edit_component_event_dlg(parent=self)
         if event_dict is not None:
             row = (event_dict.get('name', u''), event_dict.get('event', u''),
-                   event_dict.get('func_name', u''), event.get('description', u''))
+                   event_dict.get('func_name', u''), event_dict.get('description', u''))
             self.appendRow_list_ctrl(ctrl=self.event_listCtrl, row=row)
         event.Skip()
 

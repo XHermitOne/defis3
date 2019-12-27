@@ -118,11 +118,8 @@ class icConnection(icwidget.icSimple, parentModule.icConnection):
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = [x for x in component.keys() if x.find('__') != 0]
-        
-        for key in lst_keys:
-            setattr(self, key, component[key])
-        
+        self.createAttributes(component)
+
         # ВНИМАНИЕ!!! Сначала нужно создать все сигналы и слоты
         #   Создаем дочерние компоненты
         if 'child' in component:

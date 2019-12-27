@@ -96,10 +96,6 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
     """
     if attr == 'metaclass':
         return pspEdt.get_user_property_editor(value, pos, size, style, propEdt)
-#        parent = propEdt.GetPropertyGrid().GetView()
-#        res = icpassportchoice.open_passport_choice_dlg(parent)
-#        print '----> passport=', res
-#        return str(res)
 
 
 def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
@@ -108,18 +104,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
     """
     if attr == 'metaclass':
         return pspEdt.property_editor_ctrl(value, propEdt)
-#        #   Преобразем строку к значению
-#        value = str_to_val_user_property(attr, value, propEdt)
-#
-#        if value == None:
-#            return value
-#
-#        if type(value) in (type([]), type((0,))):
-#            print '>>> CTRL OK!!!!'
-#            return coderror.IC_CTRL_OK
-#        else:
-#            return coderror.IC_CTRL_FAILED
-        
+
     return coderror.IC_CTRL_OK
 
 
@@ -130,11 +115,6 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
     # Превращаем текс в картеж (представление паспорта)
     if attr == 'metaclass':
         return pspEdt.str_to_val_user_property(text, propEdt)
-#        try:
-#            value = eval(text)
-#        except:
-#            print '>>> ERROR eval(text): text=', text
-#            return []
 
     return None
 
@@ -181,28 +161,11 @@ class icPlanModifManager(icwidget.icSimple):
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = filter(lambda x: x.find('__') != 0, component.keys())
-        
-        for key in lst_keys:
-            setattr(self, key, component[key])
+        self.createAttributes(component)
 
-#        kernel = glob_functions.getEngine()
-#        if self.metaclass and kernel:
-#            self.metaclass = kernel.Create(self.metaclass, parent, eval_space)
-        
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        
-        if self.child:
-            prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
-                                bCounter=bCounter, progressDlg=progressDlg)
-      
     def getCanContainLst(self, modifId, metatype):
         """
         Возвращает список типов компонентов, которые могут содержатся в

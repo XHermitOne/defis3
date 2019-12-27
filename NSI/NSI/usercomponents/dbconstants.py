@@ -191,9 +191,8 @@ class icDBConstants(icwidget.icSimple, parentModule.icDBConstantsProto):
         #   Создаем дочерние компоненты
         component = self.addConstantsLevelsSPC(component)
         
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
-        
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
+
     def addConstantsLevelsSPC(self, component_spc):
         """
         Сразу задается структура из 1 уровня.
@@ -209,13 +208,6 @@ class icDBConstants(icwidget.icSimple, parentModule.icDBConstantsProto):
         component_spc['child'] = [level_spc]
         return component_spc
         
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
-                             bCounter=bCounter, progressDlg=progressDlg)
-      
     def getLevelCount(self):
         """
         Количество уровней.

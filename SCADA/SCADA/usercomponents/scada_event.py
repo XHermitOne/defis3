@@ -161,10 +161,7 @@ class icSCADAEvent(icwidget.icSimple):
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = [x for x in component.keys() if not x.startswith('__')]
-
-        for key in lst_keys:
-            setattr(self, key, component[key])
+        self.createAttributes(component)
 
         # Объект класса сканирования данных SCADA.
         self._scan_class = None

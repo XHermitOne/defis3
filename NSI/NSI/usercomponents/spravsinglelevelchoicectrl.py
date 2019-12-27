@@ -159,8 +159,7 @@ class icSpravSingleLevelChoiceCtrl(parentModule.icSpravSingleLevelChoiceCtrlProt
                                                                 size=self.size, pos=self.position, style=self.style)
 
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
         # Установить справочник
         sprav_psp = self.getSpravPsp()
@@ -172,13 +171,6 @@ class icSpravSingleLevelChoiceCtrl(parentModule.icSpravSingleLevelChoiceCtrlProt
         Паспорт справочника.
         """
         return self.getICAttr('sprav')
-
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
-                             bCounter=bCounter, progressDlg=progressDlg)
 
     def getNLevel(self):
         """

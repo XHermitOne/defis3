@@ -210,18 +210,7 @@ class icFrame(icwidget.icWidget, wx.Frame):
         self.BindICEvt()
 
         #   Создаем дочерние компоненты
-        self.childCreator(bCounter, progressDlg)
-
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        if self.child:
-            if not self.evalSpace['_root_obj']:
-                self.evalSpace['_root_obj'] = self
-                
-            self.GetKernel().parse_resource(self, self.child, None, context=self.evalSpace,
-                                            bCounter=bCounter, progressDlg=progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
     def OnSize(self, event):
         self.Refresh()

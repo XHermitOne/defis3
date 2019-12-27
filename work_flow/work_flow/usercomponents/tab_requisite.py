@@ -196,25 +196,11 @@ class icTABRequisite(parentModule.icTABRequisiteProto,
         
         # --- Свойства компонента ---
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = [x for x in component.keys() if x.find('__') != 0]
-        
-        for key in lst_keys:
-            setattr(self, key, component[key])
+        self.createAttributes(component)
 
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
-            
-        # Устаонвить значение по умолчанию
-        # self.init_data()
-        
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
-                             bCounter=bCounter, progressDlg=progressDlg)
-      
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
+
     def getChildrenRequisites(self):
         """
         Дочерние реквизиты и спецификации.

@@ -157,15 +157,12 @@ class icTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl,
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = [x for x in component.keys() if x.find('__') != 0]
-        
+        self.createAttributes(component)
+
         #   Признак разрешающий редактировать дерево
         self._bEditMode = True
         #   Признак заполнения буфера
         self.bObjBuff = False
-
-        for key in lst_keys:
-            setattr(self, key, component[key])
 
         parentModule.TreeCtrl.__init__(self, parent, id, self.position, self.size,
                                        style=self.style)

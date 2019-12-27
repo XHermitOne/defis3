@@ -208,19 +208,11 @@ class icExtSpravTreeChoice(parentModule.icExtSpravTreeChoiceProto,
         self.sprav_tree_choice.init(sprav_psp, root_code, view_all, complex_load)
 
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
         # Регистрация обработчиков
         self.Bind(wx.EVT_TEXT, self.onTextChange, id=self.sprav_tree_choice.GetId())
         self.BindICEvt()
-
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
-                             bCounter=bCounter, progressDlg=progressDlg)
 
     def getSpravPsp(self):
         """

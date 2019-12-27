@@ -77,8 +77,7 @@ class icDateTimeCtrl(datetime_ctrl.icDateTimeControl,
 
         datetime_ctrl.icDateTimeControl.__init__(self, parent=parent, id=id)
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        for key in [x for x in component.keys() if not x.startswith('__')]:
-            setattr(self, key, component[key])
+        self.createAttributes(component)
 
         if self.is_now:
             dt_now = self.get_now()

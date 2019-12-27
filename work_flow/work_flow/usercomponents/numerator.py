@@ -206,25 +206,11 @@ class icNumerator(icwidget.icSimple, parentModule.icNumerator):
 
         # --- Свойства компонента ---
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = [name for name in component.keys() if not name.startswith('__')]
-        
-        for key in lst_keys:
-            setattr(self, key, component[key])
+        self.createAttributes(component)
 
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        for child_res in self.resource['child']:
-            prs.icBuildObject(self, child_res, evalSpace=self.evalSpace,
-                              bIndicator=progressDlg)
-                
-    #   Обработчики событий
-    
     #   Свойства
     def getDBPsp(self):
         """

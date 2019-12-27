@@ -177,18 +177,10 @@ class icRefObjChoiceComboCtrl(parentModule.icRefObjChoiceComboCtrlProto, icwidge
         self.setRefObj(obj)
 
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
     def getRefObjPsp(self):
         """
         Паспорт бизнес объекта/документа.
         """
         return self.getICAttr('obj_psp')
-
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
-                             bCounter=bCounter, progressDlg=progressDlg)

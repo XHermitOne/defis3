@@ -364,10 +364,7 @@ class icSimpleOGLViewer(icwidget.icWidget, parentModule.ShapeCanvas):
         self.SetScrollbars(20, 20, maxWidth/20, maxHeight/20)
         # --- Свойства компонента ---
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = [x for x in component.keys() if x.find('__') != 0]
-
-        for key in lst_keys:
-            setattr(self, key, component[key])
+        self.createAttributes(component)
 
         if component.get('backgroundColor', None):
             self.SetBackgroundColour(component['backgroundColor'])

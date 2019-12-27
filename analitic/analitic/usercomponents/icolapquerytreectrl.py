@@ -177,8 +177,7 @@ class icOLAPQueryTreeCtrl(icwidget.icWidget,
         olap_query_tree_ctrl.icOLAPQueryTreeCtrlProto.__init__(self, parent=parent, id=id)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        for key in [x for x in component.keys() if not x.startswith('__')]:
-            setattr(self, key, component[key])
+        self.createAttributes(component)
 
         self._save_filename = self.getSaveFilename()
 

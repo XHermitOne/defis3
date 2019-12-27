@@ -233,14 +233,10 @@ class icDocumentNavigatorManager(icwidget.icSimple,
 
         # Свойства компонента
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = [x for x in component.keys() if x.find('__') != 0]
-
-        for key in lst_keys:
-            setattr(self, key, component[key])
+        self.createAttributes(component)
 
         #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
+        self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
         # Инициализация документа
         doc_psp = self.getDocumentPsp()
@@ -262,13 +258,6 @@ class icDocumentNavigatorManager(icwidget.icSimple,
             self.setDocListCtrlColumns(*columns)
         else:
             log.warning(u'Не определен список колонок ведомого контрола списка для менеджера навигации <%s>' % self.getName())
-
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        return prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
-                                    bCounter=bCounter, progressDlg=progressDlg)
 
     def getDocumentPsp(self):
         """
