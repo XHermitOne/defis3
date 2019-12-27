@@ -513,7 +513,7 @@ class icODS(object):
         :param paper_size_idx: Индекс 9-A4 8-A3.
         :return: Кортеж (Ширина в см, Высота в см).
         """
-        if type(paper_size_idx) != int:
+        if not isinstance(paper_size_idx, int):
             paper_size_idx = int(paper_size_idx)
             
         if paper_size_idx == 9:

@@ -168,7 +168,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
         elif property_type == icDefInf.EDT_TEXTLIST:
             # Список в синтаксисе Python. Пример: ['1', '2', 'abc']
             value_list = []
-            if type(value) in (list, tuple):
+            if isinstance(value, (list, tuple)):
                 for item in value:
                     if not isinstance(item, str):
                         item = str(item)
@@ -247,7 +247,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
         elif property_type == icDefInf.EDT_COLOR:
             # Редактор цветов wxColour.
             colour = None
-            if type(value) in (list, tuple):
+            if isinstance(value, (list, tuple)):
                 colour = wx.Colour(*value)
             wx_property = wx.propgrid.ColourProperty(name, value=colour)
 
@@ -275,12 +275,12 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
                 value = str(value)
             elif isinstance(value, str):
                 pass
-            elif type(value) in (int, float, list, tuple, dict, bool):
+            elif isinstance(value, (int, float, list, tuple, dict, bool)):
                 value = str(value)
-            elif type(value) in (datetime.datetime,):
+            elif isinstance(value, datetime.datetime):
                 # Если указывается время, то скорее всего это текущее время
                 value = u'@datetime.datetime.now()'
-            elif type(value) in (datetime.date,):
+            elif isinstance(value, datetime.date):
                 # Если указывается день, то скорее всего это сегодняшний
                 value = u'@datetime.date.today()'
             else:

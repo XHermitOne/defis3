@@ -319,7 +319,7 @@ class icSCADAEngine(icwidget.icSimple):
         """
         try:
             if update_panels:
-                if type(update_panels) in (list, tuple):
+                if isinstance(update_panels, (list, tuple)):
                     # Список панелей
                     for panel in update_panels:
                         panel.updateValues()

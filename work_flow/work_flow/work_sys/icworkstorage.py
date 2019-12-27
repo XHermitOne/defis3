@@ -604,7 +604,7 @@ class icWorkSQLStorage(icWorkStorageInterface):
             data = []
             for rec in result:
                 # Перебор полей реквизитов
-                if type(rec) in (tuple, list):
+                if isinstance(rec, (tuple, list)):
                     rec_list = list(rec)
                 else:
                     rec_list = list()

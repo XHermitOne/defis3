@@ -146,7 +146,7 @@ class icChoice(icWidget, wx.Choice):
         :rtype: C{bool}
         :return: Признак успешного выполнения.
         """
-        if not type(items) in (list, tuple):
+        if not isinstance(items, (list, tuple)):
             return False
         
         #   Чистим список
@@ -224,7 +224,7 @@ class icChoice(icWidget, wx.Choice):
         # Обрабатываем аттрибут инициализации списка
         if not component['items']:
             self.items = []
-        elif type(component['items']) in (list, tuple):
+        elif isinstance(component['items'], (list, tuple)):
             self.items = component['items']
         elif isinstance(component['items'], dict):
             self._dictRepl = component['items']
@@ -233,7 +233,7 @@ class icChoice(icWidget, wx.Choice):
         else:
             ret = util.getICAttr('@'+component['items'], self.evalSpace, 'getICAttr() Error in icchoice.__init__(...) <items> name=%s' % self.name)
 
-            if type(ret) in (list, tuple):
+            if isinstance(ret, (list, tuple)):
                 self.items = ret
             elif isinstance(ret, dict):
                 self._dictRepl = ret

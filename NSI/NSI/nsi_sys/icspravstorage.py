@@ -1311,7 +1311,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
                     log.warning(u'Поиск по полю типа <%s> не поддерживается системой' % field_type)
 
                 if sql is not None and order_by:
-                    if type(order_by) in (list, tuple):
+                    if isinstance(order_by, (list, tuple)):
                         if len(order_by) == 1:
                             # Одно поле сортировки
                             sql = sql.order_by(getattr(self._tab.c, order_by[0]) if not is_desc else icsqlalchemy.desc(getattr(self._tab.c, order_by[0])))

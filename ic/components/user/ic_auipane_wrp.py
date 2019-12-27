@@ -137,7 +137,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
     """
     if attr in ('control_res',):
         ret = str_to_val_user_property(attr, value, propEdt)
-        if ret and type(ret) == tuple:
+        if ret and isinstance(ret, tuple):
             typ, name, ifs, fl, subsys = ret[0]
             if typ not in INS_TYPES:
                 wx.MessageBox(u'Тип объекта: <%s>. Требуемый тип объекта: %s' % (typ, INS_TYPES))

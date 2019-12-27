@@ -68,19 +68,20 @@ def get_unique_id(element):
             this_id = make_id(element)
     return ids[-1]
 
+
 def get_xml_type(val):
     """Returns the data type for the xml type attribute"""
-    if type(val).__name__ in ('str', 'unicode'):
+    if isinstance(val, str):
         return 'str'
-    if type(val).__name__ in ('int', 'long'):
+    if isinstance(val, int):
         return 'int'
-    if type(val).__name__ == 'float':
+    if isinstance(val, float):
         return 'float'
-    if type(val).__name__ == 'bool':
+    if isinstance(val, bool):
         return 'bool'
     if isinstance(val, numbers.Number):
         return 'number'
-    if type(val).__name__ == 'NoneType':
+    if val is None:
         return 'null'
     if isinstance(val, dict):
         return 'dict'
@@ -88,8 +89,9 @@ def get_xml_type(val):
         return 'list'
     return type(val).__name__
 
+
 def xml_escape(s):
-    if type(s) in (str, unicode):
+    if isinstance(s, str):
         s = unicode_me(s) # avoid UnicodeDecodeError
         s = s.replace('&', '&amp;')
         s = s.replace('"', '&quot;')
@@ -130,10 +132,11 @@ def make_valid_xml_name(key, attr):
     key = 'key'
     return key, attr
 
+
 def convert(obj, ids, attr_type, parent='root'):
     """Routes the elements of an object to the right function to convert them based on their data type"""
     LOG.info('Inside convert(). obj type is: "%s", obj="%s"' % (type(obj).__name__, unicode_me(obj)))
-    if isinstance(obj, numbers.Number) or type(obj) in (str, unicode):
+    if isinstance(obj, numbers.Number) or isinstance(obj, str):
         return convert_kv('item', obj, attr_type)
     if hasattr(obj, 'isoformat'):
         return convert_kv('item', obj.isoformat(), attr_type)
@@ -159,13 +162,13 @@ def convert_dict(obj, ids, parent, attr_type):
 
         key, attr = make_valid_xml_name(key, attr)
 
-        if isinstance(val, numbers.Number) or type(val) in (str, unicode):
+        if isinstance(val, numbers.Number) or isinstance(val, str):
             addline(convert_kv(key, val, attr_type, attr))
 
-        elif hasattr(val, 'isoformat'): # datetime
+        elif hasattr(val, 'isoformat'):     # datetime
             addline(convert_kv(key, val.isoformat(), attr_type, attr))
 
-        elif type(val) == bool:
+        elif isinstance(val, bool):
             addline(convert_bool(key, val, attr_type, attr))
 
         elif isinstance(val, dict):
@@ -197,12 +200,12 @@ def convert_list(items, ids, parent, attr_type):
 
     for i, item in enumerate(items):
         LOG.info('Looping inside convert_list(): item="%s", type="%s"' % (unicode_me(item), type(item).__name__))
-        attr = {} if not ids else { 'id': '%s_%s' % (this_id, i+1) }
-        if isinstance(item, numbers.Number) or type(item) in (str, unicode):
+        attr = {} if not ids else {'id': '%s_%s' % (this_id, i+1)}
+        if isinstance(item, numbers.Number) or isinstance(item, str):
             addline(convert_kv('item', item, attr_type, attr))
         elif hasattr(item, 'isoformat'): # datetime
             addline(convert_kv('item', item.isoformat(), attr_type, attr))
-        elif type(item) == bool:
+        elif isinstance(item, bool):
             addline(convert_bool('item', item, attr_type, attr))
         elif isinstance(item, dict):
             if not attr_type:

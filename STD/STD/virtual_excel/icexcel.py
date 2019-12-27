@@ -590,7 +590,7 @@ class icVExcel(icprototype.icVPrototype):
         """
         xml_filename = self._unificXMLFileName(xml_filename)
 
-        if type(self._worksheet_list_clipboard) in (list, tuple):
+        if isinstance(self._worksheet_list_clipboard, (list, tuple)):
             for i, worksheet_src in enumerate(self._worksheet_list_clipboard):
                 workbook_name, worksheet_name = worksheet_src
 
@@ -618,7 +618,7 @@ class icVExcel(icprototype.icVPrototype):
         # Список имен листов книги
         worksheet_name_list = [data['Name'] for data in workbook_data['children'] if data['name'] == 'Worksheet']
 
-        if type(self._worksheet_list_clipboard) in (list, tuple):
+        if isinstance(self._worksheet_list_clipboard, (list, tuple)):
             for i, worksheet_name in enumerate(worksheet_name_list):
                 if worksheet_name not in not_deleted_worksheet_names:
                     self.delWorksheet(workbook_name,worksheet_name)
@@ -766,7 +766,7 @@ class icVExcel(icprototype.icVPrototype):
         то имеется ввиду активная книга.
         :param new_worksheet_names: Список имен новых листов.
         """
-        if type(self._worksheet_list_clipboard) in (list, tuple):
+        if isinstance(self._worksheet_list_clipboard, (list, tuple)):
             for i, worksheet_src in enumerate(self._worksheet_list_clipboard):
                 workbook_name, worksheet_name = worksheet_src
                 new_worksheet_name = None
@@ -786,7 +786,7 @@ class icVExcel(icprototype.icVPrototype):
         то имеется ввиду активная книга.
         :param new_worksheet_names: Список имен новых листов.
         """
-        if type(self._worksheet_list_clipboard) in (list, tuple):
+        if isinstance(self._worksheet_list_clipboard, (list, tuple)):
             for i, worksheet_src in enumerate(self._worksheet_list_clipboard):
                 workbook_name, worksheet_name = worksheet_src
                 new_worksheet_name = None

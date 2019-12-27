@@ -262,8 +262,8 @@ def _find(obj):
         rec = buff_find_str.next()
         if rec:
             fcod = rec[buff_find_str.cod_indx]
-            if type(fcod) != unicode:
-                fcod = unicode(fcod, 'utf-8')
+            if isinstance(fcod, str):
+                fcod = strfunc.toUnicode(fcod, 'utf-8')
 
             prnt_cod = sprav.getParentLevelCod(fcod)
             tree_grid.select_cod(prnt_cod, sel_cod=fcod)

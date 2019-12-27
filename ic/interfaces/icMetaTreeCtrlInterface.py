@@ -340,8 +340,8 @@ class MetaTreeCtrlInterface(treectrl_manager.icTreeCtrlManager):
                 try:
                     ic_proccess_dlg.proccess_function(self, u'Подождите', res.ReLoad, tuple(), {}, bAutoIncr=True)
                 except:
-                    if not type(res) in (type({}), type([]), type(0,)):
-                        iclog.LogLastError(u'### Reload Error')
+                    if not isinstance(res, (dict, list, tuple)):
+                        log.fatal(u'### Reload Error')
             
             self.addBranch(root, res, 0, level+1)
             t2 = time.clock()

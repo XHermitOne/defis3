@@ -598,7 +598,7 @@ class icListCtrlManager(object):
         :param auto_select: Автоматически выбрать добавленную строку?
         :return: True - все прошло нормально / False - какая-то ошибка.
         """
-        if type(row) not in (list, tuple):
+        if not isinstance(row, (list, tuple)):
             log.warning(u'Не корректный тип списка строки <%s> объекта wx.ListCtrl' % type(row))
             return False
         try:
@@ -608,7 +608,7 @@ class icListCtrlManager(object):
             for i, value in enumerate(row):
                 if value is None:
                     value = u''
-                elif type(value) in (int, float):
+                elif isinstance(value, (int, float)):
                     value = str(value)
                 # elif isinstance(value, str):
                 #    value = unicode(value, config.DEFAULT_ENCODING)
@@ -657,7 +657,7 @@ class icListCtrlManager(object):
         :param auto_select: Автоматически выбрать добавленную строку?
         :return: True - все прошло нормально / False - какая-то ошибка.
         """
-        if type(row) not in (list, tuple):
+        if not isinstance(row, (list, tuple)):
             log.warning(u'Не корректный тип списка строки <%s> объекта GroupListView' % type(row))
             return False
         try:

@@ -123,7 +123,7 @@ class icCheckListBox(icWidget, wx.CheckListBox):
         
         if not component['items']:
             self.items = list()
-        elif type(component['items']) in (list, tuple):
+        elif isinstance(component['items'], (list, tuple)):
             self.items = component['items']
         elif isinstance(component['items'], dict):
             self._dictRepl = component['items']
@@ -133,7 +133,7 @@ class icCheckListBox(icWidget, wx.CheckListBox):
                                  self.evalSpace,
                                  'getICAttr() Error in icchoice.__init__(...) <items> name=%s' % self.name)
 
-            if type(ret) in (list, tuple):
+            if isinstance(ret, (list, tuple)):
                 self.items = ret
             elif isinstance(ret, dict):
                 self._dictRepl = ret

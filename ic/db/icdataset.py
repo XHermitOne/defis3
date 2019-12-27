@@ -364,16 +364,16 @@ def findResTypeLst(res, typRes, lst=None):
     if 'type' in res and res['type'] == typRes:
         lst.append(res)
     
-    if 'child' in res and type(res['child']) in (list, tuple):
+    if 'child' in res and isinstance(res['child'], (list, tuple)):
         for r in res['child']:
             lst = findResTypeLst(r, typRes, lst)
-    elif 'cols' in res and type(res['cols']) in (list, tuple):
+    elif 'cols' in res and isinstance(res['cols'], (list, tuple)):
         for r in res['cols']:
             lst = findResTypeLst(r, typRes, lst)
-    elif 'win1' in res and type(res['win1']) in (list, tuple):
+    elif 'win1' in res and isinstance(res['win1'], (list, tuple)):
         for r in res['win1']:
             lst = findResTypeLst(r, typRes, lst)
-    elif 'win2' in res and type(res['win2']) in (list, tuple):
+    elif 'win2' in res and isinstance(res['win2'], (list, tuple)):
         for r in res['win2']:
             lst = findResTypeLst(r, typRes, lst)
         

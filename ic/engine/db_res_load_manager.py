@@ -348,7 +348,7 @@ class icDBResLoadManager(object):
         res = None
         if self.is_db_store(path):
             res = self.load_db_res(path)
-        if not res or not (type(res) in (dict, list, tuple)):
+        if not res or not isinstance(res, (dict, list, tuple)):
             return self.load_file_res(path, bRefresh)
         return res
 

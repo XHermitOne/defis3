@@ -81,7 +81,7 @@ class icVCell(icprototype.icVIndexedPrototype):
         Проверка является ли значение формулой.
         :param value: Проверяемое значение.
         """
-        return type(value) == str and bool(value) and value[0] == '='
+        return isinstance(value, str) and bool(value) and value[0] == '='
     
     def setValue(self, value, value_type='String'):
         """
@@ -377,7 +377,7 @@ class icVData(icprototype.icVPrototype):
             # ВНИМАНИЕ! Здесь идет проверка на принадлежность данных к процентному типу
             # т. к. нет возможности отделить проценты от числовых типов
             val_type = DEFAULT_PERCENTAGE_TYPE
-        elif type(value) in (int, float):
+        elif isinstance(value, (int, float)):
             val_type = DEFAULT_NUMBER_TYPE
         # elif isinstance(value, text):
         #    val = val.encode(self.getApp().encoding)

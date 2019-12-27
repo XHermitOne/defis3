@@ -187,7 +187,7 @@ class icCFObject:
         if not Filter_:
             # Если фильтр не определен, то все дочерние элементы.
             children = self.children
-        elif type(Filter_) in (str, unicode):
+        elif isinstance(Filter_, str):
             children = [child for child in self.children if Filter_ == child.name]
         else:
             children = [child for child in self.children if bool(re.search(Filter_, child.name))]

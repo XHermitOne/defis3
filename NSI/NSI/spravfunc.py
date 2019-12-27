@@ -278,11 +278,10 @@ def CtrlSprav(typSprav, val, old=None, field='name', flds=None, datatime=None, b
         #-----------------------------------------------------------------------
         #   Если дата актуальности не указана либо в таблице актуальности нет инф.
         #   за нужный период, то проверяем по справочной таблице
-        #if not datatime or len(rs) == 0:
         if not datatime or GetRecordCount(rs) == 0:
             rs = _Sprav.select(
-                AND(_Sprav.q.id_nsi_listID==spr.id,
-                    getattr(_Sprav.q, field)==value,
+                AND(_Sprav.q.id_nsi_listID == spr.id,
+                    getattr(_Sprav.q, field) == value,
                     _Sprav.q.cod.startswith(cod)))
         
         try:
@@ -290,7 +289,7 @@ def CtrlSprav(typSprav, val, old=None, field='name', flds=None, datatime=None, b
             result = IC_CTRL_OK
             
             #   Формируем словарь значений, которые необходимо вернуть
-            if type(flds) == type({}):
+            if isinstance(flds, dict):
                 for key in flds:
                     fld_sprav = flds[key]
                             
@@ -343,7 +342,6 @@ def CtrlSpravId(typSprav, value, old=None, flds=None, datatime=None, bCount=True
     :rtype: C{int}
     :return: Код возврата функции контроля.
     """
-
     result = IC_CTRL_OK
     res_val = {}
     
@@ -363,10 +361,9 @@ def CtrlSpravId(typSprav, value, old=None, flds=None, datatime=None, bCount=True
             #   Находим описание нужного справочника
             rs = _NsiList.select(_NsiList.q.type==typSprav)
             print(rs)
-            #if len(rs) == 0:
             if GetRecordCount(rs) == 0:
                 print('Invalid sprav type')
-                return (IC_CTRL_FAILED_TYPE_SPRAV, res_val)
+                return IC_CTRL_FAILED_TYPE_SPRAV, res_val
             
             tab = rs[0].tab
     
@@ -384,7 +381,7 @@ def CtrlSpravId(typSprav, value, old=None, flds=None, datatime=None, bCount=True
             result = IC_CTRL_OK
             
             #   Формируем словарь значений, которые необходимо вернуть
-            if type(flds) == type({}):
+            if isinstance(flds, dict):
                 for key in flds:
                     fld_sprav = flds[key]
                             
@@ -400,7 +397,7 @@ def CtrlSpravId(typSprav, value, old=None, flds=None, datatime=None, bCount=True
         LogLastError('CtrlSprav ERROR')
         result = IC_CTRL_FAILED_TYPE_SPRAV
 
-    return (result, res_val)
+    return result, res_val
 
 
 def NsiEdtFormName(typSprav, level_num=1):
@@ -415,7 +412,6 @@ def NsiEdtFormName(typSprav, level_num=1):
     :return: Возвращает имя формы для редактирования справочника. None - в случае
         если тип справочника не определен.
     """
-    
     #   Создаем класс данных типов справочников
     _NsiList = tabclass.CreateTabClass(getNsiListClassName())
     _NsiLevel = tabclass.CreateTabClass(getNsiLevelClassName())
@@ -428,7 +424,6 @@ def NsiEdtFormName(typSprav, level_num=1):
         #   Находим описание нужного справочника
         rs = _NsiList.select(_NsiList.q.type==typSprav)
 
-        #if len(rs) == 0:
         if GetRecordCount(rs) == 0:
             print('Invalid sprav type')
             return None
@@ -468,7 +463,6 @@ def NsiHlpFormName(typSprav, level_num=1):
     :rtype: C{string}
     :return: Возвращает имя формы выбора. None - в случае если тип справочника не определен.
     """
-    
     #   Создаем класс данных типов справочников
     _NsiList = tabclass.CreateTabClass(getNsiListClassName())
     _NsiLevel = tabclass.CreateTabClass(getNsiLevelClassName())
@@ -481,7 +475,6 @@ def NsiHlpFormName(typSprav, level_num=1):
         #   Находим описание нужного справочника
         rs = _NsiList.select(_NsiList.q.type==typSprav)
 
-        #if len(rs) == 0:
         if GetRecordCount(rs) == 0:
             print('Invalid sprav type')
             return None
@@ -528,67 +521,66 @@ def HlpSprav(typSprav,ParentCode=(None,),field=None,datatime=None,form=None,rec=
     result = IC_HLP_OK
     res_val = None
 
-    print('Start HlpSprav FIELD:',field)
+    print('Start HlpSprav FIELD:', field)
     try:
         if ParentCode is None:
             ParentCode=(None, )
 
-        #Для обработки необходимо преобразовать в список
-        parent_code=list(ParentCode)
-        #Запрашиваемый уровень
+        # Для обработки необходимо преобразовать в список
+        parent_code = list(ParentCode)
+        # Запрашиваемый уровень
         try:
-            x_level=parent_code.index(None)
-            parent_code_str=''.join(parent_code[:x_level])
-            x_level+=1
+            x_level = parent_code.index(None)
+            parent_code_str = ''.join(parent_code[:x_level])
+            x_level += 1
             print('HlpSprav Level:', x_level)
         except:
-            x_level=None
-            #Весь код заполнен
-            res_val=(ParentCode,get_fields(field,rec))
-            str_code=get_hlp_code_str(typSprav,ParentCode)
-            print('HlpSprav Resultation: ',field,rec,res_val,str_code)
-            return (result,res_val[0],res_val[1],str_code)
+            x_level = None
+            # Весь код заполнен
+            res_val = (ParentCode, get_fields(field, rec))
+            str_code = get_hlp_code_str(typSprav, ParentCode)
+            print('HlpSprav Resultation: ', field, rec, res_val, str_code)
+            return result, res_val[0], res_val[1], str_code
 
-        #Получить информацию о справочнике
+        # Получить информацию о справочнике
         _NsiList = tabclass.CreateTabClass(getNsiListClassName())
 
         #   Находим описание нужного справочника
         rs = _NsiList.select(_NsiList.q.type==typSprav)
     
-        #if len(rs) == 0:
         if GetRecordCount(rs) == 0:
             print('Invalid sprav type')
-            return (IC_HLP_FAILED_TYPE_SPRAV, res_val)
+            return IC_HLP_FAILED_TYPE_SPRAV, res_val
         
         spr = rs[0]
 
-        #Если запрашиваемый уровень больше общего количества уровней, то выйти
-        #Нет такого уровня в справочнике
-        if spr.level_num<x_level:
-            print('Invalid level %d'%(x_level))
-            return (IC_HLP_FAILED_LEVEL, res_val)
+        # Если запрашиваемый уровень больше общего количества уровней, то выйти
+        # Нет такого уровня в справочнике
+        if spr.level_num < x_level:
+            print('Invalid level %d' % x_level)
+            return IC_HLP_FAILED_LEVEL, res_val
 
-        #определить длину кода уровня
-        _NsiLevel=tabclass.CreateTabClass(getNsiLevelClassName())
+        # определить длину кода уровня
+        _NsiLevel = tabclass.CreateTabClass(getNsiLevelClassName())
         rs = _NsiLevel.select(_NsiLevel.q.type==typSprav)
         level_len=None
         for rec in rs:
-            if rec.level==x_level:
-                level_len=rec.level_len
+            if rec.level == x_level:
+                level_len = rec.level_len
                 break
 
         if level_len is None:
-            MsgBox(None,'Не определена длина кода уровня!')
-            return (IC_HLP_FAILED_LEVEL, res_val)
+            MsgBox(None, 'Не определена длина кода уровня!')
+            return IC_HLP_FAILED_LEVEL, res_val
 
-        parent_len=len(parent_code_str)
+        parent_len = len(parent_code_str)
 
         result = IC_HLP_FAILED
 
-        #--- Если указана дата актуальности ---
+        # --- Если указана дата актуальности ---
         if datatime:
-            sprav_t=spr.tab+'T'
-            sql='''SELECT id FROM %s
+            sprav_t = spr.tab+'T'
+            sql = '''SELECT id FROM %s
                 WHERE SUBSTR(cod,1,%d) LIKE(\'%s\') AND
                 LENGTH(SUBSTR(cod,%d,LENGTH(cod)-%d))=%d AND
                 time_start<=%s AND time_end>=%s'''%(sprav_t,
@@ -596,10 +588,10 @@ def HlpSprav(typSprav,ParentCode=(None,),field=None,datatime=None,form=None,rec=
                 parent_len+1,parent_len,level_len,
                 str(datatime),str(datatime))
                     
-        #---  Если дата актуальности не указана либо в таблице актуальности нет инф.
+        # ---  Если дата актуальности не указана либо в таблице актуальности нет инф.
         #   за нужный период, то проверяем по справочной таблице
         if not datatime:
-            sql='''SELECT id FROM %s
+            sql = '''SELECT id FROM %s
                 WHERE %s.id_nsi_list=%d AND
                 SUBSTR(%s.cod,1,%d) LIKE(\'%s\') AND
                 LENGTH(SUBSTR(%s.cod,%d,LENGTH(%s.cod)-%d))=%d'''%(spr.tab,
@@ -1144,7 +1136,7 @@ def DelSprav(typSprav,Code):
     :param typSprav: Тип удаляемого справочника.
     :param Code: Структурный код удаляемого справочника.
     """
-    if type(Code)==type(''):
+    if isinstance(Code, str):
         str_code=Code
     else:
         str_code=''.join(Code)

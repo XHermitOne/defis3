@@ -768,7 +768,7 @@ class icSpravProto(icSpravInterface):
             if res_val is None:
                 # Нажали ESC
                 result = IC_HLP_FAILED_IGNORE
-            elif type(res_val) in (list, tuple):
+            elif isinstance(res_val, (list, tuple)):
                 return res_val
             else:
                 result = IC_HLP_OK

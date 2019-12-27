@@ -89,7 +89,7 @@ class icAUIPanePrototype:
         self.control_subsys = None
         self.control_res = component['control_res']
         # Теперь control_res должен быть паспорт
-        if type(self.control_res) == tuple:
+        if isinstance(self.control_res, tuple):
             self.control_name = self.control_res[0][1]
             self.control_subsys = self.control_res[0][4]
             self.control_res = self.control_res[0][3]

@@ -279,7 +279,7 @@ def ctrlVal(typ, text):
     elif typ in (EDT_TEXTDICT, EDT_DICT, EDT_FONT) and isinstance(value, dict):
         ret = coderror.IC_CTRL_OK
     # Числовое поле
-    elif typ in (EDT_NUMBER, EDT_CHECK_BOX, EDT_COMBINE) and type(value) in (int, float, bool):
+    elif typ in (EDT_NUMBER, EDT_CHECK_BOX, EDT_COMBINE) and isinstance(value, (int, float, bool)):
         ret = coderror.IC_CTRL_OK
     # Редактор цветов wxColour.
     elif typ == EDT_COLOR and value is None:
@@ -288,10 +288,10 @@ def ctrlVal(typ, text):
                                (isinstance(value, tuple) and len(value) == 3)):
         ret = coderror.IC_CTRL_OK
     # Редактор координат точки wx.Point.
-    elif typ == EDT_POINT and type(value) in (tuple, type(wx.Point(0, 0))) and len(value) == 2:
+    elif typ == EDT_POINT and isinstance(value, (tuple, type(wx.Point(0, 0)))) and len(value) == 2:
         ret = coderror.IC_CTRL_OK
     # Редактор размеров окон wx.Size.
-    elif typ == EDT_SIZE and type(value) in (tuple, type(wx.Size(0, 0))) and len(value) == 2:
+    elif typ == EDT_SIZE and isinstance(value, (tuple, type(wx.Size(0, 0)))) and len(value) == 2:
         ret = coderror.IC_CTRL_OK
     
     return ret
