@@ -62,7 +62,7 @@ class icPrjResources(prj_node.icPrjFolder):
         self.include_nodes = [icPrjTabRes, icPrjDBRes,
                               icPrjObjStorageRes,
                               icPrjFrmRes, icPrjWinRes,
-                              icPrjMenuRes, icPrjTemplate, icPrjMethod, icPrjMetaDataRes]
+                              icPrjMenuRes, icPrjTemplate, icPrjMetaDataRes]
         self.include_folder = icPrjResources
         
     def isMainFolder(self):

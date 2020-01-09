@@ -130,16 +130,16 @@ class icPersistant:
             local_dir = filefunc.getPrjProfilePath() if res_path is None else res_path
             full_file_name = os.path.join(local_dir, res_name.replace(':', '_')+'.'+res_type)
             lock_file_name = os.path.join(local_dir, '#lock', res_name.replace(':', '_') + lockfunc.LOCK_FILE_EXT)
-            if not lockfunc.IsLockedFile(lock_file_name):
+            if not lockfunc.isLockedFile(lock_file_name):
                 try:
-                    lock_rec = {'computer': lockfunc.ComputerName(),
+                    lock_rec = {'computer': lockfunc.getComputerName(),
                                 'user': glob_functions.getVar('UserName')}
-                    lockfunc.LockFile(lock_file_name, lock_rec)
+                    lockfunc.lockFile(lock_file_name, lock_rec)
                     resfunc.saveResourcePickle(full_file_name, res)
-                    lockfunc.UnLockFile(lock_file_name)
+                    lockfunc.unLockFile(lock_file_name)
                 except:
                     log.fatal(u'Ошибка сохранение ресурсного файла <%s>' % full_file_name)
-                    lockfunc.UnLockFile(lock_file_name)
+                    lockfunc.unLockFile(lock_file_name)
             else:
                 log.warning(u'Файл <%s> заблокирован для записи' % full_file_name)
                 return False

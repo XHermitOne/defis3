@@ -126,7 +126,7 @@ def icSetUserVariable(varName, value, subsys='', bClose = False):
     else:
         storage = USER_OBJECT_STORAGE
 
-    keyObj = lockfunc.GetMyHostName() + 'Property'
+    keyObj = lockfunc.getHostName() + 'Property'
     #   По необходимости создаем файл
     # ВНИМАНИЕ! При работе с хранилищем используем исключительно функцию
     # наличия ключа <has_key> т.к. она определена в классе
@@ -176,7 +176,7 @@ def icGetUserVariable(varName, subsys='', bClose = False):
     else:
         storage = USER_OBJECT_STORAGE
 
-    keyObj = lockfunc.GetMyHostName() + 'Property'
+    keyObj = lockfunc.getHostName() + 'Property'
     result = None
     #   По необходимости создаем файл
     # ВНИМАНИЕ! При работе с хранилищем используем исключительно функцию

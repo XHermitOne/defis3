@@ -119,7 +119,7 @@ class icApp(icwxapplication.icWXApp):
         from ic.engine import glob_functions
         from ic.utils import resource
         
-        lockfunc.UnLockAllFile(glob_functions.getVar('LOCK_DIR'))
+        lockfunc.unLockAllFile(glob_functions.getVar('LOCK_DIR'))
         # Сохраняем локальное хранилище настроек 
         resource.icCloseLocalStorage()
         
@@ -153,11 +153,11 @@ class icApp(icwxapplication.icWXApp):
         if ok:
             # self.run(self._User.getMainWinPsp(), self._User.getMenubarsPsp())
             # Удалить файлы блокировок при входе в систему
-            lockfunc.UnLockAllFile(glob_functions.getVar('LOCK_DIR'))
+            lockfunc.unLockAllFile(glob_functions.getVar('LOCK_DIR'))
             return True
 
         # Удалить файлы блокировок при входе в систему
-        lockfunc.UnLockAllFile(glob_functions.getVar('LOCK_DIR'))
+        lockfunc.unLockAllFile(glob_functions.getVar('LOCK_DIR'))
         
         return False
 

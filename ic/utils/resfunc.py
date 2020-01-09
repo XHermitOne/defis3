@@ -368,10 +368,10 @@ def lockRes(res_name, res_filename, res_file_ext, lock_dir=None):
                                              res_filename.strip(),
                                              res_file_ext.strip(),
                                              lockfunc.LOCK_FILE_EXT))
-    comp_name = lockfunc.ComputerName()
+    comp_name = lockfunc.getComputerName()
     user_name = glob_functions.getVar('UserName')
     log.info(u'Блокировка ресурса <%s>' % lock_file)
-    return lockfunc.LockFile(lock_file, u'{\'computer\':\'%s\',\'user\':\'%s\'}' % (comp_name,
+    return lockfunc.lockFile(lock_file, u'{\'computer\':\'%s\',\'user\':\'%s\'}' % (comp_name,
                                                                                     user_name))
 
 
@@ -397,7 +397,7 @@ def unlockRes(res_name, res_filename, res_file_ext, lock_dir=None):
                                              lockfunc.LOCK_FILE_EXT))
     user_name = glob_functions.getCurUserName()
     log.info(u'Снятие блокировки ресурса <%s> : <%s>' % (lock_file, user_name))
-    return lockfunc.UnLockFile(lock_file, user=user_name)
+    return lockfunc.unLockFile(lock_file, user=user_name)
 
 
 def isLockRes(res_name, res_filename, res_file_ext, lock_dir=None):
@@ -428,8 +428,8 @@ def isLockRes(res_name, res_filename, res_file_ext, lock_dir=None):
                                             res_file_ext.strip(),
                                             lockfunc.LOCK_FILE_EXT))
         
-    is_lock_file = lockfunc.IsLockedFile(lock_file)
-    is_lock_res = lockfunc.IsLockedFile(lock_res)
+    is_lock_file = lockfunc.isLockedFile(lock_file)
+    is_lock_res = lockfunc.isLockedFile(lock_res)
     is_lock = False
     if is_lock_file or is_lock_res:
         log.info(u'Ресурс заблокирован <%s> : [%s : %s]' % (lock_file, is_lock_file, is_lock_res))
@@ -458,7 +458,7 @@ def delAllLockRes(lock_dir):
     if lock_dir is None:
         lock_dir = lockfunc.getLockDir()
         os.makedirs(lock_dir)
-    return lockfunc.UnLockAllFile(lock_dir)
+    return lockfunc.unLockAllFile(lock_dir)
 
 
 def getLockResOwner(res_name, res_filename, res_file_ext, lock_dir=None):
@@ -474,7 +474,7 @@ def getLockResOwner(res_name, res_filename, res_file_ext, lock_dir=None):
     lock_file = os.path.join(lock_dir,
                              '%s_%s_%s%s' % (res_name, res_filename,
                                              res_file_ext, lockfunc.LOCK_FILE_EXT))
-    lock_record = lockfunc.ReadLockRecord(lock_file)
+    lock_record = lockfunc.readLockRecord(lock_file)
     lock_user = lock_record.get('user', u'Не определен') if lock_record else u'Не определен'
     log.info(u'Владелец <%s> заблокированного ресурса <%s>' % (lock_user, lock_file))
     return lock_user
@@ -493,7 +493,7 @@ def getLockResRecord(res_name, res_filename, res_file_ext, lock_dir=None):
     lock_file = os.path.join(lock_dir,
                              '%s_%s_%s%s' % (res_name, res_filename,
                                              res_file_ext, lockfunc.LOCK_FILE_EXT))
-    return lockfunc.ReadLockRecord(lock_file)
+    return lockfunc.readLockRecord(lock_file)
 
 
 def getNewID():

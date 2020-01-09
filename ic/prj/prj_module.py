@@ -65,8 +65,7 @@ class icPrjModules(prj_node.icPrjFolder):
                               prj_wxcp.icPrjWXCrafterProject,
                               prj_resource.icPrjTabRes, prj_resource.icPrjDBRes,
                               prj_resource.icPrjFrmRes, prj_resource.icPrjWinRes,
-                              prj_resource.icPrjMenuRes, prj_resource.icPrjTemplate,
-                              prj_resource.icPrjMethod]
+                              prj_resource.icPrjMenuRes, prj_resource.icPrjTemplate]
         self.include_folder = icPrjPackage
 
     def onNodePopup(self, event):
@@ -419,8 +418,7 @@ class icPrjPackage(prj_node.icPrjFolder):
                               prj_wxcp.icPrjWXCrafterProject,
                               prj_resource.icPrjTabRes, prj_resource.icPrjDBRes,
                               prj_resource.icPrjFrmRes, prj_resource.icPrjWinRes,
-                              prj_resource.icPrjMenuRes, prj_resource.icPrjTemplate,
-                              prj_resource.icPrjMethod]
+                              prj_resource.icPrjMenuRes, prj_resource.icPrjTemplate]
         self.include_folder = icPrjPackage
 
     def onNodePopup(self, event):

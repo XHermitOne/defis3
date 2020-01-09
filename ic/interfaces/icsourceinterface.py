@@ -29,7 +29,7 @@ class icSourceInterface:
         """
         pass
         
-    def LockTable(self, name):
+    def lockTable(self, name):
         """
         Блокирует таблицу.
         """
@@ -41,7 +41,7 @@ class icSourceInterface:
         """        
         pass
         
-    def LockRec(self, name, id):
+    def lockRec(self, name, id):
         """
         Блокировка записи.
         """
@@ -53,13 +53,13 @@ class icSourceInterface:
         """
         pass
         
-    def IsLockTable(self, name):
+    def isLockTable(self, name):
         """
         Возвращает признак блокировки таблицы.
         """
         pass
         
-    def IsLockRec(self, name, id):
+    def isLockRec(self, name, id):
         """
         Возвращает признак блокировки записи.        
         """

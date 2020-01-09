@@ -31,7 +31,7 @@ class Resources(object):
         self.lock = lock
         self.user = user
         self.ttl = ttl
-        self.computer = lockmod.ComputerName()
+        self.computer = lockmod.getComputerName()
 
     def _get_res(self):
         return self._res
@@ -209,7 +209,7 @@ class icDBResLoadManager(object):
                 obj.lock = flag
                 obj.ttl = ttl
                 obj.user = self.get_user()
-                obj.computer = lockmod.ComputerName()
+                obj.computer = lockmod.getComputerName()
                 session.add(obj)
                 session.flush()
                 if flag:
@@ -295,7 +295,7 @@ class icDBResLoadManager(object):
                 user = getattr(self.ic, 'getCurUserName', None)
                 if user:
                     user = user()
-                if obj.computer == lockmod.ComputerName() and (obj.user is None or obj.user == user):
+                if obj.computer == lockmod.getComputerName() and (obj.user is None or obj.user == user):
                     return False
                 # Если время жизни блокировки прошло, снимаем блокировку
                 elif obj.ttl:
@@ -386,7 +386,7 @@ class icDBResLoadManager(object):
             obj.res = res
         else:
             obj = self.syscls(path, res, user)
-        obj.computer = lockmod.ComputerName()
+        obj.computer = lockmod.getComputerName()
         obj.user = user
         obj.lock = block
         obj.ttl = ttl

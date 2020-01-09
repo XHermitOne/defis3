@@ -274,7 +274,7 @@ class icObjPersistentProto(object):
         Моя блокировка?
         :param UUID: UUID блокируемого объекта.
         """
-        return self.ownerLock(UUID) == lockfunc.ComputerName()
+        return self.ownerLock(UUID) == lockfunc.getComputerName()
 
     def getFieldName(self):
         """

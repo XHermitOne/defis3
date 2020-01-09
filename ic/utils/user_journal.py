@@ -59,7 +59,7 @@ class icRegUserJournal:
         """
         Имя компьютера.
         """
-        return lockfunc.ComputerName()
+        return lockfunc.getComputerName()
         
     def getRegLastUserName(self):
         """

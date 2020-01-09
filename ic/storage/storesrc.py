@@ -1270,7 +1270,7 @@ class icTreeDirStorage(icDirStorage):
         """
         Проверка, является ли эта блокировка моей.
         """
-        return ic.utils.lockfunc.ComputerName() == self.ownerLock(Name_)
+        return ic.utils.lockfunc.getComputerName() == self.ownerLock(Name_)
         
     def unLockAllMy(self):
         """

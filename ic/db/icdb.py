@@ -663,27 +663,27 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
         return self._metadata.bind.dialect.encoding
 
     # Поддержка блокировок
-    def LockTable(self, name):
+    def lockTable(self, name):
         """
         Блокирует таблицу.
         """
-        return lockfunc.LockTable(name)
+        return lockfunc.lockTable(name)
 
     def unLockTable(self, name):
         """
         Разблокирует таблицу.
         """
-        return lockfunc.UnLockTable(name)
+        return lockfunc.unLockTable(name)
 
-    def LockRec(self, name, id, lock_record=None):
+    def lockRec(self, name, id, lock_record=None):
         """
         Блокировка записи.
         """
         if lock_record is None:
-            comp_name = lockfunc.ComputerName()
+            comp_name = lockfunc.getComputerName()
             user_name = glob_functions.getCurUserName()
             lock_record = str({'computer': comp_name, 'user': user_name})
-        result = lockfunc.LockRecord(name, id, lock_record)
+        result = lockfunc.lockRecord(name, id, lock_record)
         log.debug(u'Запись заблокирована <%s : %s : %s : %s>' % (name, id, lock_record, result))
         if result != 0:
             return False
@@ -693,18 +693,18 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
         """
         Разблокирует запись.
         """
-        if not self.IsLockRec(name, id):
+        if not self.isLockRec(name, id):
             log.debug(u'Запись разблокирована <%s : %s>' % (name, id))
             return lockfunc.unLockRecord(name, id)
         return False
 
-    def IsLockTable(self, name):
+    def isLockTable(self, name):
         """
         Возвращает признак блокировки таблицы.
         """
         return lockfunc.isLockTable(name)
 
-    def IsLockRec(self, name, id):
+    def isLockRec(self, name, id):
         """
         Возвращает признак блокировки записи.
         """

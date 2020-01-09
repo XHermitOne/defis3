@@ -116,7 +116,7 @@ class icRefTablePersistent(object):
         """
         if code:
             lock_name = self.getSprav().getName() + self.getName() + code
-            return self.ownerLock(lock_name) == lockfunc.ComputerName()
+            return self.ownerLock(lock_name) == lockfunc.getComputerName()
         return False
 
     # Методы генерации ресурса таблицы
