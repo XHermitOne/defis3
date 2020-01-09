@@ -201,7 +201,7 @@ class icSpinner(icWidget, wx.SpinCtrl):
         """
         #   Блокируем запись для редактирования, если позволяет объект данных
         if self.dataset and not self.evalSpace['__block_lock_rec']:
-            err = self.dataset.Lock()
+            err = self.dataset.lock()
                 
             if err in [1, 2] and rec != self._oldLockReck:
                 MsgBox(None, u'Запись (%d) заблокирована err=%s' % (rec, str(err)))

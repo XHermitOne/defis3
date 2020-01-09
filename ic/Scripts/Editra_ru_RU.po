@@ -2973,7 +2973,7 @@ msgid "Unknown error."
 msgstr "Неизвестная ошибка."
 
 #: ../utils/lock.py:229
-msgid "Lock file %s is deleted."
+msgid "lock file %s is deleted."
 msgstr "Блокировка файла %s удалена."
 
 #: ../utils/lock.py:235

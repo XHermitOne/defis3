@@ -1271,7 +1271,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         return False
 
     # Функции блокировок
-    def Lock(self):
+    def lock(self):
         """
         Блокирует таблицу.
         """
@@ -1287,7 +1287,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             return self.db.unLockTable(self.getClassName())
         return None
 
-    def LockObject(self, id, lock_record=None):
+    def lockObject(self, id, lock_record=None):
         """
         Блокировка изменения объекта.
         """
@@ -1303,7 +1303,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             return self.db.unLockRec(self.getClassName(), id)
         return None
 
-    def IsLock(self):
+    def isLock(self):
         """
         Возвращает признак блокировки класса данных.
         """
@@ -1311,7 +1311,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             return self.db.isLockTable(self.getClassName())
         return None
 
-    def IsLockObject(self, id):
+    def isLockObject(self, id):
         """
         Возвращает признак блокировки объекта класса данных.
         """

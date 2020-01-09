@@ -8,6 +8,5 @@
     <mapping directory="$PROJECT_DIR$/ayan_heat" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/ayan_product" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/ayan_telemetria" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/ic/report/icreport" vcs="Git" />
   </component>
 </project>

@@ -953,7 +953,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
             #   идентификатору записи
             try:
                 id = getattr(self.rowBuff, self.GetIDataclass().getIdName())
-                bLock = self.GetIDataclass().IsLockObject(id)
+                bLock = self.GetIDataclass().isLockObject(id)
             except:
                 id = -1
                 bLock = False
@@ -1032,7 +1032,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                 id = 'id'
 
             id = list(self.rowBuff)[-1][0]
-            bLock = self.GetIDataclass().IsLockObject(id)
+            bLock = self.GetIDataclass().isLockObject(id)
             # -------------------------------------------------------------------
             #   Заносим изменения если запись не заблокирована либо заблокирована
             #   текущим объектом
@@ -1436,7 +1436,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                 id = self.getId(rec, True)
                 
                 #   Если запись заблокирована, то отменяем удаление записи
-                if not self.GetIDataclass().IsLockObject(id):
+                if not self.GetIDataclass().isLockObject(id):
                     
                     # ---------------------------------------------------------------
                     #   Если в атрибуте ресурсного описания 'del' опрелено выражение,
@@ -1873,7 +1873,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
             
         try:
             id = self.indexBuff[rec][0]
-            result = self.GetIDataclass().LockObject(id)
+            result = self.GetIDataclass().lockObject(id)
             if result:
                 self._lockBuff.append(id)
         except IndexError:
@@ -1934,7 +1934,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
             
         try:
             id = self.indexBuff[rec][0]
-            ret = self.GetIDataclass().IsLockObject(id)
+            ret = self.GetIDataclass().isLockObject(id)
         except IndexError:
             log.fatal(u'SQLAlchemy Dataset. isLock')
 

@@ -673,7 +673,7 @@ class icTextField(icWidget, wx.TextCtrl):
         #   Блокируем запись для редактирования, если позволяет объект данных
         if self.dataset and not self.evalSpace['__block_lock_rec']:
             rec = self.dataset.Recno()
-            result = self.dataset.Lock(rec)
+            result = self.dataset.lock(rec)
             if not result and rec != self._oldLockReck:
                 self.bkillfocus = False
                 MsgBox(self.parent, _('Record (%d) is locked. <TextField=%s>, err=%s') % (rec, self.name, str(result)))

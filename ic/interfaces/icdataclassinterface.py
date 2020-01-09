@@ -129,7 +129,7 @@ class icDataClassInterface:
         """
         pass
 
-    def Lock(self):
+    def lock(self):
         """
         Блокирует таблицу.
         """
@@ -141,7 +141,7 @@ class icDataClassInterface:
         """
         pass
         
-    def LockObject(self, id):
+    def lockObject(self, id):
         """
         Блокировка изменения объекта.
         """
@@ -153,13 +153,13 @@ class icDataClassInterface:
         """
         pass
         
-    def IsLock(self):
+    def isLock(self):
         """
         Возвращает признак блокировки класса данных.
         """
         pass
         
-    def IsLockObject(self, id):
+    def isLockObject(self, id):
         """
         Возвращает признак блокировки объекта класса данных.
         """

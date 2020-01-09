@@ -267,7 +267,7 @@ class icChoice(icWidget, wx.Choice):
         """
         #   Блокируем запись для редактирования, если позволяет объект данных
         if self.dataset and not self.evalSpace['__block_lock_rec']:
-            err = self.dataset.Lock()
+            err = self.dataset.lock()
             
             if err in [1, 2] and rec != self._oldLockReck:
                 dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Запись (%d) заблокирована err=%s' % (rec, str(err)), self.parent)

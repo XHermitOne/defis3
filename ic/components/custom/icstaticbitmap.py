@@ -187,7 +187,7 @@ class icStaticBitmap(icWidget, wx.StaticBitmap):
         if self.editor is None and self.hlp not in (None, 'None', ''):
             #   Блокируем запись для редактирования, если позволяет объект данных
             try:
-                err = self.dataset.Lock()
+                err = self.dataset.lock()
             
                 if err in [1, 2]:
                     dlgfunc.openWarningBox(u'ОШИБКА', u'Запись заблокирована err=%s' % str(err))

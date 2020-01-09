@@ -1661,7 +1661,7 @@ class icGridDataset(icGrid):
         #   Блокируем запись для редактирования, если позволяет объект данных
         if self.GetDataset():
             try:
-                result = self.GetDataset().Lock(row)
+                result = self.GetDataset().lock(row)
                 if not result:
                     msg = ic_lock.readMessage(self.GetDataset().getDBTableName(), self.dataset.getId(row))
                     try:

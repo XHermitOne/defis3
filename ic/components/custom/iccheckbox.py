@@ -197,7 +197,7 @@ class icCheckBox(icWidget, wx.CheckBox):
         """
         #   Блокируем запись для редактирования, если позволяет объект данных
         try:
-            err = self.dataset.Lock()
+            err = self.dataset.lock()
             
             if err in [1, 2] and rec != self._oldLockReck:
                 MsgBox(None, u'Запись (%d) заблокирована err=%s' % (rec, str(err)))
