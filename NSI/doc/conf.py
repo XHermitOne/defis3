@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # NSI documentation build configuration file, created by
-# sphinx-quickstart on Tue Dec 24 13:41:46 2019.
+# sphinx-quickstart on Thu Jan  9 09:39:11 2020.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -17,11 +17,9 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, '/mnt/defis/defis3/NSI/NSI')
 import os
 import sys
+# sys.path.insert(0, '/mnt/defis/defis3/NSI/NSI')
 sys.path.append(os.path.abspath('..'))
 
 
@@ -35,8 +33,8 @@ sys.path.append(os.path.abspath('..'))
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = ['sphinx.ext.autodoc',
-              'sphinx.ext.todo',
-              'sphinx.ext.viewcode']
+    'sphinx.ext.todo',
+    'sphinx.ext.viewcode']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -52,7 +50,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'NSI'
-copyright = '2019, Author'
+copyright = '2020, Author'
 author = 'Author'
 
 # The version info for the project you're documenting, acts as replacement for

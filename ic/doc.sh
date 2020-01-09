@@ -9,5 +9,7 @@
 # sys.path.append(os.path.abspath('../..'))
 
 # Генерация документации:
-sphinx-apidoc --separate --full --force --output-dir ./doc .
+# ВНИМАНИЕ! Нельзя использовать ключ --force при генерации документации
+# т.к. перезаписывается файл conf.py
+sphinx-apidoc --separate --full --output-dir ./doc .
 make -C ./doc/ html

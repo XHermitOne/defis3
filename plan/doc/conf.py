@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # plan documentation build configuration file, created by
-# sphinx-quickstart on Wed Dec 25 10:11:02 2019.
+# sphinx-quickstart on Thu Jan  9 09:51:20 2020.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -22,6 +22,7 @@ import sys
 # sys.path.insert(0, '/mnt/defis/defis3/plan/plan')
 sys.path.append(os.path.abspath('..'))
 
+
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -32,8 +33,8 @@ sys.path.append(os.path.abspath('..'))
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = ['sphinx.ext.autodoc',
-              'sphinx.ext.todo',
-              'sphinx.ext.viewcode']
+    'sphinx.ext.todo',
+    'sphinx.ext.viewcode']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -49,7 +50,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'plan'
-copyright = '2019, Author'
+copyright = '2020, Author'
 author = 'Author'
 
 # The version info for the project you're documenting, acts as replacement for

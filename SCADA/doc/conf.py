@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # SCADA documentation build configuration file, created by
-# sphinx-quickstart on Wed Dec 25 08:04:50 2019.
+# sphinx-quickstart on Thu Jan  9 10:02:10 2020.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -17,9 +17,9 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-import os
-import sys
-sys.path.append(os.path.abspath('..'))
+# import os
+# import sys
+# sys.path.insert(0, '/mnt/defis/defis3/SCADA/SCADA')
 
 
 # -- General configuration ------------------------------------------------
@@ -32,8 +32,8 @@ sys.path.append(os.path.abspath('..'))
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = ['sphinx.ext.autodoc',
-              'sphinx.ext.todo',
-              'sphinx.ext.viewcode']
+    'sphinx.ext.todo',
+    'sphinx.ext.viewcode']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -49,7 +49,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'SCADA'
-copyright = '2019, Author'
+copyright = '2020, Author'
 author = 'Author'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -66,7 +66,7 @@ release = ''
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = 'ru'
+language = 'en'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -85,7 +85,7 @@ todo_include_todos = True
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'default'
+html_theme = 'alabaster'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the

@@ -9,5 +9,5 @@
 # sys.path.append(os.path.abspath('..'))
 
 # Генерация документации:
-sphinx-apidoc --separate --full --force --output-dir ./doc ./NSI
+sphinx-apidoc --separate --full --output-dir ./doc ./NSI
 make -C ./doc/ html
