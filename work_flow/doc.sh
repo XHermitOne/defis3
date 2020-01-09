@@ -9,5 +9,5 @@
 # sys.path.append(os.path.abspath('..'))
 
 # Генерация документации:
-sphinx-apidoc --separate --full --output-dir ./doc ./work_flow
+sphinx-apidoc --separate --full --force --output-dir ./doc ./work_flow
 make -C ./doc/ html
