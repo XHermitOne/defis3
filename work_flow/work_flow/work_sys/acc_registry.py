@@ -13,7 +13,7 @@ from sqlalchemy.orm import sessionmaker
 # from services.ic_std.log import log
 from ic.log import log
 
-__version__ = (0, 1, 1, 31)
+__version__ = (0, 1, 2, 2)
 
 
 # Имя таблицы движения по умолчанию
@@ -92,6 +92,7 @@ class icAccRegistry(object):
                  result_table_name=DEFAULT_RESULT_TABLE):
         """
         Конструктор.
+
         :param db_url: Параметры подключения к БД.
         :param operation_table_name: Имя таблицы движений.
         :param result_table_name: Имя итоговой таблицы.
@@ -120,6 +121,8 @@ class icAccRegistry(object):
         Таблица sqlalchemy операций движения.
         """
         if not self.is_connected():
+            # ВНИМАНИЕ! Обязательно необходимо проверять БД на открытие
+            # иначе последующая работа с таблицей будет не возможна
             self.connect()
 
         if self._operation_table is None:
@@ -131,6 +134,8 @@ class icAccRegistry(object):
         Таблица sqlalchemy итогов.
         """
         if not self.is_connected():
+            # ВНИМАНИЕ! Обязательно необходимо проверять БД на открытие
+            # иначе последующая работа с таблицей будет не возможна
             self.connect()
 
         if self._result_table is None:
@@ -140,6 +145,7 @@ class icAccRegistry(object):
     def is_connected(self):
         """
         Установлена связь с БД?
+
         :return: True/False
         """
         return self._connection is not None
@@ -147,6 +153,7 @@ class icAccRegistry(object):
     def connect(self, db_url=None):
         """
         Установить связь с БД.
+
         :param db_url: URL связи с БД.
         :return: Объект связи с БД.
         """
@@ -163,6 +170,7 @@ class icAccRegistry(object):
     def disconnect(self):
         """
         Разорвать связь с БД.
+
         :return: True/False.
         """
         if self._connection:
@@ -173,6 +181,7 @@ class icAccRegistry(object):
     def get_connection(self, auto_connect=True):
         """
         Объект связи с БД.
+
         :param auto_connect: Если не установлена связь,
             произвести автоматический коннект?
         """
@@ -183,7 +192,8 @@ class icAccRegistry(object):
     def sql_execute(self, connection=None, sql='', *args):
         """
         Выполнить SQL выражение.
-        @connection: Объект связи с БД.
+
+        :param connection: Объект связи с БД.
         :param sql: Текстовый формат SQL выражения.
         :param args: Параметры SQL выражения.
         :return: Рекордсет.
@@ -209,6 +219,7 @@ class icAccRegistry(object):
     def append_resource_requisite(self, requisite_name, requisite_type):
         """
         Добавление ресурса.
+
         :param requisite_name: Имя реквизита.
         :param requisite_type: Тип реквизита.
             Тип ресурсного реквизита
@@ -221,6 +232,7 @@ class icAccRegistry(object):
     def get_resource_requisite_names(self):
         """
         Имена реквизитов ресурсов.
+
         :return: Список имен реквизитов ресурсов.
         """
         names = [requisite.get('requisite_name', None) for requisite in self._resource_requisites]
@@ -229,6 +241,7 @@ class icAccRegistry(object):
     def append_dimension_requisite(self, requisite_name, requisite_type):
         """
         Добавление измерения.
+
         :param requisite_name: Имя реквизита.
         :param requisite_type: Тип реквизита.
             Тип реквизита измерения
@@ -242,6 +255,7 @@ class icAccRegistry(object):
     def get_dimension_requisite_names(self):
         """
         Имена реквизитов измерений.
+
         :return: Список имен реквизитов измерений.
         """
         names = [requisite.get('requisite_name', None) for requisite in self._dimension_requisites]
@@ -250,6 +264,7 @@ class icAccRegistry(object):
     def append_extended_requisite(self, requisite_name, requisite_type):
         """
         Добавление дополнительного реквизита.
+
         :param requisite_name: Имя реквизита.
         :param requisite_type: Тип реквизита.
             Тип реквизита дополнительного реквизита
@@ -263,6 +278,7 @@ class icAccRegistry(object):
     def get_extended_requisite_names(self):
         """
         Имена дополнительных реквизитов.
+
         :return: Список имен дополнительных реквизитов.
         """
         names = [requisite.get('requisite_name', None) for requisite in self._extended_requisites]
@@ -271,6 +287,7 @@ class icAccRegistry(object):
     def gen_column(self, requisite_name, requisite_type):
         """
         Генерация объекта колонки по описанию реквизита.
+
         :param requisite_name: Имя реквизита.
         :param requisite_type: Тип реквизита.
         :return: Объект колонки sqlalchemy или None в
@@ -295,6 +312,7 @@ class icAccRegistry(object):
     def gen_table(self, table_name, requisites):
         """
         Генерация объекта таблицы по описанию реквизитов.
+
         :param table_name: Имя таблицы.
         :param requisites: Список описаний реквизитов.
         :return: Объект таблицы sqlalchemy или None
@@ -309,6 +327,7 @@ class icAccRegistry(object):
     def _get_operation_requisites(self):
         """
         Список реквизитов-полей таблицы движения
+
         :return: Список словарей описания полей:
             [{'requisite_name': <Имя поля>,
             'requisite_type': <Тип поля>}, ...]
@@ -333,6 +352,7 @@ class icAccRegistry(object):
         '+' - это операция прихода.
         '-' - это операция расхода.
         А также поле даты-времени операции.
+
         :param operation_table_name: Имя таблицы движений.
         :return: Объект таблицы движений или None в случае ошибки.
         """
@@ -347,6 +367,7 @@ class icAccRegistry(object):
     def _get_result_requisites(self):
         """
         Список реквизитов-полей итоговой таблицы.
+
         :return: Список словарей описания полей:
             [{'requisite_name': <Имя поля>,
             'requisite_type': <Тип поля>}, ...]
@@ -357,6 +378,7 @@ class icAccRegistry(object):
     def create_result_table(self, result_table_name=None):
         """
         Создание таблицы итогов.
+
         :param result_table_name: Имя итоговой таблицы.
         :return: Объект итоговой таблицы или None в случае ошибки.
         """
@@ -372,6 +394,7 @@ class icAccRegistry(object):
         """
         Определить по значениям реквизитов какую операция
         осуществляется. Приход?
+
         :param requisite_values: Значения реквизитов.
         :return: True - приход. False - нет.
         """
@@ -382,6 +405,7 @@ class icAccRegistry(object):
         """
         Определить по значениям реквизитов какую операция
         осуществляется. Расход?
+
         :param requisite_values: Значения реквизитов.
         :return: True - расход. False - нет.
         """
@@ -395,6 +419,7 @@ class icAccRegistry(object):
         бизнес объекта. И при добавлении нового бизнесс объекта
         в таком случае необходимо инициализировать его уникальный
         идентификатор.
+
         :param table: Объект таблицы sqlalchemy.
         :return: True/False.
         """
@@ -407,6 +432,7 @@ class icAccRegistry(object):
                       requisite_values):
         """
         Выполнение операции движения. Внутреняя функция.
+
         :param transaction: Объект транзакции-сессии (sqlalchemy).
         :param operation_table: Объект таблицы операций движения (sqlalchemy).
         :param result_table: Объект итоговой таблицы (sqlalchemy).
@@ -471,6 +497,7 @@ class icAccRegistry(object):
         """
         Отфильтровать только небходимые значения реквизитов
         для таблицы операций движения.
+
         :param requisite_values: Значения реквизитов.
         :return: Список реквизитов используемых в регистре.
         """
@@ -485,6 +512,7 @@ class icAccRegistry(object):
         """
         Отфильтровать только небходимые значения реквизитов
         для таблицы итогов.
+
         :param requisite_values: Значения реквизитов.
         :return: Список реквизитов используемых в регистре.
         """
@@ -496,6 +524,7 @@ class icAccRegistry(object):
     def do_operation(self, **requisite_values):
         """
         Выполнение операции движения.
+
         :param requisite_values: Значения реквизитов.
         :return: True - операция прошла успешно.
             False - Операция не закончена по причине какой-то ошибки.
@@ -526,6 +555,7 @@ class icAccRegistry(object):
     def undo_operation(self, **requisite_values):
         """
         Отмена выполнения операции движения.
+
         :param requisite_values: Значения реквизитов.
         :return: True - Отмена операции прошла успешно.
             False - Отмена операции не закончена по причине какой-то ошибки.
@@ -638,6 +668,7 @@ class icAccRegistry(object):
     def do_operations(self, requisite_values_list):
         """
         Групповое выполнение операций движения.
+
         :param requisite_values_list: Список словарей значений реквизитов.
         :return: True - операция прошла успешно.
             False - Операция не закончена по причине какой-то ошибки.
@@ -671,6 +702,7 @@ class icAccRegistry(object):
     def receipt(self, **requisite_values):
         """
         Приход.
+
         :param requisite_values: Значения реквизитов.
         :return: True - операция прошла успешно.
             False - Операция не закончена по причине какой-то ошибки.
@@ -682,6 +714,7 @@ class icAccRegistry(object):
     def expense(self, **requisite_values):
         """
         Расход.
+
         :param requisite_values: Значения реквизитов.
         :return: True - операция прошла успешно.
             False - Операция не закончена по причине какой-то ошибки.
@@ -695,6 +728,7 @@ class icAccRegistry(object):
         Удаление старых(не актуальных) операций
         для уменьшения размера таблицы операций движения.
         Бывают задачи, в которых старые движения не нужны.
+
         :param dt_actual: Дата-время, с которой данные считаются
             актуальными. Если None, то берется сегодняшняя дата.
         :return: True/False.
@@ -714,9 +748,9 @@ class icAccRegistry(object):
         if operation_tab is not None:
             try:
                 # Удалить все записи где не определено время операции
-                sql = operation_tab.delete().where(sqlalchemy.and_(operation_tab.c.dt_oper==None))
+                sql = operation_tab.delete().where(operation_tab.c.dt_oper==None)
                 sql.execute()
-                sql = operation_tab.delete().where(sqlalchemy.and_(operation_tab.c.dt_oper < dt_actual))
+                sql = operation_tab.delete().where(operation_tab.c.dt_oper < dt_actual)
                 sql.execute()
             except:
                 log.fatal(u'Ошибка удаления не актуальных операций движения')
@@ -741,14 +775,15 @@ def test():
     registry.append_resource_requisite('test_num', 'int')
 
     registry.do_operation(code='+',
-                         test_dim1='zz',
-                         test_dim2='z',
-                         test_num=21)
+                          test_dim1='zz',
+                          test_dim2='z',
+                          test_num=21)
 
     # registry.undo_operation(code='+',
     #                         test_dim1='q',
     #                         test_dim2='w',
     #                         test_num=21)
+
 
 if __name__ == '__main__':
     test()

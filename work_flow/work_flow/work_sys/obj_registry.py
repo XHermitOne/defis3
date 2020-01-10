@@ -17,7 +17,7 @@ from sqlalchemy.orm import sessionmaker
 # from services.ic_std.log import log
 from ic.log import log
 
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 # Имя таблицы движения по умолчанию
 DEFAULT_OPERATIONS_TABLE = 'operations'
@@ -96,6 +96,7 @@ class icObjRegistry(object):
                  obj_table_name=DEFAULT_OBJ_TABLE):
         """
         Конструктор.
+
         :param db_url: Параметры подключения к БД.
         :param operation_table_name: Имя таблицы движений.
         :param obj_table_name: Имя таблицы объектов.
@@ -115,6 +116,11 @@ class icObjRegistry(object):
         """
         Таблица sqlalchemy операций движения.
         """
+        if not self.is_connected():
+            # ВНИМАНИЕ! Обязательно необходимо проверять БД на открытие
+            # иначе последующая работа с таблицей будет не возможна
+            self.connect()
+
         if self._operation_table is None:
             self.create_operation_table()
         return self._operation_table
@@ -123,13 +129,27 @@ class icObjRegistry(object):
         """
         Таблица sqlalchemy объектов.
         """
+        if not self.is_connected():
+            # ВНИМАНИЕ! Обязательно необходимо проверять БД на открытие
+            # иначе последующая работа с таблицей будет не возможна
+            self.connect()
+
         if self._obj_table is None:
             self.create_obj_table()
         return self._obj_table
 
+    def is_connected(self):
+        """
+        Установлена связь с БД?
+
+        :return: True/False
+        """
+        return self._connection is not None
+
     def connect(self, db_url=None):
         """
         Установить связь с БД.
+
         :param db_url: URL связи с БД.
         :return: Объект связи с БД.
         """
@@ -146,6 +166,7 @@ class icObjRegistry(object):
     def disconnect(self):
         """
         Разорвать связь с БД.
+
         :return: True/False.
         """
         if self._connection:
@@ -156,6 +177,7 @@ class icObjRegistry(object):
     def get_connection(self, auto_connect=True):
         """
         Объект связи с БД.
+
         :param auto_connect: Если не установлена связь,
             произвести автоматический коннект?
         """
@@ -177,6 +199,7 @@ class icObjRegistry(object):
                 на прикладном - номер объекта
             4. поле предыдущего состояния объекта
             5. поле последующего сосотояния объекта
+
         :param operation_table_name: Имя таблицы движений.
         :return: Объект таблицы движений или None в случае ошибки.
         """
@@ -199,12 +222,14 @@ class icObjRegistry(object):
                       prev_requisite,
                       post_requisite] + self._obj_requisites
         self._operation_table = self.gen_table(operation_table_name, requisites)
-        self._operation_table.create(checkfirst=True)
+        self._operation_table.create(bind=self.get_connection(),
+                                     checkfirst=True)
         return self._operation_table
 
     def create_obj_table(self, obj_table_name=None):
         """
         Создание таблицы объектов.
+
         :param obj_table_name: Имя таблицы объектов.
         :return: Объект таблицы объектов или None в случае ошибки.
         """
@@ -228,12 +253,14 @@ class icObjRegistry(object):
                       state_requisite,
                       dtstate_requisite] + self._obj_requisites
         self._obj_table = self.gen_table(obj_table_name, requisites)
-        self._obj_table.create(checkfirst=True)
+        self._obj_table.create(bind=self.get_connection(),
+                               checkfirst=True)
         return self._obj_table
 
     def gen_column(self, requisite_name, requisite_type):
         """
         Генерация объекта колонки по описанию реквизита.
+
         :param requisite_name: Имя реквизита.
         :param requisite_type: Тип реквизита.
         :return: Объект колонки sqlalchemy или None в
@@ -258,6 +285,7 @@ class icObjRegistry(object):
     def gen_table(self, table_name, requisites):
         """
         Генерация объекта таблицы по описанию реквизитов.
+
         :param table_name: Имя таблицы.
         :param requisites: Список описаний реквизитов.
         :return: Объект таблицы sqlalchemy или None
@@ -272,6 +300,7 @@ class icObjRegistry(object):
     def get_obj_requisite_names(self):
         """
         Имена реквизитов объекта.
+
         :return: Список имен реквизитов.
         """
         names = [requisite.get('requisite_name', None) for requisite in self._obj_requisites]
@@ -280,6 +309,7 @@ class icObjRegistry(object):
     def append_obj_requisite(self, requisite_name, requisite_type):
         """
         Добавление реквизита объекта.
+
         :param requisite_name: Имя реквизита.
         :param requisite_type: Тип реквизита.
             Тип реквизита реквизита
@@ -294,6 +324,7 @@ class icObjRegistry(object):
         """
         Отфильтровать только небходимые значения реквизитов
         для таблицы операций движения.
+
         :param requisite_values: Значения реквизитов.
         :return: Список реквизитов используемых в регистре.
         """
@@ -307,6 +338,7 @@ class icObjRegistry(object):
     def do_state(self, **requisite_values):
         """
         Установить новое состояние объекта.
+
         :param requisite_values: Значения реквизитов.
         :return: True - операция прошла успешно.
             False - Операция не закончена по причине какой-то ошибки.
@@ -408,6 +440,7 @@ class icObjRegistry(object):
     def undo_state(self, **requisite_values):
         """
         Восстановить предыдущее состояние объекта.
+
         :param requisite_values: Значения реквизитов.
         :return: True - операция прошла успешно.
             False - Операция не закончена по причине какой-то ошибки.
@@ -483,6 +516,7 @@ class icObjRegistry(object):
         """
         ВНИМАНИЕ! Функция удаляет все данные из регистра!!!
             Пользоваться только с очень большой осторожностью.
+
         :return: True/False.
         """
         # Сначала создать таблицы (вдруг их нет)
@@ -513,6 +547,7 @@ class icObjRegistry(object):
         """
         Получить запись операции движения по переводу объекта
             в состояние state.
+
         :param uuid_obj: UUID объекта. Если не указан, то
             документ определяется по n_obj.
         :param n_obj: Номер-идентификатор объекта.
@@ -552,21 +587,38 @@ class icObjRegistry(object):
         Удаление старых(не актуальных) операций
         для уменьшения размера таблицы операций движения.
         Бывают задачи, в которых старые движения не нужны.
+
         :param dt_actual: Дата, с которой данные считаются
             актуальными. Если None, то берется сегодняшняя дата.
         :return: True/False.
         """
         if dt_actual is None:
             dt_actual = datetime.date.today()
+
+        if (not isinstance(dt_actual, datetime.date)) and (not isinstance(dt_actual, datetime.datetime)):
+            log.warning(u'Не корректный тип даты актуальности <%s : %s>' % (dt_actual,
+                                                                            dt_actual.__class__.__name__))
+            return False
+
         operation_tab = self.get_operation_table()
         if operation_tab is not None:
             try:
-                sql = operation_tab.delete().where(sqlalchemy.and_(operation_tab.c.dt_oper < dt_actual))
+                sql = operation_tab.delete().where(operation_tab.c.dt_oper < dt_actual)
                 sql.execute()
             except:
                 log.fatal(u'Ошибка удаления не актуальных операций движения')
-            return True
-        return False
+                return False
+
+        object_tab = self.get_obj_table()
+        if object_tab is not None:
+            try:
+                sql = object_tab.delete().where(object_tab.c.dt_create < dt_actual)
+                sql.execute()
+            except:
+                log.fatal(u'Ошибка удаления не актуальных операций движения')
+                return False
+
+        return True
 
 
 def test():
@@ -615,6 +667,7 @@ def test():
     log.debug(u'Operation record <STATE2> - %s' % registry.get_operation_state_record(n_obj='1234', state='STATE2'))
 
     registry.disconnect()
+
 
 if __name__ == '__main__':
     test()

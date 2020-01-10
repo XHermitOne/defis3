@@ -6,7 +6,6 @@
 По сути это генератор таблиц хранения объектов.
 """
 
-# Imports
 import time
 
 from ic.utils import modefunc
@@ -32,7 +31,7 @@ from STD.queries import filter_generate
 
 
 # Version
-__version__ = (0, 1, 1, 4)
+__version__ = (0, 1, 1, 5)
 
 # Префикс для кода справочника в словаре записи
 NSI_CODE_PREFIX = '_'
@@ -47,6 +46,7 @@ class icObjPersistentProto(object):
     def __init__(self, parent=None):
         """
         Конструктор.
+
         :param parent: Родительский объект.
         """
         self.uuid = None
@@ -85,6 +85,7 @@ class icObjPersistentProto(object):
     def _validUUID(self, UUID):
         """
         Проверка корректного значения UUID.
+
         :return: True/False.
         """
         return uuidfunc.valid_uuid(UUID)
@@ -145,6 +146,7 @@ class icObjPersistentProto(object):
     def _createUuidFieldSpc(self, field_name='uuid'):
         """
         Создать спецификацию поля идентифицирующего документ.
+
         :param field_name: Имя идентифицирующего поля.
         """
         field_spc = util.icSpcDefStruct(util.DeepCopy(ic_field_wrp.ic_class_spc), None)
@@ -162,6 +164,7 @@ class icObjPersistentProto(object):
     def _createCodFieldSpc(self, field_name='cod'):
         """
         Создать спецификацию поля идентифицирующего объект по коду.
+
         :param field_name: Имя идентифицирующего поля.
         """
         field_spc = util.icSpcDefStruct(util.DeepCopy(ic_field_wrp.ic_class_spc), None)
@@ -179,6 +182,7 @@ class icObjPersistentProto(object):
     def _createDateFieldSpc(self, field_name='x_date', description=''):
         """
         Создать спецификацию поля даты/времени.
+
         :param field_name: Имя идентифицирующего поля.
         """
         field_spc = util.icSpcDefStruct(util.DeepCopy(ic_field_wrp.ic_class_spc), None)
@@ -196,6 +200,7 @@ class icObjPersistentProto(object):
     def _createIntFieldSpc(self, field_name='x_int', description=''):
         """
         Создать спецификацию целочисленного поля.
+
         :param field_name: Имя идентифицирующего поля.
         """
         field_spc = util.icSpcDefStruct(util.DeepCopy(ic_field_wrp.ic_class_spc), None)
@@ -223,6 +228,7 @@ class icObjPersistentProto(object):
         """
         Функции поддержки блокировок.
         Заблокировать текущий. Блокировка ведется по UUID.
+
         :param UUID: UUID блокируемого объекта.
         """
         if UUID is None:
@@ -235,6 +241,7 @@ class icObjPersistentProto(object):
         """
         Функции поддержки блокировок.
         Разблокировать.
+
         :param UUID: UUID блокируемого объекта.
         """
         if UUID is None:
@@ -247,6 +254,7 @@ class icObjPersistentProto(object):
         """
         Функции поддержки блокировок.
         Заблокирован?
+
         :param UUID: UUID блокируемого объекта.
         """
         if UUID is None:
@@ -259,6 +267,7 @@ class icObjPersistentProto(object):
         """
         Функции поддержки блокировок.
         Владелец блокировки.
+
         :param UUID: UUID блокируемого объекта.
         """
         if UUID is None:
@@ -272,6 +281,7 @@ class icObjPersistentProto(object):
         """
         Функции поддержки блокировок.
         Моя блокировка?
+
         :param UUID: UUID блокируемого объекта.
         """
         return self.ownerLock(UUID) == lockfunc.getComputerName()
@@ -294,6 +304,7 @@ class icObjPersistent(icObjPersistentProto):
     def __init__(self, parent=None):
         """
         Конструктор.
+
         :param parent: Родительский объект.
         """
         icObjPersistentProto.__init__(self, parent)
@@ -317,6 +328,7 @@ class icObjPersistent(icObjPersistentProto):
         из функций прикладного уровня.
         Использование:
             create_filter_group_AND(create_filter_compare_requisite('field1', '==', 'FFF'))
+
         :param cur_filter: Текущий устанавливаемый фильтр.
         """
         self._filter = cur_filter
@@ -351,6 +363,7 @@ class icObjPersistent(icObjPersistentProto):
     def save(self, UUID=None, data=None):
         """
         Сохранить внутренние данные в хранилище.
+
         :param UUID: Идентификатор.
         Если None, то сохранить текущий.
         :param data: Сохраняемые данные в виде каскадного словаря:
@@ -390,6 +403,7 @@ class icObjPersistent(icObjPersistentProto):
     def _saveCascadeData(self, table, UUID, data):
         """
         Сохранить каскадные данные в хранилище.
+
         :param table: Таблица.
         :param UUID: Уникальный идентификатор.
         :param data: Словарь каскадных данных:
@@ -433,6 +447,7 @@ class icObjPersistent(icObjPersistentProto):
     def _updateChildCascadeData(self, table, data, parent_record):
         """
         Сохранить каскадные данные в хранилище у дочерних объектов.
+
         :param table: Таблица.
         :param parent_record: Родительская запись.
         :param data: Список словарей каскадных данных:
@@ -483,6 +498,7 @@ class icObjPersistent(icObjPersistentProto):
     def _load_data(self, UUID=None):
         """
         Загрузить внутренние данные из хранилища.
+
         :param UUID: Идентификатор.
         :return: Возвращает словарь каскада данных:
         {
@@ -504,6 +520,7 @@ class icObjPersistent(icObjPersistentProto):
     def load_data(self, UUID=None):
         """
         Загрузить внутренние данные из хранилища.
+
         :param UUID: Идентификатор.
         :return: Возвращает словарь каскада данных:
         {
@@ -519,6 +536,7 @@ class icObjPersistent(icObjPersistentProto):
     def load(self, UUID=None):
         """
         Загрузить внутренние данные из хранилища.
+
         :param UUID: Идентификатор.
         :return: True/False.
         """
@@ -532,6 +550,7 @@ class icObjPersistent(icObjPersistentProto):
     def _getCascadeDataTab(self, table, UUID, bOneBreak=False):
         """
         Получить каскад данных из хранилища.
+
         :param table: Таблица.
         :param UUID: Иникальный идентификатор.
         :param bOneBreak: В данных дочерних объектов только одна запись?
@@ -564,6 +583,7 @@ class icObjPersistent(icObjPersistentProto):
     def _getChildCascadeDataTab(self, table, parent_uuid):
         """
         Получить каскад данных из хранилища.
+
         :param table: Таблица.
         :param parent_uuid: Уникальный идентификатор родительской записи.
         :return: Словарь каскада данных:
@@ -595,6 +615,7 @@ class icObjPersistent(icObjPersistentProto):
     def _setCascadeData(self, data):
         """
         Каскадная установка значений реквизитов.
+
         :param data: Словарь данных:
         {
         'имя поля реквизита':значение,
@@ -638,6 +659,7 @@ class icObjPersistent(icObjPersistentProto):
         'имя дочернего объекта':[список словарей значений],
         ...
         }
+
         :param bInsertChildData_: Включать в каскад значения реквизитов
             дочерних объектов?
         """
@@ -681,6 +703,7 @@ class icObjPersistent(icObjPersistentProto):
         'имя дочернего объекта':[список словарей значений по умолчанию],
         ...
         }
+
         :param bInsertChildData_: Включать в каскад значения реквизитов
             дочерних объектов?
         """
@@ -722,6 +745,7 @@ class icObjPersistent(icObjPersistentProto):
     def setValue(self, value):
         """
         Установить значения всех реквизитов.
+
         :param value: Словарь значений реквизитов.
         """
         try:
@@ -735,6 +759,7 @@ class icObjPersistent(icObjPersistentProto):
     def _getData(self, table=None, data_filter=None):
         """
         Отфильтрованные данные.
+
         :param table: Объект таблицы.
         :param data_filter: Дополнительный фильтр.
         :return: Возвращает список отфильтрованных данных.
@@ -755,6 +780,7 @@ class icObjPersistent(icObjPersistentProto):
     def add(self, UUID=None, data=None, table=None):
         """
         Добавить в хранилище текущий объект.
+
         :param UUID: Идентификатор.
         Если None, то генерируется новый uuid.
         :param table: Главная таблица объекта. Если не указана, то генерируется.
@@ -804,6 +830,7 @@ class icObjPersistent(icObjPersistentProto):
     def findChildByName(self, child_name):
         """
         Поиск дочернего реквизита по имени.
+
         :param child_name: Имя дочернего реквизита
         :return: Объект реквизита или None если реквизит не найден.
         """
@@ -818,6 +845,7 @@ class icObjPersistent(icObjPersistentProto):
     def _tabObj(self, table):
         """
         Таблица объекта.
+
         :param table: Объект/таблица, в который будет сохраняться запись.
         """
         # Таблица данных
@@ -844,6 +872,7 @@ class icObjPersistent(icObjPersistentProto):
     def _addCascadeData(self, table, data_dict, parent_record=None):
         """
         Добавление каскадного словаря значений в объект хранилища.
+
         :param table: Объект/таблица, в который будет сохраняться запись.
         :param data_dict: Словарь значений.
             Словарь представлен в виде 
@@ -897,6 +926,7 @@ class icObjPersistent(icObjPersistentProto):
     def delete(self, UUID=None):
         """
         Удалить из хранилища текущий объект.
+
         :param UUID: Идентификатор.
         Если None, то берется uuid объекта.
         :return: Возвращает результат выполнения операции True/False.
@@ -945,6 +975,7 @@ class icObjPersistent(icObjPersistentProto):
     def clear(self, bAsk=False):
         """
         Удалить из хранилища все объекты.
+
         :param bAsk: Спросить об удалении всех объектов?
         :return: Возвращает результат выполнения операции True/False.
         """
@@ -994,6 +1025,7 @@ class icObjPersistent(icObjPersistentProto):
     def _delCascadeData(self, table, rec_id, transaction=None):
         """
         Удалить каскад данных из хранилища по уникальонму идентификатору.
+
         :param table: Объект таблицы.
         :param rec_id: Идентификатор удаляемой записи.
         :param transaction: Объект транзакции.
@@ -1054,6 +1086,7 @@ class icObjPersistent(icObjPersistentProto):
     def getChildrenDefault(self):
         """
         Получить словарь значений реквизитов по умолчанию.
+
         :return: Словарь {'имя реквизита': значение реквизита по умолчанию, ...}
         """
         defaults = dict()
@@ -1076,6 +1109,7 @@ class icObjPersistent(icObjPersistentProto):
         """
         Создание по описанию объекта ресурса таблицы, в 
             которой хранятся данные объекта.
+
         :param parent_tabname: Имя родительской таблицы.
         """
         # Открыть проект
@@ -1222,6 +1256,7 @@ class icObjPersistent(icObjPersistentProto):
     def getFilterSQL(self, data_filter=None, fields=None, limit=None):
         """
         Фильтр в SQL представлении.
+
         :param data_filter: Фильтр.
         :param fields: Поля выбора. Если None, то будут выбираться только
         идентифицирующие объект поля.
@@ -1245,6 +1280,7 @@ class icObjPersistent(icObjPersistentProto):
     def getFilterSQLAlchemy(self, sql_filter=None, fields=None, limit=None):
         """
         Фильтр в SQLAlchemy представлении.
+
         :param sql_filter: Фильтр.
         :param fields: Поля выбора. Если None, то будут выбираться только 
         идентифицирующие объект поля.
@@ -1274,6 +1310,7 @@ class icObjPersistent(icObjPersistentProto):
         """
         Подготовка результата фильтрации в виде датасета для 
         грида объектов в виде списка словарей.
+
         :param filter_result: Список записей - результат фильтрации.
         :return: Список словарей записей - результат фильтрации.
         """
@@ -1303,6 +1340,7 @@ class icObjPersistent(icObjPersistentProto):
         Эта функция это и делает. Используется в менеджере навигации
         документов для корректного отображения на экране а также в
         контролах работы с документами.
+
         :param requisite_data: Словарь данных реквизитов.
         :return: Подготовленный словарь данных.
         """
@@ -1326,6 +1364,7 @@ class icObjPersistent(icObjPersistentProto):
         ВНИМАНИЕ! Этот метод переопределяется в дочерних классах.
 
         Получить все реквизиты документа/спецификации в виде словаря.
+
         :return: Словарь значений реквизитов.
             Словарь реквизитов представлен в виде
                 {
@@ -1341,6 +1380,7 @@ class icObjPersistent(icObjPersistentProto):
     def filterRequisiteData(self, filter_requisite_data=None):
         """
         Отфильтровать объекты согласно данным фильтра.
+
         :param filter_requisite_data: Словарь значений реквизитов фильтров.
             Если None, то берется текущий фильтр бизнес объектов.
             Для создания фильтров надо пользоваться
@@ -1366,6 +1406,7 @@ class icObjPersistent(icObjPersistentProto):
         """
         Набор записей.Каждая запись в виде словаря.
         Этот метод также имеет название getDataset и getRecordset.
+
         :param filter_requisite_data: Словарь значений реквизитов фильтров.
             Если None, то берется текущий фильтр бизнес объектов.
             Для создания фильтров надо пользоваться
@@ -1402,6 +1443,7 @@ class icObjPersistent(icObjPersistentProto):
         """
         Количество записей набора записей.
         Этот метод также имеет название countDataset и countRecordset.
+
         :param filter_requisite_data: Словарь значений реквизитов фильтров.
             Если None, то берется текущий фильтр бизнес объектов.
             Для создания фильтров надо пользоваться
@@ -1438,6 +1480,7 @@ class icObjPersistent(icObjPersistentProto):
     def findRequisiteData(self, **find_requisite_data):
         """
         Найти UUIDы объектов согласно данным фильтра.
+
         :param find_requisite_data: Словарь значений реквизитов фильтров.
             Если не указан, то берется текущий фильтр бизнес объектов.
             Сравнение происходит по <И>.
@@ -1468,6 +1511,7 @@ class icAttrPersistent(object):
     def __init__(self, parent=None):
         """
         Конструктор.
+
         :param parent: Родительский объект.
         """
         self.name = ''
@@ -1576,6 +1620,7 @@ class icAccRegPersistent(icObjPersistent):
             ВНИМАНИЕ! Функция переписана для адаптации
             списка операций движения регистра накопления
             для просмотра в контролах.
+
         :param limit: Ограничение по строкам. Если не определено, то ограничения нет.
         """
         data_filter = self.filterRequisiteData()
@@ -1621,6 +1666,7 @@ class icNodePersistent(icObjPersistent):
         После создания объект автоматически прописывается как дочерний.
         При создании объекта производиться контроль на возможность использования
         типа объекта как дочернего.
+
         :param obj_type_code:  Код типа дочернего объекта.
         :param default: Словарь реквизитов, заполняемых по умолчанию нового дочернего объекта.
             Если не указывается, то этот словарь берется из справочника типов объектов.
@@ -1635,6 +1681,7 @@ class icNodePersistent(icObjPersistent):
         Регистрация существующего объекта как дочернего.
         При добавлении объекта производиться контроль на возможность использования
         типа объекта как дочернего.
+
         :param child_obj: Объект - наследник icNodePersistent
         :return: True - дочерний объект успешно зарегистрирован как дочерний
             False - указанный тип объекта не может быть использован для текущего объекта
@@ -1647,6 +1694,7 @@ class icNodePersistent(icObjPersistent):
         Регистрация существующего объекта как дочернего по его UUID.
         При добавлении объекта производиться контроль на возможность использования
         типа объекта как дочернего.
+
         :param child_obj_uuid: UUID объекта добавляемого, как дочерний.
             Объект с таким UUID должен уже присутствовать в таблице объектов.
         :return: True - дочерний объект успешно зарегистрирован как дочерний
@@ -1658,6 +1706,7 @@ class icNodePersistent(icObjPersistent):
     def delChildObject(self, child_obj, auto_delete=False):
         """
         Удаление зарегистрированного существующего объекта из списка дочерних.
+
         :param child_obj: Объект - наследник icNodePersistent
         :param auto_delete: Проверить автоматическое удаление дочернего объекта, если
             он больше не связан с другим родительским объектом.
@@ -1669,7 +1718,9 @@ class icNodePersistent(icObjPersistent):
 
     def delChildObjectUUID(self, child_obj_uuid, auto_delete=False):
         """
-        Удаление зарегистрированного существующего объекта из списка дочерних по его UUID.
+        Удаление зарегистрированного существующего объекта из списка
+        дочерних по его UUID.
+
         :param child_obj_uuid: UUID удаляемого дочернего объекта.
         :param auto_delete: Проверить автоматическое удаление дочернего объекта, если
             он больше не связан с другим родительским объектом.
@@ -1682,7 +1733,9 @@ class icNodePersistent(icObjPersistent):
     def getChildObjectUUID(self, child_obj_uuid):
         """
         Получить дочерний объект текущего по его UUID.
-        При получении объекта производиться проверка на существование зарегистрированного дочернего объекта.
+        При получении объекта производиться проверка на
+        существование зарегистрированного дочернего объекта.
+
         :param child_obj_uuid: UUID запрашиваемого дочернего объекта.
         :return: Объект наследник icNodePersistent с заполненными данными дочернего объекта
             или None, если запрашиваемый объект не является дочерним текущего.
@@ -1695,6 +1748,7 @@ class icNodePersistent(icObjPersistent):
         После создания объект автоматически прописывается в списке ссылок.
         При создании объекта производиться контроль на возможность использования
         типа объекта как ссылочного.
+
         :param obj_type_code:  Код типа объекта.
         :param default: Словарь реквизитов, заполняемых по умолчанию нового объекта.
             Если не указывается, то этот словарь берется из справочника типов объектов.
@@ -1709,6 +1763,7 @@ class icNodePersistent(icObjPersistent):
         Регистрация существующего объекта как ссылочного.
         При добавлении объекта производиться контроль на возможность использования
         типа объекта как ссылочного.
+
         :param link_obj: Объект - наследник icNodePersistent
         :return: True - объект успешно зарегистрирован как ссылочный
             False - указанный тип объекта не может быть использован для текущего объекта
@@ -1721,6 +1776,7 @@ class icNodePersistent(icObjPersistent):
         Регистрация существующего объекта как ссылочного по его UUID.
         При добавлении объекта производиться контроль на возможность использования
         типа объекта как ссылочного.
+
         :param link_obj_uuid: UUID объекта добавляемого, как ссылочный
             Объект с таким UUID должен уже присутствовать в таблице объектов.
         :return: True - объект успешно зарегистрирован как ссылочный
@@ -1732,6 +1788,7 @@ class icNodePersistent(icObjPersistent):
     def delLinkObject(self, link_obj):
         """
         Удаление зарегистрированного существующего объекта из списка ссылочных.
+
         :param link_obj: Объект - наследник icNodePersistent
             ВНИМАНИЕ! У ссылочного объект может удалятся только ссылка на него.
             Сам объект не удаляется.
@@ -1742,7 +1799,9 @@ class icNodePersistent(icObjPersistent):
 
     def delLinkObjectUUID(self, link_obj_uuid):
         """
-        Удаление зарегистрированного существующего объекта из списка ссылок по его UUID.
+        Удаление зарегистрированного существующего объекта из списка
+        ссылок по его UUID.
+
         :param link_obj_uuid: UUID удаляемого объекта-ссылки.
             ВНИМАНИЕ! У ссылочного объект может удалятся только ссылка на него.
             Сам объект не удаляется.
@@ -1754,7 +1813,9 @@ class icNodePersistent(icObjPersistent):
     def getLinkObjectUUID(self, link_obj_uuid):
         """
         Получить ссфлочный объект текущего по его UUID.
-        При получении объекта производиться проверка на существование зарегистрированного объекта-ссылки.
+        При получении объекта производиться проверка на
+        существование зарегистрированного объекта-ссылки.
+
         :param link_obj_uuid: UUID запрашиваемого объекта-ссылки.
         :return: Объект наследник icNodePersistent с заполненными данными объекта-ссылки
             или None, если запрашиваемый объект не является ссылкой текущего.

@@ -14,7 +14,7 @@ from ic.log import log
 from . import persistent
 
 # Версия
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 # --- Функции ---
 _WORK_SQL_STORAGE = dict()
@@ -44,6 +44,7 @@ class icWorkStorageInterface(object):
     def __init__(self, parent, db_psp):
         """
         Конструктор.
+
         :param parent: Родительский объект.
         :param db_psp: Паспорт БД.
         """
@@ -59,6 +60,7 @@ class icWorkStorageInterface(object):
     def saveObject(self, obj):
         """
         Сохранить объект в хранилище.
+
         :param obj: Сохраняемый объект.
         """
         pass
@@ -66,6 +68,7 @@ class icWorkStorageInterface(object):
     def loadObject(self, obj, obj_id):
         """
         Загрузить данные объекта из хранилища по идентификатору.
+
         :param obj: Объект.
         :param obj_id: Идентификатор объекта.
         """
@@ -102,6 +105,7 @@ class icWorkSQLStorageContainer(object):
     def setTable(self, table_name=None):
         """
         Установить таблицу, по ее имени.
+
         :param table_name: Имя таблицы.
         :return: Возвращает объект таблицы или None, если таблицу получить нельзя.
         """
@@ -128,6 +132,7 @@ class icWorkSQLStorage(icWorkStorageInterface):
     def __init__(self, parent, db_psp):
         """
         Конструктор.
+
         :param parent: Родительский объект.
         :param db_psp: Паспорт БД.
         """
@@ -169,6 +174,7 @@ class icWorkSQLStorage(icWorkStorageInterface):
     def setCascadeDict(self, obj, record_id, data_dict, ident_fields=None):
         """
         Сохранение каскадного словаря значений в объект хранилища.
+
         :param obj: Объект/таблица, в который будет сохраняться запись.
         :param record_id: Идентификатор записи. 
             Если None, то запись будет добавлена.
@@ -204,6 +210,7 @@ class icWorkSQLStorage(icWorkStorageInterface):
     def _identRecord(self, obj, data_dict, ident_fields):
         """
         Идентифицировать запись в объекте.
+
         :param obj: Объект/таблица, в который будет сохраняться запись.
         :param data_dict: Словарь значений.
             Словарь представлен в виде 
@@ -235,6 +242,7 @@ class icWorkSQLStorage(icWorkStorageInterface):
     def _setCascadeDict(self, obj, record_id, data_dict):
         """
         Сохранение каскадного словаря значений в объект хранилища.
+
         :param obj: Объект/таблица, в который будет сохраняться запись.
         :param record_id: Идентификатор записи.
             Если None, то запись будет добавлена.
@@ -273,6 +281,7 @@ class icWorkSQLStorage(icWorkStorageInterface):
     def _tabObj(self, obj):
         """
         Таблица объекта.
+
         :param obj: Объект/таблица, в который будет сохраняться запись.
         """
         # Таблица данных
@@ -289,6 +298,7 @@ class icWorkSQLStorage(icWorkStorageInterface):
     def addCascadeDict(self, obj, data_dict):
         """
         Добавление каскадного словаря значений в объект хранилища.
+
         :param obj: Объект/таблица, в который будет сохраняться запись.
         :param data_dict: Словарь значений.
             Словарь представлен в виде 
@@ -328,6 +338,7 @@ class icWorkSQLStorage(icWorkStorageInterface):
         пустыми списками перед записью:
             doc.setRequisiteValue('tab1', list())
             doc.setRequisiteValue('tab2', list())
+
         :param obj: Сохраняемый объект.
         """
         doc_table = self.container.getTable(obj.getTableName())
@@ -392,6 +403,7 @@ class icWorkSQLStorage(icWorkStorageInterface):
                         parent_uuid=''):
         """
         Сохранить данные объекта в хранилище.
+
         :param cur_obj: Текущий объект спецификации документа.
         :param parent_table: Объект родительской таблицы.
         :param parent_id: Идентификатор родительской записи.
@@ -435,6 +447,7 @@ class icWorkSQLStorage(icWorkStorageInterface):
     def isObject(self, obj, UUID):
         """
         Проверка существования данных объекта в хранилище по идентификатору.
+
         :param obj: Объект.
         :param UUID: Уникальный идентификатор объекта.
         :return: True/False.
@@ -457,6 +470,7 @@ class icWorkSQLStorage(icWorkStorageInterface):
     def loadObject(self, obj, UUID):
         """
         Загрузить данные объекта из хранилища по идентификатору.
+
         :param obj: Объект.
         :param UUID: Уникальный идентификатор объекта.
         :return: True/False.
@@ -506,6 +520,7 @@ class icWorkSQLStorage(icWorkStorageInterface):
     def _setObjectData(self, cur_obj, obj_data):
         """
         Установка данных объекта.
+
         :param cur_obj: Текущий объект.
         :param obj_data: Данные объекта.
         """
@@ -530,6 +545,7 @@ class icWorkSQLStorage(icWorkStorageInterface):
     def _resultLen(self, query_result):
         """
         Количество записей результата запроса.
+
         :param query_result: Результат запроса.
         """
         if isinstance(query_result, list):
@@ -543,6 +559,7 @@ class icWorkSQLStorage(icWorkStorageInterface):
     def getFieldNames(self, obj):
         """
         Список имен полей таблицы хранения объекта.
+
         :param obj: Объект.
         """
         obj_requisites = [requisite for requisite in obj.getAllRequisites() if issubclass(requisite.__class__,
@@ -554,6 +571,7 @@ class icWorkSQLStorage(icWorkStorageInterface):
     def delAllData(self, obj, data_filter=None):
         """
         Удалить все данные объекта.
+
         :param obj: Объект.
         :param data_filter: Дополнительный фильтр. Словарь {'имя поля':значение}
         :return: Возвращает True/False или None  в случае ошибки.
@@ -573,6 +591,7 @@ class icWorkSQLStorage(icWorkStorageInterface):
     def getAllData(self, obj, data_filter=None):
         """
         Получить все данные объекта.
+
         :param obj: Объект.
         :param data_filter: Дополнительный фильтр.
         :return: Возвращает список или None  в случае ошибки.
@@ -621,6 +640,7 @@ class icWorkSQLStorage(icWorkStorageInterface):
     def getAllUUID(self, obj, order_sort=None):
         """
         Получить все уникальные идентификаторы объектов UUID.
+
         :param obj: Объект документа.
         :param order_sort: Порядок сортировки.
             Список имен полей, в котором надо сортировать.
