@@ -81,7 +81,7 @@ ic_can_contain = ['TrendPen']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 2, 2)
+__version__ = (0, 1, 2, 3)
 
 
 class icGnuplotTrend(icwidget.icWidget,
@@ -160,7 +160,7 @@ class icGnuplotTrend(icwidget.icWidget,
         """
         self.components['child'] = pens
         self.child = pens
-        self.childCreator()
+        self.createChildren(children=pens)
 
         self.adaptScene()
 
