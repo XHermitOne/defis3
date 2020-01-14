@@ -62,7 +62,7 @@ ic_comp_requisite_spc = copy.deepcopy(refrequisite.ic_class_spc)
 ic_comp_requisite_spc['name'] = 'computer'
 ic_comp_requisite_spc['description'] = u'Компьютер'
 ic_comp_requisite_spc['label'] = u'Компьютер'
-ic_comp_requisite_spc['default'] = u'@ic.utils.system.getComputerName()'
+ic_comp_requisite_spc['default'] = u'@ic.engine.glob_functions.getComputerName()'
 
 # Спецификация реквизита имени пользователя
 ic_user_requisite_spc = copy.deepcopy(refrequisite.ic_class_spc)
