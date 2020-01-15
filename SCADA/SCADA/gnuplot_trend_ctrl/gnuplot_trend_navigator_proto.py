@@ -19,9 +19,10 @@ from ic.utils import printerfunc
 from . import gnuplot_trend_navigator_panel_proto
 
 # --- Спецификация ---
-SPC_IC_GNUPLOT_TREND_NAVIGATOR = {
-                                  'show_legend': True,
+SPC_IC_GNUPLOT_TREND_NAVIGATOR = {'show_legend': True,
+
                                   '__parent__': icwidget.SPC_IC_WIDGET,
+
                                   '__attr_hlp__': {
                                                    'show_legend': u'Отображать легенду?',
                                                    },

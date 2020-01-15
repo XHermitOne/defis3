@@ -13,7 +13,7 @@ import wx
 from ic.utils import datetimefunc
 from ic.log import log
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # Форматы используемые для отображения временной шкалы
 DEFAULT_TIME_FMT = '%H:%M:%S'
@@ -26,6 +26,9 @@ DEFAULT_DT_FORMATS = (DEFAULT_TIME_FMT,
 # Формат шкал по умолчанию
 DEFAULT_X_FORMAT = 'time'
 DEFAULT_Y_FORMAT = 'numeric'
+
+DEFAULT_X_FORMATS = ('time', 'date', 'datetime')
+DEFAULT_Y_FORMATS = ('numeric', )
 
 
 class icTrendProto(object):

@@ -32,7 +32,7 @@ from ic.log import log
 from ic.utils import txtfunc
 
 # Версия
-__version__ = (0, 1, 3, 1)
+__version__ = (0, 1, 3, 2)
 
 # Разделитель команд gnuplot
 COMMAND_DELIMETER = ';'
@@ -59,6 +59,7 @@ class icGnuplotManager(object):
     def clearCommands(self):
         """
         Очистить список команд.
+
         :return: True/False.
         """
         self.commands = list()
@@ -67,6 +68,7 @@ class icGnuplotManager(object):
     def _findCommand(self, command_word):
         """
         Поиск команды в списке команд по ключевому слову.
+
         :param command_word: Ключевое слово.
         :return: Индекс в списке команд или -1 если такая команда не найдена.
         """
@@ -80,6 +82,7 @@ class icGnuplotManager(object):
         Произвести добавление команды в список команд.
         Если в списке найдена команда по ключевому слову, то она заменяется.
         Если не найдена, то просто команда добавляется в список.
+
         :param command: Комманда.
         :param command_word: Ключевое слово.
             Если None, то просто происходит добавление команды в список.
@@ -104,6 +107,7 @@ class icGnuplotManager(object):
         """
         Произвести удаление команды из списка команд.
         Если в списке найдена команда по ключевому слову, то она удаляется.
+
         :param command_word: Ключевое слово.
             Если None, то просто происходит добавление команды в список.
         :return: True/False.
@@ -123,6 +127,7 @@ class icGnuplotManager(object):
     def _enableCommand(self, command, enable=True):
         """
         Включить/Исключить команду из списка команд.
+
         :param command: Комманда gnuplot.
         :param enable: True - включить команду/False - исключить команду.
         :return: True/False.
@@ -138,6 +143,7 @@ class icGnuplotManager(object):
     def enableXTime(self, enable=True):
         """
         Вкл./Выкл. оси X как временной.
+
         :param enable: True - включить/False - выключить.
         :return: True/False.
         """
@@ -147,6 +153,7 @@ class icGnuplotManager(object):
     def setTimeFormat(self, dt_format=None):
         """
         Установить формат даты-времени.
+
         :param dt_format: Формат даты-времени.
             Если None, то установка формата исключается из списка команд.
         :return: True/False.
@@ -164,6 +171,7 @@ class icGnuplotManager(object):
     def setXFormat(self, x_format=None):
         """
         Установить формат оси X.
+
         :param x_format: Формат оси X.
             Если None, то установка формата исключается из списка команд.
         :return: True/False.
@@ -178,6 +186,7 @@ class icGnuplotManager(object):
     def setXRange(self, x_start, x_stop):
         """
         Установить диапазон значений оси X.
+
         :param x_start: Начальное значение диапазона.
         :param x_stop: Конечное значение диапазона.
         :return: True/False.
@@ -189,6 +198,7 @@ class icGnuplotManager(object):
     def setYRange(self, y_start, y_stop):
         """
         Установить диапазон значений оси Y.
+
         :param y_start: Начальное значение диапазона.
         :param y_stop: Конечное значение диапазона.
         :return: True/False.
@@ -200,6 +210,7 @@ class icGnuplotManager(object):
     def enableXTextVertical(self, enable=True):
         """
         Вкл./Выкл. вывода текста оси X вертикально.
+
         :param enable: True - включить/False - выключить.
         :return: True/False.
         """
@@ -209,6 +220,7 @@ class icGnuplotManager(object):
     def setOutputPNG(self, background_color=None):
         """
         Вкл./Выкл. вывода графика в формате PNG.
+
         :param background_color: Цвет фона PNG.
         :return: True/False.
         """
@@ -222,6 +234,7 @@ class icGnuplotManager(object):
     def setOutputPDF(self, background_color=None):
         """
         Вкл./Выкл. вывода графика в формате PDF.
+
         :param background_color: Цвет фона PDF.
             По умолчанию белый.
         :return: True/False.
@@ -236,6 +249,7 @@ class icGnuplotManager(object):
     def setOutputSizePNG(self, width, height):
         """
         Установить размер результирующей картинки PNG.
+
         :param width: Ширина.
         :param height: Высота.
         :return: True/False.
@@ -248,6 +262,7 @@ class icGnuplotManager(object):
     def setOutputSizePDF(self, width, height):
         """
         Установить размер результирующей картинки PDF.
+
         :param width: Ширина.
         :param height: Высота.
         :return: True/False.
@@ -260,6 +275,7 @@ class icGnuplotManager(object):
     def setOutputFilename(self, out_filename):
         """
         Установить имя результирующего файла.
+
         :param out_filename: Полное имя результирующего файла.
         :return: True/False.
         """
@@ -270,6 +286,7 @@ class icGnuplotManager(object):
     def enableGrid(self, enable=True):
         """
         Вкл./Выкл. сетки.
+
         :param enable: True - включить сетку/False - выключить.
         :return: True/False.
         """
@@ -279,6 +296,7 @@ class icGnuplotManager(object):
     def enableLegend(self, enable=True):
         """
         Вкл./Выкл. легенды.
+
         :param enable: True - включить легенду/False - выключить.
         :return: True/False.
         """
@@ -288,6 +306,7 @@ class icGnuplotManager(object):
     def setLineStyle(self, n_line=1, line_type=1, line_width=1, point_type=3, line_color='red'):
         """
         Установить стиль линии.
+
         :param n_line: Номер линии.
         :param line_type: Тип линии.
         :param line_width: Толщина линии.
@@ -306,6 +325,7 @@ class icGnuplotManager(object):
     def setPlot(self, graph_filename, count=1):
         """
         Установить отрисовку графиков.
+
         :param graph_filename: Полное имя файла данных графиков.
         :param count: Количество графиков.
         :return: True/False.
@@ -341,6 +361,7 @@ class icGnuplotManager(object):
         Записать данные графиков в файл данных.
         ВНИМАНИЕ! По умолчанию временные данные в файл
             записываются в формате DATETIME_GRAPH_DATA_FMT.
+
         :param graph_filename: Полное имя файла данных графиков.
         :param graph_data: Список словарей данных графиков.
             [
@@ -371,6 +392,7 @@ class icGnuplotManager(object):
     def getRunCommand(self):
         """
         Получить результирующую команду для запуска генерации.
+
         :return: Результирующая команда для генерации файла графика.
         """
         commands = COMMAND_DELIMETER.join(self.commands)
@@ -380,6 +402,7 @@ class icGnuplotManager(object):
         """
         Запуск генерации.
         Другое наименование метода - gen
+
         :return: True/False.
         """
         cmd = self.getRunCommand()
@@ -393,6 +416,7 @@ class icGnuplotManager(object):
     def setBorderColour(self, line_color):
         """
         Установить цвет обрамления графика.
+
         :param line_color: Цвет линии.
         :return: True/False.
         """
@@ -403,6 +427,7 @@ class icGnuplotManager(object):
     def setGridColour(self, line_color):
         """
         Установить цвет сетки графика.
+
         :param line_color: Цвет линии.
         :return: True/False.
         """
@@ -413,6 +438,7 @@ class icGnuplotManager(object):
     def setXTextColour(self, text_color):
         """
         Установить цвет надписей шкалы X графика.
+
         :param text_color: Цвет надписей.
         :return: True/False.
         """
@@ -423,6 +449,7 @@ class icGnuplotManager(object):
     def setYTextColour(self, text_color):
         """
         Установить цвет надписей шкалы Y графика.
+
         :param text_color: Цвет надписей.
         :return: True/False.
         """

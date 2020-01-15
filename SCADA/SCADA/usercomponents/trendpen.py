@@ -147,7 +147,7 @@ class icTrendPenProto(object):
         """
         wx_colour = self.getColour()
         if wx_colour:
-            return wx_colour.GetAsString(wx.C2S_HTML_SYNTAX).encode('ascii')
+            return wx_colour.GetAsString(wx.C2S_HTML_SYNTAX)
         return DEFAULT_RGB_STR_COLOUR
 
     def getLineData(self):

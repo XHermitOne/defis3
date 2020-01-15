@@ -16,6 +16,8 @@ from ic.utils import util
 from ic.bitmap import bmpfunc
 
 from SCADA.gnuplot_trend_ctrl import gnuplot_trend_navigator_proto
+from SCADA.gnuplot_trend_ctrl import gnuplot_trend_proto
+from SCADA.scada_proto import trend_proto
 
 
 # --- Спецификация ---
@@ -38,12 +40,30 @@ ic_class_spc = {'type': 'GnuplotTrendNavigator',
 
                 'show_legend': True,
 
+                'x_format': trend_proto.DEFAULT_X_FORMAT,  # Формат представления данных оси X
+                'y_format': trend_proto.DEFAULT_Y_FORMAT,  # Формат представления данных оси Y
+                'scene_min': ('00:00:00', 0.0),  # Минимальное значение видимой сцены тренда
+                'scene_max': ('12:00:00', 100.0),  # Максимальное значение видимой сцены тренда
+                'adapt_scene': False,  # Признак адаптации сцены по данным
+
+                'x_precision': gnuplot_trend_proto.DEFAULT_X_PRECISION,  # Цена деления сетки тренда по шкале X
+                'y_precision': gnuplot_trend_proto.DEFAULT_Y_PRECISION,  # Цена деления сетки тренда по шкале Y
+
                 '__styles__': ic_class_styles,
                 '__events__': {},
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['description', '_uuid',
                                                             ],
                                    },
                 '__parent__': gnuplot_trend_navigator_proto.SPC_IC_GNUPLOT_TREND_NAVIGATOR,
+
+                '__attr_hlp__': {'x_format': u'Формат представления данных оси X',
+                                 'y_format': u'Формат представления данных оси Y',
+                                 'x_precision': u'Цена деления сетки тренда по шкале X',
+                                 'y_precision': u'Цена деления сетки тренда по шкале Y',
+                                 'scene_min': u'Минимальное значение видимой сцены тренда',
+                                 'scene_max': u'Максимальное значение видимой сцены тренда',
+                                 'adapt_scene': u'Признак адаптации сцены по данным',
+                                 },
                 }
 
 #   Имя иконки класса, которые располагаются в директории
@@ -117,6 +137,8 @@ class icGnuplotTrendNavigator(icwidget.icWidget,
         #   Создаем дочерние компоненты
         self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
+        # Передаем тренду основные атрибуты
+
         # Перья определенные в навигаторе передаем тренду
         self.setPens(self.child)
 
@@ -176,3 +198,94 @@ class icGnuplotTrendNavigator(icwidget.icWidget,
         if is_update_size:
             self.trend_splitter.UpdateSize()
         return result
+
+    def setXFormat(self, x_format=None):
+        """
+        Формат представления данных оси X. Установка в тренде.
+
+        :param x_format: Формат представления данных оси X.
+            Если не определено, то берется из ресурсного описания объекта.
+        :return:
+        """
+        if x_format is None:
+            x_format = self.getICAttr('x_format')
+        trend = self.getTrend()
+        return trend.setXFormat(x_format)
+
+    def setYFormat(self, y_format=None):
+        """
+        Формат представления данных оси Y. Установка в тренде.
+
+        :param y_format: Формат представления данных оси Y.
+            Если не определено, то берется из ресурсного описания объекта.
+        :return:
+        """
+        if y_format is None:
+            y_format = self.getICAttr('y_format')
+        trend = self.getTrend()
+        return trend.setYFormat(y_format)
+
+    def setSceneMin(self, scene_min=None):
+        """
+        Минимальные значения видимой сцены тренда. Установка в тренде.
+
+        :param scene_min: Минимальные значения видимой сцены тренда.
+            Если не определено, то берется из ресурсного описания объекта.
+        :return:
+        """
+        if scene_min is None:
+            scene_min = self.getICAttr('scene_min')
+        trend = self.getTrend()
+        return trend.setSceneMin(scene_min)
+
+    def setSceneMax(self, scene_max=None):
+        """
+        Максимальные значение видимой сцены тренда. Установка в тренде.
+
+        :param scene_max: Максимальные значение видимой сцены тренда.
+            Если не определено, то берется из ресурсного описания объекта.
+        :return:
+        """
+        if scene_max is None:
+            scene_max = self.getICAttr('scene_max')
+        trend = self.getTrend()
+        return trend.setSceneMax(scene_max)
+
+    def setAdaptScene(self, adapt_scene=None):
+        """
+        Признак адаптации сцены по данным. Установка в тренде.
+
+        :param adapt_scene: Признак адаптации сцены по данным.
+            Если не определено, то берется из ресурсного описания объекта.
+        :return:
+        """
+        if adapt_scene is None:
+            adapt_scene = self.getICAttr('adapt_scene')
+        trend = self.getTrend()
+        return trend.setAdaptScane(adapt_scene)
+
+    def setXPrecision(self, x_precision=None):
+        """
+        Цена деления сетки тренда по шкале X. Установка в тренде.
+
+        :param x_precision: Цена деления сетки тренда по шкале X.
+            Если не определено, то берется из ресурсного описания объекта.
+        :return:
+        """
+        if x_precision is None:
+            x_precision = self.getICAttr('x_precision')
+        trend = self.getTrend()
+        return trend.setXPrecision(x_precision)
+
+    def setYPrecision(self, y_precision=None):
+        """
+        Цена деления сетки тренда по шкале Y. Установка в тренде.
+
+        :param y_precision: Цена деления сетки тренда по шкале Y
+            Если не определено, то берется из ресурсного описания объекта.
+        :return:
+        """
+        if y_precision is None:
+            y_precision = self.getICAttr('y_precision')
+        trend = self.getTrend()
+        return trend.setYPrecision(y_precision)

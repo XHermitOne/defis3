@@ -46,18 +46,22 @@ DEFAULT_Y_PRECISION = '1.0'
 # --- Спецификация ---
 SPC_IC_GNUPLOT_TREND = {'x_format': trend_proto.DEFAULT_X_FORMAT,   # Формат представления данных оси X
                         'y_format': trend_proto.DEFAULT_Y_FORMAT,   # Формат представления данных оси Y
-                        'scene_min': ('00:00:00', 0.0),    # Минимальное значение видимой сцены тренда
-                        'scene_max': ('12:00:00', 0.0),    # Максимальное значение видимой сцены тренда
                         'x_precision': DEFAULT_X_PRECISION,     # Цена деления сетки тренда по шкале X
                         'y_precision': DEFAULT_Y_PRECISION,     # Цена деления сетки тренда по шкале Y
 
+                        'scene_min': ('00:00:00', 0.0),    # Минимальное значение видимой сцены тренда
+                        'scene_max': ('23:59:59', 100.0),    # Максимальное значение видимой сцены тренда
+                        'adapt_scene': False,   # Признак адаптации сцены по данным
+
                         '__parent__': icwidget.SPC_IC_WIDGET,
+
                         '__attr_hlp__': {'x_format': u'Формат представления данных оси X',
                                          'y_format': u'Формат представления данных оси Y',
-                                         'scene_min': u'Минимальное значение видимой сцены тренда',
-                                         'scene_max': u'Максимальное значение видимой сцены тренда',
                                          'x_precision': u'Цена деления сетки тренда по шкале X',
                                          'y_precision': u'Цена деления сетки тренда по шкале Y',
+                                         'scene_min': u'Минимальное значение видимой сцены тренда',
+                                         'scene_max': u'Максимальное значение видимой сцены тренда',
+                                         'adapt_scene': u'Признак адаптации сцены по данным',
                                          },
                         }
 
@@ -116,6 +120,18 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
         # событием wx.EVT_WINDOW_DESTROY
         self.Bind(wx.EVT_WINDOW_DESTROY, self.onDestroy)
 
+    def _getManager(self):
+        """
+        Менеджер утилиты gnuplot.
+        """
+        return self.__gnuplot_manager
+
+    def isAdaptScene(self):
+        """
+        Произвести адаптацию сцены тренда по данным?
+        """
+        return False
+
     def setScene(self, min_x=None, min_y=None, max_x=None, max_y=None):
         """
         Установить текущую сцену тренда.
@@ -129,7 +145,8 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
         # Адаптация сцены по данным
         if self._cur_scene is None:
             pen_data = self.getPenData(pen_index=0)
-            self._cur_scene = self.adaptScene(pen_data)
+            if self.isAdaptScene():
+                self._cur_scene = self.adaptScene(pen_data)
 
         if self._cur_scene is None:
             # Адаптация закончилась безуспешно
