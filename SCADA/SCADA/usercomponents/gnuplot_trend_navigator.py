@@ -43,7 +43,7 @@ ic_class_spc = {'type': 'GnuplotTrendNavigator',
                 'x_format': trend_proto.DEFAULT_X_FORMAT,  # Формат представления данных оси X
                 'y_format': trend_proto.DEFAULT_Y_FORMAT,  # Формат представления данных оси Y
                 'scene_min': ('00:00:00', 0.0),  # Минимальное значение видимой сцены тренда
-                'scene_max': ('12:00:00', 100.0),  # Максимальное значение видимой сцены тренда
+                'scene_max': ('23:59:59', 100.0),  # Максимальное значение видимой сцены тренда
                 'adapt_scene': False,  # Признак адаптации сцены по данным
 
                 'x_precision': gnuplot_trend_proto.DEFAULT_X_PRECISION,  # Цена деления сетки тренда по шкале X
@@ -51,8 +51,14 @@ ic_class_spc = {'type': 'GnuplotTrendNavigator',
 
                 '__styles__': ic_class_styles,
                 '__events__': {},
+                '__lists__': {'x_format': list(trend_proto.DEFAULT_X_FORMATS),
+                              'y_format': list(trend_proto.DEFAULT_Y_FORMATS),
+                              },
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['description', '_uuid',
-                                                            ],
+                                                            'x_precision', 'y_precision'],
+                                   icDefInf.EDT_CHOICE: ['x_format', 'y_format'],
+                                   icDefInf.EDT_CHECK_BOX: ['adapt_scane'],
+                                   icDefInf.EDT_PY_SCRIPT: ['scene_min', 'scene_max'],
                                    },
                 '__parent__': gnuplot_trend_navigator_proto.SPC_IC_GNUPLOT_TREND_NAVIGATOR,
 
@@ -134,10 +140,19 @@ class icGnuplotTrendNavigator(icwidget.icWidget,
         #   На этапе генерации их не всегда можно определить.
         gnuplot_trend_navigator_proto.icGnuplotTrendNavigatorProto.__init__(self, parent)
 
+        # Передаем тренду основные атрибуты
+        self.setAdaptScene()
+        self.setSceneMin()
+        self.setSceneMax()
+
+        self.setXFormat()
+        self.setYFormat()
+
+        self.setXPrecision()
+        self.setYPrecision()
+
         #   Создаем дочерние компоненты
         self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
-
-        # Передаем тренду основные атрибуты
 
         # Перья определенные в навигаторе передаем тренду
         self.setPens(self.child)
@@ -262,7 +277,7 @@ class icGnuplotTrendNavigator(icwidget.icWidget,
         if adapt_scene is None:
             adapt_scene = self.getICAttr('adapt_scene')
         trend = self.getTrend()
-        return trend.setAdaptScane(adapt_scene)
+        return trend.setAdaptScene(adapt_scene)
 
     def setXPrecision(self, x_precision=None):
         """

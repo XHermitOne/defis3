@@ -335,9 +335,11 @@ class icGnuplotManager(object):
 
         if os.path.exists(graph_filename):
             # ВНИМАНИЕ! Если время разбито на дату и время, то количество в секции using увеличивается
-            #                                                        V
-            using_count = int(count) + 1 + DATETIME_GRAPH_DATA_FMT.count(' ')
-            cmd = 'plot \'%s\' using 1:%d with lines linestyle 1' % (graph_filename, using_count)
+            #                                                                                         V
+            params = ['\'%s\' using 1:%d with lines linestyle %d' % (graph_filename,
+                                                                     i + 2 + DATETIME_GRAPH_DATA_FMT.count(' '),
+                                                                     i + 1) for i in range(count)]
+            cmd = cmd_sign + ', '.join(params)
         else:
             # Если нет данных, то просто вывести абстрактный график
             log.warning(u'Не найден файл данных графиков <%s>' % graph_filename)

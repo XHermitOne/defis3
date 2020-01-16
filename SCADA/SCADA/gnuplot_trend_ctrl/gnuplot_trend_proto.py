@@ -8,6 +8,7 @@
 """
 
 import os.path
+import operator
 import wx
 import datetime
 import time
@@ -247,12 +248,26 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def getFrameFileName(self, file_type=PNG_FILE_TYPE):
         """
         Имя файла кадра.
+
+        :param file_type: Тип файла/расширение файла.
+            По умолчанию PNG файл.
         """
         file_ext = '.' + file_type.lower()
         if self.__frame_filename is None or not self.__frame_filename.endswith(file_ext):
             obj_uuid = self.getTrendUUID()
             self.__frame_filename = os.path.join(DEFAULT_GNUPLOT_FRAME_PATH, obj_uuid + file_ext)
         return self.__frame_filename
+
+    def getGraphFileName(self, file_type=DATA_FILE_EXT):
+        """
+        Имя файла данных графиков.
+
+        :param file_type: Тип файла/расширение файла.
+            По умолчанию текстовый файл *.dat.
+        """
+        frame_filename = self.getFrameFileName()
+        graph_filename = os.path.splitext(frame_filename)[0] + DATA_FILE_EXT
+        return graph_filename
 
     def getCurScene(self):
         """
@@ -301,6 +316,7 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
         :param y_format: Формат шкалы Y.
         :param scene: Границы окна сцены в данных предметной области.
         :param points: Список точек графика.
+            Список точек может задаваться также именем файла данных.
         :return: Имя файла отрисованного кадра или None в случае ошибки.
         """
         try:
@@ -345,10 +361,19 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
         :param y_format: Формат шкалы Y.
         :param scene: Границы окна сцены в данных предметной области.
         :param points: Список точек графика.
+            Список точек может задаваться также именем файла данных.
         :return: Имя файла отрисованного кадра или None в случае ошибки.
         """
         frame_filename = self.getFrameFileName(file_type)
-        graph_filename = os.path.splitext(frame_filename)[0] + DATA_FILE_EXT
+
+        if isinstance(points, (list, tuple)):
+            graph_filename = os.path.splitext(frame_filename)[0] + DATA_FILE_EXT
+        elif isinstance(points, str) and os.path.exists(points):
+            graph_filename = points
+        else:
+            log.warning(u'Не корректный тип списка точек для отрисовки кадра тренда <%s>' % self.getName())
+            return None
+
         # log.debug(u'Файл кадра: %s' % frame_filename)
         self.del_frame(frame_filename)
 
@@ -389,12 +414,15 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
                 # else:
                 #     self.__gnuplot_manager.setOutputSizePDF(width, height)
 
-        if points is not None:
+        if isinstance(points, (list, tuple)):
+            # Это 1 график
             points_lst = [dict(x=point[0] if isinstance(point[0], datetime.datetime) else float(point[0]),
                                point1=float(point[1])) for point in points]
             self.__gnuplot_manager.saveGraphData(graph_filename, points_lst, ('point1',))
+            self.__gnuplot_manager.setPlot(graph_filename, 1)
+        else:
+            self.__gnuplot_manager.setPlot(graph_filename, len(self.getPens()))
 
-        self.__gnuplot_manager.setPlot(graph_filename, 1)
         self.__gnuplot_manager.gen()
 
         if os.path.exists(frame_filename):
@@ -431,6 +459,72 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
             return True
         return False
 
+    def _saveGraphDataFile(self, graph_filename=None):
+        """
+        Сохранить данные перьев в файле графических данных.
+
+        :param graph_filename: Полное имя графического файла.
+            Если не опредлено, то генерируется.
+        :return: True - файл удачно сохранен.
+            False - ошибка сохранения файла.
+        """
+        if graph_filename is None:
+            graph_filename = self.getGraphFileName()
+
+        pens = self.getPens()
+
+        if pens:
+            self.setDefaults()
+
+            # Признак не пустого тренда
+            graph_data = list()
+            for pen in pens:
+                try:
+                    if pen:
+                        # По перьям формируем файл данных
+                        points = pen.getLineData()
+                        if points:
+                            if not graph_data:
+                                graph_data = [dict(x=point[0] if isinstance(point[0],
+                                                                            datetime.datetime) else float(point[0]),
+                                              pen1=float(point[1])) for point in points]
+                            else:
+                                for i_point, point in enumerate(points):
+                                    point_name = 'pen%d' % (i_point + 1)
+                                    is_graph_point = False
+                                    for i, graph_point in enumerate(graph_data):
+                                        if graph_data[i]['x'] == point[0]:
+                                            graph_data[i][point_name] = float(point[1])
+                                            is_graph_point = True
+                                            break
+                                    if not is_graph_point:
+                                        # Нет такой точки в выходных данных
+                                        # добавляем ее в общий список
+                                        new_graph_point = dict()
+                                        new_graph_point['x'] = point[0] if isinstance(point[0],
+                                                                                      datetime.datetime) else float(point[0])
+                                        new_graph_point[point_name] = float(point[1])
+                                        for i_prev_point in range(i_point):
+                                            new_graph_point['pen%d' % (i_prev_point + 1)] = 0.0
+                                        graph_data.append(new_graph_point)
+                    else:
+                        log.warning(u'Не определено перо тренда <%s>' % self.name)
+                except:
+                    log.fatal(u'Ошибка отрисовки тренда')
+                    break
+
+            if graph_data:
+                # После заполнения списка графических данных сортируем его по времени
+                graph_data.sort(key=operator.itemgetter('x'))
+                # И сохраняем его в файле
+                self.__gnuplot_manager.saveGraphData(graph_filename, graph_data,
+                                                     ['pen%d' % (i_pen + 1) for i_pen in range(len(pens))])
+                return True
+        else:
+            log.warning(u'Не определены перья в тренде <%s>' % self.getName())
+
+        return False
+
     def draw(self, redraw=True, size=None):
         """
         Основной метод отрисовки тренда.
@@ -441,40 +535,16 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
         if size is None:
             size = self.GetSize()
 
-        pens = self.getPens()
+        # Признак не пустого тренда
+        graph_filename = self.getGraphFileName()
+        not_empty = self._saveGraphDataFile(graph_filename)
 
-        if pens:
-            self.setDefaults()
-
-            # Признак не пустого тренда
-            not_empty = False
-            for pen in pens:
-                try:
-                    if pen:
-                        line_data = pen.getLineData()
-                        if line_data:
-                            # rgb_str = pen.getColourStr()
-                            if redraw:
-                                self.draw_frame(size=size, points=line_data,
-                                                scene=self._cur_scene)
-                            self.set_frame()
-                            not_empty = True
-                        else:
-                            log.warning(u'Пустые значения GnuplotTrend <%s>' % self.name)
-                            not_empty = not_empty or False
-
-                    else:
-                        log.warning(u'Не определено перо тренда <%s>' % self.name)
-                        not_empty = False
-                except:
-                    log.fatal(u'Ошибка отрисовки тренда')
-                    not_empty = False
-
-            if not not_empty:
-                # Если тренд пустой, то отрисовать пустой тренд
-                self.draw_empty(size=size)
+        if not_empty:
+            if redraw:
+                self.draw_frame(size=size, points=graph_filename, scene=self._cur_scene)
+            self.set_frame()
         else:
-            # Если перья не определены то просто отобразить тренд
+            # Если тренд пустой, то отрисовать пустой тренд
             self.draw_empty(size=size)
 
     def adaptScene(self, graph_data=None):

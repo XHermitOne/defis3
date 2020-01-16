@@ -44,7 +44,7 @@ ic_class_spc = {'type': 'GnuplotTrend',
                 'x_format': trend_proto.DEFAULT_X_FORMAT,  # Формат представления данных оси X
                 'y_format': trend_proto.DEFAULT_Y_FORMAT,  # Формат представления данных оси Y
                 'scene_min': ('00:00:00', 0.0),    # Минимальное значение видимой сцены тренда
-                'scene_max': ('12:00:00', 100.0),    # Максимальное значение видимой сцены тренда
+                'scene_max': ('23:59:59', 100.0),    # Максимальное значение видимой сцены тренда
                 'adapt_scene': False,  # Признак адаптации сцены по данным
 
                 'x_precision': gnuplot_trend_proto.DEFAULT_X_PRECISION,  # Цена деления сетки тренда по шкале X
@@ -58,8 +58,8 @@ ic_class_spc = {'type': 'GnuplotTrend',
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['description', '_uuid',
                                                             'x_precision', 'y_precision'],
                                    icDefInf.EDT_CHOICE: ['x_format', 'y_format'],
-                                   icDefInf.EDT_TEXTLIST: ['x_tunes', 'y_tunes'],
                                    icDefInf.EDT_CHECK_BOX: ['adapt_scane'],
+                                   icDefInf.EDT_PY_SCRIPT: ['scene_min', 'scene_max'],
                                    },
                 '__parent__': gnuplot_trend_proto.SPC_IC_GNUPLOT_TREND,
                 }
@@ -136,17 +136,26 @@ class icGnuplotTrend(icwidget.icWidget,
         self.createChildren(bCounter=bCounter, progressDlg=progressDlg)
 
         # Инициализация внутренного состояния контрола:
+        self.setAdaptScene()
+        self.setSceneMin()
+        self.setSceneMax()
+
+        self.setXFormat()
+        self.setYFormat()
+
+        self.setXPrecision()
+        self.setYPrecision()
 
         # Шкалы настройки
         # self.setTunes(self.x_tunes, self.y_tunes)
         # Цена деления
-        self.setPrecisions(self.x_precision, self.y_precision)
+        # self.setPrecisions(self.x_precision, self.y_precision)
         # Формат шкал
-        self.setFormats(self.x_format, self.y_format)
+        # self.setFormats(self.x_format, self.y_format)
 
         # Текущая сцена тренда - Границы окна сцены в данных предметной области.
         # Представляется в виде кортежа (X1, Y1, X2, Y2)
-        self.setScene(self.scene_min[0], self.scene_min[1], self.scene_max[0], self.scene_max[1])
+        # self.setScene(self.scene_min[0], self.scene_min[1], self.scene_max[0], self.scene_max[1])
 
         # отрисовать в соответствии с внутренним состоянием
         # self.draw()
@@ -231,8 +240,16 @@ class icGnuplotTrend(icwidget.icWidget,
             scene_min = self.scene_min
         else:
             scene_min = self.getICAttr('scene_min')
-        dt_min = self._str2dt(scene_min[0], self._x_format) if isinstance(scene_min[0], str) else scene_min[0]
+        if scene_min and isinstance(scene_min, str):
+            try:
+                scene_min = eval(scene_min)
+            except:
+                log.fatal(u'Ошибка формата минимальных значений сцены')
+                log.warning(u'Минимальные значения должны задаваться кортежем. Например (\'00:00:00\', 0.0)')
+                scene_min = ('00:00:00', 0.0)
+        dt_min = self._str2dt(scene_min[0], self.x_format) if isinstance(scene_min[0], str) else scene_min[0]
         y_min = float(scene_min[1])
+        self.scene_min = (dt_min, y_min)
         return dt_min, y_min
 
     def getSceneTimeMin(self):
@@ -257,8 +274,16 @@ class icGnuplotTrend(icwidget.icWidget,
             scene_max = self.scene_max
         else:
             scene_max = self.getICAttr('scene_max')
-        dt_max = self._str2dt(scene_max[0], self._x_format) if isinstance(scene_max[0], str) else scene_max[0]
+        if scene_max and isinstance(scene_max, str):
+            try:
+                scene_max = eval(scene_max)
+            except:
+                log.fatal(u'Ошибка формата максимальных значений сцены')
+                log.warning(u'Максимальные значения должны задаваться кортежем. Например (\'00:00:00\', 0.0)')
+                scene_max = ('23:59:59', 100.0)
+        dt_max = self._str2dt(scene_max[0], self.x_format) if isinstance(scene_max[0], str) else scene_max[0]
         y_max = float(scene_max[1])
+        self.scene_max = (dt_max, y_max)
         return dt_max, y_max
 
     def getSceneTimeMax(self):
