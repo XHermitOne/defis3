@@ -478,19 +478,20 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
 
             # Признак не пустого тренда
             graph_data = list()
-            for pen in pens:
+            for i_pen, pen in enumerate(pens):
                 try:
                     if pen:
                         # По перьям формируем файл данных
                         points = pen.getLineData()
+                        # log.debug(u'Точки пера <%s> %s' % (pen.getName(), str(points)))
                         if points:
                             if not graph_data:
                                 graph_data = [dict(x=point[0] if isinstance(point[0],
                                                                             datetime.datetime) else float(point[0]),
-                                              pen1=float(point[1])) for point in points]
+                                              pen0=float(point[1])) for point in points]
                             else:
                                 for i_point, point in enumerate(points):
-                                    point_name = 'pen%d' % (i_point + 1)
+                                    point_name = 'pen%d' % i_pen
                                     is_graph_point = False
                                     for i, graph_point in enumerate(graph_data):
                                         if graph_data[i]['x'] == point[0]:
@@ -504,8 +505,8 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
                                         new_graph_point['x'] = point[0] if isinstance(point[0],
                                                                                       datetime.datetime) else float(point[0])
                                         new_graph_point[point_name] = float(point[1])
-                                        for i_prev_point in range(i_point):
-                                            new_graph_point['pen%d' % (i_prev_point + 1)] = 0.0
+                                        for i_prev_pen in range(i_pen):
+                                            new_graph_point['pen%d' % i_prev_pen] = 0.0
                                         graph_data.append(new_graph_point)
                     else:
                         log.warning(u'Не определено перо тренда <%s>' % self.name)
@@ -518,7 +519,7 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
                 graph_data.sort(key=operator.itemgetter('x'))
                 # И сохраняем его в файле
                 self.__gnuplot_manager.saveGraphData(graph_filename, graph_data,
-                                                     ['pen%d' % (i_pen + 1) for i_pen in range(len(pens))])
+                                                     ['pen%d' % i_pen for i_pen in range(len(pens))])
                 return True
         else:
             log.warning(u'Не определены перья в тренде <%s>' % self.getName())
