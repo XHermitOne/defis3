@@ -16,6 +16,8 @@ from ic.log import log
 from ic.editor import ext_python_editor
 from ic.PropertyEditor import icDefInf
 
+from . import ImpNode
+
 __version__ = (0, 1, 1, 1)
 
 # Константы
@@ -597,7 +599,7 @@ class icPrjTree(wx.TreeCtrl):
         """
         item = event.GetItem()
         node = self.GetItemData(item)
-        if node.__class__.__name__ == 'PrjImportSys' and not node.isBuild():
+        if isinstance(node, ImpNode.icPrjImportSys) and not node.isBuild():
             try:
                 # Затем построить дерево подсистемы
                 sub_sys_dir = node.getPathInPrj()

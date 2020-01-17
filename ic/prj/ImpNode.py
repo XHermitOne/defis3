@@ -112,7 +112,6 @@ class icPrjImportModules(prj_module.icPrjModules):
     """
     Папка модулей внутри импортируемой подсистемы.
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.
@@ -128,6 +127,14 @@ class icPrjImportModules(prj_module.icPrjModules):
         Вызов всплывающего меню узла.
         """
         pass
+
+    def edit(self):
+        """
+        Необходимо заблокировать редактирование этого узла.
+        Т.к. импортированные системы не редактируются.
+        """
+        dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
+                               u'Редактирование импортированных систем не возможно.')
 
 
 class icPrjImportSystems(icPrjImportFolder):
@@ -148,6 +155,14 @@ class icPrjImportSystems(icPrjImportFolder):
         # Для доступа к редактору ресурсов и IDE
         self.res_editor = None
         self.ide = None
+
+    def edit(self):
+        """
+        Необходимо заблокировать редактирование этого узла.
+        Т.к. импортированные системы не редактируются.
+        """
+        dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
+                               u'Редактирование импортированных систем не возможно.')
 
     def setRoot(self, root):
         prj_node.icPrjNode.setRoot(self, root)
@@ -244,7 +259,7 @@ class icPrjImportSystems(icPrjImportFolder):
         prj_dir = os.path.dirname(os.path.dirname(self.getRoot().getPrjFileName()))
         try:
             dlgfunc.openProgressDlg(None, u'Обновление подсистем',
-                                     u'Обновление подсистем', 0, len(sub_systems))
+                                    u'Обновление подсистем', 0, len(sub_systems))
             for i_sub_sys in range(len(sub_systems)):
                 sub_sys_dir = os.path.dirname(sub_systems[i_sub_sys]['path'])
 
