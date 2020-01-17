@@ -156,6 +156,12 @@ class icPrjImportSystems(icPrjImportFolder):
         self.res_editor = None
         self.ide = None
 
+    def getIDE(self):
+        """
+        IDE проекта.
+        """
+        return self.ide
+
     def edit(self):
         """
         Необходимо заблокировать редактирование этого узла.
