@@ -13,6 +13,7 @@ from ic.components import icwidget
 from . import prj_root
 from ic.bitmap import bmpfunc
 from ic.log import log
+from ic.dlg import dlgfunc
 from ic.editor import ext_python_editor
 from ic.PropertyEditor import icDefInf
 
@@ -127,7 +128,7 @@ class icPrjTreeImgList(wx.ImageList):
         try:
             self._img_lst.Replace(img_idx, img)
         except:
-            log.error(u'%s from %s %s ' % (img_idx, self._img_lst.GetImageCount(), img))
+            log.fatal(u'%s from %s %s ' % (img_idx, self._img_lst.GetImageCount(), img))
         return img_idx
 
 
@@ -232,7 +233,7 @@ class icPrjTree(wx.TreeCtrl):
             return True
         except:
             log.fatal(u'Ошибка построения дерева проекта')
-            return False
+        return False
 
     def getRoot(self):
         """
@@ -553,9 +554,8 @@ class icPrjTree(wx.TreeCtrl):
             self.editItemLabel = False
             # освободить перехваченную мышь
             self.ReleaseMouse()
-            wx.MessageBox(u'Не корректное наименование',
-                          u'Сообщение',
-                          wx.OK | wx.ICON_INFORMATION)
+            dlgfunc.openWarningBox(u'ВНИМАНИЕ!', u'Не корректное наименование',
+                                   parent=self)
             event.Veto()
             return
         # освободить перехваченную мышь
@@ -614,9 +614,8 @@ class icPrjTree(wx.TreeCtrl):
                     self.addBranch(item, child)
             except:
                 log.fatal(u'Ошибка открытия подсистемы')
-                wx.MessageBox(u'Ошибка открытия подсистемы',
-                              u'ОШИБКА',
-                              wx.OK | wx.ICON_ERROR)
+                dlgfunc.openErrBox(u'ОШИБКА', u'Ошибка открытия подсистемы',
+                                   parent=self)
         
         event.Skip()
         
@@ -673,7 +672,7 @@ class icPrjTreeViewer(icPrjTree):
                 except:
                     self.GetParent().GetParent().setPassportLabel('')
             except:
-                log.error()
+                log.fatal()
                 
         event.Skip()
     
