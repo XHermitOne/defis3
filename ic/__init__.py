@@ -31,7 +31,7 @@ from ic.report import REPORT_MANAGER
 
 # ic series version number
 # (note that subpackages have their own version number)
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # Copyright notice string
 __copyright__ = u'Copyright (c) 2002, Kolchanov Alexander xhermitone@gmail.com'
@@ -87,15 +87,21 @@ def Login(user, passw, path, runtime_mode=False):
     1. Исключение LoginErrorException возбуждается если пользователь с таким именем
     уже вошел в систему.
     2. LoginInvalidException возбуждается если неверен логин либо пароль.
+
     :param user: Имя пользователя.
     :param passw: Пароль пользователя.
-    :param path: Путь до папки проекта (c:/defis/tutorial/tutorial/)."""
-    modefunc.setRuntimeMode(runtime_mode)
-    set_ini_file(path)
-    if not runtime_mode:
-        result = icEditorLogin(user, passw, '-s', PrjDir_=path, DEBUG_MODE=False)
-    else:
-        result = icLogin(user, passw, '-s', PrjDir_=path, DEBUG_MODE=False)
+    :param path: Путь до папки проекта (c:/defis/tutorial/tutorial/).
+    """
+    try:
+        modefunc.setRuntimeMode(runtime_mode)
+        set_ini_file(path)
+        if not runtime_mode:
+            result = icEditorLogin(user, passw, '-s', prj_dirname=path, DEBUG_MODE=False)
+        else:
+            result = icLogin(user, passw, '-s', prj_dirname=path, DEBUG_MODE=False)
+    except:
+        log.fatal(u'Ошибка входа в систему')
+        result = False
     return result
 
 

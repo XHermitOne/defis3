@@ -654,6 +654,9 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                                                                                      record_data[field['name']],
                                                                                      type(record_data[field['name']])))
                             raise
+                # Удалим поля не относящиеся к таблице
+                field_names = [fld['name'] for fld in self.getResource()['child']]
+                record_data = dict([(field_name, field_value) for field_name, field_value in record_data.items() if field_name in field_names])
             elif isinstance(record_data, tuple):
                 # Строка задана кортежем
                 rec_data = list(record_data)
@@ -692,6 +695,9 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                     else:
                         break
                 record_data = rec_data
+            else:
+                log.warning(u'Не поддерживаемый тип записи <%s> таблицы <%s>' % (record_data.__class__.__name__,
+                                                                                 self.getName()))
         except:
             log.fatal(u'Ошибка приведения типов записи %s' % str(record_data))
 

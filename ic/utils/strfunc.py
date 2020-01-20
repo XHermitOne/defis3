@@ -332,6 +332,7 @@ RU_ENCODINGS = {'UTF-8': 'utf-8',
 def get_codepage(text=None):
     """
     Определение кодировки текста.
+
     Пример вызова функции:
     print(RU_ENCODINGS[get_codepage(file('test.txt').read())])
     Есть альтернативный вариант определения кодировки (с помощью chardet):

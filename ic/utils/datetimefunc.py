@@ -19,7 +19,7 @@ except:
 
 _ = wx.GetTranslation
 
-__version__ = (0, 1, 2, 2)
+__version__ = (0, 1, 3, 1)
 
 # --- Константы и переменные ---
 DEFAULT_DATETIME_FMT = '%d.%m.%Y'
@@ -93,10 +93,30 @@ def Today():
     :return: Объект date или None в случае ошибки.
     """
     try:
-        return datetime.date(2005, 1, 1).today()
+        return datetime.date.today()
     except:
         log.fatal(u'Ошибка')
-        return None
+    return None
+
+
+def Yesterday():
+    """
+    Вчерашняя дата от текущей системной даты.
+
+    :return:
+    """
+    today = Today()
+    return today - datetime.timedelta(days=1)
+
+
+def BeforeYesterday():
+    """
+    Позавчерашняя дата от текущей системной даты.
+
+    :return:
+    """
+    today = Today()
+    return today - datetime.timedelta(days=2)
 
 
 def Now():

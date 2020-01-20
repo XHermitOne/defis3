@@ -30,7 +30,7 @@ TAG_KEY = '__tag__'
 CHILDREN_KEY = '__children__'
 VALUE_KEY = '__value__'
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 def XmlFile2Dict(xml_filename, encoding='utf-8'):
@@ -213,15 +213,18 @@ def convert_xml_file2dict(xml_filename, codepage='utf-8'):
         return dict()
 
     body_xml = extfunc.load_file_text(xml_filename, 'utf-8')
+    # log.debug(u'Содержимое xml файла:\n%s' % body_xml)
 
     # Перекодировать текст, если надо
     src_codepage = strfunc.get_codepage(body_xml)
     if src_codepage and src_codepage.lower() != codepage:
-            log.info(u'Перекодировка XML файла <%s> из <%s> в <%s> кодировку' % (xml_filename, src_codepage, codepage))
-            body_xml = strfunc.recode_text(body_xml, src_codepage, codepage)
+        log.info(u'Перекодировка XML файла <%s> из <%s> в <%s> кодировку' % (xml_filename, src_codepage, codepage))
+        body_xml = strfunc.recode_text(body_xml, src_codepage, codepage)
     elif not src_codepage:
+        # Если кодовую страницу файла не удалось определить, то считаем что
+        # указанная кодовая страница, правдива для файла и перекодировку производить не недо.
+        # Но выводим предупреждение!
         log.warning(u'Не возможно определить кодовую страницу XML файла <%s>' % xml_filename)
-        return dict()
 
     return convert_xml_text2dict(body_xml, codepage)
 
