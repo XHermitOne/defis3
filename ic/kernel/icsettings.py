@@ -17,7 +17,7 @@ from ic.utils import execfunc
 from ic.engine import glob_functions
 from ic.log import log
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 
 def setProjectSettingsToEnvironment(ProjectName_=None, ReDefine_=False):
@@ -269,3 +269,19 @@ class icParamDotUse(icSettingsDotUsePrototype):
         """
         ini_file_name = self._get_ini_file_name()
         return inifunc.saveParamINI(ini_file_name, self._cur_settings_list[1], self._cur_settings_list[2], value)
+
+    def value(self):
+        """
+        Получить значение.
+        ВНИМАНИЕ! Производиться попытка преобразования типа.
+
+        :return:
+        """
+        str_value = self.get()
+        # Пытаемся преобразовать тип
+        try:
+            value = eval(str_value)
+        except:
+            # log.fatal(u'Ошибка преобразования строки <%s> к типу' % str_value)
+            value = str_value
+        return value
