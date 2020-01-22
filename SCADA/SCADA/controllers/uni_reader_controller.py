@@ -13,7 +13,7 @@ import xmlrpc.client
 from ic.log import log
 
 # Version
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 
 # Используемый порт по умолчанию
@@ -21,6 +21,7 @@ DEFAULT_PORT = 8080
 
 # Имена используемых узлов
 OPC_SERVER_NODE = 'OPC_SERVER_NODE'
+# OPC_SERVER_NODE = 'OPC_DA'
 
 
 class icUniReaderControllerProto(object):
@@ -30,6 +31,7 @@ class icUniReaderControllerProto(object):
     def __init__(self, host=None, port=DEFAULT_PORT, server=None, node=None, *args, **kwargs):
         """
         Конструктор.
+
         :param host: Компьютер с сервером
         :param port: Порт сервера. По умолчанию используется 8080.
         :param server: Имя сервера.
@@ -43,6 +45,7 @@ class icUniReaderControllerProto(object):
     def read_tags(self, host=None, port=DEFAULT_PORT, server=None, node=None, **tags):
         """
         Чтение данных из UniReader сервера. С помощью XML RPC.
+
         :param host: Компьютер с сервером
         :param port: Порт сервера. По умолчанию используется 8080.
         :param server: Имя сервера.
@@ -76,6 +79,7 @@ class icUniReaderControllerProto(object):
     def _read_data_xmlrpc(self, host, port, server, node, **tags):
         """
         Чтение данных из UniReader сервера. С помощью XML RPC.
+
         :param host: Компьютер с сервером
         :param port: Порт сервера. По умолчанию используется 8080.
         :param opc_server: Имя сервера.
@@ -92,7 +96,11 @@ class icUniReaderControllerProto(object):
             opc = xmlrpc.client.ServerProxy('http://%s:%d' % (host, port))
             values = opc.sources.ReadValuesAsStrings(node, server, *addresses)
 
-            result = dict([(tag_name, values[i]) for i, tag_name in enumerate(tag_names)])
+            if not values:
+                log.warning(u'UniReader. Пустые прочитанные значения: %s' % str(values))
+                log.warning(u'UniReader. Проверте поддержку типа <%s> узла службой uni_reader' % node)
+
+            result = dict([(tag_name, values[i] if values else u'') for i, tag_name in enumerate(tag_names)])
             return result
         except:
             # Ошибка

@@ -25,7 +25,8 @@ SERVERS = (RSLINX_SERVER, )
 
 # Имена используемых узлов
 OPC_SERVER_NODE = 'OPC_SERVER_NODE'
-NODES = (OPC_SERVER_NODE, )
+OPC_DA_NODE = 'OPC_DA'
+NODES = (OPC_SERVER_NODE, OPC_DA_NODE)
 
 # --- Спецификация ---
 SPC_IC_UNI_READER_CTRL = {'host': u'',
@@ -90,7 +91,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 2, 1)
 
 
 class icUniReaderController(icwidget.icSimple,
