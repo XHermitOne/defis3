@@ -111,11 +111,10 @@ ic_can_contain = ['SpravLevel']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 2, 3)
+__version__ = (0, 1, 2, 4)
+
 
 # Функции редактирования
-
-
 def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):
     """
     Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
@@ -193,7 +192,7 @@ class icSprav(icwidget.icSimple, parentModule.icSpravProto):
         sprav_obj = glob_functions.getKernel().createObjBySpc(parent=None, res=res, context=context)
 
         log.info(u'Тестирование СПРАВОЧНИКА <%s>' % res['name'])
-        sprav_obj.edit(parent=parent)
+        sprav_obj.Edit(parent=parent)
         return
 
     def __init__(self, parent, id, component, logType=0, evalSpace=None,
