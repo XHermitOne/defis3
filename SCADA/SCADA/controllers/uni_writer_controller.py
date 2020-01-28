@@ -143,7 +143,7 @@ class icUniWriterControllerProto(object):
                     result = opc.destinations.WriteValueAsBoolean(node, server, address,
                                                                   eval(value) if isinstance(value, str) else bool(value))
                 elif isinstance(value, str) or tag_type == STRING_TAG_TYPE:
-                    result = opc.destinations.ReadValuesAsStrings(node, server, address, str(value))
+                    result = opc.destinations.WriteValueAsString(node, server, address, str(value))
                 else:
                     log.warning(u'UniWriter. Не поддерживаемый тип тегов <%s : %s>' % (tag_type, type(value)))
                     result = False
