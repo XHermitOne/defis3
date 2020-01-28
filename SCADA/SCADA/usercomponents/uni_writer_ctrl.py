@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 
 """
-Компонент контроллера универсального удаленного чтения <Удаленная служба UniReader>.
+Компонент контроллера универсальной удаленной
+записи <Удаленная служба UniWriter>.
 
-Этот контроллер используется для чтения
-с помощью XML-RPC данных из службы UniReader.
+Этот контроллер используется для записи значений тегов
+с помощью XML-RPC данных из службы UniWriter.
 """
 
 from ic.log import log
@@ -17,7 +18,7 @@ from ic.PropertyEditor import icDefInf
 
 from ic.bitmap import bmpfunc
 
-from SCADA.controllers import uni_reader_controller
+from SCADA.controllers import uni_writer_controller
 
 # Поддерживаемые сервера
 RSLINX_SERVER = u'RSLinx OPC Server'
@@ -29,8 +30,8 @@ OPC_DA_NODE = 'OPC_DA'
 NODES = (OPC_SERVER_NODE, OPC_DA_NODE)
 
 # --- Спецификация ---
-SPC_IC_UNI_READER_CTRL = {'host': u'',
-                          'port': uni_reader_controller.DEFAULT_PORT,
+SPC_IC_UNI_WRITER_CTRL = {'host': u'',
+                          'port': uni_writer_controller.DEFAULT_PORT,
                           'server': RSLINX_SERVER,
                           'node': OPC_SERVER_NODE,
                           'tags': None,
@@ -39,7 +40,7 @@ SPC_IC_UNI_READER_CTRL = {'host': u'',
                                            'port': u'Порт',
                                            'server': u'Имя сервера подключения',
                                            'node': u'Имя узла подключания',
-                                           'tags': u'Словарь тегов с адресами',
+                                           'tags': u'Словарь значений тегов с адресами и типами',
                                            },
                           }
 
@@ -47,17 +48,17 @@ SPC_IC_UNI_READER_CTRL = {'host': u'',
 ic_class_type = icDefInf._icUserType
 
 #   Имя класса
-ic_class_name = 'icUniReaderController'
+ic_class_name = 'icUniWriterController'
 
 #   Спецификация на ресурсное описание класса
-ic_class_spc = {'type': 'UniReaderController',
+ic_class_spc = {'type': 'UniWriterController',
                 'name': 'default',
                 'child': [],
                 'activate': True,
                 '_uuid': None,
 
                 'host': u'',
-                'port': uni_reader_controller.DEFAULT_PORT,
+                'port': uni_writer_controller.DEFAULT_PORT,
                 'server': RSLINX_SERVER,
                 'node': OPC_SERVER_NODE,
                 'tags': None,
@@ -71,16 +72,16 @@ ic_class_spc = {'type': 'UniReaderController',
                                    icDefInf.EDT_CHOICE: ['server', 'node'],
                                    icDefInf.EDT_DICT: ['tags'],
                                    },
-                '__parent__': SPC_IC_UNI_READER_CTRL,
+                '__parent__': SPC_IC_UNI_WRITER_CTRL,
                 }
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = bmpfunc.createLibraryBitmap('server-arrow.png')
-ic_class_pic2 = bmpfunc.createLibraryBitmap('server-arrow.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('server-pencil.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('server-pencil.png')
 
 #   Путь до файла документации
-ic_class_doc = 'SCADA/doc/_build/html/SCADA.usercomponents.uni_reader_ctrl.html'
+ic_class_doc = 'SCADA/doc/_build/html/SCADA.usercomponents.uni_writer_ctrl.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -91,13 +92,14 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 1, 1)
 
 
-class icUniReaderController(icwidget.icSimple,
-                            uni_reader_controller.icUniReaderControllerProto):
+class icUniWriterController(icwidget.icSimple,
+                            uni_writer_controller.icUniWriterControllerProto):
     """
-    Компонент контроллера универсального удаленного чтения <Удаленная служба UniReader>.
+    Компонент контроллера универсальной удаленной
+    записи <Удаленная служба UniWriter>.
 
     :type component_spc: C{dictionary}
     :cvar component_spc: Спецификация компонента.
@@ -120,12 +122,12 @@ class icUniReaderController(icwidget.icSimple,
         :param kwarg:
         :return:
         """
-        import ic
-        from SCADA.controllers import test_uni_reader_ctrl_dlg
+        # import ic
+        # from SCADA.controllers import test_uni_reader_ctrl_dlg
         log.info(u'Тестирование контроллера <%s>. Имя файла <%s>. Расширение <%s>' % (res['name'], parent._formName,
                                                                                       parent.file.split('.')[1]))
-        controller = ic.getKernel().createObjBySpc(None, res, context=context)
-        test_uni_reader_ctrl_dlg.view_test_uni_reader_ctrl_dlg(parent=None, controller=controller)
+        # controller = ic.getKernel().createObjBySpc(None, res, context=context)
+        # test_uni_reader_ctrl_dlg.view_test_uni_reader_ctrl_dlg(parent=None, controller=controller)
 
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None,
                  bCounter=False, progressDlg=None):
@@ -156,7 +158,7 @@ class icUniReaderController(icwidget.icSimple,
         port = self.getPort()
         server = self.getServer()
         node = self.getNode()
-        uni_reader_controller.icUniReaderControllerProto.__init__(self, host=host,
+        uni_writer_controller.icUniWriterControllerProto.__init__(self, host=host,
                                                                   port=port,
                                                                   server=server, node=node)
 
@@ -189,6 +191,6 @@ class icUniReaderController(icwidget.icSimple,
     def getTags(self):
         """
         Словарь тегов в формате:
-            {'имя тега': 'адрес тега', ... }
+            {'имя_тега': ('Адрес_тега', Значение_тега, 'Тип_тега'), ...}
         """
         return self.getICAttr('tags')

@@ -51,6 +51,7 @@ class icUniReaderControllerProto(object):
         :param server: Имя сервера.
         :param node: Наименования узла.
         :param tags: Словарь запрашиваемых тегов.
+            {'имя_тега': 'Адрес_тега', ...}
         :return: Словарь тегов, заполненных данными.
         """
         if host is None:
@@ -85,6 +86,7 @@ class icUniReaderControllerProto(object):
         :param opc_server: Имя сервера.
         :param node: Наименования узла.
         :param tags: Словарь запрашиваемых тегов.
+            {'имя_тега': 'Адрес_тега', ...}
         :return: Словарь тегов, заполненных данными.
         """
         tag_items = tags.items()

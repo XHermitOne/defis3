@@ -12,7 +12,7 @@ from ic.engine import form_manager
 from ic.log import log
 from ic.dlg import dlgfunc
 
-__version__ = (0, 0, 1, 4)
+__version__ = (0, 0, 1, 5)
 
 
 class icTestUniReaderCtrlDlg(test_uni_reader_ctrl_dlg_proto.icTestUniReaderControllerDlgProto,
@@ -33,6 +33,7 @@ class icTestUniReaderCtrlDlg(test_uni_reader_ctrl_dlg_proto.icTestUniReaderContr
     def set_tags(self, tags=None):
         """
         Установить проверяемые теги.
+
         :param tags: Словарь тегов в формате:
             {'имя тега': 'адрес тега', ... }
         """
@@ -45,6 +46,7 @@ class icTestUniReaderCtrlDlg(test_uni_reader_ctrl_dlg_proto.icTestUniReaderContr
     def set_controller(self, controller=None):
         """
         Установить контроллер.
+
         :param controller: Объект контроллера.
         """
         self.controller = controller
@@ -84,6 +86,7 @@ class icTestUniReaderCtrlDlg(test_uni_reader_ctrl_dlg_proto.icTestUniReaderContr
     def update_tags(self, **tags):
         """
         Установить теги.
+
         :param tags: Словарь тегов в формате:
             {'имя тега': 'адрес тега', ... }
         :return: True/False.
@@ -105,6 +108,7 @@ class icTestUniReaderCtrlDlg(test_uni_reader_ctrl_dlg_proto.icTestUniReaderContr
     def read_tags(self, **tags):
         """
         Прочитать теги из контроллера.
+
         :param tags: Словарь тегов в формате:
             {'имя тега': 'адрес тега', ... }
         :return: Словарь прочитанных значений:
@@ -171,7 +175,8 @@ class icTestUniReaderCtrlDlg(test_uni_reader_ctrl_dlg_proto.icTestUniReaderContr
 
 def view_test_uni_reader_ctrl_dlg(parent=None, controller=None):
     """
-    Функция отображения диалогового окна тестирования контроллера Uni Reader.
+    Функция отображения диалогового окна тестирования контроллера UniReader.
+
     :param parent: Родительское окно.
     :param controller: Объект контроллера.
     """
