@@ -13,7 +13,7 @@ import xmlrpc.client
 from ic.log import log
 
 # Version
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 
 # Используемый порт по умолчанию
@@ -49,7 +49,8 @@ class icUniWriterControllerProto(object):
         self.server = server
         self.node = node
     
-    def write_tags(self, host=None, port=DEFAULT_PORT, server=None, node=None, **tags):
+    def write_tags(self, host=None, port=DEFAULT_PORT, server=None, node=None,
+                   *tags_tuple, **tags_dict):
         """
         Запись данных в UniWriter сервер. С помощью XML RPC.
 
@@ -57,8 +58,14 @@ class icUniWriterControllerProto(object):
         :param port: Порт сервера. По умолчанию используется 8081.
         :param server: Имя сервера.
         :param node: Наименования узла.
-        :param tags: Словарь записываемых тегов.
+        :param tags_tuple: Список записываемых тегов. Формат:
+            (('Адрес_тега', Значение_тега, 'Тип_тега'), ...)
+            Тип тега может не задаваться.
+            Тогда тип тега определяется по типу значения.
+        :param tags_dict: Словарь записываемых тегов. Формат:
             {'имя_тега': ('Адрес_тега', Значение_тега, 'Тип_тега'), ...}
+            Тип тега может не задаваться.
+            Тогда тип тега определяется по типу значения.
         :return: True - запись прошла успешно / False - ошибка записи данных.
         """
         if host is None:
@@ -82,9 +89,10 @@ class icUniWriterControllerProto(object):
             log.warning(u'Не определен узел')
             return dict()
             
-        return self._write_data_xmlrpc(host, port, server, node, **tags)
+        return self._write_data_xmlrpc(host, port, server, node,
+                                       *tags_tuple, **tags_dict)
     
-    def _write_data_xmlrpc(self, host, port, server, node, **tags):
+    def _write_data_xmlrpc(self, host, port, server, node, *tags_tuple, **tags_dict):
         """
         Запись данных в UniWriter сервер. С помощью XML RPC.
 
@@ -92,32 +100,36 @@ class icUniWriterControllerProto(object):
         :param port: Порт сервера. По умолчанию используется 8080.
         :param opc_server: Имя сервера.
         :param node: Наименования узла.
-        :param tags: Словарь записываемых тегов.
+        :param tags_tuple: Список записываемых тегов. Формат:
+            (('Адрес_тега', Значение_тега, 'Тип_тега'), ...)
+            Тип тега может не задаваться.
+            Тогда тип тега определяется по типу значения.
+        :param tags_dict: Словарь записываемых тегов. Формат:
             {'имя_тега': ('Адрес_тега', Значение_тега, 'Тип_тега'), ...}
+            Тип тега может не задаваться.
+            Тогда тип тега определяется по типу значения.
         :return: True - запись прошла успешно / False - ошибка записи данных.
         """
-        tag_items = tags.items()
-        address_value_list = [tag_data for tag_name, tag_data in tag_items]
-        check_types = all([isinstance(tag_data, (list, tuple)) and len(tag_data) >= 2 for tag_data in address_value_list])
+        tag_values = tags_tuple if tags_tuple else tags_dict.values()
+        check_types = all([isinstance(tag_data, (list, tuple)) and len(tag_data) >= 2 for tag_data in tag_values])
         if not check_types:
             log.warning(u'Не корректные данные записываемых тегов')
             log.warning(u'Словарь записываемых тегов задается как {\'имя_тега\': (\'Адрес_тега\', Значение_тега, \'Тип_тега\'), ...}')
             return False
-        tag_names = [tag_name for tag_name, tag_addr in tag_items]
 
         try:
             # Создание клиента OPC
             opc = xmlrpc.client.ServerProxy('http://%s:%d' % (host, port))
 
             results = list()
-            for address, field in address_value_list:
-                if len(field) >= 3:
-                    address = field[0]
-                    value = field[1]
-                    tag_type = field[2]
+            for tag_value in tag_values:
+                if len(tag_value) >= 3:
+                    address = tag_value[0]
+                    value = tag_value[1]
+                    tag_type = tag_value[2]
                 else:
-                    address = field[0]
-                    value = field[1]
+                    address = tag_value[0]
+                    value = tag_value[1]
                     tag_type = None
 
                 if tag_type == INT2_TAG_TYPE:
@@ -142,3 +154,20 @@ class icUniWriterControllerProto(object):
             # Ошибка
             log.fatal(u'UniWriter. Ошибка записи данных сервера <%s:%d / %s>' % (host, port, server))
         return False
+
+    def write_tag(self, host=None, port=DEFAULT_PORT, server=None, node=None,
+                  address=None, tag_type=None, value=None):
+        """
+        Запись данных в UniWriter сервер. С помощью XML RPC.
+
+        :param host: Компьютер с сервером
+        :param port: Порт сервера. По умолчанию используется 8081.
+        :param server: Имя сервера.
+        :param node: Наименования узла.
+        :param address: Адрес тега.
+        :param tag_type: Тип тега.
+        :param value: Записываемое значение тега.
+        :return: True - запись прошла успешно / False - ошибка записи данных.
+        """
+        return self.write_tags(host=host, port=port, server=server, node=node,
+                               write_tag=(address, value, tag_type))

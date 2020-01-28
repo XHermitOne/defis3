@@ -109,3 +109,30 @@ class icUniReaderControllerProto(object):
             log.fatal(u'Ошибка чтения данных сервера <%s:%d / %s>' % (host, port, server))
             # Скорее всего это ошибка связи с сервером
             return dict([(tag_name, u'') for tag_name in tag_names])
+
+    def read_tag(self, host=None, port=DEFAULT_PORT, server=None, node=None,
+                 address=None, bTypeCast=True):
+        """
+        Чтение данных из UniReader сервера. С помощью XML RPC.
+
+        :param host: Компьютер с сервером
+        :param port: Порт сервера. По умолчанию используется 8080.
+        :param server: Имя сервера.
+        :param node: Наименования узла.
+        :param address: Адрес читаемого тега.
+        :param bTypeCast: Попытка автоматически определить и преобразовать тип значения.
+        :return: Прочитанное значение тега в виде строки или None в случае ошибки.
+        """
+        values = self.read_tags(host=host, port=port, server=server, node=node,
+                                read_tag=address)
+        if values and 'read_tag' in values:
+            value = values['read_tag']
+            if bTypeCast and isinstance(value, str):
+                try:
+                    # Попытка приведения к типу
+                    value = eval(value)
+                except:
+                    # Попытка не удалась. Считаем что это строка
+                    pass
+            return value
+        return None
