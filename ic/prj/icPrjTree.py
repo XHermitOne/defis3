@@ -595,11 +595,14 @@ class icPrjTree(wx.TreeCtrl):
 
     def onItemExpanded(self, event):
         """
-        Раскрытие узла по +.
+        Обработчик: Раскрытие узла по +.
+        Дерево проекта распахивается сразу.
+        А импортированные системы по необходимости.
         """
         item = event.GetItem()
         node = self.GetItemData(item)
-        if isinstance(node, ImpNode.icPrjImportSys) and not node.isBuild():
+        if isinstance(node, ImpNode.icPrjImportSys) and not isinstance(node, prj_root.icPrjRoot) and not node.isBuild():
+            log.info(u'Раскрытие узла импортированной подсистемы <%s>' % node.name)
             try:
                 # Затем построить дерево подсистемы
                 sub_sys_dir = node.getPathInPrj()

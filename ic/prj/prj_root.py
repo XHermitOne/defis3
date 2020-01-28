@@ -408,7 +408,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
         tree_prj = self.getParent()
         if prj_filename is None:
             prj_filename = dlgfunc.getFileDlg(tree_prj, u'Открыть проект',
-                                            u'Файл проекта (*.pro)|*.pro',
+                                              u'Файл проекта (*.pro)|*.pro',
                                               default_path=filefunc.getRootDir())
 
         if prj_filename and not os.path.exists(prj_filename):
@@ -420,8 +420,8 @@ class icPrjRoot(ImpNode.icPrjImportSys):
             prj_name, sub_sys_name = self.getPrjSubsys(prj_filename)
             if prj_name != sub_sys_name:
                 dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
-                                    u'Подключение подсистемы <%s> к проекту <%s>! Все изменения будут утеряны. Подсистема: <%s>, Проект: <%s>!' % (sub_sys_name,
-                                    prj_name, sub_sys_name, prj_name), parent=tree_prj)
+                                       u'Подключение подсистемы <%s> к проекту <%s>! Все изменения будут утеряны. Подсистема: <%s>, Проект: <%s>!' % (sub_sys_name,
+                                       prj_name, sub_sys_name, prj_name), parent=tree_prj)
             self.delMyLocks()   # Удалить блокировки из старого проекта
             self.logout()
 
@@ -519,7 +519,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
                 # Добавить узел в папку
                 cur_folder.addChild(cur_node)
             else:
-                log.warning(u'Invalid resource type <%s>' % res_node_typ)
+                log.warning(u'Не корректный тип ресурса <%s>' % res_node_typ)
 
         return cur_node
             
