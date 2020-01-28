@@ -76,8 +76,8 @@ ic_class_spc = {'type': 'UniReaderController',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = bmpfunc.createLibraryBitmap('server-arrow.png')
-ic_class_pic2 = bmpfunc.createLibraryBitmap('server-arrow.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('server--arrow.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('server--arrow.png')
 
 #   Путь до файла документации
 ic_class_doc = 'SCADA/doc/_build/html/SCADA.usercomponents.uni_reader_ctrl.html'

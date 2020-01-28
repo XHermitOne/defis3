@@ -77,8 +77,8 @@ ic_class_spc = {'type': 'UniWriterController',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = bmpfunc.createLibraryBitmap('server-pencil.png')
-ic_class_pic2 = bmpfunc.createLibraryBitmap('server-pencil.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('server--pencil.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('server--pencil.png')
 
 #   Путь до файла документации
 ic_class_doc = 'SCADA/doc/_build/html/SCADA.usercomponents.uni_writer_ctrl.html'
