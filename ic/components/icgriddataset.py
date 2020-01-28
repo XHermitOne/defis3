@@ -81,7 +81,7 @@ ic_can_contain = ['GridCell']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (1, 1, 1, 3)
+__version__ = (1, 1, 1, 4)
 
 #   Атрибуты редактируемых ячеек
 icAttrEditCell = {'backgroundColor': (255, 255, 255),
@@ -1121,7 +1121,8 @@ class icGridDataset(icGrid):
 
         # Цвет сетки грида
         clr = self.line_color
-        self.SetGridLineColour(wx.Colour(clr[0], clr[1], clr[2]))
+        if clr:
+            self.SetGridLineColour(wx.Colour(clr[0], clr[1], clr[2]))
         # Устанавливаем высоту шапки
         self.SetColLabelSize(self.label_height)
         # Определяем можно ли изменять мышкой рамеры колонок и строк
