@@ -22,7 +22,8 @@ from SCADA.controllers import uni_writer_controller
 
 # Поддерживаемые сервера
 RSLINX_SERVER = u'RSLinx OPC Server'
-SERVERS = (RSLINX_SERVER, )
+LOGIKA_DA_SERVER = u'Logika.DA.2'
+SERVERS = (RSLINX_SERVER, LOGIKA_DA_SERVER)
 
 # Имена используемых узлов
 OPC_SERVER_NODE = 'OPC_SERVER_NODE'
@@ -158,8 +159,7 @@ class icUniWriterController(icwidget.icSimple,
         port = self.getPort()
         server = self.getServer()
         node = self.getNode()
-        uni_writer_controller.icUniWriterControllerProto.__init__(self, host=host,
-                                                                  port=port,
+        uni_writer_controller.icUniWriterControllerProto.__init__(self, host=host, port=port,
                                                                   server=server, node=node)
 
     def getHost(self):
@@ -194,3 +194,13 @@ class icUniWriterController(icwidget.icSimple,
             {'имя_тега': ('Адрес_тега', Значение_тега, 'Тип_тега'), ...}
         """
         return self.getICAttr('tags')
+
+    def print_connection_param(self):
+        """
+        Вывести параметры связи с UniWriter Gateway.
+        """
+        log.info(u'UniWriter. Параметры связи <%s>' % self.getName())
+        log.info(u'\tХост <%s>' % self.host)
+        log.info(u'\tПорт <%s>' % self.port)
+        log.info(u'\tУзел <%s>' % self.node)
+        log.info(u'\tСервер <%s>' % self.server)

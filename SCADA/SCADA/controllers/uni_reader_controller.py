@@ -41,7 +41,17 @@ class icUniReaderControllerProto(object):
         self.port = port
         self.server = server
         self.node = node
-    
+
+    def print_connection_param(self):
+        """
+        Вывести параметры связи с UniReader Gateway.
+        """
+        log.info(u'UniReader. Параметры связи <%s>' % str(self))
+        log.info(u'\tХост <%s>' % self.host)
+        log.info(u'\tПорт <%s>' % self.port)
+        log.info(u'\tУзел <%s>' % self.node)
+        log.info(u'\tСервер <%s>' % self.server)
+
     def read_tags(self, host=None, port=DEFAULT_PORT, server=None, node=None, **tags):
         """
         Чтение данных из UniReader сервера. С помощью XML RPC.
@@ -64,15 +74,15 @@ class icUniReaderControllerProto(object):
             node = self.node
             
         if not host:
-            log.warning(u'Не определен хост для подключения')
+            log.warning(u'UniReader. Не определен хост для подключения')
             return dict()
             
         if not server:
-            log.warning(u'Не определено имя сервера')
+            log.warning(u'UniReader. Не определено имя сервера')
             return dict()
 
         if not node:
-            log.warning(u'Не определен узел')
+            log.warning(u'UniReader. Не определен узел')
             return dict()
             
         return self._read_data_xmlrpc(host, port, server, node, **tags)
@@ -97,6 +107,12 @@ class icUniReaderControllerProto(object):
             # Создание клиента OPC
             opc = xmlrpc.client.ServerProxy('http://%s:%d' % (host, port))
             values = opc.sources.ReadValuesAsStrings(node, server, *addresses)
+
+            if not isinstance(values, (tuple, list)):
+                # ВНИМАНИЕ! В случае одного тега может возвращаться его значение а не
+                # список значений. Необходимо привести выходные данные к однопу типу!!!
+                # log.debug(u'UniReader. Прочитанные данные %s : %s' % (str(values), type(values)))
+                values = (values, )
 
             if not values:
                 log.warning(u'UniReader. Пустые прочитанные значения: %s' % str(values))

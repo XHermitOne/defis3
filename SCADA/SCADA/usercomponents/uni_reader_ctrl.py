@@ -21,7 +21,8 @@ from SCADA.controllers import uni_reader_controller
 
 # Поддерживаемые сервера
 RSLINX_SERVER = u'RSLinx OPC Server'
-SERVERS = (RSLINX_SERVER, )
+LOGIKA_DA_SERVER = u'Logika.DA.2'
+SERVERS = (RSLINX_SERVER, LOGIKA_DA_SERVER)
 
 # Имена используемых узлов
 OPC_SERVER_NODE = 'OPC_SERVER_NODE'
@@ -34,6 +35,7 @@ SPC_IC_UNI_READER_CTRL = {'host': u'',
                           'server': RSLINX_SERVER,
                           'node': OPC_SERVER_NODE,
                           'tags': None,
+
                           '__parent__': icwidget.SPC_IC_SIMPLE,
                           '__attr_hlp__': {'host': u'Хост',
                                            'port': u'Порт',
@@ -149,15 +151,18 @@ class icUniReaderController(icwidget.icSimple,
         :type progressDlg: C{wx.ProgressDialog}
         :param progressDlg: Указатель на идикатор создания формы.
         """
-        component = util.icSpcDefStruct(self.component_spc, component, True)
+        component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
         host = self.getHost()
+        # log.debug(u'UniReader. <%s> Хост: %s' % (self.getName(), host))
         port = self.getPort()
+        # log.debug(u'UniReader. <%s> Порт: %s' % (self.getName(), port))
         server = self.getServer()
+        # log.debug(u'UniReader. <%s> Сервер: %s' % (self.getName(), server))
         node = self.getNode()
-        uni_reader_controller.icUniReaderControllerProto.__init__(self, host=host,
-                                                                  port=port,
+        # log.debug(u'UniReader. <%s> Узел: %s' % (self.getName(), node))
+        uni_reader_controller.icUniReaderControllerProto.__init__(self, host=host, port=port,
                                                                   server=server, node=node)
 
     def getHost(self):
@@ -176,7 +181,7 @@ class icUniReaderController(icwidget.icSimple,
         """
         Сервер.
         """
-        # log.info(u'\tResource server attr: %s' % self.resource['server'])
+        # log.info(u'\tResource server attr: %s' % self.resource)
         return self.getICAttr('server')
 
     def getNode(self):
@@ -192,3 +197,13 @@ class icUniReaderController(icwidget.icSimple,
             {'имя тега': 'адрес тега', ... }
         """
         return self.getICAttr('tags')
+
+    def print_connection_param(self):
+        """
+        Вывести параметры связи с UniReader Gateway.
+        """
+        log.info(u'UniReader. Параметры связи <%s>' % self.getName())
+        log.info(u'\tХост <%s>' % self.host)
+        log.info(u'\tПорт <%s>' % self.port)
+        log.info(u'\tУзел <%s>' % self.node)
+        log.info(u'\tСервер <%s>' % self.server)

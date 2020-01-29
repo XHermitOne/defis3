@@ -479,9 +479,13 @@ class icPrjTree(wx.TreeCtrl):
                 self._helpWin = None
                 
             item = event.GetItem()
-            log.debug(u'Определен элемент дерева')
-            node = self.GetItemData(item)
-            log.debug(u'Получены данные узла')
+            log.debug(u'Определен элемент дерева <%s : %s>' % (str(item), str(item.IsOk())))
+
+            node = None
+            if item and item.IsOk():
+                node = self.GetItemData(item)
+                log.debug(u'Получены данные узла')
+
             if node and node.isShowPopupHelp():
                 log.debug(u'Смена окна всплывающих подсказок')
                 help_txt = node.getPopupHelpText()

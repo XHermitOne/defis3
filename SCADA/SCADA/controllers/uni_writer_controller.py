@@ -48,7 +48,17 @@ class icUniWriterControllerProto(object):
         self.port = port
         self.server = server
         self.node = node
-    
+
+    def print_connection_param(self):
+        """
+        Вывести параметры связи с UniWriter Gateway.
+        """
+        log.info(u'UniWriter. Параметры связи <%s>' % str(self))
+        log.info(u'\tХост <%s>' % self.host)
+        log.info(u'\tПорт <%s>' % self.port)
+        log.info(u'\tУзел <%s>' % self.node)
+        log.info(u'\tСервер <%s>' % self.server)
+
     def write_tags(self, host=None, port=DEFAULT_PORT, server=None, node=None,
                    *tags_tuple, **tags_dict):
         """
@@ -78,15 +88,15 @@ class icUniWriterControllerProto(object):
             node = self.node
             
         if not host:
-            log.warning(u'Не определен хост для подключения')
+            log.warning(u'UniWriter. Не определен хост для подключения')
             return dict()
             
         if not server:
-            log.warning(u'Не определено имя сервера')
+            log.warning(u'UniWriter. Не определено имя сервера')
             return dict()
 
         if not node:
-            log.warning(u'Не определен узел')
+            log.warning(u'UniWriter. Не определен узел')
             return dict()
             
         return self._write_data_xmlrpc(host, port, server, node,

@@ -735,6 +735,8 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
                 value = eval(str_value.strip())
 
         elif property_type == icDefInf.EDT_CHOICE:
+            # ВНИМАНИЕ! В случае редактора выбора элементов должно быть больше чем 1
+            # Иначе в значение может записываться пустая строка!!!
             # ComboBox
             value = str_value
 
