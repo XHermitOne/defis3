@@ -48,6 +48,7 @@ PERSON_FIND_SMB_URLS = ('smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks
 def smb_download_sprvent(download_urls=None, local_filename=None):
     """
     Найти и загрузить DBF справочник контрагентов.
+
     :param download_urls: Список путей поиска DBF файла справочника.
     :param local_filename: Локальное имя файла.
     :return: True - Произошла загрузка, False - ничего не загружено.

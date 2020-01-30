@@ -95,6 +95,7 @@ class icZatratyImportManager(import_manager.icBalansImportManager):
         """
         Импорт документов затрат на производство из БАЛАНСа.
             Выборка документов производиться за год.
+
         :param cur_year: Год выборки документов.
         :param is_input: Признак приходного документа.
         :param is_nds: Учет наличия НДС в документе для загрузки.
@@ -118,6 +119,7 @@ class icZatratyImportManager(import_manager.icBalansImportManager):
         """
         Импорт документов затрат на производство из БАЛАНСа.
             Выборка документов производиться за год.
+
         :param cur_year: Обрабатываемый год.
         :param is_input: Признак приходного документа.
         :param pack_doc: Объект документа пакетной обработки.
@@ -162,6 +164,7 @@ class icZatratyImportManager(import_manager.icBalansImportManager):
         """
         Импорт документов затрат на производство по 7601 счету из БАЛАНСа.
             Выборка документов производиться за год.
+
         :param cur_year: Обрабатываемый год.
         :param is_input: Признак приходного документа.
         :param pack_doc: Объект документа пакетной обработки.
@@ -171,12 +174,12 @@ class icZatratyImportManager(import_manager.icBalansImportManager):
                                           base_filename='BS0Z76.DBS', is_nds=is_nds,
                                           n_schet='76-01')
 
-
     def _import_ztr7606_docs_file(self, cur_year, is_input=False, pack_doc=None, 
                                   is_nds=False):
         """
         Импорт документов затрат на производство по 7606 счету из БАЛАНСа.
             Выборка документов производиться за год.
+
         :param cur_year: Обрабатываемый год.
         :param is_input: Признак приходного документа.
         :param pack_doc: Объект документа пакетной обработки.
@@ -191,6 +194,7 @@ class icZatratyImportManager(import_manager.icBalansImportManager):
         """
         Загрузить данные пакета документов реализации (счет-фактур и ТОРГ12) 
             из DBF файла БАЛАНСа.
+
         :param is_input: Признак приходного документа.
         :param is_nds: Учет наличия НДС в документе для загрузки.
         :param n_schet: Номер счета 76-01/76-06.
@@ -305,6 +309,7 @@ class icZatratyImportManager(import_manager.icBalansImportManager):
     def _is_nds_in_schet_factura(self, is_on, cod_oper):
         """
         Проверка на есть ли в СФ НДС.
+
         :param is_on: Признак наличия НДС.
         :param cod_oper: Код операции БАЛАНС+.
         """
@@ -316,6 +321,7 @@ class icZatratyImportManager(import_manager.icBalansImportManager):
         """
         Создать счет-фактуру по данным документа БАЛАНСа <Затраты на производство>.
         Все дополнительные признаки-атрибуты фиксируются в тегах карточки документа.
+
         :param record: Словарь записи DBF файла.
         :param is_input: Признак приходного документа.
         :param is_nds: Учет наличия НДС в документе для загрузки.
@@ -424,6 +430,7 @@ class icZatratyImportManager(import_manager.icBalansImportManager):
             по данным документа БАЛАНСа <Затраты на производство>.
             Все дополнительные признаки-атрибуты фиксируются 
             в тегах карточки документа.
+
         :param record: Словарь записи DBF файла.
         :param is_input: Признак приходного документа.
         :param n_schet: Номер счета 76-01/76-06.
@@ -519,7 +526,9 @@ class icZatratyImportManager(import_manager.icBalansImportManager):
                        is_input=False, doc=None, n_schet=None):
         """
         Создать приложение по данным документа БАЛАНСа <Затраты на производство>.
-        Все дополнительные признаки-атрибуты фиксируются в тегах карточки документа.
+        Все дополнительные признаки-атрибуты фиксируются в тегах
+        карточки документа.
+
         :param record: Словарь записи DBF файла.
         :param is_input: Признак приходного документа.
         :param n_schet: Номер счета 76-01/76-06.

@@ -92,6 +92,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         2. Если поле пустое, то поиск в полях примечания:
             следующее слово после <накл>.
         3. Если в примечаниях не найдено, то используем номер счет фактуры поставщика.
+
         :param record: Словарь записи DBF файла.
         """
         # Получить поля записи
@@ -103,7 +104,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         comment = prim + u' ' + prim2 + u' ' + prim3 + u' ' + prim4 + u' ' + prim5
         comment = comment.strip()
 
-        alt_n_torg12 = unicode(record['ALTNDOC'], DBF_DEFAULT_ENCODE)        
+        alt_n_torg12 = unicode(record['ALTNDOC'], DBF_DEFAULT_ENCODE)
         n_torg12 = unicode(record.get('NTORG12', ''), DBF_DEFAULT_ENCODE)
 
         if n_torg12:
@@ -140,18 +141,18 @@ class icRealizImportManager(import_manager.icBalansImportManager):
             if idx is None:
                 return False
             is_input = idx == 1
-            
+
             if not is_input:
-                n_warehouse = std_dlg.getIntegerDlg(parent=self.pack_scan_panel, 
+                n_warehouse = std_dlg.getIntegerDlg(parent=self.pack_scan_panel,
                                                     title=u'Склад',
-                                                    label=u'Введите номер склада:', 
+                                                    label=u'Введите номер склада:',
                                                     min_value=1, max_value=100)
                 if n_warehouse is None:
                     # Нажата ОТМЕНА
                     return False
                 n_warehouses = [n_warehouse]
             else:
-                n_warehouses = std_dlg.getCheckBoxDlg(parent=self.pack_scan_panel, 
+                n_warehouses = std_dlg.getCheckBoxDlg(parent=self.pack_scan_panel,
                                                       title=u'Склад',
                                                       label=u'Выберите номера складов:',
                                                       choices=(u'2 Склад', u'5 Склад', u'6 Склад', u'8 Склад', u'10 Склад'))
@@ -178,7 +179,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
     def _import_docs_rlz(self, dt_begin, dt_end, n_warehouse, is_input=False):
         """
         Импорт документов реализации из БАЛАНСа.
-            Выборка документов производиться по диапазону дат документов 
+            Выборка документов производиться по диапазону дат документов
             по определенному складу.
         :param dt_begin: Дата начала выборки документов.
         :param dt_end: Дата конца выборки документов.
@@ -192,26 +193,26 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         max_dt = max(dt_begin, dt_end)
         day_count = (max_dt - min_dt).days if min_dt != max_dt else 1
         for i_day in range(day_count):
-            cur_dt = min_dt + datetime.timedelta(days=i_day)        
+            cur_dt = min_dt + datetime.timedelta(days=i_day)
             cur_year = cur_dt.year
 
             if self.pack_doc is None:
                 self.pack_doc = ic.metadata.archive.mtd.scan_document_pack.create()
                 self.pack_doc.GetManager().init()
 
-            result1 = self._import_rlz_docs_file(cur_year, cur_dt.month, n_warehouse, 
+            result1 = self._import_rlz_docs_file(cur_year, cur_dt.month, n_warehouse,
                                             min_dt, max_dt, is_input, self.pack_doc)
-            result2 = self._import_ttn_docs_file(cur_year, cur_dt.month, n_warehouse, 
+            result2 = self._import_ttn_docs_file(cur_year, cur_dt.month, n_warehouse,
                                                  min_dt, max_dt, is_input, self.pack_doc)
             # result2= True
             return result1 and result2
         return False
 
-    def _import_rlz_docs_file(self, cur_year, cur_month, n_warehouse, min_dt, max_dt, 
+    def _import_rlz_docs_file(self, cur_year, cur_month, n_warehouse, min_dt, max_dt,
                               is_input=False, pack_doc=None):
         """
         Импорт документов реализации из БАЛАНСа.
-            Выборка документов производиться по диапазону дат документов 
+            Выборка документов производиться по диапазону дат документов
             по определенному складу.
         :param cur_year: Обрабатываемый год.
         :param cur_month: Обрабатываемый месяц.
@@ -222,9 +223,9 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         if pack_doc is None:
             log.warning(u'Не определен объект документа пакетной обработки')
             return False
-    
+
         src_filename = self._get_src_dbf_filename(cur_year, cur_month, n_warehouse, is_input)
-        
+
         # Сначала загрузить DBF из бекапа
         dst_path = os.path.join(filefunc.getRootProjectDir(), 'db')
         dst_filename = os.path.join(dst_path, src_filename)
@@ -238,7 +239,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
                 if os.path.exists(dbf_filename):
                     os.remove(dbf_filename)
                 filefunc.CopyFile(dst_filename, dbf_filename)
-            
+
                 self._load_rlz_from_dbf(dbf_filename, min_dt, max_dt, is_input)
             else:
                 log.debug(u'Уже загружен актуальный файл <%s>' % dst_filename)
@@ -247,12 +248,13 @@ class icRealizImportManager(import_manager.icBalansImportManager):
             log.warning(u'Ошибка связи с SMB ресурсом бекапа')
         return False
 
-    def _import_ttn_docs_file(self, cur_year, cur_month, n_warehouse, min_dt, max_dt, 
+    def _import_ttn_docs_file(self, cur_year, cur_month, n_warehouse, min_dt, max_dt,
                               is_input=False, pack_doc=None):
         """
         Импорт документов ТТН из БАЛАНСа.
-            Выборка документов производиться по диапазону дат документов 
+            Выборка документов производиться по диапазону дат документов
             по определенному складу.
+
         :param cur_year: Обрабатываемый год.
         :param cur_month: Обрабатываемый месяц.
         :param n_warehouse: Номер склада.
@@ -288,7 +290,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
                 if os.path.exists(dbf_filename_spc):
                     os.remove(dbf_filename_spc)
                 filefunc.CopyFile(dst_filename_spc, dbf_filename_spc)
-            
+
                 self._load_ttn_from_dbf(dbf_filename, min_dt, max_dt, is_input)
 
             else:
@@ -300,8 +302,9 @@ class icRealizImportManager(import_manager.icBalansImportManager):
 
     def _load_rlz_from_dbf(self, dbf_filename=None, begin_dt=None, end_dt=None, is_input=False):
         """
-        Загрузить данные пакета документов реализации (счет-фактур и ТОРГ12) 
+        Загрузить данные пакета документов реализации (счет-фактур и ТОРГ12)
             из DBF файла БАЛАНСа.
+
         :param is_input: Признак приходного документа.
         """
         if dbf_filename is None or not os.path.exists(dbf_filename):
@@ -319,12 +322,12 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         tab = doc.getTable()
 
         # Сначала удалить данные из таблицы за указанный период по определенному складу
-        #tab.del_where(sqlalchemy.and_(tab.c.doc_date.between(begin_dt.strftime(DEFAULT_DB_DT_FMT), 
+        #tab.del_where(sqlalchemy.and_(tab.c.doc_date.between(begin_dt.strftime(DEFAULT_DB_DT_FMT),
         #                              end_dt.strftime(DEFAULT_DB_DT_FMT)),
         #              tab.c.n_doc.endswith('/%d' % n_warehouse)))
 
         # Затем запускаем загрузку
-        transaction = tab.getDB().getTransaction(autoflush=False, autocommit=False)         
+        transaction = tab.getDB().getTransaction(autoflush=False, autocommit=False)
 
         dbf_tab = None
         try:
@@ -373,7 +376,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         except:
             # Отменить транзакцию
             transaction.rollback()
-            
+
             dlgfunc.closeProgressDlg()
             if dbf_tab:
                 dbf_tab.Close()
@@ -402,12 +405,12 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         tab = doc.getTable()
 
         # Сначала удалить данные из таблицы за указанный период по определенному складу
-        #tab.del_where(sqlalchemy.and_(tab.c.doc_date.between(begin_dt.strftime(DEFAULT_DB_DT_FMT), 
+        #tab.del_where(sqlalchemy.and_(tab.c.doc_date.between(begin_dt.strftime(DEFAULT_DB_DT_FMT),
         #                              end_dt.strftime(DEFAULT_DB_DT_FMT)),
         #              tab.c.n_doc.endswith('/%d' % n_warehouse)))
 
         # Затем запускаем загрузку
-        transaction = tab.getDB().getTransaction(autoflush=False, autocommit=False)         
+        transaction = tab.getDB().getTransaction(autoflush=False, autocommit=False)
 
         dbf_tab = None
         try:
@@ -422,8 +425,8 @@ class icRealizImportManager(import_manager.icBalansImportManager):
             record = dbf_tab.getRecDict()
             while not dbf_tab.EOF():
                 # По документу генерируем <ТТН>
-                # Удаление на случай двойного описания 
-                # одного и того же в DBF файле                              
+                # Удаление на случай двойного описания
+                # одного и того же в DBF файле
                 new_recs = self._create_ttn(record, transaction, is_input, doc, spc_idx_records)
                 if new_recs:
                     for new_rec in new_recs:
@@ -461,7 +464,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         """
         return bool(cod_oper) and is_on
 
-    def _create_schet_factura(self, record, transaction=None, n_warehouse=1, 
+    def _create_schet_factura(self, record, transaction=None, n_warehouse=1,
                               is_input=False, doc=None):
         """
         Создать счет-фактуру по данным документа БАЛАНСа.
@@ -475,7 +478,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         tab = doc.getTable()
 
         # ВНИМАНИЕ! Приходные документы по 8-му складу добавлять услуги
-        # как расходные если они проходят с отрицательными суммами        
+        # как расходные если они проходят с отрицательными суммами
         doc_typ = None
         if n_warehouse == 8 and is_input:
             doc_sum = float(record['SUMMA'])
@@ -488,7 +491,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
                 # считаем расходными
                 doc_typ = '2001000000000'
 
-        n_doc = u'%s/%d' % (unicode(record['NDOC'], DBF_DEFAULT_ENCODE).strip(), 
+        n_doc = u'%s/%d' % (unicode(record['NDOC'], DBF_DEFAULT_ENCODE).strip(),
                             n_warehouse)
 
         dt_doc = record['DTDOC']
@@ -519,20 +522,20 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         # Контроль на не корректный код
         if not self.is_correct_contragent_code(cagent_cod):
             log.service(u'Документ <%s>. Не корректный код <%s> контрагента <%s>' % (n_doc, cagent_cod, platelchik_name))
-            return None                
+            return None
 
         # По документу генерируем <счет-фактуры>
         if doc_typ is None:
             doc_typ = '2001000000000' if not is_input else '1001000000000'
-        find_uuid = self.find_uuid_document(doc, n_doc, dt_doc, doc_typ, 
+        find_uuid = self.find_uuid_document(doc, n_doc, dt_doc, doc_typ,
                                              tab, transaction)
 
-        # Удаление на случай двойного описания 
+        # Удаление на случай двойного описания
         # одного и того же в DBF файле
-        tab.del_where_transact(tab.c.uuid==find_uuid, 
+        tab.del_where_transact(tab.c.uuid==find_uuid,
                                transaction=transaction)
 
-        # Проверка игнорирования обаботки документов по доп коду документа                    
+        # Проверка игнорирования обаботки документов по доп коду документа
         codf = unicode(record['CODF'], DBF_DEFAULT_ENCODE)
         if codf in IGNORED_CODF:
             return None
@@ -541,7 +544,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
             # Для 8 склада приходные документы могут содержать расходные
             pass
         elif is_input and not alt_n_doc.strip():
-            # ВНИМАНИЕ! Для приходных документов счет фактур если не определен 
+            # ВНИМАНИЕ! Для приходных документов счет фактур если не определен
             # номер документа поставщика, то считаем что от поставщика нет счет фактуры
             # поэтому документ не создаем
             log.service(u'Документ <%s>. Для приходных документов счет фактур если не определен номер документа поставщика, то считаем что от поставщика нет счет фактуры поэтому документ не создаем' % n_doc)
@@ -551,7 +554,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
             return None
 
         is_nds_doc_str = u'с НДС' if is_nds_doc else u'без НДС'
-        
+
         new_rec = dict(uuid=find_uuid,
                        state='00',
                        dt_create=DT_TODAY,
@@ -571,7 +574,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
                        tags=u'Счет-фактура;Реализация;Код операции %02d;Склад %d;;%s;;;%s;%s' % (cod_oper, n_warehouse, codf, is_nds_doc_str, alt_n_doc))
         return new_rec
 
-    def _create_torg12(self, record, transaction=None, n_warehouse=1, 
+    def _create_torg12(self, record, transaction=None, n_warehouse=1,
                        is_input=False, doc=None):
         """
         Создать ТОРГ12 по данным документа БАЛАНСа.
@@ -598,7 +601,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
                 # считаем расходными
                 doc_typ = '2002000000000'
 
-        n_doc = u'%s/%d' % (unicode(record['NDOC'], DBF_DEFAULT_ENCODE).strip(), 
+        n_doc = u'%s/%d' % (unicode(record['NDOC'], DBF_DEFAULT_ENCODE).strip(),
                             n_warehouse)
 
         dt_doc = record['DTDOC']
@@ -635,12 +638,12 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         find_uuid = self.find_uuid_document(doc, n_doc, dt_doc, doc_typ,
                                             tab, transaction)
 
-        # Удаление на случай двойного описания 
+        # Удаление на случай двойного описания
         # одного и того же в DBF файле
-        tab.del_where_transact(tab.c.uuid==find_uuid, 
+        tab.del_where_transact(tab.c.uuid==find_uuid,
                                transaction=transaction)
 
-        # Проверка игнорирования обаботки документов по доп коду документа                    
+        # Проверка игнорирования обаботки документов по доп коду документа
         codf = unicode(record['CODF'], DBF_DEFAULT_ENCODE)
         if codf in IGNORED_CODF:
             return None
@@ -667,7 +670,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
                        tags=u'ТОРГ12;Реализация;Склад %d;;;%s;;;;' % (n_warehouse, codf))
         return new_rec
 
-    def _create_alkospravka(self, record, transaction=None, n_warehouse=1, 
+    def _create_alkospravka(self, record, transaction=None, n_warehouse=1,
                             is_input=False, doc=None):
         """
         Создать алко-справку по данным документа БАЛАНСа.
@@ -682,7 +685,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
 
         doc_typ = None
 
-        n_doc = u'%s/%d' % (unicode(record['NDOC'], DBF_DEFAULT_ENCODE).strip(), 
+        n_doc = u'%s/%d' % (unicode(record['NDOC'], DBF_DEFAULT_ENCODE).strip(),
                             n_warehouse)
 
         dt_doc = record['DTDOC']
@@ -713,20 +716,20 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         # Контроль на не корректный код
         if not self.is_correct_contragent_code(cagent_cod):
             log.service(u'Документ <%s>. Не корректный код <%s> контрагента <%s>' % (n_doc, cagent_cod, platelchik_name))
-            return None                
+            return None
 
         # По документу генерируем <алко-справки>
         if doc_typ is None:
             doc_typ = '2003000000000' if not is_input else '1003000000000'
-        find_uuid = self.find_uuid_document(doc, n_doc, dt_doc, doc_typ, 
+        find_uuid = self.find_uuid_document(doc, n_doc, dt_doc, doc_typ,
                                             tab, transaction)
 
-        # Удаление на случай двойного описания 
+        # Удаление на случай двойного описания
         # одного и того же в DBF файле
-        tab.del_where_transact(tab.c.uuid==find_uuid, 
+        tab.del_where_transact(tab.c.uuid==find_uuid,
                                transaction=transaction)
 
-        # Проверка игнорирования обаботки документов по доп коду документа                    
+        # Проверка игнорирования обаботки документов по доп коду документа
         codf = unicode(record['CODF'], DBF_DEFAULT_ENCODE)
         if codf in IGNORED_CODF:
             return None
@@ -759,7 +762,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
                        tags=u'Алкосправка;Реализация;Склад %d;;;%s;;ТТН %s;ЕГАИС %s;%s' % (n_warehouse, codf, n_ttn, n_fix_egais, alt_n_doc))
         return new_rec
 
-    def _create_ttn(self, record, transaction=None, is_input=False, doc=None, 
+    def _create_ttn(self, record, transaction=None, is_input=False, doc=None,
                     spc_idx_records=None, n_warehouse=None):
         """
         Создать ТТН по данным документа БАЛАНСа.
@@ -778,7 +781,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         spc_records = spc_idx_records.get(balans_ndoc, list())
 
         pos_count = len(spc_records)
-        n_docs = [u'%s/%d' % (balans_ndoc, i+1) for i in range(pos_count)]        
+        n_docs = [u'%s/%d' % (balans_ndoc, i+1) for i in range(pos_count)]
 
         new_recs = list()
         for i, n_doc in enumerate(n_docs):
@@ -830,7 +833,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
                 continue
 
             # По документу генерируем <ТТН>
-            # Удаление на случай двойного описания 
+            # Удаление на случай двойного описания
             # одного и того же в DBF файле
             doc_typ = '2004000000000' if not is_input else '1004000000000'
             if not n_warehouse:
@@ -839,7 +842,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
                     # n_warehouse = spc_record.get('COD3', n_from_ndoc)
                     # n_warehouse = n_warehouse if n_warehouse != 0 else n_from_ndoc
                     doc_prim = unicode(spc_record['PRIM'], DBF_DEFAULT_ENCODE) if not isinstance(spc_record['PRIM'], unicode) else spc_record['PRIM']
-                    n_warehouse = self._get_ttn_warehouse(n_doc, spc_record.get('COD3', 0), 
+                    n_warehouse = self._get_ttn_warehouse(n_doc, spc_record.get('COD3', 0),
                                                           doc_prim)
                 except:
                     log.fatal(u'Ошибка определения номера склада по номеру документа <%s>' % n_doc)
@@ -848,7 +851,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
             find_uuid = self.find_uuid_document(doc, n_doc, dt_doc, doc_typ,
                                                 tab, transaction)
 
-            tab.del_where_transact(tab.c.uuid==find_uuid, 
+            tab.del_where_transact(tab.c.uuid==find_uuid,
                                    transaction=transaction)
             new_rec = dict(uuid=find_uuid,
                            state='00',

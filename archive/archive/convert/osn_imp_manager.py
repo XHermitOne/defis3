@@ -123,6 +123,7 @@ class icOsnovnImportManager(import_manager.icBalansImportManager):
         """
         Импорт документов из БАЛАНСа <Основные средства>.
             Выборка документов производиться за год.
+
         :param cur_year: Год выборки документов.
         :param base_filename: Наименование файла данных для загрузки.
         :param is_nds: Признак обязательного наличия НДС в документе.
@@ -141,6 +142,7 @@ class icOsnovnImportManager(import_manager.icBalansImportManager):
         """
         Импорт документов учета основных средств из БАЛАНСа.
             Выборка документов производиться за год.
+
         :param cur_year: Обрабатываемый год.
         :param base_filename: Наименование файла данных для загрузки.
         :param is_nds: Признак обязательного наличия НДС в документе.
@@ -184,6 +186,7 @@ class icOsnovnImportManager(import_manager.icBalansImportManager):
         """
         Загрузить данные пакета документов основных средств
             из DBF файла БАЛАНСа.
+
         :param dbf_filename: Полное имя загружаемого DBF файла.
         :param cur_year: Загружаемый год. Если None, то грузим текущий год.
         :param is_nds: Признак обязательного наличия НДС в документе.
@@ -278,6 +281,7 @@ class icOsnovnImportManager(import_manager.icBalansImportManager):
             по данным документа БАЛАНСа <Основные средства>.
             Все дополнительные признаки-атрибуты фиксируются 
             в тегах карточки документа.
+
         :param record: Словарь записи DBF файла.
         :return: Словарь новой записи документа.
         """
@@ -354,6 +358,7 @@ class icOsnovnImportManager(import_manager.icBalansImportManager):
             по данным документа БАЛАНСа <Основные средства>.
             Все дополнительные признаки-атрибуты фиксируются 
             в тегах карточки документа.
+
         :param record: Словарь записи DBF файла.
         :return: Словарь новой записи документа.
         """
@@ -419,6 +424,7 @@ class icOsnovnImportManager(import_manager.icBalansImportManager):
     def _is_nds_in_schet_factura(self, is_on, cod_oper):
         """
         Проверка на есть ли в СФ НДС.
+
         :param is_on: Признак наличия НДС.
         :param cod_oper: Код операции БАЛАНС+.
         """
@@ -430,6 +436,7 @@ class icOsnovnImportManager(import_manager.icBalansImportManager):
             по данным документа БАЛАНСа <Основные средства>.
             Все дополнительные признаки-атрибуты фиксируются 
             в тегах карточки документа.
+
         :param record: Словарь записи DBF файла.
         :param is_nds: Признак обязательного наличия НДС в документе.
         :return: Словарь новой записи документа Счет-фактура.
@@ -519,6 +526,7 @@ class icOsnovnImportManager(import_manager.icBalansImportManager):
             по данным документа БАЛАНСа <Основные средства>.
             Все дополнительные признаки-атрибуты фиксируются 
             в тегах карточки документа.
+
         :param record: Словарь записи DBF файла.
         :param is_nds: Признак обязательного наличия НДС в документе.
         :return: Словарь новой записи документа Счет-фактура.
@@ -613,6 +621,7 @@ class icOsnovnImportManager(import_manager.icBalansImportManager):
             по данным документа БАЛАНСа <Основные средства>.
             Все дополнительные признаки-атрибуты фиксируются 
             в тегах карточки документа.
+
         :param record: Словарь записи DBF файла.
         :param is_nds: Признак обязательного наличия НДС в документе.
         :return: Словарь новой записи документа Счет-фактура.

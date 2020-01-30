@@ -22,16 +22,15 @@ import ic
 # Version
 __version__ = (0, 0, 1, 2)
 
-# Functions
 
 class icDBFDocLoadManager(import_manager.icBalansImportManager):
     """
     Класс общий для всех менеджеров импорта документов из DBF.
     """
-
     def __init__(self, pack_scan_panel=None):
         """
         Конструктор.
+
         :param pack_scan_panel: Панель отображения списка документов в пакетной обработке.
         """
         import_manager.icBalansImportManager.__init__(self, pack_scan_panel)
@@ -39,6 +38,7 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
     def _create_doc(self, dbf_record, transaction, doc, sType, in_out=None):
         """
         Создание нового документа.
+
         :param dbf_record: Словарь записи DBF файла.
         :param transaction: Объект транзакции.
         :param doc: Объект документа для пакетной обработки.
@@ -56,21 +56,31 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
         nn = dbf_record['NPP']
         npps = dbf_record['NPPS']
         str_n_doc = dbf_record['NDOC'].strip()
-        n_doc = u'%s.%s.%s' % (self.get_sector_subcode(sType),
-                               self.get_doc_type_subcode(dbf_record['TYP_DOC'], dbf_record['IN_OUT']),
-                               str_n_doc)
         alt_n_doc = dbf_record['NOMDOC']
+        # ВНИМАНИЕ! Номер документа на бумажном носителе
+        print_n_doc = dbf_record['NOMDOC']
         dt_doc = dbf_record['DTDOC']
         dt_obj = dbf_record['DATE1']
         dt_oper = dbf_record['DTOPER']
         doc_name = self.get_doc_name(dbf_record['TYP_DOC'])
         in_out = int(dbf_record['IN_OUT']) if in_out is None else in_out
-        doc_typ =  self.find_doc_type_code(dbf_record['TYP_DOC'], in_out)
+        doc_typ = self.find_doc_type_code(dbf_record['TYP_DOC'], in_out)
         cagent_cod = self.find_contragent_code(self.contragent_sprav,
                                                dbf_record['NAMD'],
                                                dbf_record['INN'],
                                                dbf_record['KPP'],
                                                dbf_record['CODK'])
+
+        if in_out:
+            # Расходные документы/Продажа
+            n_doc = u'%s.%s.%s' % (self.get_sector_subcode(sType),
+                                   self.get_doc_type_subcode(dbf_record['TYP_DOC'], dbf_record['IN_OUT']),
+                                   print_n_doc)
+        else:
+            # Приходные документы/Покупка
+            n_doc = u'%s.%s.%s' % (self.get_sector_subcode(sType),
+                                   self.get_doc_type_subcode(dbf_record['TYP_DOC'], dbf_record['IN_OUT']),
+                                   str_n_doc)
 
         prim = dbf_record['PRIM']
         prim2 = dbf_record['PRIM2']
@@ -120,6 +130,7 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
     def _load_doc(self, doc_dbf_filename, sFileType):
         """
         Загрузить документы из DBF файла.
+
         :param doc_dbf_filename: Полное имя загружаемого файла.
         :param sFileType: Тип загружаемого файла.
         """
@@ -184,6 +195,7 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
     def load_doc(self, doc_dbf_filename, sFileType, bAutoRemove=False):
         """
         Загрузить документы из DBF файла.
+
         :param doc_dbf_filename: Полное имя загружаемого файла.
         :param sFileType: Тип загружаемого файла.
         :param bAutoRemove: Автоматически удалить файл после загрузки?
