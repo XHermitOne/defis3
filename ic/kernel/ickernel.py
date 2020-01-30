@@ -18,7 +18,7 @@ from . import io_prnt
 from .icbasekernel import icBaseKernel
 from ic.utils import util
 
-__version__ = (0, 2, 1, 4)
+__version__ = (0, 2, 2, 1)
 
 prs = None
 resource = None
@@ -61,31 +61,65 @@ def createEditorKernel():
     from ic.engine import glob_variables
     # Определить ядро
     kernel = glob_variables.set_glob_var('KERNEL', icKernel())
-    log.info(u'[KERNEL] CREATE EDITOR KERNEL <%s>' % kernel.context.__class__)
+    log.info(u'[KERNEL] Создание ядра в режиме редактора <%s>' % kernel.context.__class__)
     return kernel
 
 
 def createRuntimeKernel():
     """
-    Создание и регистрация ядра в режиме исполнения.
+    Создание и регистрация ядра в режиме ИСПОЛНЕНИЕ В СРЕДЕ GUI.
     """
     from ic.engine import icapplication
     from ic.engine import glob_variables
     # Определить ядро
     kernel = glob_variables.set_glob_var('KERNEL', icapplication.icApp())
-    log.info(u'[KERNEL] CREATE RUNTIME KERNEL !')
+    log.info(u'[KERNEL] Создание ядра в режиме ИСПОЛНЕНИЕ В СРЕДЕ GUI')
     return kernel
 
 
-def createKernel():
+def createConsoleKernel():
     """
-    Создать ядро.
+    Создание и регистрация ядра в режиме ИСПОЛНЕНИЕ В КОНСОЛЬНОЙ СРЕДЕ.
+    """
+    from ic.engine import glob_variables
+    # Определить ядро
+    kernel = glob_variables.set_glob_var('KERNEL', icKernel())
+    log.info(u'[KERNEL] Создание ядра в режиме ИСПОЛНЕНИЕ В КОНСОЛЬНОЙ СРЕДЕ')
+    return kernel
+
+
+def createKernel(is_runtime_mode=None, is_console_mode=None, is_editor_mode=None):
+    """
+    Создать объект ядра.
+
+    :param is_runtime_mode: Запуск ядра в режиме ИСПОЛНЕНИЕ В СРЕДЕ GUI?
+        Если не определено, то берется из параметров коммандной строки <-run>
+    :param is_console_mode: Запуск ядра в режиме ИСПОЛНЕНИЕ В КОНСОЛЬНОЙ СРЕДЕ?
+        Если не определено, то берется из параметров коммандной строки <-cui>
+    :param is_console_mode: Запуск ядра в режиме РЕДАКТОРА?
+        Если не определено, то берется из параметров коммандной строки <-cfg>
+    :return: Объект ядра системы.
     """
     from ic.utils import modefunc
-    if modefunc.isRuntimeMode():
+
+    if is_runtime_mode is None:
+        is_runtime_mode = modefunc.isRuntimeMode()
+
+    if is_console_mode is None:
+        is_console_mode = modefunc.isConsoleMode()
+
+    if is_editor_mode is None:
+        is_editor_mode = modefunc.isEditorMode()
+
+    if is_runtime_mode:
         return createRuntimeKernel()
-    else:
+    elif is_console_mode:
+        return createConsoleKernel()
+    elif is_editor_mode:
         return createEditorKernel()
+    else:
+        log.error(u'[KERNEl] Ошибка создания объекта ядра. Не определен режим запуска.')
+    return None
 
 
 def getKernel():

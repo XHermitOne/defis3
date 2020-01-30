@@ -7,7 +7,7 @@
 
 from ic.kernel.ickernelmode import *
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 # Режим работы с БД
 global DB_MODE
@@ -20,7 +20,7 @@ DB_SHARE = '-s'         # Многопользовательский режим 
 
 def isRuntimeMode():
     """
-    Движок запущен?
+    Движок запущен в режиме ИСПОЛНЕНИЕ В СРЕДЕ GUI?
     """
     global RUNTIME_MODE
     return RUNTIME_MODE
@@ -28,10 +28,45 @@ def isRuntimeMode():
 
 def setRuntimeMode(runtime_mode=True):
     """
-    Установить признак режима исполнения.
+    Установить признак режима ИСПОЛНЕНИЕ В СРЕДЕ GUI.
     """
     global RUNTIME_MODE
     RUNTIME_MODE = runtime_mode
+    if RUNTIME_MODE:
+        # Если включается режим GUI, то надо выключить режим консоли
+        global CONSOLE_MODE
+        CONSOLE_MODE = False
+
+
+def isConsoleMode():
+    """
+    Движок запущен в режиме ИСПОЛНЕНИЕ В КОНСОЛЬНОЙ СРЕДЕ?
+    """
+    global CONSOLE_MODE
+    return CONSOLE_MODE
+
+
+def setConsoleMode(console_mode=True):
+    """
+    Установить признак режима ИСПОЛНЕНИЕ В КОНСОЛЬНОЙ СРЕДЕ.
+    """
+    global CONSOLE_MODE
+    CONSOLE_MODE = console_mode
+    if CONSOLE_MODE:
+        # Если включается режим консоли, то надо выключить режим GUI
+        global RUNTIME_MODE
+        RUNTIME_MODE = False
+
+
+def isEditorMode():
+    """
+    Движок запущен в режиме РЕДАКТОРА?
+    Считается что если ни один из режимов иполнения не запущен,
+    то это режим редактирования!
+    """
+    global RUNTIME_MODE
+    global CONSOLE_MODE
+    return not RUNTIME_MODE and not CONSOLE_MODE
 
 
 def getDBMode():

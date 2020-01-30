@@ -74,12 +74,10 @@ class icApp(icwxapplication.icWXApp):
     """
     Класс приложения(ДВИЖКА СИСТЕМЫ).
     """
-
     def __init__(self):
         """
         Конструктор.
         """
-
         # Главное меню
         self._MainMenu = None
         # Главное окно
@@ -315,8 +313,8 @@ class icApp(icwxapplication.icWXApp):
                 return popup
         return None
 
-    def setEnabled(self, Enabled_):
-        self._Enabled = Enabled_
+    def setEnabled(self, enabled):
+        self._Enabled = enabled
         if self._MainWindow is not None:
             self._MainWindow.Enable(self._Enabled)
 

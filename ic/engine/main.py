@@ -52,6 +52,7 @@ def main(args):
         
         # Запуск конфигуратора
         modefunc.setRuntimeMode(False)
+        modefunc.setConsoleMode(False)
 
         prj_path = None
         if args:
@@ -83,6 +84,25 @@ def main(args):
             glob_functions.icLogin(None, None, args[1], prj_dirname=prj_path)
         else:
             glob_functions.icLogin()
+
+    elif '-cui' in args:
+        del args[args.index('-cui')]
+
+        modefunc.setConsoleMode(True)
+        if args:
+            prj_path = args[0]
+            ic.set_log_prj(prj_path)
+            ic.set_ini_file(prj_path)
+
+        if len(args) > 3:
+            glob_functions.icLogin(args[2], args[3], args[1], prj_dirname=prj_path)
+        elif len(args) > 2:
+            glob_functions.icLogin(args[2], '', args[1], prj_dirname=prj_path)
+        elif len(args) > 1:
+            glob_functions.icLogin(None, None, args[1], prj_dirname=prj_path)
+        else:
+            glob_functions.icLogin()
+
     elif '-srv' in args:
         # Режим работы СЕРВИСНОГО СЕРВЕРА
         pass

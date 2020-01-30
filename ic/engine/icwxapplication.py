@@ -24,7 +24,6 @@ class icWXApp(wx.App, ickernel.icKernel):
     """
     Класс приложения библиотеки WX.
     """
-
     def __init__(self, *args, **kwargs):
         """
         Конструктор.
