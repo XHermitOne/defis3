@@ -137,7 +137,7 @@ class icSearchCritPanelProto ( wx.Panel ):
 		self.doc_type_checkBox = wx.CheckBox( self.crit_scrolledWindow, wx.ID_ANY, u"Тип документа:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer4.Add( self.doc_type_checkBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.doc_type_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self.crit_scrolledWindow, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_doc_type', None, 'nsi_archive.mtd', 'archive'),),  'level_enable': 1})
+		self.doc_type_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self.crit_scrolledWindow, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_doc_type', None, 'nsi_archive.mtd', 'archive'),),  'level_enable': 1, 'on_change': 'self.findGrandParent(\'icPrintDocPanel\', is_subclass=False).onDocTypeChange(event)'})
 		self.doc_type_ctrl.Enable( False )
 		
 		bSizer4.Add( self.doc_type_ctrl, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )

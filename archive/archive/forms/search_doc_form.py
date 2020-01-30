@@ -31,7 +31,6 @@ class icSearchCritPanelCtrl:
     """
     Класс функций обработки панели выбора критериев поиска документов.
     """
-
     pass
 
 
@@ -39,7 +38,6 @@ class icSearchDocPanelCtrl(icSearchCritPanelCtrl):
     """
     Класс функций обработки панели поиска документов.
     """
-
     def init_images(self):
         """
         Инициализация картинок контролов.
@@ -544,13 +542,29 @@ class icSearchDocPanelCtrl(icSearchCritPanelCtrl):
         self.ctrl_toolBar.EnableTool(self.expand_tool.GetId(), False)
         event.Skip()
 
+    def onDocTypeChange(self, event):
+        """
+        Обработчик смены типа документа в контроле.
+        """
+        selected_doc_type_code = self.search_crit_panel.doc_type_ctrl.getValue()
+
+        # Для исходящих документов отключаем поиск по номеру документа контрагента
+        enabled = not (isinstance(selected_doc_type_code, str) and selected_doc_type_code.startswith('200'))
+        log.debug(u'Тип документа входящий (True)/исходящий (False): %s' % str(enabled))
+        if not enabled:
+            self.search_crit_panel.nobj_textCtrl.SetValue('')
+        self.search_crit_panel.nobj_textCtrl.Enable(enabled)
+        self.search_crit_panel.nobj_radioBox.Enable(enabled)
+
+        if event:
+            event.Skip()
+
 
 class icSearchDocPanel(icSearchDocPanelCtrl,
                        search_doc_form_proto.icSearchDocPanelProto):
     """
     Панель поиска документов.
     """
-
     def __init__(self, *args, **kwargs):
         """
         Конструктор.
@@ -600,7 +614,6 @@ class icSearchDocDlg(icSearchDocPanelCtrl,
         # Необходимо перепривязать обработчик кнопок
         self.search_crit_panel.clear_button.Bind(wx.EVT_BUTTON, self.onClearButtonClick)
         self.search_crit_panel.search_button.Bind(wx.EVT_BUTTON, self.onSearchButtonClick)
-
 
     def onCancelButtonClick(self, event):
         """
@@ -764,6 +777,7 @@ class icChoiceDocsDlg(icSearchDocPanelCtrl,
     def set_filter(self, filter_requisites=None):
         """
         Установить фильтр документов по значениям реквизитов карточки документа.
+
         :param filter_requisites: Словарь значений реквизитов по которым происходит фильтрация.
         """
         # Если фильтр не указан, то не производить фильтрацию
@@ -872,6 +886,7 @@ def search_doc_dlg(parent=None):
 def choice_docs_dlg(parent=None, prev_filter=None):
     """
     Поиск и выбор сразу нескольких документов с помощью диалоговой формы.
+
     :param parent: Родительское окно.
     :param prev_filter: Словарь предварительного фильтра документов по
         значениям атрибутам карточки документа.

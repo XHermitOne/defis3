@@ -119,7 +119,7 @@ from ic.kernel import icContext
 from ic.kernel import icsignalsrc
 import ic
 
-__version__ = (1, 1, 1, 2)
+__version__ = (1, 1, 2, 1)
 
 SPC_IC_SIMPLE = {'name': 'base',
                  'type': 'Base',
@@ -2085,6 +2085,8 @@ class icWidget(icBase, icEvent):
 
         :param parent_class: Класс родительского объекта:
             wx.Dialog, wx.Frame, wx.Panel и т.п.
+            Если включена проверка на полное совпадение,
+            то класс родительского объекта может задаваться по имени.
         :param cur_object: Текущий проверяемый объект.
             Если None, то берется self.
         :param is_subclass: True - Проверять на наследственность от класса.
@@ -2100,13 +2102,16 @@ class icWidget(icBase, icEvent):
             try:
                 if is_subclass:
                     # Проверять на наследственность от класса
-                    if issubclass(parent.__class__, parent_class):
+                    if not isinstance(parent_class, str) and issubclass(parent.__class__, parent_class):
                         # Нашли
                         return parent
                 else:
                     # Проверять на полное совпадение
-                    if parent.__class__ == parent_class:
-                        # Нашли
+                    if isinstance(parent_class, str) and parent.__class__.__name__ == parent_class:
+                        # Родительский класс задается как имя класса
+                        return parent
+                    elif not isinstance(parent_class, str) and parent.__class__ == parent_class:
+                        # Родительский класс задается как объект класса
                         return parent
 
                 # Продолжаем поиск

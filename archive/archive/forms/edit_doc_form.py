@@ -236,6 +236,9 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
         log.debug(u'edit. Установка данных. Код вида документа <%s>' % doc_type_code)
         self.edit_doc_panel.doc_type_ctrl.setValue(doc_type_code)
 
+        # Для исходящих документов отключаем номер документа контрагента
+        # self.edit_doc_panel.nobj_textCtrl.Enable(not (doc_type_code and doc_type_code.startswith('200')))
+
         self.edit_doc_panel.contragent_ctrl.setValue(self.document.getRequisiteValue('c_agent'))
 
         entity_code = self.document.getRequisiteValue('entity')

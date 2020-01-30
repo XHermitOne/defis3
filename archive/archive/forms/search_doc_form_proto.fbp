@@ -87,7 +87,7 @@
                     <property name="border">5</property>
                     <property name="flag">wxEXPAND|wxALL|wxALIGN_CENTER_HORIZONTAL</property>
                     <property name="proportion">1</property>
-                    <object class="wxScrolledWindow" expanded="0">
+                    <object class="wxScrolledWindow" expanded="1">
                         <property name="BottomDockable">1</property>
                         <property name="LeftDockable">1</property>
                         <property name="RightDockable">1</property>
@@ -163,7 +163,7 @@
                         <event name="OnSetFocus"></event>
                         <event name="OnSize"></event>
                         <event name="OnUpdateUI"></event>
-                        <object class="wxBoxSizer" expanded="0">
+                        <object class="wxBoxSizer" expanded="1">
                             <property name="minimum_size"></property>
                             <property name="name">bSizer23</property>
                             <property name="orient">wxVERTICAL</property>
@@ -1766,7 +1766,7 @@
                                     </object>
                                 </object>
                             </object>
-                            <object class="sizeritem" expanded="0">
+                            <object class="sizeritem" expanded="1">
                                 <property name="border">2</property>
                                 <property name="flag">wxEXPAND</property>
                                 <property name="proportion">0</property>
@@ -1951,11 +1951,11 @@
                                     </object>
                                 </object>
                             </object>
-                            <object class="sizeritem" expanded="0">
+                            <object class="sizeritem" expanded="1">
                                 <property name="border">2</property>
                                 <property name="flag">wxEXPAND</property>
                                 <property name="proportion">0</property>
-                                <object class="wxBoxSizer" expanded="0">
+                                <object class="wxBoxSizer" expanded="1">
                                     <property name="minimum_size"></property>
                                     <property name="name">bSizer4</property>
                                     <property name="orient">wxHORIZONTAL</property>
@@ -2068,7 +2068,7 @@
                                             <property name="center_pane">0</property>
                                             <property name="class"></property>
                                             <property name="close_button">1</property>
-                                            <property name="construction">self.doc_type_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self.crit_scrolledWindow, id=wx.NewId(), component={&apos;sprav&apos;: ((&apos;Sprav&apos;, &apos;nsi_doc_type&apos;, None, &apos;nsi_archive.mtd&apos;, &apos;archive&apos;),),  &apos;level_enable&apos;: 1})</property>
+                                            <property name="construction">self.doc_type_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self.crit_scrolledWindow, id=wx.NewId(), component={&apos;sprav&apos;: ((&apos;Sprav&apos;, &apos;nsi_doc_type&apos;, None, &apos;nsi_archive.mtd&apos;, &apos;archive&apos;),),  &apos;level_enable&apos;: 1, &apos;on_change&apos;: &apos;self.findGrandParent(\&apos;icPrintDocPanel\&apos;, is_subclass=False).onDocTypeChange(event)&apos;})</property>
                                             <property name="context_help"></property>
                                             <property name="context_menu">1</property>
                                             <property name="declaration"></property>
