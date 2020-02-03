@@ -23,7 +23,7 @@ COMMENT_COMMAND_SIGNATIRE = '#'
 
 # Замены для адаптации модуля
 ADAPTATION_REPLACES = (dict(compare=STARTSWITH_SIGNATURE, src='import wx.combo', dst='# import wx.combo'),
-                       dict(compare=STARTSWITH_SIGNATURE, src='import wx.xrc', dst='import wx.adv'),
+                       dict(compare=STARTSWITH_SIGNATURE, src='import wx.xrc', dst='import wx.adv\nimport wx.lib.gizmos'),
                        dict(compare=CONTAIN_SIGNATURE, src='wx.combo.', dst='wx.adv.'),
                        # Calendar
                        dict(compare=STARTSWITH_SIGNATURE, src='import wx.calendar', dst='# import wx.calendar'),
@@ -45,9 +45,9 @@ ADAPTATION_REPLACES = (dict(compare=STARTSWITH_SIGNATURE, src='import wx.combo',
                        # TextCtrl
                        dict(compare=CONTAIN_SIGNATURE, src='.SetMaxLength', dst=COMMENT_COMMAND_SIGNATIRE),
                        # TreeListCtrl
-                       dict(compare=CONTAIN_SIGNATURE, src='wx.TreeListCtrl', dst='wx.dataview.TreeListCtrl'),
-                       dict(compare=CONTAIN_SIGNATURE, src='wx.TL_', dst='wx.dataview.TL_'),
-                       dict(compare=CONTAIN_SIGNATURE, src='wx.EVT_TREELIST_', dst='wx.dataview.EVT_TREELIST_'),
+                       dict(compare=CONTAIN_SIGNATURE, src='wx.TreeListCtrl', dst='wx.lib.gizmos.TreeListCtrl'),
+                       dict(compare=CONTAIN_SIGNATURE, src='wx.TL_', dst='wx.lib.gizmos.TR_'),
+                       dict(compare=CONTAIN_SIGNATURE, src='wx.EVT_TREELIST_', dst='wx.lib.gizmos.EVT_TREELIST_'),
                        )
 
 
