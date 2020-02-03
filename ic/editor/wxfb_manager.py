@@ -48,6 +48,7 @@ ADAPTATION_REPLACES = (dict(compare=STARTSWITH_SIGNATURE, src='import wx.combo',
                        dict(compare=CONTAIN_SIGNATURE, src='wx.TreeListCtrl', dst='wx.lib.gizmos.TreeListCtrl'),
                        dict(compare=CONTAIN_SIGNATURE, src='wx.TL_', dst='wx.lib.gizmos.TR_'),
                        dict(compare=CONTAIN_SIGNATURE, src='wx.EVT_TREELIST_', dst='wx.lib.gizmos.EVT_TREELIST_'),
+                       dict(compare=CONTAIN_SIGNATURE, src='_treeListCtrl.AppendColumn(', dst='_treeListCtrl.AddColumn('),
                        )
 
 

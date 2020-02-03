@@ -23,7 +23,7 @@ from ic import config
 from . import listctrl_manager
 from . import treectrl_manager
 from . import toolbar_manager
-from . import validate_manger
+from . import validate_manager
 
 
 __version__ = (0, 1, 3, 1)
@@ -36,7 +36,7 @@ SKIP_ACCORD_NAMES = ('Handle', 'EventHandler', 'Parent', 'GrandParent')
 class icPanelManager(listctrl_manager.icListCtrlManager,
                      treectrl_manager.icTreeCtrlManager,
                      toolbar_manager.icToolBarManager,
-                     validate_manger.icValidateManager):
+                     validate_manager.icValidateManager):
     """
     Менеджер WX панели.
     В самом общем случае в этот класс перенесены функции работы
