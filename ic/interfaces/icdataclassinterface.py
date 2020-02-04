@@ -255,6 +255,9 @@ class icDataClassInterface:
         """
         if normal_data is None:
             normal_data = self.get_normalized()
+        if normal_data is None:
+            log.warning(u'Не определены нормализованные данные для получения списка записей')
+            return list()
 
         recordset = list()
         field_names = [field[0] for field in normal_data.get('__fields__', [])]

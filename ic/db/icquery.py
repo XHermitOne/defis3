@@ -223,6 +223,7 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
 
         :param kwargs: Параметры SQL запроса для генерации исполняемого текста
             SQL запроса.
+        :return:
         """
         data_src = self.getDataSource()
         if data_src:
