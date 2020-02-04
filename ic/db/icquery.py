@@ -53,7 +53,7 @@ def getQueryTableFields(query):
     except:
         # Вывести сообщение об ошибке в лог
         log.fatal(u'Ошибка получения описаний полей таблицы запроса <%s>.' % str(query))
-        return None
+    return None
 
 
 _fieldType = {'T': 6,   # Код текстового поля
@@ -131,7 +131,7 @@ def getQueryTable(query, post_filter=None):
     except:
         # Вывести сообщение об ошибке в лог
         log.fatal(u'Ошибка получения таблицы запроса %s.' % str(query))
-        return None
+    return None
 
 
 # --- Спецификаци ---

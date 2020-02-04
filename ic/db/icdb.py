@@ -188,7 +188,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
 
         :param db_url: URL связи с БД.
         :return: True - есть связь.
-        False - связь не установлена.
+            False - связь не установлена.
         """
         if db_url is None:
             db_url = self.getDBUrl()
@@ -572,6 +572,10 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
             Или None в случае ошибки.
         """
         result = None
+        if not self.checkConnect():
+            dlgfunc.openErrBox(u'ОШИБКА', u'Нет связи с БД <%s>' % self.getName())
+            return None
+
         # Выполнить запрос
         try:
             # Доступ к конекшену DBAPI2
@@ -621,6 +625,10 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
             Или None в случае ошибки.
         """
         result = None
+        if not self.checkConnect():
+            dlgfunc.openErrBox(u'ОШИБКА', u'Нет связи с БД <%s>' % self.getName())
+            return None
+
         # Выполнить запрос
         try:
             # Доступ к конекшену DBAPI2
