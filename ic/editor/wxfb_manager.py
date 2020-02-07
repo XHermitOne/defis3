@@ -47,8 +47,15 @@ ADAPTATION_REPLACES = (dict(compare=STARTSWITH_SIGNATURE, src='import wx.combo',
                        # TreeListCtrl
                        dict(compare=CONTAIN_SIGNATURE, src='wx.TreeListCtrl', dst='wx.lib.gizmos.TreeListCtrl'),
                        dict(compare=CONTAIN_SIGNATURE, src='wx.TL_', dst='wx.lib.gizmos.TR_'),
-                       dict(compare=CONTAIN_SIGNATURE, src='wx.EVT_TREELIST_', dst='wx.lib.gizmos.EVT_TREELIST_'),
+                       dict(compare=CONTAIN_SIGNATURE, src='wx.lib.gizmos.TR_SINGLE', dst='wx.lib.gizmos.TR_FULL_ROW_HIGHLIGHT'),
+                       dict(compare=CONTAIN_SIGNATURE, src='wx.TL_', dst='wx.lib.gizmos.TR_'),
+                       dict(compare=CONTAIN_SIGNATURE, src='wx.EVT_TREELIST_SELECTION_CHANGED', dst='wx.EVT_TREE_SEL_CHANGED'),
+                       dict(compare=CONTAIN_SIGNATURE, src='wx.EVT_TREELIST_SELECTION_CHANGING', dst='wx.EVT_TREE_SEL_CHANGING'),
                        dict(compare=CONTAIN_SIGNATURE, src='_treeListCtrl.AppendColumn(', dst='_treeListCtrl.AddColumn('),
+                       dict(compare=CONTAIN_SIGNATURE, src=', wx.COL_RESIZABLE )', dst=')'),
+                       dict(compare=CONTAIN_SIGNATURE, src=', wx.COL_SORTABLE )', dst=')'),
+                       dict(compare=CONTAIN_SIGNATURE, src=', wx.COL_RESIZABLE|wx.COL_SORTABLE )', dst=')'),
+                       dict(compare=CONTAIN_SIGNATURE, src=', wx.lib.gizmos.TR_', dst=', agwStyle=wx.lib.gizmos.TR_'),
                        )
 
 
@@ -154,7 +161,9 @@ class icWXFormBuilderManager(icdesignerinterface.icExtFormDesignerInterface):
         :return: Измененная строка модуля.
         """
         if replacement_dst == COMMENT_COMMAND_SIGNATIRE:
+            log.info(u'Строка <%s> закомментирована' % line)
             return COMMENT_COMMAND_SIGNATIRE + line
+        log.info(u'Произведена замена <%s> на <%s> в строке <%s>' % (replacement_src, replacement_dst, line))
         return line.replace(replacement_src, replacement_dst)
 
     def adaptation_form_py(self, py_filename):
