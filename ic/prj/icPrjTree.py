@@ -483,8 +483,9 @@ class icPrjTree(wx.TreeCtrl):
 
             node = None
             if item and item.IsOk():
+                log.debug(u'Получение данных узла ...')
                 node = self.GetItemData(item)
-                log.debug(u'Получены данные узла')
+                log.debug(u'... Получены данные узла')
 
             if node and node.isShowPopupHelp():
                 log.debug(u'Смена окна всплывающих подсказок')

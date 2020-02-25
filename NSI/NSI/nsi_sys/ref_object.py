@@ -49,6 +49,7 @@ class icRefObjectProto(icsprav.icSpravInterface):
     def __init__(self, sprav_manager=None, name=None):
         """
         Конструктор.
+
         :param sprav_manager: Объект менеджера справочника.
         :param name: Имя справочника в списке менеджера справочников.
         """
@@ -57,6 +58,7 @@ class icRefObjectProto(icsprav.icSpravInterface):
     def Edit(self, parent_code=(None,), parent=None):
         """
         Запуск окна редактирования объекта-ссылки/справочника.
+
         :param parent_code: Код более верхнего уровня.
         :param parent: Родительская форма.
             Если не определена, то берется главная форма.
@@ -86,6 +88,7 @@ class icRefObjectProto(icsprav.icSpravInterface):
     def getLevel(self, level_id=0):
         """
         Получить уровень объекта-ссылки/справочника.
+
         :param level_id: Идентификатор уровня.
             Может быть как индексом так и наменованием уровня.
         :return: Объект уровня или None если уровень не найден.
@@ -106,6 +109,7 @@ class icRefObjectProto(icsprav.icSpravInterface):
     def createLevelTabRes(self):
         """
         Создать все ресурсы таблиц всех уровней объекта-ссылки/справочника.
+
         :return: True/False.
         """
         levels = self.getLevels()
@@ -119,6 +123,7 @@ class icRefObjectProto(icsprav.icSpravInterface):
         """
         Таблица объекта-ссылки.
         Считаем что это таблица уровня.
+
         :param index: Индекс уровня объекта-ссылки.
             Если не определен, то берется первый уровень.
         """
@@ -135,6 +140,7 @@ class icRefObjectProto(icsprav.icSpravInterface):
         """
         Запуск визуального интерфейса просмотра,  поиска и выбора значений поля
             или группы полей из отмеченной строки указанного объекта-ссылки/справочника.
+
         :type parent_code: C{...}
         :param parent_code: Код более верхнего уровня.
         :param field: Задает поле или группу полей, которые надо вернуть.
@@ -194,6 +200,7 @@ class icRefObjectProto(icsprav.icSpravInterface):
     def addRec(self, cod, record_dict, dt=None, bClearCache=False):
         """
         Добавить запись в справочник по коду.
+
         :param cod: Код.
         :param record_dict: Словарь изменений.
         :param dt: Период актуальности.
@@ -223,6 +230,7 @@ class icRefObjectProto(icsprav.icSpravInterface):
     def _addRec(self, cod, record_dict, dt=None, bClearCache=False):
         """
         Добавить запись в справочник по коду.
+
         :param cod: Код.
         :param record_dict: Словарь изменений.
         :param dt: Период актуальности.
@@ -283,7 +291,9 @@ class icRefObjectProto(icsprav.icSpravInterface):
 
     def Ctrl(self, val, old=None, field='name', flds=None, bCount=True, cod='', dt=None):
         """
-        Функция контроля наличия в справочнике значения поля с указанным значением.
+        Функция контроля наличия в справочнике значения поля
+        с указанным значением.
+
         :type cod: C{string}
         :param cod: Начальная подстрока структурного кода, ограничивающая множество возможных кодов.
         :type val: C{...}

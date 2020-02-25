@@ -59,6 +59,7 @@ class icSpravInterface(object):
     def __init__(self, sprav_manager=None, name=None):
         """
         Конструктор.
+
         :param sprav_manager: Объект менеджера справочника.
         :param name: Имя справочника в списке менеджера справочников.
             Оно же и является типом справочника в таблице справочников.
@@ -97,6 +98,7 @@ class icSpravInterface(object):
     def getCachedRec(self, code):
         """
         Получить закешированную запись по коду.
+
         :param code: Код справочника.
         :return: Словарь записи.
         """
@@ -193,6 +195,7 @@ class icSpravInterface(object):
     def getTable(self):
         """
         Таблица справочника.
+
         :return: Объект таблицы справочника или None, если
             не возможно определеить таблицу.
         """
@@ -207,6 +210,7 @@ class icSpravInterface(object):
     def createStorage(self, ShowMsg_=True):
         """
         Создать хранилище справочников.
+
         :param ShowMsg_: Признак отображения предупреждения о неправильно определенном хранилище.
         """
         db_name = self.getDBName()
@@ -348,6 +352,7 @@ class icSpravInterface(object):
     def Clear(self, bAsk=False):
         """
         Очистить справочник от данных.
+
         :param bAsk: Спросить о подтверждении очистки справочника?
         """
         storage = self.getStorage()
@@ -363,6 +368,7 @@ class icSpravInterface(object):
     def isEmpty(self):
         """
         Проверка на пустой справочник.
+
         :return: True - справочник пустой, False - Есть данные.
         """
         storage = self.getStorage()
@@ -383,6 +389,7 @@ class icSpravInterface(object):
     def isCod(self, cod):
         """
         Есть такой код в справочнике?
+
         :param cod: Код.
         """
         return self.getStorage().isCod(cod)
@@ -392,6 +399,7 @@ class icSpravInterface(object):
         Проверка активности кода в справочнике?
         Если справочник не поддерживает признак активности,
         то считается что он всегда включен.
+
         :param cod: Код.
         :return: True - код активен / False - код выключен.
         """
@@ -408,6 +416,7 @@ class icSpravInterface(object):
     def isSubCodes(self, cod):
         """
         Есть ли у указанного кода подкоды подуровней?
+
         :param cod: Код справочника.
         """
         storage = self.getStorage()
@@ -419,6 +428,7 @@ class icSpravInterface(object):
     def addRec(self, cod, record_dict, dt=None, bClearCache=False):
         """
         Добавить запись в справочник по коду.
+
         :param cod: Код.
         :param record_dict: Словарь изменений.
         :param dt: Период актуальности.
@@ -431,6 +441,7 @@ class icSpravInterface(object):
     def delRec(self, cod, dt=None):
         """
         Удалить запись по коду.
+
         :param cod: Код.
         :param dt: Период актуальности.
         """
@@ -439,6 +450,7 @@ class icSpravInterface(object):
     def getRec(self, cod, dt=None):
         """
         Получить запись по коду.
+
         :param cod: Код.
         :param dt: Период актуальности.
         """
@@ -447,6 +459,7 @@ class icSpravInterface(object):
     def getDataTree(self):
         """
         Данные справочника в виде дерева.
+
         :return: Словарно-списковую структуру следующего формата:
             [
                 {
@@ -463,6 +476,7 @@ class icSpravInterface(object):
     def getFields(self, fields=None, cod=None):
         """
         Заполнение полей для возврата функцией Hlp/Choice.
+
         :param fields: Задает поле или группу полей, которые надо вернуть.
             Поля могут задаваться как имя одного поля в виде строки,
             так и как группы полей как словарь соответствий полей ключам
@@ -492,6 +506,7 @@ class icSpravInterface(object):
     def getLevelByIdx(self, index=-1):
         """
         Определить уровень по индексу.
+
         :param index: Индекс уровня.
         :return: Возвращает объект уровня или None в случае ошибки.
         """
@@ -504,6 +519,7 @@ class icSpravInterface(object):
     def getLevelByCod(self, cod):
         """
         Определить уровень по коду.
+
         :param cod: Код в строковом представлении.
         :return: Объект уровня, соответствующего коду или None в случае ошибки.
         """
@@ -522,6 +538,7 @@ class icSpravInterface(object):
         """
         Запуск визуального интерфейса просмотра,  поиска и выбора значений поля
             или группы полей из отмеченной строки указанного справочника.
+
         :type parent_code: C{...}
         :param parent_code: Код более верхнего уровня.
         :param field: Задает поле или группу полей, которые надо вернуть.
@@ -547,6 +564,7 @@ class icSpravInterface(object):
     def Edit(self, parent_code=(None,), parent=None):
         """
         Запуск окна редактирования справочника/перечисления.
+
         :param parent_code: Код более верхнего уровня.
         :param parent: Родительская форма.
             Если не определена, то берется главная форма.
@@ -557,7 +575,9 @@ class icSpravInterface(object):
 
     def Ctrl(self, val, old=None, field='name', flds=None, bCount=True, cod='', dt=None):
         """
-        Функция контроля наличия в справочнике значения поля с указанным значением.
+        Функция контроля наличия в справочнике значения поля
+        с указанным значением.
+
         :type cod: C{string}
         :param cod: Начальная подстрока структурного кода, ограничивающая множество возможных кодов.
         :type val: C{...}
@@ -602,6 +622,7 @@ class icSpravInterface(object):
     def getParentLevelCod(self, cod):
         """
         Код родительского уровня.
+
         :param cod: Код.
         :return: Код родительского уровня.
         """
@@ -610,6 +631,7 @@ class icSpravInterface(object):
     def StrCode2ListCode(self, str_code):
         """
         Преобразовать строковый код в списковый код по уровням.
+
         :param str_code: Строковое представление кода.
         :param cod_encode: Однобайтовая кодировка кода.
         """
@@ -627,6 +649,7 @@ class icSpravInterface(object):
     def ListCode2StrCode(self, list_code):
         """
         Преобразовать списковый код по уровням в строковый код.
+
         :param list_code: Списковое/кортежное представление кода.
         """
         return ''.join([cod for cod in list(list_code) if cod is not None])
@@ -641,6 +664,7 @@ class icSpravInterface(object):
     def findCodes(self, **field_values):
         """
         Поиск кода по нескольким полям.
+
         :param field_values: Словарь значений полей.
             Например:
                 {
@@ -659,6 +683,41 @@ class icSpravInterface(object):
             log.warning(u'Не определено хранилище в справочнике <%s>' % self.getName())
         return None
 
+    def choice_record(self, parent=None, *args, **kwargs):
+        """
+        Вызов выбора записи из справочника.
+
+        :param parent: Родительская форма.
+        :return: Выбранную запись или None в случае ошибки.
+        """
+        try:
+            field_names = tuple(self.getStorage().getSpravFieldNames())
+            fields = dict([(field_name, field_name) for field_name in field_names])
+            result = self.Hlp(field=fields, parent=parent,
+                              *args, **kwargs)
+            if result[0] in (0, coderror.IC_HLP_OK):
+                record = result[2]
+                # Преобразуем запись в словарь
+                # record = dict([(field_name, field_values[idx]) for idx, field_name in enumerate(field_names)])
+                return record
+            else:
+                log.error(u'Ошибка выбора справочника <%s>. Результат %s' % (self.getName(), result))
+        except:
+            log.fatal(u'Ошибка выбора записи справочника <%s>' % self.getName())
+        return None
+
+    def choice_code(self, parent=None, *args, **kwargs):
+        """
+        Вызов выбора кода из справочника.
+
+        :param parent: Родительская форма.
+        :return: Выбранный код.
+        """
+        record = self.choice_record(parent, *args, **kwargs)
+        if record and isinstance(record, dict):
+            return record.get('cod', None)
+        return None
+
 
 class icSpravProto(icSpravInterface):
     """
@@ -668,6 +727,7 @@ class icSpravProto(icSpravInterface):
     def __init__(self, sprav_manager=None, name=None):
         """
         Конструктор.
+
         :param sprav_manager: Объект менеджера справочника.
         :param name: Имя справочника в списке менеджера справочников.
         """
@@ -684,6 +744,7 @@ class icSpravProto(icSpravInterface):
         """
         Запуск визуального интерфейса просмотра,  поиска и выбора значений поля
             или группы полей из отмеченной строки указанного справочника.
+
         :type parent_code: C{...}
         :param parent_code: Код более верхнего уровня.
         :param field: Задает поле или группу полей, которые надо вернуть.
@@ -778,42 +839,10 @@ class icSpravProto(icSpravInterface):
 
         return result, res_val, self.getFields(field, res_val)
 
-    def choice_record(self, parent=None, *args, **kwargs):
-        """
-        Вызов выбора записи из справочника.
-        :param parent: Родительская форма.
-        :return: Выбранную запись или None в случае ошибки.
-        """
-        try:
-            field_names = tuple(self.getStorage().getSpravFieldNames())
-            fields = dict([(field_name, field_name) for field_name in field_names])
-            result = self.Hlp(field=fields, parent=parent,
-                              *args, **kwargs)
-            if result[0] in (0, coderror.IC_HLP_OK):
-                record = result[2]
-                # Преобразуем запись в словарь
-                # record = dict([(field_name, field_values[idx]) for idx, field_name in enumerate(field_names)])
-                return record
-            else:
-                log.error(u'Ошибка выбора справочника <%s>. Результат %s' % (self.getName(), result))
-        except:
-            log.fatal(u'Ошибка выбора записи справочника <%s>' % self.getName())
-        return None
-
-    def choice_code(self, parent=None, *args, **kwargs):
-        """
-        Вызов выбора кода из справочника.
-        :param parent: Родительская форма.
-        :return: Выбранный код.
-        """
-        record = self.choice_record(parent, *args, **kwargs)
-        if record and isinstance(record, dict):
-            return record.get('cod', None)
-        return None
-
     def Edit(self, parent_code=(None,), parent=None):
         """
         Запуск окна редактирования справочника/перечисления.
+
         :param parent_code: Код более верхнего уровня.
         :param parent: Родительская форма.
             Если не определена, то берется главная форма.
@@ -890,7 +919,9 @@ class icSpravProto(icSpravInterface):
 
     def Ctrl(self, val, old=None, field='name', flds=None, bCount=True, cod='', dt=None):
         """
-        Функция контроля наличия в справочнике значения поля с указанным значением.
+        Функция контроля наличия в справочнике значения поля
+        с указанным значением.
+
         :type cod: C{string}
         :param cod: Начальная подстрока структурного кода, ограничивающая множество возможных кодов.
         :type val: C{...}
@@ -986,6 +1017,7 @@ class icSpravProto(icSpravInterface):
     def updateRec(self, cod, record_dict, dt=None, bClearCache=False):
         """
         Обновить запись в справочнике по коду.
+
         :param cod: Код.
         :param record_dict: Словарь изменений.
         :param dt: Период актуальности.
@@ -1015,6 +1047,7 @@ class icSpravProto(icSpravInterface):
     def _updateRec(self, cod, record_dict, dt=None, bClearCache=False):
         """
         Обновить запись в справочнике по коду.
+
         :param cod: Код.
         :param record_dict: Словарь изменений.
         :param dt: Период актуальности.
@@ -1034,6 +1067,7 @@ class icSpravProto(icSpravInterface):
     def addRec(self, cod, record_dict, dt=None, bClearCache=False):
         """
         Добавить запись в справочник по коду.
+
         :param cod: Код.
         :param record_dict: Словарь изменений.
         :param dt: Период актуальности.
@@ -1063,6 +1097,7 @@ class icSpravProto(icSpravInterface):
     def _addRec(self, cod, record_dict, dt=None, bClearCache=False):
         """
         Добавить запись в справочник по коду.
+
         :param cod: Код.
         :param record_dict: Словарь изменений.
         :param dt: Период актуальности.
@@ -1086,6 +1121,7 @@ class icSpravProto(icSpravInterface):
     def delRec(self, cod, dt=None):
         """
         Удалить запись по коду.
+
         :param cod: Код.
         :param dt: Период актуальности.
         """
@@ -1112,6 +1148,7 @@ class icSpravProto(icSpravInterface):
     def _delRec(self, cod, dt=None):
         """
         Удалить запись по коду.
+
         :param cod: Код.
         :param dt: Период актуальности.
         """
@@ -1137,6 +1174,7 @@ class icSpravProto(icSpravInterface):
     def _get_refspr_parent_cod(self, parent_cod):
         """
         Определяет родительский код связанного справочника.
+
         :param parent_cod: Родительский код текущего справочника.
         """
         ref_sprav = self.getLevelRefSpravByCod(parent_cod)
@@ -1155,6 +1193,7 @@ class icSpravProto(icSpravInterface):
     def gen_precod(self, cod, default_lst=None):
         """
         Генерирут строки родительских кодов.
+
         :param cod: Код.
         :param default_lst: Список словарей (для каждого уровня) значений полей.
         """
