@@ -34,6 +34,7 @@ from ic.PropertyEditor import icDefInf
 from ic.utils import toolfunc
 
 from ic.db import icdb
+from ic.db import icMySQL as mysql_func
 
 #   Тип компонента
 ic_class_type = icDefInf._icDatasetType
@@ -140,3 +141,16 @@ class icMySQL(icwidget.icSimple, icdb.icSQLAlchemyDB):
         
         # Установить тип БД
         self._db_type = icdb.MYSQL_DB_TYPE
+
+    def _adaptFieldDescription(self, field_description):
+        """
+        Преобразовать описания полей во внутренний вариан описаний.
+
+        :param field_description: Список описаний полей DBAPI2.
+        :return: Список описаний полей во внутреннем формате:
+            [
+            ('Имя поля', 'Тип поля (T, I, F, DateTime, Boolean и т.п)', Длина поля),
+            ...
+            ]
+        """
+        return mysql_func.mysqldb_description2fields(*field_description)

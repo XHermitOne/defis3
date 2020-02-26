@@ -8,6 +8,7 @@
 import os
 import os.path
 import copy
+import datetime
 
 from ic.log import log
 
@@ -49,6 +50,10 @@ DB_TYPE_URL_DRIVER = {SQLITE_DB_TYPE: 'sqlite',
                       MYSQL_DB_TYPE: 'mysql',
                       MSSQL_DB_TYPE: 'mssql+pyodbc',
                       }
+
+# Форматы даты и времени по умолчанию
+DEFAULT_DB_DATETIME_FMT = '%Y-%m-%d %H:%M:%S'
+DEFAULT_DB_DATE_FMT = '%Y-%m-%d'
 
 
 def createDBUrl(res):
@@ -421,7 +426,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
         except:
             log.fatal(u'Ошибка определения связи с БД')
             dlgfunc.openErrBox(u'ОШИБКА',
-                            u'Ошибка определения связи с БД [%s]. Проверте параметры соединения' % self._metadata)
+                               u'Ошибка определения связи с БД [%s]. Проверте параметры соединения' % self._metadata)
             return None
 
     def createScheme(self, bReCreate=True):
@@ -600,7 +605,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
 
         return result
 
-    def _adaptFieldDescription(self, *field_description):
+    def _adaptFieldDescription(self, field_description):
         """
         Преобразовать описания полей во внутренний вариан описаний.
         Метод абстрактный и переопределяется для каждой БД отдельно.
@@ -612,7 +617,8 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
             ...
             ]
         """
-        log.warning(u'Не определен метод _adaptFieldDescription для БД <%s>' % self.__class__.__name__)
+        log.warning(u'Описания полей: %s' % str(field_description))
+        log.warning(u'Не определен метод _adaptFieldDescription для БД <%s>' % self.getName())
         return field_description
 
     def executeSQLOne(self, sql_query, to_dict=False):
@@ -663,6 +669,58 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
         :return: Возвражает объект SelectResults.
         """
         return sqlalchemy.select(*args, **kwargs).execute()
+
+    def _str_value(self, value):
+        """
+        Приведения значения к строковому виду для использования в SQL выражениях.
+
+        :param value: Значение.
+        :return: Значение в виде строки.
+        """
+        if isinstance(value, str):
+            return '\'%s\'' % value
+        elif isinstance(value, datetime.datetime):
+            return '\'%s\'' % value.strftime(DEFAULT_DB_DATETIME_FMT)
+        elif isinstance(value, datetime.date):
+            return '\'%s\'' % value.strftime(DEFAULT_DB_DATE_FMT)
+        elif value is None:
+            return 'NULL'
+        return str(value)
+
+    def insert(self, tab_name, records=()):
+        """
+        Произвести добавление записей в таблицу.
+        Сохранение записей производится в рамках одной транзакции.
+
+        :param tab_name: Имя таблицы в БД.
+        :param records: Список сохраняемых строк.
+            Представлен как список словарей записей.
+        :return: True/False.
+        """
+        result = False
+        if not records:
+            log.warning(u'Не указаны записи для добавления в таблицу <%s.%s>' % (self.getName(), tab_name))
+            return result
+
+        connection = self.connect()
+        # open a transaction - this runs in the context of method_a's transaction
+        transaction = connection.begin()
+        try:
+            for record in records:
+                fields = ', '.join([str(field) for field, value in record.items()])
+                values = ','.join([self._str_value(value) for field, value in record.items()])
+                sql = 'INSERT INTO %s (%s) VALUES (%s)' % (tab_name, fields, values)
+                log.info(u'Выполнение SQL: %s' % sql)
+                connection.execute(sql)
+
+            # transaction is not committed yet
+            transaction.commit()
+        except:
+            # this rolls back the transaction unconditionally
+            transaction.rollback()
+            log.fatal(u'Ошибка добавления записей в таблицу <%s>' % tab_name)
+        self.disconnect()
+        return result
 
     def getEncoding(self):
         """

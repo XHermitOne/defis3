@@ -140,14 +140,16 @@ class icPostgreSQL(icwidget.icSimple, icdb.icSQLAlchemyDB):
     def countActiveConnections(self):
         """
         Колчество активных связей с БД PostgreSQL.
+
         :return: Количество активных связей или -1 в случае ошибки.
         """
         db_url = self.getDBUrl()
         return icPostgreSQL.countActiveConnections(db_url)
 
-    def _adaptFieldDescription(self, *field_description):
+    def _adaptFieldDescription(self, field_description):
         """
         Преобразовать описания полей во внутренний вариан описаний.
+
         :param field_description: Список описаний полей DBAPI2.
         :return: Список описаний полей во внутреннем формате:
             [
