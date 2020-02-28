@@ -68,9 +68,8 @@ sudo apt install --assume-yes python3-matplotlib
 
 # БД
 sudo apt install --assume-yes python3-psycopg2
-
+sudo apt install --assume-yes python3-mysqldb
 sudo apt install --assume-yes python3-sqlalchemy
-
 sudo apt install --assume-yes unixodbc unixodbc-dev freetds-bin freetds-dev tdsodbc python3-pyodbc
 
 # pip3 install dbfpy

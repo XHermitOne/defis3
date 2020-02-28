@@ -687,14 +687,14 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
             return 'NULL'
         return str(value)
 
-    def insert(self, tab_name, records=()):
+    def insert(self, tab_name, records=(), do_transaction=True):
         """
         Произвести добавление записей в таблицу.
-        Сохранение записей производится в рамках одной транзакции.
 
         :param tab_name: Имя таблицы в БД.
         :param records: Список сохраняемых строк.
             Представлен как список словарей записей.
+        :param do_transaction: Сохранение записей производится в рамках одной транзакции?
         :return: True/False.
         """
         result = False
@@ -702,22 +702,30 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
             log.warning(u'Не указаны записи для добавления в таблицу <%s.%s>' % (self.getName(), tab_name))
             return result
 
-        connection = self.connect()
-        # open a transaction - this runs in the context of method_a's transaction
-        transaction = connection.begin()
+        if do_transaction:
+            # open a transaction - this runs in the context of method_a's transaction
+            transaction = self.getTransaction(autoflush=False, autocommit=False)
+        else:
+            connection = self.connect()
         try:
             for record in records:
                 fields = ', '.join([str(field) for field, value in record.items()])
                 values = ','.join([self._str_value(value) for field, value in record.items()])
                 sql = 'INSERT INTO %s (%s) VALUES (%s)' % (tab_name, fields, values)
                 log.info(u'Выполнение SQL: %s' % sql)
-                connection.execute(sql)
+                if do_transaction:
+                    transaction.execute(sql)
+                else:
+                    connection.execute(sql)
 
             # transaction is not committed yet
-            transaction.commit()
+            if do_transaction:
+                transaction.commit()
+            result = True
         except:
             # this rolls back the transaction unconditionally
-            transaction.rollback()
+            if do_transaction:
+                transaction.rollback()
             log.fatal(u'Ошибка добавления записей в таблицу <%s>' % tab_name)
         self.disconnect()
         return result
