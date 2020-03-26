@@ -467,6 +467,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def getDocListCtrlRows(self, dataset=None, *columns):
         """
         Получение списка строк спискового контрола для заполнения.
+
         :param dataset: Список документов.
             Если не определен, то берется текущий заполненный.
         :param columns: Список функций получения значений колонок.
@@ -486,7 +487,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         rows = list()
         for record in dataset:
             row = list()
-            # log.debug(u'Record: %s' % str(record))
+            # log.debug(u'Record: %s %s' % (str(record), str(columns)))
             for column in columns:
                 value = None
                 if isinstance(column, str):
@@ -507,6 +508,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                 else:
                     log.warning(u'Не поддерживаемый тип колонки <%s>' % column.__class__.__name__)
                 row.append(value)
+            # log.debug(u'Record: %s -> %s' % (str(record), str(row)))
             rows.append(tuple(row))
         # log.debug(u'Rows: %s' % str(rows))
         return rows
@@ -564,6 +566,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                 # При обновление одной строки работаем с существующим датасетом
                 dataset = self.getDocDataset(bAutoUpdate=bAutoUpdate)
                 row = self.getDocListCtrlRows(dataset)[index]
+                # log.debug(u'%s - %s' % (dataset[index], str(row)))
 
             row_colour = wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX)
             red = int(row_colour.Red() / 8.0 * 7.0)

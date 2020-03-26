@@ -175,9 +175,11 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         pos = self.getToolLeftBottomPoint(self.ctrl_toolBar, self.group_tool)
         doc_dataset = self.doc_navigator.getDocDataset()
         nn_max = int(str(doc_dataset[-1].get('nn', '00'))[:-1]) if doc_dataset else 0
+        # log.debug(u'1. Данные %s' % str(doc_dataset[0]))
         value = group_manipulation_dlg.show_group_manipulation_dlg(self,
                                                                    n_max=nn_max,
                                                                    position=pos)
+        # log.debug(u'Отредактированные данные %s' % str(value))
         if value:
             n_begin = value.get('n_begin', 1)
             n_begin = n_begin - 1 if n_begin else 0
@@ -186,7 +188,10 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
             # self.checkItems_list_ctrl(self.docs_listCtrl, value.get('on_off', False),
             #                          n_begin, n_end)
             # log.debug(u'Диапазон [%d : %d]' % (n_begin, n_end))
-            check_list = self.checkItems_requirement(self.docs_listCtrl, rows=self.doc_navigator.getDocDataset(),
+            # dataset = self.doc_navigator.getDocDataset()
+            # log.debug(u'2.Данные %s' % str(doc_dataset[0]))
+            
+            check_list = self.checkItems_requirement(self.docs_listCtrl, rows=doc_dataset,
                                                      requirement=lambda i, rec: int(str(rec['nn'])[:-1]) in list(range(n_begin+1, n_end+2)),
                                                      bSet=True)
             # log.debug(u'Индексы меток %s' % str(check_list))
@@ -203,6 +208,11 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
                     doc_uuid = doc.getUUID()
                     self._set_doc_pages_and_duplex(i, doc, doc_uuid,
                                                    n_pages, is_duplex)
+
+                self.checkItems_requirement(self.docs_listCtrl, rows=doc_dataset,
+                                            requirement=lambda i, rec: int(str(rec['nn'])[:-1]) in list(range(n_begin+1, n_end+2)),
+                                            bSet=True)
+            # log.debug(u'3.Данные %s' % str(doc_dataset[0]))
 
             # Количество документов и страниц в обработке
             self.doc_count_staticText.SetLabel(str(self.getScanDocCount()))
@@ -442,11 +452,15 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
                        n_scan_pages=int(n_scan_pages),
                        is_duplex=int(is_duplex))
 
-        dataset = self.doc_navigator.getDocDataset()
+        self.refreshDocList(bAutoUpdate=True)
+
+        dataset = self.doc_navigator.getDocDataset(bAutoUpdate=False)
+        # log.debug(u'2>>> %s' % dataset[0])
         # Обновить только одну строку списка
         dataset[item_idx]['n_scan_pages'] = int(n_scan_pages)
         dataset[item_idx]['is_duplex'] = int(is_duplex)
 
+        log.debug(u'Oбновление строки [%d]' % item_idx)
         self.doc_navigator.refreshDocListCtrlRow(index=item_idx)
 
     def refreshDocList(self, bAutoUpdate=False, filter_date=None):
@@ -465,13 +479,15 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         if filter_date:
             doc_filter = filter_generate.create_filter_group_AND(filter_generate.create_filter_compare_requisite('doc_date', '==', filter_date))
         self.doc_navigator.setDocDatasetFilter(doc_filter=doc_filter, bAutoUpdate=bAutoUpdate)
-        # if bAutoUpdate:
-        #     self.doc_navigator.updateDocDataset()
+        if bAutoUpdate:
+            self.doc_navigator.updateDocDataset()
 
         self.doc_navigator.refreshSortDocListCtrlRows(sort_fields=('nn', ))
 
         # Расцветка строк
-        for i, doc_rec in enumerate(self.doc_navigator.getDocDataset()):
+        doc_dataset = self.doc_navigator.getDocDataset()
+        # log.debug(u'Doc record %s' % doc_dataset[0] if doc_dataset else '---')
+        for i, doc_rec in enumerate(doc_dataset):
             if doc_rec['file_name'] and os.path.exists(doc_rec['file_name']):
                 self.setRowForegroundColour_list_ctrl(self.docs_listCtrl,
                                                       i, wx.Colour('DARKGREEN'))
