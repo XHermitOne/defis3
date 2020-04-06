@@ -340,6 +340,11 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
         used_key_connections = [(combine_key['mode'],
                                  combine_key['key'],
                                  key_combine_connections[name]) for name, combine_key in used_key_combins]
+
+        # log.info(u'Установлена акселераторная таблица для окна:')
+        # for mode, name, combine in used_key_connections:
+        #     log.info(u'\t%s / %s = %s' % (mode, name, combine))
+
         win._accelerator_table = wx.AcceleratorTable(used_key_connections)
         win.SetAcceleratorTable(win._accelerator_table)
 

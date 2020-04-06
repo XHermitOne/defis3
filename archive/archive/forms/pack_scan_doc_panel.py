@@ -58,6 +58,9 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         # Режим быстрого ввода
         self.quick_entry_mode = False
 
+        # Индекс предыдущего элемента при быстром вводе
+        self.prev_item_idx = -1
+
     def init(self):
         """
         Инициализация панели.
@@ -144,7 +147,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
                                                              bRefresh=False)
                     if not result:
                         dlgfunc.openWarningBox(u'ВНИМАНИЕ',
-                                            u'Ошибка переноса документа <%s> в архив' % doc.getRequisiteValue('n_doc'))
+                                               u'Ошибка переноса документа <%s> в архив' % doc.getRequisiteValue('n_doc'))
 
                     pack_result = pack_result and result
                 else:
@@ -156,7 +159,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
 
             if pack_result:
                 dlgfunc.openMsgBox(u'АРХИВ',
-                                u'Пакет документов перенесен в архив')
+                                   u'Пакет документов перенесен в архив')
             self.refreshDocList(True)
         event.Skip()
 
@@ -175,26 +178,18 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         pos = self.getToolLeftBottomPoint(self.ctrl_toolBar, self.group_tool)
         doc_dataset = self.doc_navigator.getDocDataset()
         nn_max = int(str(doc_dataset[-1].get('nn', '00'))[:-1]) if doc_dataset else 0
-        # log.debug(u'1. Данные %s' % str(doc_dataset[0]))
         value = group_manipulation_dlg.show_group_manipulation_dlg(self,
                                                                    n_max=nn_max,
                                                                    position=pos)
-        # log.debug(u'Отредактированные данные %s' % str(value))
         if value:
             n_begin = value.get('n_begin', 1)
             n_begin = n_begin - 1 if n_begin else 0
             n_end = value.get('n_end', self.docs_listCtrl.GetItemCount())
             n_end = n_end - 1 if n_end else self.docs_listCtrl.GetItemCount() - 1
-            # self.checkItems_list_ctrl(self.docs_listCtrl, value.get('on_off', False),
-            #                          n_begin, n_end)
-            # log.debug(u'Диапазон [%d : %d]' % (n_begin, n_end))
-            # dataset = self.doc_navigator.getDocDataset()
-            # log.debug(u'2.Данные %s' % str(doc_dataset[0]))
-            
+
             check_list = self.checkItems_requirement(self.docs_listCtrl, rows=doc_dataset,
                                                      requirement=lambda i, rec: int(str(rec['nn'])[:-1]) in list(range(n_begin+1, n_end+2)),
                                                      bSet=True)
-            # log.debug(u'Индексы меток %s' % str(check_list))
 
             if value.get('n_pages', None) or value.get('is_duplex', None):
                 n_pages = value.get('n_pages', None)
@@ -202,7 +197,6 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
                 is_duplex = value.get('is_duplex', None)
                 is_duplex = bool(is_duplex) if is_duplex else False
 
-                # for idx in range(n_begin, n_end + 1):
                 for i in check_list:
                     doc = self.doc_navigator.getSlaveDocument(index=i)
                     doc_uuid = doc.getUUID()
@@ -212,7 +206,6 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
                 self.checkItems_requirement(self.docs_listCtrl, rows=doc_dataset,
                                             requirement=lambda i, rec: int(str(rec['nn'])[:-1]) in list(range(n_begin+1, n_end+2)),
                                             bSet=True)
-            # log.debug(u'3.Данные %s' % str(doc_dataset[0]))
 
             # Количество документов и страниц в обработке
             self.doc_count_staticText.SetLabel(str(self.getScanDocCount()))
@@ -276,11 +269,11 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         self.ctrl_toolBar.EnableTool(self.edit_tool.GetId(), not self.quick_entry_mode)
 
         item_selected_idx = self.getItemSelectedIdx(self.docs_listCtrl)
-        if self.quick_entry_mode and item_selected_idx == -1:
-            # Если включен режим и никакой документ не выбран, то
-            # Выбираем первый элемент списка и открываем окно ввода
-            self.docs_listCtrl.Select(0)
-        elif self.quick_entry_mode and item_selected_idx >= 0:
+        # if self.quick_entry_mode and item_selected_idx == -1:
+        #     # Если включен режим и никакой документ не выбран, то
+        #     # Выбираем первый элемент списка и открываем окно ввода
+        #     self.docs_listCtrl.Select(0)
+        if self.quick_entry_mode and item_selected_idx >= 0:
             # Если выбран элемент, то просто отобразить окно быстрого ввода для
             # этого документа
             self._show_quick_entry_dlg(item_selected_idx)
@@ -377,11 +370,11 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         быстрого ввода автоматически.
         """
         item_selected_idx = self.getItemSelectedIdx(self.docs_listCtrl)
-        if self.quick_entry_mode and item_selected_idx == -1:
-            # Если включен режим и никакой документ не выбран, то
-            # Выбираем первый элемент списка и открываем окно ввода
-            self.docs_listCtrl.Select(0)
-        elif self.quick_entry_mode and item_selected_idx >= 0:
+        # if self.quick_entry_mode and item_selected_idx == -1:
+        #     # Если включен режим и никакой документ не выбран, то
+        #     # Выбираем первый элемент списка и открываем окно ввода
+        #     self.docs_listCtrl.Select(0)
+        if self.quick_entry_mode and item_selected_idx >= 0:
             # Если выбран элемент, то просто отобразить окно быстрого ввода для
             # этого документа
             self._show_quick_entry_dlg(item_selected_idx)
@@ -391,8 +384,13 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
     def _show_quick_entry_dlg(self, item_idx):
         """
         Отобразить окно быстрого ввода.
+
         :param item_idx: Индекс выбранного элемента.
         """
+        if item_idx == self.prev_item_idx:
+            log.warning(u'Режим быстрого ввода для [%d : %d]' % (self.prev_item_idx, item_idx))
+            return
+
         dataset = self.doc_navigator.getDocDataset()
         # Получить текущую запись
         doc_rec = dataset[item_idx]
@@ -412,6 +410,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
                                                              size=wx.Size(525, 280),
                                                              quick_entry_panel_class=icQuickEntryPackScanPanel,
                                                              defaults=values)
+        self.prev_item_idx = item_idx
         if edit_result == quick_entry_panel.GO_PREV_ITEM_CMD:
             # Переход к предыдущему элементу
             self.selectItem_list_ctrl(ctrl=self.docs_listCtrl,
@@ -435,6 +434,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
                                   n_scan_pages=1, is_duplex=False):
         """
         Установить количество сканированных страниц и признак дуплекса в документе.
+
         :param item_idx: Индекс текущего элемента списка, соответствующего документу.
         :param doc: Объект документа.
         :param doc_uuid: UUID документа.
@@ -447,25 +447,28 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         if doc_uuid is None:
             doc_uuid = doc.getUUID()
 
+        # dataset = self.doc_navigator.getDocDataset()
+        # log.debug(u'%d. Запись > %s' % (item_idx, dataset[item_idx]))
+
         # Обновить в БД отредактированные данные
         doc.update_obj(doc_uuid,
                        n_scan_pages=int(n_scan_pages),
                        is_duplex=int(is_duplex))
 
-        self.refreshDocList(bAutoUpdate=True)
-
         dataset = self.doc_navigator.getDocDataset(bAutoUpdate=False)
-        # log.debug(u'2>>> %s' % dataset[0])
+        log.debug(u'Запись [%d] >>> %s' % (item_idx, dataset[item_idx]))
         # Обновить только одну строку списка
         dataset[item_idx]['n_scan_pages'] = int(n_scan_pages)
         dataset[item_idx]['is_duplex'] = int(is_duplex)
 
         log.debug(u'Oбновление строки [%d]' % item_idx)
-        self.doc_navigator.refreshDocListCtrlRow(index=item_idx)
+        row = self.doc_navigator.getDocListCtrlRows(dataset)[item_idx]
+        self.doc_navigator.refreshDocListCtrlRow(index=item_idx, row=row)
 
     def refreshDocList(self, bAutoUpdate=False, filter_date=None):
         """
         Обновление списка документов.
+
         :param bAutoUpdate: Произвести обновление датасета из БД?
         :param filter_date: Указание даты для дополнительного фильтра.
             Если не определено, то берется из контролов.
@@ -479,6 +482,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         if filter_date:
             doc_filter = filter_generate.create_filter_group_AND(filter_generate.create_filter_compare_requisite('doc_date', '==', filter_date))
         self.doc_navigator.setDocDatasetFilter(doc_filter=doc_filter, bAutoUpdate=bAutoUpdate)
+
         if bAutoUpdate:
             self.doc_navigator.updateDocDataset()
 
@@ -486,8 +490,8 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
 
         # Расцветка строк
         doc_dataset = self.doc_navigator.getDocDataset()
-        # log.debug(u'Doc record %s' % doc_dataset[0] if doc_dataset else '---')
         for i, doc_rec in enumerate(doc_dataset):
+            # log.debug(u'%d. Doc record %s' % (i, doc_dataset[i] if doc_dataset else '---'))
             if doc_rec['file_name'] and os.path.exists(doc_rec['file_name']):
                 self.setRowForegroundColour_list_ctrl(self.docs_listCtrl,
                                                       i, wx.Colour('DARKGREEN'))

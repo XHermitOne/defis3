@@ -74,6 +74,7 @@ class icQuickEntryPanelCtrl(quick_entry_panel_ctrl_proto.icQuickEntryPanelCtrlPr
         """
         Обработчик инструмента отмены ввода.
         """
+        log.debug(u'Отмена ввода')
         self.entry_check = ENTRY_CANCEL_CMD
         self.GetParent().EndModal(wx.ID_CANCEL)
         event.Skip()
@@ -82,6 +83,7 @@ class icQuickEntryPanelCtrl(quick_entry_panel_ctrl_proto.icQuickEntryPanelCtrlPr
         """
         Обработчик инструмента подтверждения ввода.
         """
+        log.debug(u'Подтверждение ввода')
         self.entry_check = ENTRY_OK_CMD
         self.GetParent().EndModal(wx.ID_OK)
         event.Skip()
@@ -90,6 +92,7 @@ class icQuickEntryPanelCtrl(quick_entry_panel_ctrl_proto.icQuickEntryPanelCtrlPr
         """
         Обработчик инструмента добавление нового элемента.
         """
+        log.debug(u'Добавление элемента')
         self.entry_check = ENTRY_ADD_CMD
         self.GetParent().EndModal(wx.ID_OK)
         event.Skip()
@@ -98,6 +101,7 @@ class icQuickEntryPanelCtrl(quick_entry_panel_ctrl_proto.icQuickEntryPanelCtrlPr
         """
         Обработчик инструмента удаления существующего элемента.
         """
+        log.debug(u'Удаление существующего элемента')
         self.entry_check = ENTRY_DEL_CMD
         self.GetParent().EndModal(wx.ID_OK)
         event.Skip()
@@ -108,6 +112,7 @@ class icQuickEntryPanelCtrl(quick_entry_panel_ctrl_proto.icQuickEntryPanelCtrlPr
         ВНИМАНИЕ! В обработчике не вызываем event.Skip() чтобы окно не закрывалось
             по умолчанию.
         """
+        log.debug(u'Установка значений по умолчанию')
         self.GetParent().set_defaults()
 
     def onHelpToolClicked(self, event):
@@ -129,6 +134,7 @@ class icQuickEntryPanelCtrl(quick_entry_panel_ctrl_proto.icQuickEntryPanelCtrlPr
         INS - Добавление нового элемента 
         DEL - Удаление существующего элемента 
         '''
+        log.debug(u'Помощь')
         parent = self   # .GetParent().GetParent()
         wx.MessageBox(help_txt, u'ПОМОЩЬ', style=wx.OK | wx.ICON_QUESTION, parent=parent)
 
@@ -136,6 +142,7 @@ class icQuickEntryPanelCtrl(quick_entry_panel_ctrl_proto.icQuickEntryPanelCtrlPr
         """
         Переход на предыдущий элемент без сохранения данных.
         """
+        log.debug(u'Переход на предыдущий элемент без сохранения данных')
         self.entry_check = GO_PREV_ITEM_CMD
         self.GetParent().EndModal(wx.ID_CANCEL)
         event.Skip()
@@ -144,6 +151,7 @@ class icQuickEntryPanelCtrl(quick_entry_panel_ctrl_proto.icQuickEntryPanelCtrlPr
         """
         Переход на следующий элемент без сохранения данных.
         """
+        log.debug(u'Переход на следующий элемент без сохранения данных')
         self.entry_check = GO_NEXT_ITEM_CMD
         self.GetParent().EndModal(wx.ID_CANCEL)
         event.Skip()
@@ -297,22 +305,31 @@ def quick_entry_ctrl(parent, title=u'', pos=None, size=None,
            1 - Сделан переход на следующий элемент без сохранения данных
         2. Словарь заполненных значений
     """
-    # Создаем подложку
-    dlg = icQuickEntryPanelDialog(parent=parent, title=title, pos=pos, size=size,
-                                  quick_entry_panel_class=quick_entry_panel_class,
-                                  *args, **kwargs)
-    # Отключить не нужные инструменты
-    if tool_disabled:
-        tool_disabled_arg = dict([(tool_name+'_tool', False) for tool_name in tool_disabled])
-        dlg.ctrl_panel.enableTools(**tool_disabled_arg)
-    else:
-        dlg.ctrl_panel.enableTools()
+    dlg = None
+    result = None
+    try:
+        # Создаем подложку
+        dlg = icQuickEntryPanelDialog(parent=parent, title=title, pos=pos, size=size,
+                                      quick_entry_panel_class=quick_entry_panel_class,
+                                      *args, **kwargs)
+        # Отключить не нужные инструменты
+        if tool_disabled:
+            tool_disabled_arg = dict([(tool_name+'_tool', False) for tool_name in tool_disabled])
+            dlg.ctrl_panel.enableTools(**tool_disabled_arg)
+        else:
+            dlg.ctrl_panel.enableTools()
 
-    # Устанавливаем значения по умолчанию
-    if defaults:
-        dlg.set_defaults(defaults)
-    dlg.ShowModal()
-    return dlg.ctrl_panel.entry_check, dlg.get_panel_data(dlg.ctrl_panel.quick_entry_panel)
+        # Устанавливаем значения по умолчанию
+        if defaults:
+            dlg.set_defaults(defaults)
+        dlg.ShowModal()
+        result = (dlg.ctrl_panel.entry_check, dlg.get_panel_data(dlg.ctrl_panel.quick_entry_panel))
+        dlg.Destroy()
+    except:
+        if dlg:
+            dlg.Destroy()
+        log.fatal(u'Ошибка окна быстрого ввода')
+    return result
 
 
 def quick_entry_edit_dlg(parent, title=u'', pos=None, size=None,
