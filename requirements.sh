@@ -42,7 +42,7 @@ sudo apt install --assume-yes build-essential libgtk-3-dev
 sudo apt install --assume-yes libwebkit2gtk-4.0-dev
 
 # Установка для Ubuntu 16.04
-pip3 install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython
+# pip3 install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython
 
 # Обновление:
 # pip3 install wxPython --upgrade
@@ -50,7 +50,7 @@ pip3 install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubunt
 # pip3 uninstall wxPython
 
 # Установка для Ubuntu 18.04
-# pip3 install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04 wxPython
+pip3 install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04 wxPython
 
 # Альтернативный способ установки
 # pip3 download wxPython
@@ -74,8 +74,8 @@ sudo apt install --assume-yes unixodbc unixodbc-dev freetds-bin freetds-dev tdso
 
 # pip3 install dbfpy
 # Работу с DBF везде необходимо делать через JDBC
-pip3 install JayDeBeApi
-# pip3 install JayDeBeApi3
+# pip3 install JayDeBeApi
+pip3 install JayDeBeApi3
 
 pip3 install dbfread
 

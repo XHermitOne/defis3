@@ -174,7 +174,7 @@ def InitObjectsInfo(bRefresh=False):
     редактором компонентов.
     !!! Функция должна вызываться только после того как создан объект приложения.
     """
-    t1 = time.clock()
+    # t1 = time.clock()
     global ObjectsInfo
     ObjectsInfo = {'Root': (-1, -1, -1, {}, -1, None, None),
                    'ResTree': (-1, -1, -1, {}, -1, None, None)}
@@ -255,7 +255,7 @@ def InitObjectsInfo(bRefresh=False):
                                 mod.ic_can_contain,
                                 mod.ic_can_not_contain, mod)
 
-    t2 = time.clock()
+    # t2 = time.clock()
 
 
 def OnFile(event):
