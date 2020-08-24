@@ -662,6 +662,16 @@ def delAllFilesFilter(delete_dir, *mask_filters):
         return None
 
 
+def clearDir(delete_dir):
+    """
+    Удаление всех файлов из папки. Удаление
+    рекурсивное по поддиректориям.
+
+    :param delete_dir: Папка-источник.
+    """
+    return delAllFilesFilter(delete_dir, '*.*')
+
+
 def getPythonDir():
     """
     Папка в которую установлен Python.

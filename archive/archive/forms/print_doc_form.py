@@ -18,6 +18,7 @@ from archive.forms import scheme_doc_form
 from ic import bmpfunc
 from ic import log
 from ic import dlgfunc
+from ic import filefunc
 from ic.utils import datetimefunc
 import ic
 from archive.forms import search_doc_form
@@ -157,6 +158,59 @@ class icPrintDocPanel(search_doc_form.icSearchDocPanelCtrl,
                     order_by_field=['', 'n_doc', 'doc_name', 'doc_date'][orderby_idx])
         rep_manager.prev_select_action('doc_ext/search_document_list.ods',
                                        variables=vars)
+        event.Skip()
+
+    def onSaveToolClicked(self, event):
+        """
+        Обработчик сохранения документов в PDF.
+        """
+        save_pdf_dir = ic.settings.THIS.SETTINGS.save_pdf_dir.get()
+        if not save_pdf_dir or not os.path.exists(save_pdf_dir):
+            save_pdf_dir = dlgfunc.getDirDlg(parent=self,
+                                             title=u'Папка сохранения PDF документов')
+            if not save_pdf_dir:
+                event.Skip()
+                return
+
+        if os.path.exists(save_pdf_dir) and dlgfunc.openAskBox(u'Очистка папки',
+                                                               u'Удалить все файлы из папки <%s>?' % save_pdf_dir):
+            filefunc.clearDir(save_pdf_dir)
+
+
+        sprav_manager = ic.metadata.THIS.mtd.nsi_archive.create()
+        c_agent = sprav_manager.getSpravByName('nsi_c_agent')
+
+        for i in range(self.docs_listCtrl.GetItemCount()):
+            if self.docs_listCtrl.IsChecked(i):
+                document = self.documents[i]
+                doc_uuid = document['uuid']
+                doc = ic.metadata.THIS.mtd.scan_document.create()
+                doc.load_obj(doc_uuid)
+                filename = doc.getRequisiteValue('file_name')
+
+                doc_name = doc.getRequisiteValue('doc_name')
+                doc_date = doc.getRequisiteValue('doc_date')
+                doc_n = doc.getRequisiteValue('n_doc')
+
+                contragent_cod = doc.getRequisiteValue('c_agent')
+                contragent_data = c_agent.Find(contragent_cod, ('name', 'inn', 'kpp'))
+                contragent_name = contragent_data.get('name', u'')
+                contragent_inn = contragent_data.get('inn', u'')
+                contragent_kpp = contragent_data.get('kpp', u'')
+
+                doc_contragent_n = doc.getRequisiteValue('n_obj')
+                doc_contragent_date = doc.getRequisiteValue('obj_date')
+
+                words = (doc_name, doc_n, doc_date.strftime('%d-%m-%Y'),
+                         contragent_name, u'ИНН:'+contragent_inn, u'КПП:'+contragent_kpp,
+                         doc_contragent_n, doc_contragent_date.strftime('%d-%m-%Y'))
+                base_filename = '.'.join(words).replace('/', '|').replace('\\', '|')
+                new_filename = os.path.join(save_pdf_dir, base_filename + os.path.splitext(filename)[1])
+
+                filefunc.copyFile(filename, new_filename, True)
+            else:
+                log.debug(u'Не сохраняется [%d]' % i)
+
         event.Skip()
 
 
