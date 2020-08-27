@@ -160,56 +160,151 @@ class icPrintDocPanel(search_doc_form.icSearchDocPanelCtrl,
                                        variables=vars)
         event.Skip()
 
-    def onSaveToolClicked(self, event):
+    def getSavePDFDirPath(self):
         """
-        Обработчик сохранения документов в PDF.
+        Определить папку для сохранения PDF файлов.
+        :return:
         """
         save_pdf_dir = ic.settings.THIS.SETTINGS.save_pdf_dir.get()
         if not save_pdf_dir or not os.path.exists(save_pdf_dir):
             save_pdf_dir = dlgfunc.getDirDlg(parent=self,
                                              title=u'Папка сохранения PDF документов')
-            if not save_pdf_dir:
-                event.Skip()
-                return
+        return save_pdf_dir
 
-        if os.path.exists(save_pdf_dir) and dlgfunc.openAskBox(u'Очистка папки',
-                                                               u'Удалить все файлы из папки <%s>?' % save_pdf_dir):
+    def savePDFDocs(self, save_doc_uuids, save_pdf_dir=None, bAutoClear=False):
+        """
+        Сохранение PDF документов в разные PDF файлы.
+
+        :param save_doc_uuids: UUIDы сохраняемых документов.
+        :param save_pdf_dir: Папка для сохранения.
+        :param bAutoClear: Автоматически очистить папку выгрузки?
+        :return: True/False.
+        """
+        try:
+            return self._savePDFDocs(save_doc_uuids=save_doc_uuids,
+                                     save_pdf_dir=save_pdf_dir,
+                                     bAutoClear=bAutoClear)
+        except:
+            log.fatal(u'Ошибка сохранения документов в PDF виде в папку <%s>' % save_pdf_dir)
+        return False
+
+    def _savePDFDocs(self, save_doc_uuids, save_pdf_dir=None, bAutoClear=False):
+        """
+        Сохранение PDF документов в разные PDF файлы.
+
+        :param save_doc_uuids: UUIDы сохраняемых документов.
+        :param save_pdf_dir: Папка для сохранения.
+        :param bAutoClear: Автоматически очистить папку выгрузки?
+        :return: True/False.
+        """
+        if save_pdf_dir is None:
+            save_pdf_dir = self.getSavePDFDirPath()
+            if not save_pdf_dir:
+                msg = u'Не определена папка для сохранения PDF файлов'
+                log.warning(msg)
+                dlgfunc.openWarningBox(u'ОШИБКА', msg)
+                return False
+
+        if os.path.exists(save_pdf_dir) and (bAutoClear or dlgfunc.openAskBox(u'Очистка папки',
+                                                                              u'Удалить все файлы из папки <%s>?' % save_pdf_dir)):
             filefunc.clearDir(save_pdf_dir)
 
+        if not os.path.exists(save_pdf_dir):
+            msg = u'Не существует папка выгрузки PDF файлов <%s>' % save_pdf_dir
+            log.warning(msg)
+            dlgfunc.openWarningBox(u'ОШИБКА', msg)
+            return False
 
         sprav_manager = ic.metadata.THIS.mtd.nsi_archive.create()
         c_agent = sprav_manager.getSpravByName('nsi_c_agent')
+        doc = ic.metadata.THIS.mtd.scan_document.create()
 
-        for i in range(self.docs_listCtrl.GetItemCount()):
-            if self.docs_listCtrl.IsChecked(i):
-                document = self.documents[i]
-                doc_uuid = document['uuid']
-                doc = ic.metadata.THIS.mtd.scan_document.create()
-                doc.load_obj(doc_uuid)
-                filename = doc.getRequisiteValue('file_name')
+        for i, doc_uuid in enumerate(save_doc_uuids):
+            doc.load_obj(doc_uuid)
+            filename = doc.getRequisiteValue('file_name')
 
-                doc_name = doc.getRequisiteValue('doc_name')
-                doc_date = doc.getRequisiteValue('doc_date')
-                doc_n = doc.getRequisiteValue('n_doc')
+            doc_name = doc.getRequisiteValue('doc_name')
+            doc_date = doc.getRequisiteValue('doc_date')
+            doc_n = doc.getRequisiteValue('n_doc')
 
-                contragent_cod = doc.getRequisiteValue('c_agent')
-                contragent_data = c_agent.Find(contragent_cod, ('name', 'inn', 'kpp'))
-                contragent_name = contragent_data.get('name', u'')
-                contragent_inn = contragent_data.get('inn', u'')
-                contragent_kpp = contragent_data.get('kpp', u'')
+            # contragent_cod = doc.getRequisiteValue('c_agent')
+            # contragent_data = c_agent.Find(contragent_cod, ('name', 'inn', 'kpp'))
+            # contragent_name = contragent_data.get('name', u'')
+            # contragent_inn = contragent_data.get('inn', u'')
+            # contragent_kpp = contragent_data.get('kpp', u'')
 
-                doc_contragent_n = doc.getRequisiteValue('n_obj')
-                doc_contragent_date = doc.getRequisiteValue('obj_date')
+            doc_contragent_n = doc.getRequisiteValue('n_obj')
+            doc_contragent_date = doc.getRequisiteValue('obj_date')
 
-                words = (doc_name, doc_n, doc_date.strftime('%d-%m-%Y'),
-                         contragent_name, u'ИНН:'+contragent_inn, u'КПП:'+contragent_kpp,
-                         doc_contragent_n, doc_contragent_date.strftime('%d-%m-%Y'))
-                base_filename = '.'.join(words).replace('/', '|').replace('\\', '|')
-                new_filename = os.path.join(save_pdf_dir, base_filename + os.path.splitext(filename)[1])
+            words = ('%04d' % (i+1), doc_name, doc_n, doc_date.strftime('%d-%m-%Y'),
+                     # contragent_name, u'ИНН:'+contragent_inn, u'КПП:'+contragent_kpp,
+                     doc_contragent_n, doc_contragent_date.strftime('%d-%m-%Y'))
+            base_filename = '.'.join(words).replace('/', '|').replace('\\', '|')
+            new_filename = os.path.join(save_pdf_dir, base_filename + os.path.splitext(filename)[1])
 
-                filefunc.copyFile(filename, new_filename, True)
-            else:
-                log.debug(u'Не сохраняется [%d]' % i)
+            filefunc.copyFile(filename, new_filename, True)
+        return True
+
+    def onSaveToolClicked(self, event):
+        """
+        Обработчик сохранения документов в PDF.
+        """
+        save_pdf_dir = self.getSavePDFDirPath()
+        if not save_pdf_dir:
+            event.Skip()
+            return
+
+        doc_uuids = [self.documents[i]['uuid'] for i in range(self.docs_listCtrl.GetItemCount()) if self.docs_listCtrl.IsChecked(i)]
+        self.savePDFDocs(save_doc_uuids=doc_uuids, save_pdf_dir=save_pdf_dir)
+
+        event.Skip()
+
+    def onSaveOnePDFToolClicked(self, event):
+        """
+        Обработчик сохранения документов в один PDF файл.
+        """
+        save_pdf_dir = self.getSavePDFDirPath()
+        if not save_pdf_dir:
+            event.Skip()
+            return
+
+        doc_uuids = [self.documents[i]['uuid'] for i in range(self.docs_listCtrl.GetItemCount()) if self.docs_listCtrl.IsChecked(i)]
+        self.savePDFDocs(save_doc_uuids=doc_uuids, save_pdf_dir=save_pdf_dir, bAutoClear=True)
+
+        try:
+            pdf_filenames = filefunc.getFilenamesByExt(save_pdf_dir, '.pdf')
+            pdf_filenames.sort()
+            first_pdf_name = os.path.splitext(os.path.basename(pdf_filenames[0]))[0]
+            last_pdf_name = os.path.splitext(os.path.basename(pdf_filenames[-1]))[0]
+
+            # Переименовать все файлы
+            for i, pdf_filename in enumerate(pdf_filenames):
+                new_pdf_filename = os.path.join(save_pdf_dir, '%04d.pdf' % i)
+                filefunc.copyFile(pdf_filename, new_pdf_filename)
+                filefunc.removeFile(pdf_filename)
+
+            pdf_filenames = filefunc.getFilenamesByExt(save_pdf_dir, '.pdf')
+            pdf_filenames.sort()
+
+            if pdf_filenames:
+                pdf_filenames_str = ' '.join(['\'%s\'' % pdf_filename for pdf_filename in pdf_filenames])
+                new_pdf_filename = u'Документы.%s-%s.pdf' % (first_pdf_name, last_pdf_name)
+                new_pdf_filename = os.path.join(save_pdf_dir,
+                                                new_pdf_filename.replace('"', ' '))
+                cmd = 'pdftk %s cat output \'%s\'' % (pdf_filenames_str, new_pdf_filename)
+
+                # log.debug(u'Команда конвертации в PDF <%s>' % cmd)
+                os.system(cmd)
+
+                if dlgfunc.openAskBox(u'СОХРАНЕНИЕ',
+                                      u'Документы успешно сохранены в PDF файл <%s>. Открыть для просмотра?' % new_pdf_filename):
+                    self.viewDocFile(new_pdf_filename)
+
+                for pdf_filename in pdf_filenames:
+                    os.remove(pdf_filename)
+
+        except:
+            log.fatal(u'Ощибка сохранения одного PDF файла')
 
         event.Skip()
 

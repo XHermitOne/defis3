@@ -23,4 +23,6 @@ sudo python3 ./dbfpy3/setup.py install
 
 pip3 install dbfread
 
+sudo apt install --assume-yes pdftk
+
 sudo apt --fix-broken install --assume-yes

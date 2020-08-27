@@ -713,7 +713,9 @@ class icPrintDocPanelProto ( wx.Panel ):
 		self.ctrl_toolBar.AddControl( self.all_checkBox )
 		self.print_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Печать", wx.ArtProvider.GetBitmap( wx.ART_PRINT, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Печать", u"Печать", None )
 
-		self.save_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_FILE_SAVE_AS, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Сохранить", u"Сохранить", None )
+		self.save_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_FILE_SAVE, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Сохранить", u"Сохранить", None )
+
+		self.one_pdf_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-select-all", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Сохранить в PDF", u"Сохранить в PDF", None )
 
 		self.ctrl_toolBar.AddSeparator()
 
@@ -765,6 +767,7 @@ class icPrintDocPanelProto ( wx.Panel ):
 		self.all_checkBox.Bind( wx.EVT_CHECKBOX, self.onAllCheckBox )
 		self.Bind( wx.EVT_TOOL, self.onPrintToolClicked, id = self.print_tool.GetId() )
 		self.Bind( wx.EVT_TOOL, self.onSaveToolClicked, id = self.save_tool.GetId() )
+		self.Bind( wx.EVT_TOOL, self.onSaveOnePDFToolClicked, id = self.one_pdf_tool.GetId() )
 		self.Bind( wx.EVT_TOOL, self.onReportToolClicked, id = self.report_tool.GetId() )
 
 	def __del__( self ):
@@ -797,6 +800,9 @@ class icPrintDocPanelProto ( wx.Panel ):
 		event.Skip()
 
 	def onSaveToolClicked( self, event ):
+		event.Skip()
+
+	def onSaveOnePDFToolClicked( self, event ):
 		event.Skip()
 
 	def onReportToolClicked( self, event ):

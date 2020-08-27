@@ -307,6 +307,24 @@ class icSearchDocPanelCtrl(icSearchCritPanelCtrl):
             comment = comment if isinstance(comment, str) else u''
             self.docs_listCtrl.SetItem(row_idx, 6, comment)
 
+    def viewDocFile(self, doc_filename):
+        """
+        Открыть файл отсвканированного документа для просмотра.
+
+        :param doc_filename: Полное имя отсканированного документа.
+        :return:
+        """
+        doc_file_ext = os.path.splitext(doc_filename)[1].lower()
+        cmd = u''
+        if doc_file_ext == '.pdf':
+            cmd = u'evince \'%s\'&' % doc_filename
+        elif doc_file_ext in ('.jpg', '.jpeg', '.tiff', '.bmp'):
+            cmd = u'eog \'%s\'&' % doc_filename
+        else:
+            log.warning(u'Не поддерживаемый тип файла <%s>' % doc_file_ext)
+        if cmd:
+            os.system(cmd)
+
     def onViewToolClicked(self, event):
         """
         Обработчик инструмента просмотра документа.
@@ -320,16 +338,7 @@ class icSearchDocPanelCtrl(icSearchCritPanelCtrl):
                 event.Skip()
                 return
 
-            doc_file_ext = os.path.splitext(doc_filename)[1].lower()
-            cmd = u''
-            if doc_file_ext == '.pdf':
-                cmd = u'evince %s&' % doc_filename
-            elif doc_file_ext in ('.jpg', '.jpeg', '.tiff', '.bmp'):
-                cmd = u'eog %s&' % doc_filename
-            else:
-                log.warning(u'Не поддерживаемый тип файла <%s>' % doc_file_ext)
-            if cmd:
-                os.system(cmd)
+            self.viewDocFile(doc_filename=doc_filename)
         else:
             dlgfunc.openWarningBox(u'ВНИМАНИЕ!', u'Выберите документ')
 
