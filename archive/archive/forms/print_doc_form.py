@@ -24,6 +24,7 @@ import ic
 from archive.forms import search_doc_form
 from ic.dlg import ic_printer_dlg
 from ic.utils import printerfunc
+from ic.utils import pdffunc
 from ic.engine import form_manager
 
 # Version
@@ -274,37 +275,43 @@ class icPrintDocPanel(search_doc_form.icSearchDocPanelCtrl,
         try:
             pdf_filenames = filefunc.getFilenamesByExt(save_pdf_dir, '.pdf')
             pdf_filenames.sort()
-            first_pdf_name = os.path.splitext(os.path.basename(pdf_filenames[0]))[0]
-            last_pdf_name = os.path.splitext(os.path.basename(pdf_filenames[-1]))[0]
+            # first_pdf_name = os.path.splitext(os.path.basename(pdf_filenames[0]))[0]
+            # last_pdf_name = os.path.splitext(os.path.basename(pdf_filenames[-1]))[0]
+            first_pdf_name = '0000'
+            last_pdf_name = '%04d' % (len(pdf_filenames) - 1)
 
             # Переименовать все файлы
             for i, pdf_filename in enumerate(pdf_filenames):
                 new_pdf_filename = os.path.join(save_pdf_dir, '%04d.pdf' % i)
                 filefunc.copyFile(pdf_filename, new_pdf_filename)
-                filefunc.removeFile(pdf_filename)
+                if os.path.exists(new_pdf_filename):
+                    filefunc.removeFile(pdf_filename)
+                else:
+                    log.warning(u'Промежуточный файл документа <%s> не найден' % new_pdf_filename)
 
             pdf_filenames = filefunc.getFilenamesByExt(save_pdf_dir, '.pdf')
             pdf_filenames.sort()
 
             if pdf_filenames:
-                pdf_filenames_str = ' '.join(['\'%s\'' % pdf_filename for pdf_filename in pdf_filenames])
                 new_pdf_filename = u'Документы.%s-%s.pdf' % (first_pdf_name, last_pdf_name)
                 new_pdf_filename = os.path.join(save_pdf_dir,
                                                 new_pdf_filename.replace('"', ' '))
-                cmd = 'pdftk %s cat output \'%s\'' % (pdf_filenames_str, new_pdf_filename)
+                if pdffunc.concatenatePDF(src_pdf_filenames=pdf_filenames, dst_pdf_filename=new_pdf_filename):
+                    pdffunc.compressPDF(pdf_filename=new_pdf_filename)
 
-                # log.debug(u'Команда конвертации в PDF <%s>' % cmd)
-                os.system(cmd)
-
-                if dlgfunc.openAskBox(u'СОХРАНЕНИЕ',
-                                      u'Документы успешно сохранены в PDF файл <%s>. Открыть для просмотра?' % new_pdf_filename):
-                    self.viewDocFile(new_pdf_filename)
+                if os.path.exists(new_pdf_filename):
+                    if dlgfunc.openAskBox(u'СОХРАНЕНИЕ',
+                                          u'Документы успешно сохранены в PDF файл <%s>. Открыть для просмотра?' % new_pdf_filename):
+                        self.viewDocFile(new_pdf_filename)
+                else:
+                    dlgfunc.openWarningBox(u'СОХРАНЕНИЕ',
+                                           u'Ошибка сохранения документов в PDF файле')
 
                 for pdf_filename in pdf_filenames:
                     os.remove(pdf_filename)
 
         except:
-            log.fatal(u'Ощибка сохранения одного PDF файла')
+            log.fatal(u'Ошибка сохранения одного PDF файла')
 
         event.Skip()
 

@@ -102,7 +102,7 @@ def copyFile(filename, new_filename, bRewrite=True):
             # Файл уже существует?
             if os.path.exists(new_filename):
                 if dlgfunc.getAskDlg(u'КОПИРВАНИЕ',
-                                   u'Файл <%s> уже существует. Переписать?' % new_filename) == wx.NO:
+                                     u'Файл <%s> уже существует. Переписать?' % new_filename) == wx.NO:
                     return False
         else:
             if os.path.exists(new_filename):
@@ -113,6 +113,7 @@ def copyFile(filename, new_filename, bRewrite=True):
             log.warning(u'Попытка скопировать файл <%s> самого в себя' % filename)
         else:
             shutil.copyfile(filename, new_filename)
+            log.info(u'Копирование файла <%s> -> <%s>' % (filename, new_filename))
         return True
     except:
         log.fatal(u'Ошибка копирования файла <%s> -> <%s>' % (filename, new_filename))

@@ -2,7 +2,7 @@
 # -*- coding: utf8 -*-
 
 """
-Функции работы спринтерами/печатью/и т.п.
+Функции работы с принтерами/печатью/и т.п.
 
 Печать производится утилитой lpr.
 Например:
@@ -18,13 +18,18 @@ import os
 import os.path
 import subprocess
 import locale
+import time
 
 from ic.log import log
+
+from . import filefunc
+from . import strfunc
 
 __version__ = (0, 1, 1, 1)
 
 NO_DEFAULT_PRINTER_MSG = 'no system default destination'
-
+PDF_EXT = '.pdf'
+TIMEOUT_BUSY_PRINTER = 1
 
 def _get_exec_cmd_stdout_lines(cmd):
     """
@@ -193,14 +198,14 @@ def print_file(filename, printer_name=None, copies=1):
     :return: True - файл отправлен на печать, False - нет.
     """
     filename_ext = os.path.splitext(filename)[1].lower()
-    if filename_ext == '.pdf':
+    if filename_ext == PDF_EXT:
         # PDF файлы
         return printPDF(filename, printer_name, copies)
     elif filename_ext in ('.jpg', '.jpeg', '.tiff', '.tif', '.bmp', '.png', '.gif'):
         # Графические файлы
 
         # Сначала конвертируем в PDF а затем печатаем как обычно
-        pdf_filename = os.path.splitext(filename)+'.pdf'
+        pdf_filename = os.path.splitext(filename)[0] + PDF_EXT
         if os.path.exists(pdf_filename):
             os.remove(pdf_filename)
         cmd = 'convert %s %s' % (filename, pdf_filename)
@@ -210,3 +215,90 @@ def print_file(filename, printer_name=None, copies=1):
     else:
         log.warning(u'Печать. Не поддерживаемое расширение файла печати <%s>' % filename_ext)
     return False
+
+
+DEFAULT_CUPS_PDF_DIRNAME = 'PDF'
+DEFAULT_CUPS_PDF_DEVICE = 'cups-pdf:'
+
+
+def printToCupsPDF(filename, printer_name=None, copies=1):
+    """
+    Печать файла на виртуальный принтер CUPS-PDF.
+        Для печати документов с кирилическими именами файлов
+        нужно в /etc/cups/cups-pdf.conf выставить
+        TitlePref 1 и DecodeHexStrings 1
+
+    :param filename: Полное имя печатаемого файла.
+    :param printer_name: Имя принтера для печати.
+        По умолчанию CUPS-PDF принтер назвается PDF.
+    :param copies: Количество копий.
+    :return: Новое имя напетанного PDF файла или None в случае ошибки.
+    """
+    if printer_name is None:
+        printer_name = getCupsPDFPrinterName()
+        if printer_name is None:
+            log.warning(u'Не установлен CUPS-PDF принтер в системе')
+            return None
+
+    log.info(u'Для печати документов с кирилическими именами файлов')
+    log.info(u'\tнужно в /etc/cups/cups-pdf.conf выставить')
+    log.info(u'\tTitlePref 1 и DecodeHexStrings 1')
+
+    result = print_file(filename=filename, printer_name=printer_name, copies=copies)
+
+    if result:
+        pdf_out_path = os.path.join(filefunc.getHomeDir(), DEFAULT_CUPS_PDF_DIRNAME)
+        if not os.path.exists(pdf_out_path):
+            log.warning(u'Не найден путь <%s> CUPS PDF принтера' % pdf_out_path)
+            return None
+
+        new_pdf_filename = os.path.join(pdf_out_path,
+                                        os.path.splitext(os.path.basename(filename))[0] + PDF_EXT)
+
+        # Необходимо подождать окончания печати
+        for i_timeout in range(10):
+            if os.path.exists(new_pdf_filename):
+                return new_pdf_filename
+            if isBusyPrinter(printer_name):
+                time.sleep(TIMEOUT_BUSY_PRINTER)
+
+        log.warning(u'Результирующий файл печати <%s> не найден' % new_pdf_filename)
+    return None
+
+
+def isCupsPDF():
+    """
+    Проверить установлен ли в системе CUPS-PDF принтер?
+
+    :return: True - установлен, False - не установлен.
+    """
+    printer_devices = getPrinterDevices()
+    return any([printer_dev.startswith(DEFAULT_CUPS_PDF_DEVICE) for printer_name, printer_dev in printer_devices])
+
+
+def getCupsPDFPrinterName():
+    """
+    Получить имя CUPS-PDF принтера если он установлен.
+
+    :return: Имя CUPS-PDF принтера или None если принтер не установлен.
+    """
+    printer_devices = getPrinterDevices()
+    find_cups_pdf_printer_name = [printer_name for printer_name, printer_dev in printer_devices if printer_dev.startswith(DEFAULT_CUPS_PDF_DEVICE)]
+    return find_cups_pdf_printer_name[0] if find_cups_pdf_printer_name else None
+
+
+def isBusyPrinter(printer_name):
+    """
+    Проверка занятого принтера.
+    Функция работает через утилиту lpstat.
+
+    :param printer_name: Наименование принтера.
+    :return: True - принтер занят / False - принтер свободен.
+    """
+    cmd = ('lpstat', '-p', printer_name)
+    lines = _get_exec_cmd_stdout_lines(cmd)
+    if not lines:
+        return None
+    else:
+        result = any([strfunc.txt_find_words(printer, u'свободен', 'free') for printer in lines])
+        return not result
