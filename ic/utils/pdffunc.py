@@ -3,6 +3,10 @@
 
 """
 Функции обработки PDF файлов.
+
+Для функционирования необходим пакет pdftk
+
+sudo apt install pdftk
 """
 
 import os

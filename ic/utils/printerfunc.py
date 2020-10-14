@@ -12,6 +12,9 @@ lpr -o fit-to-page -P "PrinterName" /.nixprint/print.pdf
 Например:
 lpoptions -p <Имя принтера> -l
 lpoptions -p WorkCentre-5325 -l
+
+Для работы с CUPS-PDF виртуальным принтером необходим пакет cups-pdf:
+sudo apt install cups-pdf
 """
 
 import os
@@ -30,6 +33,7 @@ __version__ = (0, 1, 1, 1)
 NO_DEFAULT_PRINTER_MSG = 'no system default destination'
 PDF_EXT = '.pdf'
 TIMEOUT_BUSY_PRINTER = 1
+
 
 def _get_exec_cmd_stdout_lines(cmd):
     """
@@ -183,7 +187,7 @@ def printPDF(sPDFFileName, sPrinter=None, iCopies=1):
     return True
 
 
-def print_file(filename, printer_name=None, copies=1):
+def printFile(filename, printer_name=None, copies=1):
     """
     Распечатать файл.
     Файлы распознаются по расширению.
@@ -244,7 +248,7 @@ def printToCupsPDF(filename, printer_name=None, copies=1):
     log.info(u'\tнужно в /etc/cups/cups-pdf.conf выставить')
     log.info(u'\tTitlePref 1 и DecodeHexStrings 1')
 
-    result = print_file(filename=filename, printer_name=printer_name, copies=copies)
+    result = printFile(filename=filename, printer_name=printer_name, copies=copies)
 
     if result:
         pdf_out_path = os.path.join(filefunc.getHomeDir(), DEFAULT_CUPS_PDF_DIRNAME)

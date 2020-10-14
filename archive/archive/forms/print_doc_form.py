@@ -90,7 +90,7 @@ class icPrintDocPanel(search_doc_form.icSearchDocPanelCtrl,
         """
         if os.path.exists(doc_filename):
             log.debug(u'Печать документа <%s>' % doc_filename)
-            printerfunc.print_file(doc_filename, printer_name)
+            printerfunc.printFile(doc_filename, printer_name)
         else:
             log.warning(u'Не найден файла <%s> для печати' % doc_filename)
 
