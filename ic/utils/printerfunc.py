@@ -32,7 +32,9 @@ __version__ = (0, 1, 1, 1)
 
 NO_DEFAULT_PRINTER_MSG = 'no system default destination'
 PDF_EXT = '.pdf'
-TIMEOUT_BUSY_PRINTER = 1
+# Параметры ожидания окончания печати принтера
+TIMEOUT_BUSY_PRINTER = 5
+TIMEOUT_COUNT_BUSY_PRINTER = 20
 
 
 def _get_exec_cmd_stdout_lines(cmd):
@@ -260,13 +262,15 @@ def printToCupsPDF(filename, printer_name=None, copies=1):
                                         os.path.splitext(os.path.basename(filename))[0] + PDF_EXT)
 
         # Необходимо подождать окончания печати
-        for i_timeout in range(10):
-            if os.path.exists(new_pdf_filename):
-                return new_pdf_filename
+        for i_timeout in range(TIMEOUT_COUNT_BUSY_PRINTER):
+            log.debug(u'Ожидание печати PDF принтера: %d' % i_timeout)
             if isBusyPrinter(printer_name):
                 time.sleep(TIMEOUT_BUSY_PRINTER)
 
-        log.warning(u'Результирующий файл печати <%s> не найден' % new_pdf_filename)
+            if os.path.exists(new_pdf_filename) and not isBusyPrinter(printer_name):
+                return new_pdf_filename
+
+        log.warning(u'Результирующий PDF файл печати <%s> не создан' % new_pdf_filename)
     return None
 
 
@@ -301,6 +305,11 @@ def isBusyPrinter(printer_name):
     """
     cmd = ('lpstat', '-p', printer_name)
     lines = _get_exec_cmd_stdout_lines(cmd)
+
+    # Отладка
+    # for line in lines:
+    #     log.debug(line)
+
     if not lines:
         return None
     else:

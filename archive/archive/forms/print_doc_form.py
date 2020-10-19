@@ -172,24 +172,28 @@ class icPrintDocPanel(search_doc_form.icSearchDocPanelCtrl,
                                              title=u'Папка сохранения PDF документов')
         return save_pdf_dir
 
-    def savePDFDocs(self, save_doc_uuids, save_pdf_dir=None, bAutoClear=False):
+    def savePDFDocs(self, save_doc_uuids, save_pdf_dir=None, bAutoClear=False,
+                    bCompactName=False):
         """
         Сохранение PDF документов в разные PDF файлы.
 
         :param save_doc_uuids: UUIDы сохраняемых документов.
         :param save_pdf_dir: Папка для сохранения.
         :param bAutoClear: Автоматически очистить папку выгрузки?
+        :param bCompactName: Сокращенное именование файлов документов?
         :return: True/False.
         """
         try:
             return self._savePDFDocs(save_doc_uuids=save_doc_uuids,
                                      save_pdf_dir=save_pdf_dir,
-                                     bAutoClear=bAutoClear)
+                                     bAutoClear=bAutoClear,
+                                     bCompactName=bCompactName)
         except:
             log.fatal(u'Ошибка сохранения документов в PDF виде в папку <%s>' % save_pdf_dir)
         return False
 
-    def _savePDFDocs(self, save_doc_uuids, save_pdf_dir=None, bAutoClear=False):
+    def _savePDFDocs(self, save_doc_uuids, save_pdf_dir=None, bAutoClear=False,
+                     bCompactName=False):
         """
         Сохранение PDF документов в разные PDF файлы.
 
@@ -228,19 +232,25 @@ class icPrintDocPanel(search_doc_form.icSearchDocPanelCtrl,
             doc_date = doc.getRequisiteValue('doc_date')
             doc_n = doc.getRequisiteValue('n_doc')
 
-            # contragent_cod = doc.getRequisiteValue('c_agent')
-            # contragent_data = c_agent.Find(contragent_cod, ('name', 'inn', 'kpp'))
+            contragent_cod = doc.getRequisiteValue('c_agent')
+            contragent_data = c_agent.Find(contragent_cod, ('name', 'inn', 'kpp'))
             # contragent_name = contragent_data.get('name', u'')
-            # contragent_inn = contragent_data.get('inn', u'')
+            contragent_inn = contragent_data.get('inn', u'')
             # contragent_kpp = contragent_data.get('kpp', u'')
 
             doc_contragent_n = doc.getRequisiteValue('n_obj')
             doc_contragent_date = doc.getRequisiteValue('obj_date')
 
-            words = ('%04d' % (i+1), doc_name, doc_n, doc_date.strftime('%d-%m-%Y'),
-                     # contragent_name, u'ИНН:'+contragent_inn, u'КПП:'+contragent_kpp,
-                     doc_contragent_n, doc_contragent_date.strftime('%d-%m-%Y'))
-            base_filename = '.'.join(words).replace('/', '|').replace('\\', '|')
+            if bCompactName:
+                words = ('%04d' % (i+1), u'INN'+contragent_inn)
+            else:
+                words = ('%04d' % (i+1),  doc_name, doc_n, doc_date.strftime('%d-%m-%Y'),
+                         # contragent_name,
+                         u'INN'+contragent_inn,
+                         # u'КПП:'+contragent_kpp,
+                         doc_contragent_n, doc_contragent_date.strftime('%d-%m-%Y'))
+
+            base_filename = '.'.join(words).replace('/', '-').replace('\\', '-')
             new_filename = os.path.join(save_pdf_dir, base_filename + os.path.splitext(filename)[1])
 
             filefunc.copyFile(filename, new_filename, True)
@@ -270,34 +280,23 @@ class icPrintDocPanel(search_doc_form.icSearchDocPanelCtrl,
             return
 
         doc_uuids = [self.documents[i]['uuid'] for i in range(self.docs_listCtrl.GetItemCount()) if self.docs_listCtrl.IsChecked(i)]
-        self.savePDFDocs(save_doc_uuids=doc_uuids, save_pdf_dir=save_pdf_dir, bAutoClear=True)
+        self.savePDFDocs(save_doc_uuids=doc_uuids, save_pdf_dir=save_pdf_dir, bAutoClear=True, bCompactName=True)
 
         try:
             pdf_filenames = filefunc.getFilenamesByExt(save_pdf_dir, '.pdf')
             pdf_filenames.sort()
-            # first_pdf_name = os.path.splitext(os.path.basename(pdf_filenames[0]))[0]
-            # last_pdf_name = os.path.splitext(os.path.basename(pdf_filenames[-1]))[0]
-            first_pdf_name = '0000'
-            last_pdf_name = '%04d' % (len(pdf_filenames) - 1)
-
-            # Переименовать все файлы
-            for i, pdf_filename in enumerate(pdf_filenames):
-                new_pdf_filename = os.path.join(save_pdf_dir, '%04d.pdf' % i)
-                filefunc.copyFile(pdf_filename, new_pdf_filename)
-                if os.path.exists(new_pdf_filename):
-                    filefunc.removeFile(pdf_filename)
-                else:
-                    log.warning(u'Промежуточный файл документа <%s> не найден' % new_pdf_filename)
-
-            pdf_filenames = filefunc.getFilenamesByExt(save_pdf_dir, '.pdf')
-            pdf_filenames.sort()
+            first_pdf_name = os.path.splitext(os.path.basename(pdf_filenames[0]))[0]
+            last_pdf_name = os.path.splitext(os.path.basename(pdf_filenames[-1]))[0]
 
             if pdf_filenames:
-                new_pdf_filename = u'Документы.%s-%s.pdf' % (first_pdf_name, last_pdf_name)
+                new_pdf_filename = u'Docs.%s-%s.pdf' % (first_pdf_name, last_pdf_name)
                 new_pdf_filename = os.path.join(save_pdf_dir,
                                                 new_pdf_filename.replace('"', ' '))
                 if pdffunc.concatenatePDF(src_pdf_filenames=pdf_filenames, dst_pdf_filename=new_pdf_filename):
                     pdffunc.compressPDF(pdf_filename=new_pdf_filename)
+
+                    for pdf_filename in pdf_filenames:
+                        os.remove(pdf_filename)
 
                 if os.path.exists(new_pdf_filename):
                     if dlgfunc.openAskBox(u'СОХРАНЕНИЕ',
@@ -306,9 +305,6 @@ class icPrintDocPanel(search_doc_form.icSearchDocPanelCtrl,
                 else:
                     dlgfunc.openWarningBox(u'СОХРАНЕНИЕ',
                                            u'Ошибка сохранения документов в PDF файле')
-
-                for pdf_filename in pdf_filenames:
-                    os.remove(pdf_filename)
 
         except:
             log.fatal(u'Ошибка сохранения одного PDF файла')
