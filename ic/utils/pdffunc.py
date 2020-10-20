@@ -15,6 +15,8 @@ import os.path
 from ic.log import log
 
 from . import printerfunc
+# Импорт для использования из этого модуля
+from .printerfunc import toPDF
 from . import filefunc
 
 __version__ = (0, 1, 1, 1)
@@ -50,7 +52,7 @@ def concatenatePDF(src_pdf_filenames, dst_pdf_filename):
 DEFAULT_COMPRESSED_FILENAME = 'compress.pdf'
 
 
-def compressPDF(pdf_filename, new_pdf_filename=None):
+def compressCupsPDF(pdf_filename, new_pdf_filename=None):
     """
     Попытка уменьшить размер PDF файла.
         Сжатие PDF файла производиться через виртуальный принтер CUPS-PDF
@@ -85,4 +87,32 @@ def compressPDF(pdf_filename, new_pdf_filename=None):
             log.warning(u'Не найден установленный CUPS-PDF принтер в системе для сжатия PDF файла <%s>' % pdf_filename)
     except:
         log.fatal(u'Ошибка сжатия PDF файла <%s>' % pdf_filename)
+    return False
+
+
+def compressGhostscriptPDF(pdf_filename, new_pdf_filename=None,
+                           quality=printerfunc.GS_QUALITY_DEFAULT):
+    """
+    Попытка уменьшить размер PDF файла.
+        Сжатие PDF файла производиться через Ghostscript.
+
+    :param pdf_filename: Сжимаемый PDF файл.
+    :param new_pdf_filename: Новый PDF файл.
+        Если не указан, то происходит перезапись существующего PDF файла.
+    :param quality: Качество печати.
+        GS_QUALITY_PREPRESS = 'prepress'    (Color 300dpi)
+        GS_QUALITY_PRINTER = 'printer'      (300dpi)
+        GS_QUALITY_EBOOK = 'ebook'          (150dpi)
+        GS_QUALITY_SCREEN = 'screen'        (72dpi)
+    :return: True/False.
+    """
+    try:
+        log.info(u'Сжатие PDF файла <%s> через Ghostscript' % pdf_filename)
+
+        dst_pdf_filename = printerfunc.printToGhostscriptPDF(pdf_filename, new_pdf_filename,
+                                                             quality=quality)
+        if dst_pdf_filename:
+            return True
+    except:
+        log.fatal(u'Ошибка сжатия PDF файла <%s> с помощью Ghostscript' % pdf_filename)
     return False

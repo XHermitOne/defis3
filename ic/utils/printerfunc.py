@@ -32,6 +32,7 @@ __version__ = (0, 1, 1, 1)
 
 NO_DEFAULT_PRINTER_MSG = 'no system default destination'
 PDF_EXT = '.pdf'
+GRAPH_FILE_EXT = ('.jpg', '.jpeg', '.tiff', '.tif', '.bmp', '.png', '.gif')
 # Параметры ожидания окончания печати принтера
 TIMEOUT_BUSY_PRINTER = 5
 TIMEOUT_COUNT_BUSY_PRINTER = 20
@@ -189,6 +190,29 @@ def printPDF(sPDFFileName, sPrinter=None, iCopies=1):
     return True
 
 
+def toPDF(filename):
+    """
+    Конвертировать файл в PDF если возможно.
+
+    :param filename: Полное имя печатаемого файла.
+    :return: Имя PDF файла или None если конвертация не возможна.
+    """
+    filename_ext = os.path.splitext(filename)[1].lower()
+    if filename_ext == PDF_EXT:
+        # PDF файлы
+        return filename
+    elif filename_ext in GRAPH_FILE_EXT:
+        # Графические файлы
+        pdf_filename = os.path.splitext(filename)[0] + PDF_EXT
+        if os.path.exists(pdf_filename):
+            os.remove(pdf_filename)
+        cmd = 'convert %s %s' % (filename, pdf_filename)
+        os.system(cmd)
+        return pdf_filename
+    log.warning(u'Не поддерживается конвертация файла <%s> в PDF' % filename)
+    return None
+
+
 def printFile(filename, printer_name=None, copies=1):
     """
     Распечатать файл.
@@ -203,24 +227,8 @@ def printFile(filename, printer_name=None, copies=1):
     :param copies: Количество копий.
     :return: True - файл отправлен на печать, False - нет.
     """
-    filename_ext = os.path.splitext(filename)[1].lower()
-    if filename_ext == PDF_EXT:
-        # PDF файлы
-        return printPDF(filename, printer_name, copies)
-    elif filename_ext in ('.jpg', '.jpeg', '.tiff', '.tif', '.bmp', '.png', '.gif'):
-        # Графические файлы
-
-        # Сначала конвертируем в PDF а затем печатаем как обычно
-        pdf_filename = os.path.splitext(filename)[0] + PDF_EXT
-        if os.path.exists(pdf_filename):
-            os.remove(pdf_filename)
-        cmd = 'convert %s %s' % (filename, pdf_filename)
-        os.system(cmd)
-
-        return printPDF(pdf_filename, printer_name, copies)
-    else:
-        log.warning(u'Печать. Не поддерживаемое расширение файла печати <%s>' % filename_ext)
-    return False
+    pdf_filename = toPDF(filename)
+    return printPDF(pdf_filename, printer_name, copies)
 
 
 DEFAULT_CUPS_PDF_DIRNAME = 'PDF'
@@ -262,16 +270,28 @@ def printToCupsPDF(filename, printer_name=None, copies=1):
                                         os.path.splitext(os.path.basename(filename))[0] + PDF_EXT)
 
         # Необходимо подождать окончания печати
-        for i_timeout in range(TIMEOUT_COUNT_BUSY_PRINTER):
-            log.debug(u'Ожидание печати PDF принтера: %d' % i_timeout)
-            if isBusyPrinter(printer_name):
-                time.sleep(TIMEOUT_BUSY_PRINTER)
-
-            if os.path.exists(new_pdf_filename) and not isBusyPrinter(printer_name):
-                return new_pdf_filename
+        if waitBusyPrinter(printer_name) and os.path.exists(new_pdf_filename):
+            return new_pdf_filename
 
         log.warning(u'Результирующий PDF файл печати <%s> не создан' % new_pdf_filename)
     return None
+
+
+def waitBusyPrinter(printer_name):
+    """
+    Ожидание окончания печати принтера.
+
+    :param printer_name: Наименование принтера.
+    :return: True - принтер свободен после печати.
+        False - закончилось время ожидания (сработал таймаут).
+    """
+    for i_timeout in range(TIMEOUT_COUNT_BUSY_PRINTER):
+        log.debug(u'Ожидание печати PDF принтера: %d' % i_timeout)
+        if isBusyPrinter(printer_name):
+            time.sleep(TIMEOUT_BUSY_PRINTER)
+        else:
+            break
+    return not isBusyPrinter(printer_name)
 
 
 def isCupsPDF():
@@ -315,3 +335,55 @@ def isBusyPrinter(printer_name):
     else:
         result = any([strfunc.txt_find_words(printer, u'свободен', 'free') for printer in lines])
         return not result
+
+
+# Качество печати Ghostscript
+GS_QUALITY_DEFAULT = 'default'
+GS_QUALITY_PREPRESS = 'prepress'    # Color 300dpi
+GS_QUALITY_PRINTER = 'printer'      # 300dpi
+GS_QUALITY_EBOOK = 'ebook'          # 150dpi
+GS_QUALITY_SCREEN = 'screen'        # 72dpi
+
+
+def printToGhostscriptPDF(filename, new_pdf_filename=None, quality=GS_QUALITY_DEFAULT):
+    """
+    Печать файла с помощью Ghostscript в PDF.
+
+    :param filename: Полное имя печатаемого файла.
+    :param new_pdf_filename: Имя результирующего PDF файла.
+        Если не указывается, то происходит перезапись результирующего файла.
+    :param quality: Качество печати.
+        GS_QUALITY_PREPRESS = 'prepress'    (Color 300dpi)
+        GS_QUALITY_PRINTER = 'printer'      (300dpi)
+        GS_QUALITY_EBOOK = 'ebook'          (150dpi)
+        GS_QUALITY_SCREEN = 'screen'        (72dpi)
+    :return: Новое имя напетанного PDF файла или None в случае ошибки.
+    """
+    try:
+        pdf_filename = toPDF(filename)
+        dst_pdf_filename = os.path.join(os.path.dirname(pdf_filename),
+                                        '_'+os.path.basename(pdf_filename)) if new_pdf_filename is None else new_pdf_filename
+
+        cmd = ('gs', '-sDEVICE=pdfwrite', '-dCompatibilityLevel=1.4',
+               '-dPDFSETTINGS=/{}'.format(quality),
+               '-dNOPAUSE', '-dQUIET', '-dBATCH',
+               '-sOutputFile={}'.format(dst_pdf_filename),
+               pdf_filename)
+        subprocess.call(cmd)
+
+        if not os.path.exists(dst_pdf_filename):
+            log.warning(u'Не сформирован промежуточный файл печати <%s> с помощью Ghostscriopt в PDF' % dst_pdf_filename)
+            return None
+
+        if os.path.exists(dst_pdf_filename) and new_pdf_filename is None:
+            filefunc.copyFile(dst_pdf_filename, pdf_filename, bRewrite=True)
+            filefunc.removeFile(dst_pdf_filename)
+            new_pdf_filename = pdf_filename
+
+        if os.path.exists(new_pdf_filename):
+            return new_pdf_filename
+        log.warning(u'Не сформирован результирующий файл печати <%s> с помощью Ghostscriopt в PDF' % new_pdf_filename)
+    except:
+        log.fatal(u'Ошибка печати файла <%s> с помощью Ghostscriopt в PDF' % filename)
+    return None
+

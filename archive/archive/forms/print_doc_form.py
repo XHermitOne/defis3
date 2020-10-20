@@ -293,7 +293,9 @@ class icPrintDocPanel(search_doc_form.icSearchDocPanelCtrl,
                 new_pdf_filename = os.path.join(save_pdf_dir,
                                                 new_pdf_filename.replace('"', ' '))
                 if pdffunc.concatenatePDF(src_pdf_filenames=pdf_filenames, dst_pdf_filename=new_pdf_filename):
-                    pdffunc.compressPDF(pdf_filename=new_pdf_filename)
+                    pdffunc.compressCupsPDF(pdf_filename=new_pdf_filename)
+                    # pdffunc.compressGhostscriptPDF(pdf_filename=new_pdf_filename,
+                    #                                quality=printerfunc.GS_QUALITY_SCREEN)
 
                     for pdf_filename in pdf_filenames:
                         os.remove(pdf_filename)
