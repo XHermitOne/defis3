@@ -174,9 +174,9 @@ SPC_IC_LABELATTR = {'type': 'label_attr',
                     }
 
 # Режимы выбора
-GRID_SELECTION_MODES = {'cells': grid.Grid.wxGridSelectCells,
-                        'rows': grid.Grid.wxGridSelectRows,
-                        'columns': grid.Grid.wxGridSelectColumns,
+GRID_SELECTION_MODES = {'cells': grid.Grid.GridSelectCells if wx.VERSION >= (4, 1, 1) else grid.Grid.wxGridSelectCells,
+                        'rows': grid.Grid.GridSelectRows if wx.VERSION >= (4, 1, 1) else grid.Grid.wxGridSelectRows,
+                        'columns': grid.Grid.GridSelectColumns if wx.VERSION >= (4, 1, 1) else grid.Grid.wxGridSelectColumns,
                         }
     
 #   Спецификация описания грида
@@ -661,7 +661,7 @@ class icGrid(icwidget.icWidget, grid.Grid,
                 return GRID_SELECTION_MODES[attr_value]
         except:
             log.warning(u'Not define attr selection_mode in Grid')
-        return grid.Grid.wxGridSelectCells
+        return grid.Grid.GridSelectCells if wx.VERSION >= (4, 1, 1) else grid.Grid.wxGridSelectCells
 
     def moveCursorFirst(self):
         """

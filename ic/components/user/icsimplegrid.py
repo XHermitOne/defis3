@@ -35,9 +35,9 @@ from ic.utils import strfunc
 from ic.dlg import dlgfunc
 
 # --- Спецификация ---
-GRID_SELECTION_MODES = {'cells': parentModule.Grid.wxGridSelectCells,
-                        'rows': parentModule.Grid.wxGridSelectRows,
-                        'columns': parentModule.Grid.wxGridSelectColumns,
+GRID_SELECTION_MODES = {'cells': parentModule.Grid.GridSelectCells if wx.VERSION >= (4, 1, 1) else parentModule.Grid.wxGridSelectCells,
+                        'rows': parentModule.Grid.GridSelectRows if wx.VERSION >= (4, 1, 1) else parentModule.Grid.wxGridSelectRows,
+                        'columns': parentModule.Grid.GridSelectColumns if wx.VERSION >= (4, 1, 1) else parentModule.Grid.wxGridSelectColumns,
                         }
     
 SPC_IC_SIMPLEGRID = {'col_count': 2,    # Количество колонок
@@ -523,7 +523,7 @@ class icSimpleGrid(icwidget.icWidget,
         """
         attr_value = self.getICAttr('selection_mode')
         return GRID_SELECTION_MODES.setdefault(attr_value,
-                                               parentModule.Grid.wxGridSelectCells)
+                                               parentModule.Grid.GridSelectCells if wx.VERSION >= (4, 1, 1) else parentModule.Grid.wxGridSelectCells)
         
     # --- Обработчики событий ---
     def onDblClick(self, event):
