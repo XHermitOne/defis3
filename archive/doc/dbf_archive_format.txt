@@ -1,0 +1,175 @@
+Формат DBF документов передаваемых в архив для импорта
+========================================================
+
+Введение
+----------
+
+Для импорта карточек документов с последующим сканированием передаются файлы dBase(DBF) 
+формата в кодировке CP866.
+
+
+Правила именования файлов
+--------------------------
+
+Имена DBF файлов кодируются в формате '8.3'
+
+1) Участок <Материалы>
+
+ |---Материалы
+ ||-----Приход(P) или Расход(R)
+ || │-----Склад Если 000 то склад не указан
+ || │ │-----Месяц
+ || │ │   │----ASF - счетфактуры / ATG - ТОРГ12
+ ||┌┴┐├┐ ┌┴┐           
+ MP00101.ASF
+
+2) Участок <Затраты на производство>
+
+ |---Затраты
+ ||-----Приход(P) или Расход(R)
+ || │----- 761 - Счет 76-01  / 766 - Счет 76-06 / 762 - Счет 76-12
+ || │ │-----Месяц
+ || │ │   │----ASF - счетфактуры / ATG - ТОРГ12 / ARH - Общий список документов
+ ||┌┴┐├┐ ┌┴┐           
+ ZR76109.ARH
+
+3) Участок <Реализация>
+
+ |---Реализация
+ ||-----Приход(P) или Расход(R) Ремонт (U)
+ || │----- Склад
+ || │ │-----Месяц
+ || │ │   │----ASF - счетфактуры / ATG - ТОРГ12 / ARH - Общий список документов / ATT - ТТН
+ ||┌┴┐├┐ ┌┴┐           
+ RP00204.ATG 
+
+4) Участок <Основные средства>
+
+ |---Основные средства
+ ||-----Приход(P) или Расход(R)
+ || │----- Резерв
+ || │ │-----Квартал
+ || │ │   │----ASF - счетфактуры / ATG - ТОРГ12 / ARH - Общий список документов
+ ||┌┴┐├┐ ┌┴┐           
+ OR00003.ARH
+
+ |---Основные средства
+ ||-----Приход(P) или Расход(R)
+ || │----- OC1-Акты приема-передачи / OC3-Акты модернизации / OC4-Акты списания / OCA-Акты списания автотранспорта
+ || │ │-----Квартал
+ || │ │   │----ARH - Общий список документов
+ ||┌┴┐├┐ ┌┴┐           
+ OPOC103.ARH
+
+5) Участок <Аренда>
+
+ |---Услуги
+ ||-----Приход(P) или Расход(R)
+ || │----- Резерв 000
+ || │ │-----Квартал
+ || │ │   │----ARH - Общий список документов
+ ||┌┴┐├┐ ┌┴┐           
+ UP00002.ARH
+
+
+Формат DBF файла
+-------------------
+
+Name        Type          Length
+=========== ======= =============== ===================================================================
+NPP         Numeric         5  0    Порядковый номер 
+NPPS        Numeric         2  0
+TYP_DOC     Character      30	    Тип документа	
+IN_OUT      Numeric         1  0    Признак входящий/исходящий
+NOMDOC      Character      30       Номер документа в учетной системе контрагента
+DATDOC      Date            8       Дата документа в учетной системе контрагента
+NDOC        Character       6       Номер документа краткий в нашей учетной системе
+DTDOC       Date            8       Дата документа в нашей учетной системе
+NMDOC       Character      10       Номер документа полный
+SUMMA       Numeric        18  2    Сумма документа
+ALTNDOC     Character      30       Альтернативный номер документа
+DATE1       Date            8       Альтернативная дата документа
+ALTNDOC3    Character       3       Альтернативный номер документа
+ALTDTDOC3   Date            8	    Альтернативная дата документа
+ALTNDOC4    Character      30       Альтернативный номер документа 
+ALTDTDOC4   Date            8       Альтернативная дата документа
+ALTNDOC5    Character       3       Альтернативный номер документа
+ALTDTDOC5   Date            8       Альтернативная дата документа
+NDPL        Character     120
+DTPL        Date            8
+DTOPER      Date            8       Дата операции
+CODOPER     Numeric         2  0    Код операции
+CODK        Numeric         7  0    Код контрагента 
+NAMD        Character      60       Наименование контрагента
+INN         Character      12       ИНН контрагента
+KPP         Character       9       КПП контрагента
+CODK2       Numeric         7  0    Код контрагента 2
+NAMD2       Character      60	    Наименование контрагента 2		
+INN2        Character      16       ИНН контрагента 2
+KPP2        Character       9       КПП контрагента 2
+PN1         Numeric        19  3
+PN2         Numeric        19  3
+DOC_AU      Character      60
+DOC_AU2     Character      60
+PODR        Numeric         3  0
+OPER_COD    Character       1
+CODF        Character       2
+SPRFD       Numeric         3  0
+NDOVER      Character      30
+DDOVER      Date            8
+VDOVER      Character     100
+FGTD1       Character     200
+REGN        Character      10
+SER         Character      10
+NREG        Character      10
+PLIST       Character      10
+SGDAT       Date            8
+MAUTO       Character      30
+GNAUTO      Character      15
+VAUTO       Character      40
+UVAUTO      Character      15
+VPER        Character      20
+PPOGR       Character      30
+PRAZGR      Character      30
+PRICEP1     Character      20
+NPRICEP1    Character      15
+NTN         Character      15
+DTN         Date            8
+DTTN        Date            8
+MGTN        Numeric        19  3
+NEGAIS      Character      50
+DEGAIS      Character      20
+NTTN        Character      12
+VDOC        Character       1
+NTORG12     Character      50
+DTORG12     Date            8
+PRIM_2      Character      20
+PRIM        Character      60     Доп. описание
+PRIM2       Character      60
+PRIM3       Character      60
+PRIM4       Character      60
+PRIM5       Character     200
+PRIM6       Character      60
+YESNDS      Character       1
+DUPLEX      Character       1
+NLIST       Numeric         3  0
+N_DOGOV     Character      60
+D_DOGOV     Date            8
+PODOT       Numeric         7  0
+FL_HOME     Character       6
+N_ISN       Numeric         7  0
+P_HOME      Character      50
+FLAG_FL     Character       6
+SUMMA10     Numeric        15  2
+SUMMA20     Numeric        15  2
+SUMMA18     Numeric        15  2
+SUMMA_V     Numeric        15  2
+SUMMAD      Numeric        15  2
+SUMMAU      Numeric        15  2
+SNDS10      Numeric        15  2
+SNDS20      Numeric        15  2
+SNDS18      Numeric        15  2
+SNDSU       Numeric        15  2
+SNDSD       Numeric        15  2
+TYPK        Character       3
+NOMSF       Character      10

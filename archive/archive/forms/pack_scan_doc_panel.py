@@ -284,6 +284,8 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         """
         Обработчик запуска сканирования документов.
         """
+        dlgfunc.openMsgBox(title=u'ВНИМАНИЕ!',
+                           prompt_text=u'Проверте подготовку сканера к работе и наличие документов в лотке!')
         scan_manager = ic.getScanManager()
         check_idx_list = self.getCheckedItems_list_ctrl(ctrl=self.docs_listCtrl)
         log.debug(u'Список индексов сканированных документов в пакете %s' % check_idx_list)

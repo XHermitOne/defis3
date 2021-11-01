@@ -255,6 +255,10 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
         quartal = int(dbf_filename[5:7]) if dbf_filename[5:7].isdigit() else 0
         if quartal:
             label += u'Документы за %d квартал' % quartal
+        if dbf_filename[1:2] == 'P':
+            label += u'. Покупка. '
+        elif dbf_filename[1:2] == 'R':
+            label += u'. Продажа. '
         return label
 
     def getYearMonthDlg(self, bYear=True, bMonth=False):
