@@ -42,7 +42,7 @@ FIND_SMB_URLS = ('smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pv
                  )
 
 PERSON_FIND_SMB_URLS = ('smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pvz/##PUB/ZPL/%d/ZPL.ZLC' % datetime.datetime.now().year,
-                       )
+                        )
 
 
 def smb_download_sprvent(download_urls=None, local_filename=None):

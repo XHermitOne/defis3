@@ -20,7 +20,7 @@ from ic.dlg import dlgfunc
 import ic
 
 # Version
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 0, 1, 3)
 
 
 class icDBFDocLoadManager(import_manager.icBalansImportManager):
@@ -55,7 +55,12 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
         # необходимо по NPP + NPPS
         nn = dbf_record['NPP']
         npps = dbf_record['NPPS']
+
+        # !!! Для 1С
+        # str_n_doc = dbf_record['PRIM_2'].strip() if dbf_record['PRIM_2'].strip() else dbf_record['NDOC'].strip()
+        # Для Баланс+
         str_n_doc = dbf_record['NDOC'].strip()
+        
         alt_n_doc = dbf_record['NOMDOC']
         # ВНИМАНИЕ! Номер документа на бумажном носителе
         print_n_doc = dbf_record['NOMDOC']

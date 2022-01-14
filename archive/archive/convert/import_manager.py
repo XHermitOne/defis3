@@ -140,7 +140,7 @@ class icBalansImportManager(icImportManagerInterface):
             msg = u'Найдено несколько кодов для <%s> ИНН: <%s> КПП: <%s>' % (name, inn, kpp)
             log.warning(msg)
         else:
-            log.warning(u'Не найден в справочнике контрагент <%s>. Код БАЛАНС+: %s.' %(name, balance_cod))
+            log.warning(u'Не найден в справочнике контрагент <%s>. Код БАЛАНС+: %s. ИНН: %s КПП: %s' %(name, balance_cod, inn, kpp))
         return None
 
     def find_doc_type_code(self, typ_doc, in_out):

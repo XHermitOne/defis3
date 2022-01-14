@@ -33,10 +33,8 @@ DEFAULT_PERSON_KPP_CODE = '+++++++++'
 DEFAULT_INN_CODE_FMT = '%010d'
 
 # Полное имя файла SPRAV.DBF (Справочник БАЛАНС+)
-COMPANY_SPRAV_DBF_FILENAME = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db', 'SPRVENT.DBF') if os.path.dirname(__file__) else  '/mnt/defis/defis3/archive/db/SPRVENT.DBF'
-PERSON_SPRAV_DBF_FILENAME = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db', 'ZPL.DBF') if os.path.dirname(__file__) else  '/mnt/defis/defis3/archive/db/ZPL.DBF'
-
-
+COMPANY_SPRAV_DBF_FILENAME = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db', 'SPRVENT.DBF') if os.path.dirname(__file__) else '/mnt/defis/defis3/archive/db/SPRVENT.DBF'
+PERSON_SPRAV_DBF_FILENAME = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db', 'ZPL.DBF') if os.path.dirname(__file__) else '/mnt/defis/defis3/archive/db/ZPL.DBF'
 
 
 class icNSIContrAgentTabManager(icmanagerinterface.icWidgetManager):
@@ -77,7 +75,7 @@ class icNSIContrAgentTabManager(icmanagerinterface.icWidgetManager):
             dbf_tab.Open(dbf_filename)
 
             dlgfunc.openProgressDlg(ic.getMainWin(),
-                                     u'Справочник контрагентов', u'Импорт данных',
+                                    u'Справочник контрагентов', u'Импорт данных',
                                     max_value=dbf_tab.getRecCount())
             i = 0
             i_code = 0
@@ -194,7 +192,7 @@ class icNSIContrAgentTabManager(icmanagerinterface.icWidgetManager):
             dbf_tab.Open(dbf_filename)
 
             dlgfunc.openProgressDlg(ic.getMainWin(),
-                                     u'Справочник физических лиц', u'Импорт данных',
+                                    u'Справочник физических лиц', u'Импорт данных',
                                     max_value=dbf_tab.getRecCount())
             i = 0
             i_code = 0

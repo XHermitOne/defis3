@@ -15,7 +15,7 @@ from . import load_net_config
 from ic.utils import smbfunc
 from ic.utils import filefunc
 
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
 
 
 def download_all_dbf(urls=load_net_config.SMB_SRC_URLS,
@@ -109,5 +109,6 @@ def download_archive_files(archive_year=None, archive_month=None):
     if isinstance(archive_month, datetime.date) or isinstance(archive_month, datetime.datetime):
         archive_month = archive_month.month
 
-    urls = [url_fmt % archive_year for url_fmt in load_net_config.ARCH_SMB_URLS_FMT]
+    urls = [url_fmt % archive_year if '%' in url_fmt else url_fmt for url_fmt in load_net_config.ARCH_SMB_URLS_FMT]
     return download_all_dbf(urls=urls, dst_file_ext='_%d.DBF' % archive_year)
+
