@@ -11,12 +11,13 @@ import ic
 from ic.log import log
 
 # Version
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 def validZipDocCatalog(zipdoc_dir=None):
     """
     Проверка корректного примонтированного каталога документов.
+    
     :return: True/False.
     """
     try:
@@ -34,6 +35,7 @@ def validZipDocCatalog(zipdoc_dir=None):
 def validZipDocDir(zipdoc_dir=None):
     """
     Проверка наличия папки каталога документов.
+    
     :return: True/False.
     """
     if zipdoc_dir is None:
@@ -44,6 +46,7 @@ def validZipDocDir(zipdoc_dir=None):
 def isEmptyDir(dirname):
     """
     Проверка пустой папки.
+    
     :return: True/False.
     """
     if not os.path.exists(dirname):

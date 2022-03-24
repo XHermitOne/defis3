@@ -325,7 +325,7 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
 
         if filename:
             manager = load_manager.icDBFDocLoadManager(self.pack_scan_panel)
-            manager.load_doc(filename, 'R')
+            manager.load_doc(filename, 'R', from_1c=False)
 
         if event:
             event.Skip()
@@ -347,7 +347,7 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
 
         if filename:
             manager = load_manager.icDBFDocLoadManager(self.pack_scan_panel)
-            manager.load_doc(filename, 'Z')
+            manager.load_doc(filename, 'Z', from_1c=False)
 
         if event:
             event.Skip()
@@ -369,7 +369,7 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
 
         if filename:
             manager = load_manager.icDBFDocLoadManager(self.pack_scan_panel)
-            manager.load_doc(filename, 'M')
+            manager.load_doc(filename, 'M', from_1c=False)
 
         if event:
             event.Skip()
@@ -391,7 +391,7 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
 
         if filename:
             manager = load_manager.icDBFDocLoadManager(self.pack_scan_panel)
-            manager.load_doc(filename, 'O')
+            manager.load_doc(filename, 'O', from_1c=False)
 
         if event:
             event.Skip()
@@ -413,7 +413,7 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
 
         if filename:
             manager = load_manager.icDBFDocLoadManager(self.pack_scan_panel)
-            manager.load_doc(filename, 'U')
+            manager.load_doc(filename, 'U', from_1c=False)
 
         if event:
             event.Skip()

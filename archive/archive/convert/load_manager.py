@@ -20,7 +20,7 @@ from ic.dlg import dlgfunc
 import ic
 
 # Version
-__version__ = (0, 0, 1, 3)
+__version__ = (0, 0, 2, 1)
 
 
 class icDBFDocLoadManager(import_manager.icBalansImportManager):
@@ -35,7 +35,7 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
         """
         import_manager.icBalansImportManager.__init__(self, pack_scan_panel)
 
-    def _create_doc(self, dbf_record, transaction, doc, sType, in_out=None):
+    def _create_doc(self, dbf_record, transaction, doc, sType, in_out=None, from_1c=False):
         """
         Создание нового документа.
 
@@ -56,10 +56,12 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
         nn = dbf_record['NPP']
         npps = dbf_record['NPPS']
 
-        # !!! Для 1С
-        # str_n_doc = dbf_record['PRIM_2'].strip() if dbf_record['PRIM_2'].strip() else dbf_record['NDOC'].strip()
-        # Для Баланс+
-        str_n_doc = dbf_record['NDOC'].strip()
+        if from_1c:
+            # !!! Для 1С
+            str_n_doc = dbf_record['PRIM_2'].strip() if dbf_record['PRIM_2'].strip() else dbf_record['NDOC'].strip()
+        else:
+            # Для Баланс+
+            str_n_doc = dbf_record['NDOC'].strip()
         
         alt_n_doc = dbf_record['NOMDOC']
         # ВНИМАНИЕ! Номер документа на бумажном носителе
@@ -132,7 +134,7 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
                        n_scan_pages=n_pages)
         return new_rec
 
-    def _load_doc(self, doc_dbf_filename, sFileType):
+    def _load_doc(self, doc_dbf_filename, sFileType, from_1c=False):
         """
         Загрузить документы из DBF файла.
 
@@ -166,7 +168,7 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
                 else:
                     in_out = None
                 log.debug(u'Файл: %s. Приход/Расход: %s' % (os.path.basename(doc_dbf_filename), in_out))
-                new_rec = self._create_doc(record, transaction, doc, sFileType, in_out=in_out)
+                new_rec = self._create_doc(record, transaction, doc, sFileType, in_out=in_out, from_1c=from_1c)
                 if new_rec:
                     n_doc = new_rec['n_doc']
                     # log.debug(u'+ %s' % str(new_rec))
@@ -197,7 +199,7 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
                 dbf_tab = None
             log.fatal(u'Ошибка загрузки данных документов материалов БАЛАНС+')
 
-    def load_doc(self, doc_dbf_filename, sFileType, bAutoRemove=False):
+    def load_doc(self, doc_dbf_filename, sFileType, bAutoRemove=False, from_1c=False):
         """
         Загрузить документы из DBF файла.
 
@@ -205,7 +207,7 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
         :param sFileType: Тип загружаемого файла.
         :param bAutoRemove: Автоматически удалить файл после загрузки?
         """
-        self._load_doc(doc_dbf_filename, sFileType)
+        self._load_doc(doc_dbf_filename, sFileType, from_1c=from_1c)
 
         # Удалить файл после загрузки
         if bAutoRemove:

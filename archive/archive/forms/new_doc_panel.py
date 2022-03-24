@@ -115,40 +115,42 @@ class icDocCardPanelManager():
             if not filename:
                 # Если не определен файл документа
                 dlgfunc.openErrBox(u'ОШИБКА',
-                                u'Не определен файл регистрируемого документа')
+                                u'Не определен файл регистрируемого документа', parent=self)
                 return False
             elif not os.path.exists(filename):
                 # Если не существует файл документа
                 dlgfunc.openErrBox(u'ОШИБКА',
-                                u'Файл регистрируемого документа <%s> не существует' % filename)
+                                u'Файл регистрируемого документа <%s> не существует' % filename, parent=self)
                 return False
             elif not data['doc_name'].strip():
                 # Если не определено имя документа
                 dlgfunc.openErrBox(u'ОШИБКА',
-                                u'Имя документа не определено')
+                                u'Имя документа не определено', parent=self)
                 return False
             elif not data['n_doc'].strip():
                 # Если не определен номер документа
                 dlgfunc.openErrBox(u'ОШИБКА',
-                                u'Не определен номер документа')
+                                u'Не определен номер документа', parent=self)
                 return False
             elif not data.get('doc_type', None):
                 # Если не определен тип документа
                 # То валидация не проходит, т.к. тип документа присутствует в
                 # имени файла скана
                 dlgfunc.openErrBox(u'ОШИБКА',
-                                u'Не определен тип документа')
+                                u'Не определен тип документа', parent=self)
                 return False
             elif not data.get('c_agent', None):
                 # Если не определен контрагент
                 # То валидация не проходит, т.к. контрагент присутствует в
                 # имени файла скана
                 dlgfunc.openErrBox(u'ОШИБКА',
-                                u'Не определен контрагент документа')
+                                u'Не определен контрагент документа', parent=self)
                 return False
             return True
         else:
             log.warning(u'Не определены данные экранной формы')
+            dlgfunc.openErrBox(u'ОШИБКА',
+                               u'Не определены данные экранной формы', parent=self)
         return False
 
     def put_doc_catalog(self, doc, scan_filename, doRemoveScan=True):
@@ -408,11 +410,15 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
             self.clear_ctrl_data()
 
             dlgfunc.openMsgBox(u'РЕГИСТРАЦИЯ',
-                            u'Новый документ <%s> зарегистрирован в БД.' % ctrl_data.get('n_doc', u''))
+                            u'Новый документ <%s> зарегистрирован в БД.' % ctrl_data.get('n_doc', u''), parent=self)
             #if not ic_dlg.openAskBox(u'РЕГИСТРАЦИЯ',
             #                       u'Новый документ <%s> зарегистрирован в БД. Продолжить регистрацию?' % ctrl_data.get('n_doc', u'')):
             #    main_win = ic.getMainWin()
             #    main_win.delPageByTitle(u'Регистрация новых документов')
+        else:
+            dlgfunc.openErrBox(u'ОШИБКА',
+                               u'Не корректные данные экранной формы', parent=self)
+			
 
         event.Skip()
 
@@ -429,7 +435,7 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
 
                 if not self.valid_link(doc_uuid):
                     log.warning(u'Попытка добавления уже существующей связи с документом')
-                    dlgfunc.openWarningBox(u'ВНИМАНИЕ', u'Связь с документом <%s> уже есть в списке' % doc_data.get('doc_name', u'-'))
+                    dlgfunc.openWarningBox(u'ВНИМАНИЕ', u'Связь с документом <%s> уже есть в списке' % doc_data.get('doc_name', u'-'), parent=self)
                     continue
 
                 self._link_to_uuids.append(doc_uuid)

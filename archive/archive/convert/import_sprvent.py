@@ -22,7 +22,7 @@ from ic.utils import filefunc
 from ic.utils import filefunc
 
 # Version
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 
 DEFAULT_WORKGROUP = 'WORKGROUP'
@@ -33,8 +33,9 @@ DEFAULT_WORKGROUP = 'WORKGROUP'
 PRJ_DIRNAME = os.path.dirname(os.path.dirname(os.path.dirname(__file__))) if os.path.dirname(__file__) else os.path.dirname(os.path.dirname(os.getcwd()))
 LOCAL_SPRVENT_FILENAME = os.path.join(PRJ_DIRNAME, 'db', 'SPRVENT.VNT')
 LOCAL_PERSON_FILENAME = os.path.join(PRJ_DIRNAME, 'db', 'ZPL.ZLC')
+LOCAL_CONTRAGENT_1C_FILENAME = os.path.join(PRJ_DIRNAME, 'db', 'C_AGENT.DBF')
 
-LOCAL_FILENAMES = (LOCAL_SPRVENT_FILENAME, LOCAL_PERSON_FILENAME)
+LOCAL_FILENAMES = (LOCAL_SPRVENT_FILENAME, LOCAL_PERSON_FILENAME, LOCAL_CONTRAGENT_1C_FILENAME)
 
 # Список путей поиска DBF файла справочника
 FIND_SMB_URLS = ('smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pvz/NSI/SPRVENT.VNT',
@@ -42,6 +43,9 @@ FIND_SMB_URLS = ('smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pv
                  )
 
 PERSON_FIND_SMB_URLS = ('smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pvz/##PUB/ZPL/%d/ZPL.ZLC' % datetime.datetime.now().year,
+                        )
+
+CONTRAGENT_1C_FIND_SMB_URLS = ('smb://xhermit@book/public/MAIL/Arxiv/C_AGENT.DBF',
                         )
 
 
@@ -126,7 +130,9 @@ def import_sprvent():
     """
     log.info(u'--- ЗАПУСК ИМПОРТА СПРАВОЧНИКА КОНТРАГЕНТОВ ---')
     # Сначала загрузить справочник из бекапа
-    result = smb_download_sprvent(FIND_SMB_URLS, LOCAL_SPRVENT_FILENAME) and smb_download_sprvent(PERSON_FIND_SMB_URLS, LOCAL_PERSON_FILENAME)
+    result = all([smb_download_sprvent(FIND_SMB_URLS, LOCAL_SPRVENT_FILENAME),
+                 smb_download_sprvent(PERSON_FIND_SMB_URLS, LOCAL_PERSON_FILENAME),
+                 smb_download_sprvent(CONTRAGENT_1C_FIND_SMB_URLS, LOCAL_CONTRAGENT_1C_FILENAME)])
     if result:
         # Успешно загрузили
         is_load = any([not filefunc.is_same_file_length(local_filename,

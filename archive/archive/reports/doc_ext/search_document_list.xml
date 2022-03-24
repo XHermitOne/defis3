@@ -1,76 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:x="urn:schemas-microsoft-com:office:excel">
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
   <Styles>
     <Style ss:ID="ce1">
       <Alignment ss:Horizontal="Left" ss:Vertical="Top"/>
       <Borders>
       </Borders>
       <Font ss:Size="12" ss:Bold="1" ss:FontName="Courier New"/>
-      <Interior ss:Color="#99ccff"/>
-    </Style>
-    <Style ss:ID="ce2">
-      <Alignment/>
-      <Borders>
-      </Borders>
-      <Font ss:Size="12" ss:Bold="1" ss:FontName="Courier New"/>
-      <Interior ss:Color="#99ccff"/>
-    </Style>
-    <Style ss:ID="ce3">
-      <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>
-      <Borders>
-      </Borders>
-      <Font ss:Size="12" ss:Bold="1" ss:FontName="Courier New"/>
-      <Interior ss:Color="#99ccff"/>
-    </Style>
-    <Style ss:ID="ce4">
-      <Alignment ss:Horizontal="Center" ss:WrapText="1" ss:Vertical="Center"/>
-      <Borders>
-      </Borders>
-      <Font ss:Size="12" ss:Bold="1" ss:FontName="Arial"/>
-      <Interior/>
-    </Style>
-    <Style ss:ID="ce5">
-      <Alignment ss:Horizontal="Center" ss:WrapText="1" ss:Vertical="Center"/>
-      <Borders>
-      </Borders>
-      <Font ss:Size="12" ss:Bold="1" ss:FontName="Arial"/>
-      <Interior/>
-    </Style>
-    <Style ss:ID="ce6">
-      <Alignment ss:Vertical="Center" ss:WrapText="1"/>
-      <Borders>
-        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="0.99"/>
-        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="0.99"/>
-        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.99"/>
-        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.99"/>
-      </Borders>
-      <Font ss:Size="10" ss:Bold="1" ss:FontName="Arial"/>
-      <Interior ss:Color="#cccccc"/>
-    </Style>
-    <Style ss:ID="ce7">
-      <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
-      <Borders>
-        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="0.99"/>
-        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="0.99"/>
-        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.99"/>
-        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.99"/>
-      </Borders>
-      <Font ss:Size="10" ss:FontName="Arial"/>
-      <Interior/>
-    </Style>
-    <Style ss:ID="ce8">
-      <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
-      <Borders>
-      </Borders>
-      <Font ss:Size="10" ss:Bold="1" ss:FontName="Arial"/>
-      <Interior/>
-    </Style>
-    <Style ss:ID="ce9">
-      <Alignment/>
-      <Borders>
-      </Borders>
-      <Font ss:Size="8"/>
       <Interior ss:Color="#99ccff"/>
     </Style>
     <Style ss:ID="ce11">
@@ -103,6 +39,70 @@
     <Style ss:ID="ce16">
       <Font ss:Size="8"/>
     </Style>
+    <Style ss:ID="ce2">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="12" ss:Bold="1" ss:FontName="Courier New"/>
+      <Interior ss:Color="#99ccff"/>
+    </Style>
+    <Style ss:ID="ce3">
+      <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="12" ss:Bold="1" ss:FontName="Courier New"/>
+      <Interior ss:Color="#99ccff"/>
+    </Style>
+    <Style ss:ID="ce4">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="12" ss:Bold="1" ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce5">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="12" ss:Bold="1" ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce6">
+      <Alignment ss:Vertical="Center" ss:WrapText="1"/>
+      <Borders>
+        <Border ss:Position="Left" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="0.99"/>
+        <Border ss:Position="Right" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="0.99"/>
+        <Border ss:Position="Top" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="0.99"/>
+        <Border ss:Position="Bottom" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="0.99"/>
+      </Borders>
+      <Font ss:Size="10" ss:Bold="1" ss:FontName="Arial"/>
+      <Interior ss:Color="#cccccc"/>
+    </Style>
+    <Style ss:ID="ce7">
+      <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:Position="Left" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="0.99"/>
+        <Border ss:Position="Right" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="0.99"/>
+        <Border ss:Position="Top" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="0.99"/>
+        <Border ss:Position="Bottom" ss:Color="#000000" ss:LineStyle="Continuous" ss:Weight="0.99"/>
+      </Borders>
+      <Font ss:Size="10" ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce8">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="10" ss:Bold="1" ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce9">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="8"/>
+      <Interior ss:Color="#99ccff"/>
+    </Style>
     <Style ss:ID="Default">
       <Font/>
     </Style>
@@ -111,12 +111,12 @@
     <Table>
       <Column ss:Width="18.284" ss:StyleID="ce2"/>
       <Column ss:Width="92.008" ss:StyleID="ce9"/>
-      <Column ss:Width="153.02" ss:StyleID="ce9"/>
-      <Column ss:Width="84.364" ss:StyleID="ce9"/>
-      <Column ss:Width="97.048" ss:StyleID="ce9"/>
-      <Column ss:Width="165.2" ss:StyleID="ce9"/>
+      <Column ss:Width="65.044" ss:StyleID="ce9"/>
+      <Column ss:Width="84.84" ss:StyleID="ce9"/>
+      <Column ss:Width="97.04799999999999" ss:StyleID="ce9"/>
+      <Column ss:Width="117.88" ss:StyleID="ce9"/>
       <Column ss:Width="87.416" ss:StyleID="ce14"/>
-      <Column ss:Width="63.224" ss:Span="249" ss:StyleID="ce16"/>
+      <Column ss:Width="63.22399999999999" ss:Span="249" ss:StyleID="ce16"/>
       <Row ss:Height="14.812">
         <Cell ss:StyleID="ce1">
           <Data ss:Type="String">Отчет списка найденных документов</Data>
@@ -142,7 +142,7 @@
         </Cell>
       </Row>
       <Row ss:Height="23.548">
-        <Cell ss:MergeDown="0" ss:MergeAcross="5" ss:StyleID="ce3">
+        <Cell ss:StyleID="ce3" ss:MergeAcross="5" ss:MergeDown="0">
           <Data ss:Type="String">PY: doc_ext.query_search_doc.search_doc_data(docnum, is_docnum_equal, docname, docdate_start, docdate_end, doctype, contragents, entity, description, comment, tag0, tag1, tag2, tag3, tag4, tag5, tag6, tag7, tag8, tag9, order_by_field)</Data>
         </Cell>
         <Cell ss:Index="7">
@@ -150,10 +150,10 @@
         </Cell>
       </Row>
       <Row ss:Height="12.6">
-        <Cell ss:MergeDown="0" ss:MergeAcross="5" ss:StyleID="ce4">
+        <Cell ss:StyleID="ce4" ss:MergeAcross="5" ss:MergeDown="0">
           <Data ss:Type="String">Список документов</Data>
         </Cell>
-        <Cell ss:Index="7" ss:MergeDown="2" ss:MergeAcross="0" ss:StyleID="ce15">
+        <Cell ss:Index="7" ss:StyleID="ce15" ss:MergeAcross="0" ss:MergeDown="2">
           <Data ss:Type="String">[header]</Data>
         </Cell>
         <Cell ss:StyleID="Default"/>
@@ -220,8 +220,8 @@
           <Data ss:Type="String">[detail]</Data>
         </Cell>
       </Row>
-      <Row ss:Height="17.192">
-        <Cell ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce8">
+      <Row ss:Height="17.191999999999997">
+        <Cell ss:StyleID="ce8" ss:MergeAcross="1" ss:MergeDown="0">
           <Data ss:Type="String">Всего документов:</Data>
         </Cell>
         <Cell ss:Index="3" ss:StyleID="ce13">
@@ -240,11 +240,9 @@
     </Table>
     <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
       <PageSetup>
-        <Layout/>
-        <PageMargins/>
+        <Layout x:Orientation="Landscape"/>
+        <PageMargins x:Left="0.39370078740157477" x:Right="0.39370078740157477" x:Top="0.39370078740157477" x:Bottom="0.39370078740157477"/>
       </PageSetup>
-      <FitToPage/>
-      
       <Print>
         <PaperSizeIndex>9</PaperSizeIndex>
       </Print>
