@@ -24,7 +24,7 @@ from ic.dlg import dlgfunc
 
 import ic.config
 
-__version__ = (1, 2, 1, 2)
+__version__ = (1, 2, 2, 1)
 
 _ = wx.GetTranslation
 
@@ -663,14 +663,21 @@ def delAllFilesFilter(delete_dir, *mask_filters):
         return None
 
 
-def clearDir(delete_dir):
+def clearDir(delete_dir, bDelSubDirs=False):
     """
     Удаление всех файлов из папки. Удаление
     рекурсивное по поддиректориям.
 
     :param delete_dir: Папка-источник.
+    :param bDelSubDirs: Удалить под папки?
     """
-    return delAllFilesFilter(delete_dir, '*.*')
+    result = delAllFilesFilter(delete_dir, '*.*')
+    if bDelSubDirs:
+        subdirs = getSubDirs(delete_dir)
+        if subdirs:
+            for subdir in subdirs:
+                shutil.rmtree(subdir, ignore_errors=True)
+    return result
 
 
 def getPythonDir():

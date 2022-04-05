@@ -7,6 +7,8 @@
 Для функционирования необходим пакет pdftk
 
 sudo apt install pdftk
+На Ubuntu 18.04+:
+sudo snap install pdftk
 """
 
 import os

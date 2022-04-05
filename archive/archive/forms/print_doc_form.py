@@ -8,6 +8,7 @@
 import sys
 import os
 import os.path
+import datetime
 import wx
 import wx.adv
 import sqlalchemy
@@ -270,9 +271,152 @@ class icPrintDocPanel(search_doc_form.icSearchDocPanelCtrl,
 
         event.Skip()
 
+    def publicPDFDocs(self, save_doc_uuids, save_pdf_dir=None, bAutoClear=False,
+                    bCompactName=False, catalog_order=('inn', 'kpp', 'year', 'doc_type'),
+                    bProgress=True):
+        """
+        Сохранение PDF документов в разные PDF файлы.
+
+        :param save_doc_uuids: UUIDы сохраняемых документов.
+        :param save_pdf_dir: Папка для сохранения.
+        :param bAutoClear: Автоматически очистить папку выгрузки?
+        :param bCompactName: Сокращенное именование файлов документов?
+        :param catalog_order: Порядо катологизации документов.
+        :param bProgress: Отобразить прогресс бар?
+        :return: True/False.
+        """
+        try:
+            return self._publicPDFDocs(save_doc_uuids=save_doc_uuids,
+                                     save_pdf_dir=save_pdf_dir,
+                                     bAutoClear=bAutoClear,
+                                     bCompactName=bCompactName,
+                                     catalog_order=catalog_order,
+                                     bProgress=bProgress)
+        except:
+            log.fatal(u'Ошибка сохранения документов в PDF виде в папку <%s>' % save_pdf_dir)
+        return False
+
+    def _publicPDFDocs(self, save_doc_uuids, save_pdf_dir=None, bAutoClear=False,
+                       bCompactName=False, catalog_order=('inn', 'kpp', 'year', 'doc_type'),
+                       bProgress=True):
+        """
+        Сохранение PDF документов в разные PDF файлы.
+
+        :param save_doc_uuids: UUIDы сохраняемых документов.
+        :param save_pdf_dir: Папка для сохранения.
+        :param bAutoClear: Автоматически очистить папку выгрузки?
+        :param bCompactName: Сокращенное именование файлов документов?
+        :param catalog_order: Порядо катологизации документов.
+        :param bProgress: Отобразить прогресс бар?
+        :return: True/False.
+        """
+        if save_pdf_dir is None:
+            save_pdf_dir = self.getSavePDFDirPath()
+            if not save_pdf_dir:
+                msg = u'Не определена папка для сохранения PDF файлов'
+                log.warning(msg)
+                dlgfunc.openWarningBox(u'ОШИБКА', msg)
+                return False
+
+        if os.path.exists(save_pdf_dir) and (bAutoClear or dlgfunc.openAskBox(u'Очистка папки',
+                                                                              u'Удалить все файлы из папки <%s>?' % save_pdf_dir)):
+            filefunc.clearDir(save_pdf_dir, bDelSubDirs=True)
+
+        if not os.path.exists(save_pdf_dir):
+            msg = u'Не существует папка выгрузки PDF файлов <%s>' % save_pdf_dir
+            log.warning(msg)
+            dlgfunc.openWarningBox(u'ОШИБКА', msg)
+            return False
+
+        try:
+            if bProgress:
+                dlgfunc.openProgressDlg(parent=None, title=u'ЗАГРУЗКА', prompt_text=u'',
+                                        min_value=0, max_value=len(save_doc_uuids))
+                                        
+            sprav_manager = ic.metadata.THIS.mtd.nsi_archive.create()
+            c_agent = sprav_manager.getSpravByName('nsi_c_agent')
+            doc_types = sprav_manager.getSpravByName('nsi_doc_type')
+            doc = ic.metadata.THIS.mtd.scan_document.create()
+
+            for i, doc_uuid in enumerate(save_doc_uuids):
+                doc.load_obj(doc_uuid)
+                filename = doc.getRequisiteValue('file_name')
+
+                doc_name = doc.getRequisiteValue('doc_name')
+                doc_date = doc.getRequisiteValue('doc_date')
+                doc_n = doc.getRequisiteValue('n_doc')
+                doc_type_cod = doc.getRequisiteValue('doc_type')
+                doc_type_name = doc_types.Find(doc_type_cod)
+
+                contragent_cod = doc.getRequisiteValue('c_agent')
+                contragent_data = c_agent.Find(contragent_cod, ('name', 'inn', 'kpp'))
+                contragent_name = contragent_data.get('name', u'')
+                contragent_inn = contragent_data.get('inn', u'')
+                contragent_kpp = contragent_data.get('kpp', u'')
+
+                doc_contragent_n = doc.getRequisiteValue('n_obj')
+                doc_contragent_date = doc.getRequisiteValue('obj_date')
+            
+                # Распределение по подпапкам
+                save_dir_names = dict(inn=contragent_inn, kpp=contragent_kpp, 
+                                      year=str(doc_date.year) if isinstance(doc_date, (datetime.datetime, datetime.date)) else 'XXXX',
+                                      doc_type=doc_type_name)
+                save_subdirs = [save_pdf_dir] + [save_dir_names.get(catalog_name, 'X') for catalog_name in catalog_order]
+                log.debug(str(save_subdirs))
+                save_dir_path = os.path.join(*save_subdirs)
+                if not os.path.exists(save_dir_path):
+                    filefunc.makeDirs(save_dir_path)
+
+                if bCompactName:
+                    words = ('%04d' % (i+1), u'INN'+contragent_inn)
+                else:
+                    words = ('%04d' % (i+1), contragent_inn, 
+                            contragent_kpp, doc_date.strftime('%d-%m-%Y'),
+                            doc_type_name)
+
+                base_filename = '_'.join(words).replace('/', '-').replace('\\', '-')
+                new_filename = os.path.join(save_dir_path, base_filename + os.path.splitext(filename)[1])
+
+                filefunc.copyFile(filename, new_filename, True)
+                
+                dlgfunc.updateProgressDlg(i, new_prompt_text=u'Загрузка файла <%s>' % base_filename)
+
+            if bProgress:
+                dlgfunc.closeProgressDlg()                
+            return True
+        except:
+            log.fatal(u'Ошибка сохранения PDF файлов из БД')
+            if bProgress:
+                dlgfunc.closeProgressDlg()                
+        return False
+
     def onSaveOnePDFToolClicked(self, event):
         """
         Обработчик сохранения документов в один PDF файл.
+        """
+        save_pdf_dir = self.getSavePDFDirPath()
+        if not save_pdf_dir:
+            event.Skip()
+            return
+
+        doc_uuids = [self.documents[i]['uuid'] for i in range(self.docs_listCtrl.GetItemCount()) if self.docs_listCtrl.IsChecked(i)]
+        if not doc_uuids:
+            dlgfunc.openWarningBox(u'СОХРАНЕНИЕ', u'Не выбраны документы для сохранения')
+            event.Skip()
+            return
+            
+        if self.publicPDFDocs(save_doc_uuids=doc_uuids, save_pdf_dir=save_pdf_dir, bAutoClear=True, bCompactName=False):
+            dlgfunc.openMsgBox(u'СОХРАНЕНИЕ',
+                               u'Документы успешно сохранены в <%s>. ' % save_pdf_dir)
+        else:            
+            dlgfunc.openWarningBox(u'СОХРАНЕНИЕ',
+                                   u'Ошибка сохранения PDF файлов из БД')
+
+        event.Skip()
+
+    def onSaveOnePDFToolClicked_old(self, event):
+        """
+        Обработчик сохранения PDF документов для передачи третьим лицам в электронном виде.
         """
         save_pdf_dir = self.getSavePDFDirPath()
         if not save_pdf_dir:
