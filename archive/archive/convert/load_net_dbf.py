@@ -15,7 +15,7 @@ from . import load_net_config
 from ic.utils import smbfunc
 from ic.utils import filefunc
 
-__version__ = (0, 1, 2, 2)
+__version__ = (0, 1, 3, 1)
 
 
 def download_all_dbf(urls=load_net_config.SMB_SRC_URLS,
@@ -90,12 +90,13 @@ def download_all_dbf(urls=load_net_config.SMB_SRC_URLS,
     return all(results)
 
 
-def download_archive_files(archive_year=None, archive_month=None):
+def download_archive_files(archive_year=None, archive_month=None, urls_fmt=load_net_config.ARCH_SMB_URLS_FMT):
     """
     Загрузить архивные файлы за год.
 
     :param archive_year: Год загрузки. Если не указан, то берется текущий системный.
     :param archive_month: Месяц загрузки. Если не указан, то берется текущий системный.
+    :param urls_fmt: Форматы URl для загрузки DBF файлов.
     :return: True/False
     """
     if archive_year is None:
@@ -109,6 +110,6 @@ def download_archive_files(archive_year=None, archive_month=None):
     if isinstance(archive_month, datetime.date) or isinstance(archive_month, datetime.datetime):
         archive_month = archive_month.month
 
-    urls = [url_fmt % archive_year if '%' in url_fmt else url_fmt for url_fmt in load_net_config.ARCH_SMB_URLS_FMT]
+    urls = [url_fmt % archive_year if '%' in url_fmt else url_fmt for url_fmt in urls_fmt]
     return download_all_dbf(urls=urls, dst_file_ext='_%d.DBF' % archive_year)
 

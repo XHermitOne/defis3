@@ -24,6 +24,10 @@ ARCH_SMB_URLS_FMT = ('smb://xhermit@NAS1/sys$/Nas_pvz/#RLZ/%d/ARHIV',
                      # 'smb://xhermit@NAS1/sys$/_MAIL/Arxiv',
                      )
 
+ARCH_1C_SMB_URLS_FMT = ('smb://xhermit@NAS1/sys$/_MAIL/Arxiv/mts/%d',
+                        # 'smb://xhermit@NAS1/sys$/_MAIL/Arxiv/rlz/%d',
+                        )
+
 # ARCH_SMB_URLS_FMT = ('/mnt/samba/Nas_pvz/#RLZ/%d/ARHIV',
 #                     '/mnt/samba/Nas_pvz/#MTS/%d/ARHIV',
 #                     )
@@ -36,4 +40,4 @@ DEST_PATH = '/mnt/defis/defis3/archive/db'
 # Расширение результирующего файла, после загрузки
 DEST_FILE_EXT = '.DBF'
 
-__version__ = (0, 1, 4, 1)
+__version__ = (0, 1, 5, 1)

@@ -30,7 +30,7 @@ from archive.convert import load_net_config
 ### RESOURCE_MODULE_IMPORTS
 
 #   Version
-__version__ = (0, 1, 5, 1)
+__version__ = (0, 1, 6, 1)
 
 DOC_FILE_TYPES = ('RLZ', 'ZTR', 'MTS', 'OSN', 'ARN')
 
@@ -288,12 +288,13 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
         arch_quarter = arch_quarter[1] if arch_quarter else None
         return arch_year, arch_quarter
 
-    def downloadArchiveDBF(self, arch_year, arch_month):
+    def downloadArchiveDBF(self, arch_year, arch_month, from_1c=False):
         """
         Произвести загрузку файлов архивных данных.
 
         :param bYear: Определить дату как Год.
         :param bMonth: Определить дату как Год-Месяц.
+        :param from_1c: Загрузка DBF из 1С?
         :return: True - загрузка произведена, False - нажата <Отмена>.
         """
         # Удалить все ранее загруженные файлы
@@ -303,7 +304,8 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
                 filefunc.removeFile(dbf_filename)
 
         # Загрузить все данные за указанный год - месяц
-        result = load_net_dbf.download_archive_files(arch_year, arch_month)
+        urls_fmt = load_net_config.ARCH_1C_SMB_URLS_FMT if from_1c else load_net_config.ARCH_SMB_URLS_FMT
+        result = load_net_dbf.download_archive_files(arch_year, arch_month, urls_fmt=urls_fmt)
         if not result:
             dlgfunc.openWarningBox(u'ЗАГРУЗКА', u'Ошибка загрузки файлов данных архива')
         return result
@@ -320,7 +322,8 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
                 event.Skip()
             return
 
-        self.downloadArchiveDBF(arch_year, arch_month)
+        # from_1c = dlgfunc.openAskBox(u'ЗАГРУЗКА', u'Загрузить данные из 1С?')
+        self.downloadArchiveDBF(arch_year, arch_month, from_1c=False)
         filename = self.choiceLoadFileName('R', arch_year, arch_month)
 
         if filename:
@@ -342,12 +345,13 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
                 event.Skip()
             return
 
-        self.downloadArchiveDBF(arch_year, arch_month)
+        from_1c = dlgfunc.openAskBox(u'ЗАГРУЗКА', u'Загрузить данные из 1С?')
+        self.downloadArchiveDBF(arch_year, arch_month, from_1c=from_1c)
         filename = self.choiceLoadFileName('Z', arch_year, arch_month)
 
         if filename:
             manager = load_manager.icDBFDocLoadManager(self.pack_scan_panel)
-            manager.load_doc(filename, 'Z', from_1c=False)
+            manager.load_doc(filename, 'Z', from_1c=from_1c)
 
         if event:
             event.Skip()
@@ -364,12 +368,13 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
                 event.Skip()
             return
 
-        self.downloadArchiveDBF(arch_year, arch_month)
+        from_1c = dlgfunc.openAskBox(u'ЗАГРУЗКА', u'Загрузить данные из 1С?')
+        self.downloadArchiveDBF(arch_year, arch_month, from_1c=from_1c)
         filename = self.choiceLoadFileName('M', arch_year, arch_month)
 
         if filename:
             manager = load_manager.icDBFDocLoadManager(self.pack_scan_panel)
-            manager.load_doc(filename, 'M', from_1c=False)
+            manager.load_doc(filename, 'M', from_1c=from_1c)
 
         if event:
             event.Skip()
@@ -386,12 +391,13 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
                 event.Skip()
             return
 
-        self.downloadArchiveDBF(arch_year, arch_quarter)
+        from_1c = dlgfunc.openAskBox(u'ЗАГРУЗКА', u'Загрузить данные из 1С?')
+        self.downloadArchiveDBF(arch_year, arch_quarter, from_1c=from_1c)
         filename = self.choiceLoadFileName('O', arch_year, arch_quarter)
 
         if filename:
             manager = load_manager.icDBFDocLoadManager(self.pack_scan_panel)
-            manager.load_doc(filename, 'O', from_1c=False)
+            manager.load_doc(filename, 'O', from_1c=from_1c)
 
         if event:
             event.Skip()
@@ -408,12 +414,13 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
                 event.Skip()
             return
 
-        self.downloadArchiveDBF(arch_year, arch_quarter)
+        from_1c = dlgfunc.openAskBox(u'ЗАГРУЗКА', u'Загрузить данные из 1С?')
+        self.downloadArchiveDBF(arch_year, arch_quarter, from_1c=from_1c)
         filename = self.choiceLoadFileName('U', arch_year, arch_quarter)
 
         if filename:
             manager = load_manager.icDBFDocLoadManager(self.pack_scan_panel)
-            manager.load_doc(filename, 'U', from_1c=False)
+            manager.load_doc(filename, 'U', from_1c=from_1c)
 
         if event:
             event.Skip()
