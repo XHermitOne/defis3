@@ -101,11 +101,11 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
                                   cols=((u'№', 80),
                                         ('Лист.', 40),
                                         ('2 стор.', 40),
-                                        (u'№ док.', 150),
+                                        (u'№ док.', 200),
                                         (u'Дата док.', 80),
                                         (u'№ док. контрагента', 200),
                                         (u'Дата контрагента', 80),
-                                        (u'Наименование', 450),
+                                        (u'Наименование', 400),
                                         ('Контрагент', 500)))
 
     def getScanDocCount(self):

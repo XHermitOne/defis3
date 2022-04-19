@@ -132,15 +132,15 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
             label += u'Покупка. ТОРГ12 '
         # Участок ЗАТРАТЫ
         elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
-            return None
+            label += u'Продажа. СФ '
         elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
-            return None
-        elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'R' and file_ext == 'APX':
-            return None
-        elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'P' and file_ext == 'APX':
-            return None
-        elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'T' and file_ext == 'APX':
-            return None
+            label += u'Покупка. СФ '
+        elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'R' and file_ext == 'AKT':
+            label += u'Продажа. Акты '
+        elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'P' and file_ext == 'AKT':
+            label += u'Покупка. Акты '
+        elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'O' and file_ext == 'AKT':
+            label += u'Акты '
         elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ARH':
             # label += u'Продажа. Документы '
             return None
@@ -149,21 +149,27 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
             return None
         elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'O' and file_ext == 'ARH':
             label += u'Документы '
+        elif dbf_filename.startswith('Z') and file_ext == 'ARX':
+            return None
         # Участок АРЕНДА
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
             label += u'Продажа. СФ '
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
             label += u'Покупка. СФ '
-        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'O' and file_ext == 'APX':
+        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'O' and file_ext == 'ARX':
             label += u'Документы '
-        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'P' and file_ext == 'APX':
-           return None
-        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'R' and file_ext == 'APX':
-           return None
+        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'O' and file_ext == 'AКТ':
+            label += u'Акты '
+        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'P' and file_ext == 'AКТ':
+            label += u'Продажа. Акты '
+        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'R' and file_ext == 'AКТ':
+            label += u'Покупка. Акты '
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ARH':
             label += u'Продажа. Документы '
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ARH':
             label += u'Покупка. Документы '
+        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'O' and file_ext == 'ARH':
+            label += u'Документы '
         # Участок ОСНОВНЫЕ СРЕДСТВА
         elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
             return None
