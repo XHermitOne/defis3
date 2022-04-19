@@ -135,6 +135,8 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
             label += u'Продажа. СФ '
         elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
             label += u'Покупка. СФ '
+        elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'O' and file_ext == 'ASF':
+            label += u'Счет-фактуры '
         elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'R' and file_ext == 'AKT':
             label += u'Продажа. Акты '
         elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'P' and file_ext == 'AKT':
@@ -156,6 +158,8 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
             label += u'Продажа. СФ '
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
             label += u'Покупка. СФ '
+        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'O' and file_ext == 'ASF':
+            label += u'Счет-фактуры '
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'O' and file_ext == 'ARX':
             label += u'Документы '
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'O' and file_ext == 'AКТ':
@@ -233,6 +237,8 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
             label = u'Счет 76-06'
         elif schet == '762':
             label = u'Счет 76-12'
+        elif schet == '000':
+            label = u'Прочие'
         return label
 
     def getMonthLabel(self, dbf_filename):
