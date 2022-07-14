@@ -179,6 +179,12 @@ class icBalansImportManager(icImportManagerInterface):
         elif typ_doc.upper() in (u'СОГЛАШЕНИЕ О ЗАЧЕТЕ ТРЕБОВАНИЙ', ):
             # СОГЛАШЕНИЕ О ЗАЧЕТЕ ТРЕБОВАНИЙ
             typ = '9009700000000'
+        elif typ_doc.upper() in (u'ДЕКЛАРАЦИЯ', ):
+            # ДЕКЛАРАЦИЯ
+            typ = '9009800000000'
+        elif typ_doc.upper() in (u'ИНВОЙС', ):
+            # ИНВОЙС
+            typ = '9009900000000'
         else:
             log.warning(u'Не определен тип документа <%s>' % typ_doc)
         return typ
