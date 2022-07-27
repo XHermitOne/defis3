@@ -176,15 +176,19 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
             label += u'Документы '
         # Участок ОСНОВНЫЕ СРЕДСТВА
         elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
-            return None
+            label += u'Продажа. СФ. '
         elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
-            return None
+            label += u'Покупка. СФ. '
+        elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ATG':
+            label += u'Продажа. Документы. '
+        elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ATG':
+            label += u'Покупка. Документы. '
         elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'R' and file_ext == 'APX':
             return None
         elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'P' and file_ext == 'APX':
             return None
-        elif dbf_filename.startswith('O') and file_ext == 'ATG':
-            return None
+        # elif dbf_filename.startswith('O') and file_ext == 'ATG':
+        #    return None
         elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ARH':
             # label += u'Продажа. Документы '
             pass
