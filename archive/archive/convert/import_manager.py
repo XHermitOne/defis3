@@ -109,6 +109,8 @@ class icBalansImportManager(icImportManagerInterface):
             sprav_manager = ic.metadata.archive.mtd.nsi_archive.create()
             contragent_sprav = sprav_manager.getSpravByName('nsi_c_agent')
 
+        # log.debug(u'Поиск контрагента <%s ИНН: %s КПП: %s>' % (name, inn, kpp))
+
         name = name.strip()
         inn = inn.strip() if inn else inn
         kpp = kpp.strip() if kpp else kpp
@@ -120,9 +122,14 @@ class icBalansImportManager(icImportManagerInterface):
             tab = contragent_sprav.getStorage().getTable()
             find_codes = contragent_sprav.getStorage().find_code_where(sqlalchemy.and_(tab.c.s1.ilike(u'%'+str_balans_cod+u'%'),
                                                                                        tab.c.inn == inn))
-        elif kpp and inn:
+        elif kpp and inn and name:
             # Ищем по ИНН с KPP и наименованию
             find_codes = contragent_sprav.getStorage().find_code(name=name, inn=inn, kpp=kpp)
+
+        elif kpp and inn and not name:
+            # Ищем по ИНН с KPP
+            find_codes = contragent_sprav.getStorage().find_code(inn=inn, kpp=kpp)
+
         elif inn:
             # Ищем только по ИНН и наименованию
             find_codes = contragent_sprav.getStorage().find_code(name=name, inn=inn)

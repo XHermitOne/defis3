@@ -72,6 +72,7 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
         doc_name = self.get_doc_name(dbf_record['TYP_DOC'])
         in_out = int(dbf_record['IN_OUT']) if in_out is None else in_out
         doc_typ = self.find_doc_type_code(dbf_record['TYP_DOC'], in_out)
+        # log.debug(str(dbf_record))
         cagent_cod = self.find_contragent_code(self.contragent_sprav,
                                                dbf_record['NAMD'],
                                                dbf_record['INN'],

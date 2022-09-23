@@ -32,7 +32,7 @@ class icBrowseDocLinksPanelProto ( wx.Panel ):
 		
 		bSizer1.Add( self.ctrl_toolBar, 0, wx.EXPAND, 5 )
 		
-		self.links_treeListCtrl = wx.TreeListCtrl( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.links_treeListCtrl = wx.lib.gizmos.TreeListCtrl( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
 		
 		bSizer1.Add( self.links_treeListCtrl, 1, wx.EXPAND |wx.ALL, 5 )
 		

@@ -9,6 +9,7 @@ import sys
 import os
 import os.path
 import wx
+import wx.adv
 import sqlalchemy
 
 from archive.forms import search_doc_form_proto
@@ -276,8 +277,9 @@ class icSearchDocPanelCtrl(icSearchCritPanelCtrl):
         self.refreshDocList()
         
         # Отобразить количество найденных документов
-        doc_count = len(self.documents) if self.documents else 0
-        self.search_count_staticText.SetLabel(str(doc_count))
+        if hasattr(self, 'search_count_staticText'):
+            doc_count = len(self.documents) if self.documents else 0
+            self.search_count_staticText.SetLabel(str(doc_count))
 
         event.Skip()
         
@@ -698,8 +700,8 @@ class icChoiceDocsDlg(icSearchDocPanelCtrl,
 
         self.init()
 
-        self.search_crit_panel.start_datePicker.Bind(wx.EVT_DATE_CHANGED, self.onStartDatePickerChanged)
-        self.search_crit_panel.end_datePicker.Bind(wx.EVT_DATE_CHANGED, self.onEndDatePickerChanged)
+        self.search_crit_panel.start_datePicker.Bind(wx.adv.EVT_DATE_CHANGED, self.onStartDatePickerChanged)
+        self.search_crit_panel.end_datePicker.Bind(wx.adv.EVT_DATE_CHANGED, self.onEndDatePickerChanged)
 
         self.search_crit_panel.date_checkBox.Bind(wx.EVT_CHECKBOX, self.onDateCheckBox)
         self.search_crit_panel.one_date_checkBox.Bind(wx.EVT_CHECKBOX, self.onOneDateCheckBox)
