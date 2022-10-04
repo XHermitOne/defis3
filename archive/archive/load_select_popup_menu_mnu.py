@@ -241,6 +241,10 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
             label = u'Счет 76-06'
         elif schet == '762':
             label = u'Счет 76-12'
+        elif schet == '767':
+            label = u'Счет 76-XX'
+        elif schet == '768':
+            label = u'Счет 76-00'
         elif schet == '000':
             label = u'Прочие'
         return label
@@ -338,8 +342,8 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
                 event.Skip()
             return
 
-        # from_1c = dlgfunc.openAskBox(u'ЗАГРУЗКА', u'Загрузить данные из 1С?')
-        self.downloadArchiveDBF(arch_year, arch_month, from_1c=False)
+        from_1c = dlgfunc.openAskBox(u'ЗАГРУЗКА', u'Загрузить данные из 1С?')
+        self.downloadArchiveDBF(arch_year, arch_month, from_1c=from_1c)
         filename = self.choiceLoadFileName('R', arch_year, arch_month)
 
         if filename:
