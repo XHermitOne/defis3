@@ -157,7 +157,7 @@ class icColourComboBox(icwidget.icWidget, wx.ComboCtrl):
         font.SetWeight(wx.FONTWEIGHT_BOLD)
         dc.SetFont(font)
         tw,th = dc.GetTextExtent(label)
-        dc.DrawText(label, (bw-tw)/2, (bw-tw)/2)
+        dc.DrawText(label, round((bw-tw)/2), round((bw-tw)/2))
         del dc
 
         # now apply a mask using the bgcolor

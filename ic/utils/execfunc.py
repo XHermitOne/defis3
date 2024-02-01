@@ -293,6 +293,7 @@ def runTaskSH(command):
         f = open(run_sh_name, 'wt')
         f.write(command)
         f.close()
+        os.chmod(run_sh_name, 0o777)
         f = None
         # Запуск исполняемого скрипта
         log.info(u'run task: %s' % run_sh_name)

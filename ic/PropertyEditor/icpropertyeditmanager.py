@@ -613,7 +613,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
             lst = tree.GetChildNameList(tree.GetSelection())
             if value in lst:
                 dlgfunc.openWarningBox(u'Контроль  значения',
-                                    u'Имя <%s> уже существует. Введите другое.' % value)
+                                       u'Имя <%s> уже существует. Введите другое.' % value)
                 ret = coderror.IC_CTRL_FAILED_IGNORE
             else:
                 tree.SetItemText(tree.GetSelection(), res['type']+': '+value)
@@ -624,18 +624,18 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
             ret = cls.Ctrl(value, attr=name, propEdt=self)
             if typ is None:
                 dlgfunc.openWarningBox(u'Контроль  значения',
-                                    u'Не известный тип атрибута: <%s>' % value)
+                                       u'Не известный тип атрибута: <%s>' % value)
                 ret = coderror.IC_CTRL_FAILED_IGNORE
             elif ret == coderror.IC_CTRL_FAILED:
                 dlgfunc.openWarningBox(u'Контроль  значения',
-                                    u'Не корректный тип значения: <%s>. Свойство <%s>' % (value, name))
+                                       u'Не корректный тип значения: <%s>. Свойство <%s>' % (value, name))
                 ret = coderror.IC_CTRL_FAILED_IGNORE
             elif ret is None:
                 dlgfunc.openWarningBox(u'Контроль  значения',
-                                    u'Ошибка записи значения: <%s> Свойство <%s>' % (value, name))
+                                       u'Ошибка записи значения: <%s> Свойство <%s>' % (value, name))
                 ret = coderror.IC_CTRL_FAILED_IGNORE
             elif ret == coderror.IC_CTRL_FAILED_IGNORE:
-                pass
+                log.warning(u'Код возврата CTRL_FAILED_IGNORE')
         return ret
 
     def _refreshResTree(self, name, value, res_tree=None):

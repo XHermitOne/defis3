@@ -21,7 +21,7 @@ from ic.interfaces import icmanagerinterface
 ### RESOURCE_MODULE_IMPORTS
 
 #   Version
-__version__ = (0, 0, 2, 1)
+__version__ = (0, 0, 2, 2)
 
 DBF_DEFAULT_ENCODE = 'cp866'
 
@@ -55,8 +55,7 @@ class icNSIContrAgentTabManager(icmanagerinterface.icWidgetManager):
             self.set_company_default_data(True, COMPANY_SPRAV_DBF_FILENAME)
             self.set_person_default_data(False, PERSON_SPRAV_DBF_FILENAME)
         else:
-            self.set_contragent_1c_default_data(False, CONTRAGENT_1C_SPRAV_DBF_FILENAME)
-            
+            self.set_contragent_1c_default_data(True, CONTRAGENT_1C_SPRAV_DBF_FILENAME)
 
     def set_company_default_data(self, bClear=False, dbf_filename=None):
         """
@@ -240,10 +239,10 @@ class icNSIContrAgentTabManager(icmanagerinterface.icWidgetManager):
                 phone = u''
                 balans_code = int(record['CODK'])
 
-                try:
-                    log.debug('NSI [%s : %s]' % (cod, name))
-                except UnicodeDecodeError:
-                    log.debug('NSI [%s]' % cod)
+                # try:
+                #    log.debug('NSI [%s : %s]' % (cod, name))
+                # except UnicodeDecodeError:
+                #    log.debug('NSI [%s]' % cod)
 
                 find_rec = tab.get_where_transact(tab.c.cod == cod, transaction=transaction)
                 not_new = find_rec and find_rec.rowcount
@@ -299,7 +298,7 @@ class icNSIContrAgentTabManager(icmanagerinterface.icWidgetManager):
                 dbf_tab = None
             log.fatal(u'Ошибка импорта данных справочника контрагентов БАЛАНС+')
 
-    def set_contragent_1c_default_data(self, bClear=False, dbf_filename=None):
+    def set_contragent_1c_default_data(self, bClear=True, dbf_filename=None):
         """
         Установка значений справочника по умолчанию.  Справочник контрагентов + физ. лиц.
         Данные беруться из таблицы справочника 1C.
@@ -354,20 +353,20 @@ class icNSIContrAgentTabManager(icmanagerinterface.icWidgetManager):
                         cod = find_rec.fetchone()['cod']
                     else:
                         # По GUID 1C не нашли. Ищем по коду БАЛАНС+
-                        find_rec = tab.get_where_transact(tab.c.s1.ilike('%%<%s>%%' % balans_code), transaction=transaction)
-                        if find_rec.rowcount > 1:
-                            log.warning(u'Множественное определение в справочнике контрагента по коду БАЛАНС+ <%s>' % balans_code)
-                            dbf_tab.Next()
-                            record = dbf_tab.getRecDict()
-                            i += 1
-                            continue
+                        # find_rec = tab.get_where_transact(tab.c.s1.ilike('%%<%s>%%' % balans_code), transaction=transaction)
+                        # if find_rec.rowcount > 1:
+                        #     log.warning(u'Множественное определение в справочнике контрагента по коду БАЛАНС+ <%s>' % balans_code)
+                        #     dbf_tab.Next()
+                        #     record = dbf_tab.getRecDict()
+                        #     i += 1
+                        #     continue
                             
-                        not_new = find_rec and find_rec.rowcount
-                        if not_new:
-                            cod = find_rec.fetchone()['cod']
-                        else:                        
-                            subcode = DEFAULT_INN_CODE_FMT % i_code
-                            cod = '-' * (12 - len(subcode)) + subcode + kpp
+                        # not_new = find_rec and find_rec.rowcount
+                        #if not_new:
+                        #    cod = find_rec.fetchone()['cod']
+                        #else:
+                        subcode = DEFAULT_INN_CODE_FMT % i_code
+                        cod = '-' * (12 - len(subcode)) + subcode + kpp
                 else:
                     cod = '-' * (12 - len(inn)) + inn + kpp
                 
@@ -386,10 +385,10 @@ class icNSIContrAgentTabManager(icmanagerinterface.icWidgetManager):
                 address = str(record['ADDRESS']).replace(u'\r', u'').replace(u'\n', u'')
                 phone = str(record['TELEFON'])
 
-                try:
-                    log.debug('NSI [%s : %s]' % (cod, name))
-                except UnicodeDecodeError:
-                    log.debug('NSI [%s]' % cod)
+                # try:
+                #    log.debug('NSI [%s : %s]' % (cod, name))
+                # except UnicodeDecodeError:
+                #    log.debug('NSI [%s]' % cod)
 
                 find_rec = tab.get_where_transact(tab.c.cod == cod, transaction=transaction)
                 not_new = find_rec and find_rec.rowcount

@@ -20,7 +20,7 @@ from ic.utils import uuidfunc
 
 
 # Version
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 0, 3, 1)
 
 # Код КПП для ИП отсутствует, подменяем на КПП по умолчанию
 DEFAULT_KPP_CODE = '---------'
@@ -122,17 +122,22 @@ class icBalansImportManager(icImportManagerInterface):
             tab = contragent_sprav.getStorage().getTable()
             find_codes = contragent_sprav.getStorage().find_code_where(sqlalchemy.and_(tab.c.s1.ilike(u'%'+str_balans_cod+u'%'),
                                                                                        tab.c.inn == inn))
-        elif kpp and inn and name:
-            # Ищем по ИНН с KPP и наименованию
-            find_codes = contragent_sprav.getStorage().find_code(name=name, inn=inn, kpp=kpp)
+        # elif kpp and inn and name:
+        #    # Ищем по ИНН с KPP и наименованию
+        #    find_codes = contragent_sprav.getStorage().find_code(name=name, inn=inn, kpp=kpp)
 
-        elif kpp and inn and not name:
+        elif kpp and inn:
             # Ищем по ИНН с KPP
             find_codes = contragent_sprav.getStorage().find_code(inn=inn, kpp=kpp)
 
-        elif inn:
-            # Ищем только по ИНН и наименованию
-            find_codes = contragent_sprav.getStorage().find_code(name=name, inn=inn)
+        #elif inn and name:
+        #    # Ищем только по ИНН и наименованию
+        #    find_codes = contragent_sprav.getStorage().find_code(name=name, inn=inn)
+
+        elif (not kpp) and inn:
+            # Ищем по ИНН
+            find_codes = contragent_sprav.getStorage().find_code(inn=inn)
+
         else:
             # Нет полной информации ищем только по коду БАЛАНС
             str_balans_cod = u'<%d>' % balance_cod
@@ -141,11 +146,12 @@ class icBalansImportManager(icImportManagerInterface):
 
         len_find_codes = len(find_codes)
         if len_find_codes == 1:
-            log.debug(u'Найден контрагент <%s> для <%s>' % (find_codes[0], name))
+            # log.debug(u'Найден контрагент <%s> для <%s>' % (find_codes[0], name))
             return find_codes[0]
         elif len_find_codes > 1:
             msg = u'Найдено несколько кодов для <%s> ИНН: <%s> КПП: <%s>' % (name, inn, kpp)
             log.warning(msg)
+            return find_codes[0]
         else:
             log.warning(u'Не найден в справочнике контрагент <%s>. Код БАЛАНС+: %s. ИНН: %s КПП: %s' %(name, balance_cod, inn, kpp))
         return None
@@ -192,6 +198,10 @@ class icBalansImportManager(icImportManagerInterface):
         elif typ_doc.upper() in (u'ИНВОЙС', ):
             # ИНВОЙС
             typ = '9009900000000'
+        elif typ_doc.upper() == u'УПД':
+            typ = '2009000000000' if in_out else '1009000000000'
+        elif typ_doc.upper() == u'УПД2':
+            typ = '2009200000000' if in_out else '1009200000000'
         else:
             log.warning(u'Не определен тип документа <%s>' % typ_doc)
         return typ
@@ -213,6 +223,10 @@ class icBalansImportManager(icImportManagerInterface):
             return u'АКТ'
         elif typ_doc.upper() in (u'ОС1', u'ОС3', u'ОС4', u'ОС4А', u'ОС4Б'):
             return u'АКТ'
+        elif typ_doc.upper() == u'УПД':
+            return u'УПД'
+        elif typ_doc.upper() == u'УПД2':
+            return u'УПД2'
         return u''
 
     def get_doc_name(self, typ_doc):
@@ -243,6 +257,8 @@ class icBalansImportManager(icImportManagerInterface):
             return u'ЗТР'
         elif sType.upper() == u'O':
             return u'ОС'
+        elif sType.upper() == u'A':
+            return u'АРН'
         elif sType.upper() == u'U':
             return u'УСЛ'
         return u''
@@ -259,8 +275,10 @@ class icBalansImportManager(icImportManagerInterface):
             return u'Затраты на производство'
         elif sType.upper() == u'O':
             return u'Основные средства'
+        elif sType.upper() == u'A':
+            return u'Аренда'
         elif sType.upper() == u'U':
-            return u'Услуги/Аренда'
+            return u'Услуги'
         return u''
 
     def gen_contragent_code(self, inn, kpp, i=0):

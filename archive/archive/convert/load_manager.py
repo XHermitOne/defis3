@@ -20,7 +20,7 @@ from ic.dlg import dlgfunc
 import ic
 
 # Version
-__version__ = (0, 0, 2, 1)
+__version__ = (0, 0, 2, 2)
 
 
 class icDBFDocLoadManager(import_manager.icBalansImportManager):

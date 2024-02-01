@@ -22,7 +22,7 @@ from ic.utils import filefunc
 from ic.utils import filefunc
 
 # Version
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
 
 
 DEFAULT_WORKGROUP = 'WORKGROUP'
@@ -33,19 +33,20 @@ DEFAULT_WORKGROUP = 'WORKGROUP'
 PRJ_DIRNAME = os.path.dirname(os.path.dirname(os.path.dirname(__file__))) if os.path.dirname(__file__) else os.path.dirname(os.path.dirname(os.getcwd()))
 LOCAL_SPRVENT_FILENAME = os.path.join(PRJ_DIRNAME, 'db', 'SPRVENT.VNT')
 LOCAL_PERSON_FILENAME = os.path.join(PRJ_DIRNAME, 'db', 'ZPL.ZLC')
-LOCAL_CONTRAGENT_1C_FILENAME = os.path.join(PRJ_DIRNAME, 'db', 'C_AGENT.DBF')
+LOCAL_CONTRAGENT_1C_FILENAME = os.path.join(PRJ_DIRNAME, 'db', 'C_AGENT.VNT')
 
-LOCAL_FILENAMES = (LOCAL_SPRVENT_FILENAME, LOCAL_PERSON_FILENAME, LOCAL_CONTRAGENT_1C_FILENAME)
+# LOCAL_FILENAMES = (LOCAL_SPRVENT_FILENAME, LOCAL_PERSON_FILENAME, LOCAL_CONTRAGENT_1C_FILENAME)
+LOCAL_FILENAMES = (LOCAL_CONTRAGENT_1C_FILENAME, )
 
 # Список путей поиска DBF файла справочника
-FIND_SMB_URLS = ('smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pvz/NSI/SPRVENT.VNT',
+FIND_SMB_URLS = (# 'smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pvz/NSI/SPRVENT.VNT',
                  # 'smb://xhermit@TELEMETRIA/share/install/SPRVENT.VNT',
                  )
 
-PERSON_FIND_SMB_URLS = ('smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pvz/##PUB/ZPL/%d/ZPL.ZLC' % datetime.datetime.now().year,
+PERSON_FIND_SMB_URLS = (#'smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pvz/##PUB/ZPL/%d/ZPL.ZLC' % datetime.datetime.now().year,
                         )
 
-CONTRAGENT_1C_FIND_SMB_URLS = ('smb://xhermit@book/public/MAIL/Arxiv/C_AGENT.DBF',
+CONTRAGENT_1C_FIND_SMB_URLS = ('smb://lex@book/public/MAIL/Arxiv/C_AGENT.DBF',
                         )
 
 
@@ -87,7 +88,7 @@ def smb_download_sprvent(download_urls=None, local_filename=None):
             download_filename = url.path + ('/#' + url.fragment if url.fragment else '')
             download_file = os.path.join(*download_filename.split(os.path.sep)[2:])
 
-            log.info(u'Загрузка файла <%s : %s> из SMB ресурса' % (download_url, download_file))
+            log.info(u'Загрузка файла <%s : %s> из SMB ресурса в <%s>' % (download_url, download_file, local_filename))
 
             if os.path.exists(local_filename):
                 log.info(u'Удаление файла <%s>' % local_filename)
@@ -130,9 +131,10 @@ def import_sprvent():
     """
     log.info(u'--- ЗАПУСК ИМПОРТА СПРАВОЧНИКА КОНТРАГЕНТОВ ---')
     # Сначала загрузить справочник из бекапа
-    result = all([smb_download_sprvent(FIND_SMB_URLS, LOCAL_SPRVENT_FILENAME),
-                 smb_download_sprvent(PERSON_FIND_SMB_URLS, LOCAL_PERSON_FILENAME),
-                 smb_download_sprvent(CONTRAGENT_1C_FIND_SMB_URLS, LOCAL_CONTRAGENT_1C_FILENAME)])
+    # result = all([smb_download_sprvent(FIND_SMB_URLS, LOCAL_SPRVENT_FILENAME),
+    #              smb_download_sprvent(PERSON_FIND_SMB_URLS, LOCAL_PERSON_FILENAME),
+    #              smb_download_sprvent(CONTRAGENT_1C_FIND_SMB_URLS, LOCAL_CONTRAGENT_1C_FILENAME)])
+    result = smb_download_sprvent(CONTRAGENT_1C_FIND_SMB_URLS, LOCAL_CONTRAGENT_1C_FILENAME)
     if result:
         # Успешно загрузили
         is_load = any([not filefunc.is_same_file_length(local_filename,

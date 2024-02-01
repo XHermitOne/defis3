@@ -18,7 +18,7 @@ try:
     sqlalchemy_field_type_Float = sqlalchemy.Float
     sqlalchemy_field_type_String = sqlalchemy.String
     sqlalchemy_field_type_Text = sqlalchemy.Text
-    sqlalchemy_field_type_Binary = sqlalchemy.Binary
+    sqlalchemy_field_type_Binary = sqlalchemy.Binary if hasattr(sqlalchemy, 'Binary') else sqlalchemy.BINARY
     sqlalchemy_field_type_DateTime = sqlalchemy.DateTime
     sqlalchemy_field_type_PickleType = sqlalchemy.PickleType
     sqlalchemy_field_type_BigInteger = sqlalchemy.BigInteger
@@ -37,7 +37,7 @@ except ImportError:
 
 from ic.components import icwidget
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # Типы полей
 FIELD_TYPE = 'Field'

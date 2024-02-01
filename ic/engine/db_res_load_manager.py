@@ -21,7 +21,13 @@ try:
 except ImportError:
     from ic.engine import glob_functions
 
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
+
+if hasattr(orm_ifs, 'MapperExtension'):
+    SQLALCHEMY_MAPPER_EXTENSION = orm_ifs.MapperExtension
+else:
+    from sqlalchemy.orm import events as orm_events
+    SQLALCHEMY_MAPPER_EXTENSION = orm_events.MapperEvents
 
 
 class Resources(object):
@@ -64,7 +70,7 @@ def mapclass(sysdb, tab_name=None):
     return resources_tab, Resources
 
 
-class ResEventExtension(orm_ifs.MapperExtension):
+class ResEventExtension(SQLALCHEMY_MAPPER_EXTENSION):
     pass
 
 

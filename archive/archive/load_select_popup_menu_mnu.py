@@ -9,6 +9,7 @@
 
 import os
 import os.path
+import fnmatch
 
 from ic.interfaces import icmanagerinterface
 from ic.log import log
@@ -30,9 +31,9 @@ from archive.convert import load_net_config
 ### RESOURCE_MODULE_IMPORTS
 
 #   Version
-__version__ = (0, 1, 6, 1)
+__version__ = (0, 1, 7, 2)
 
-DOC_FILE_TYPES = ('RLZ', 'ZTR', 'MTS', 'OSN', 'ARN')
+DOC_FILE_TYPES = ('RLZ', 'ZTR', 'MTS', 'OSN', 'ARN', 'USL')
 
 
 class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
@@ -54,11 +55,11 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
         if event:
             event.Skip()
 
-    def choiceLoadFileName(self, sFileType, choice_year=None, choice_month=None):
+    def choiceLoadFileName(self, file_masks, choice_year=None, choice_month=None):
         """
         Выбрать загружаемый файл.
 
-        :param sFileType: Тип загружаемого файла.
+        :param file_masks: Маски загружаемого файла.
         :param choice_year: Отфильтровать год.
         :param choice_year: Отфильтровать месяц.
         :return: Полное имя загружаемого файла или None, если нажата <отмена>.
@@ -67,7 +68,15 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
         # log.debug(u'Папка загрузки документов <%s>' % load_doc_dir)
         if load_doc_dir and os.path.exists(load_doc_dir):
             all_filenames = os.listdir(load_doc_dir)
-            filenames = [filename for filename in all_filenames if filename.startswith(sFileType) and os.path.splitext(filename)[1].lower() == '.dbf']
+            
+            if isinstance(file_masks, str):
+                filenames = fnmatch.filter(all_filenames, file_masks)
+            elif isinstance(file_masks, (list, tuple)):
+                filenames = []
+                for file_mask in file_masks:
+                    filenames += fnmatch.filter(all_filenames, file_mask)
+            log.debug(u'Список обрабатываемых файлов %s' % str(filenames))
+                    
             # log.debug(u'Список файлов %s' % str(filenames))
             if choice_year and not choice_month:
                 filenames = [filename for filename in filenames if filename.endswith('_%d.DBF' % choice_year)]
@@ -93,123 +102,183 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
                 dlgfunc.openErrBox(u'ЗАГРУЗКА', u'Файлы списка документов для загрузки не найдены!')
         return None
 
+
     def getLabelByDBFFilename(self, dbf_filename):
         """
         Определить надпись по имени загружаемого файла.
         """
+        file_ext = dbf_filename[8:11].upper()
+        log.debug(u'Тип файла %s' % file_ext)
+
         label = u''
-        if dbf_filename.startswith('R'):
+        if fnmatch.fnmatch(dbf_filename, load_net_config.REALIZ_FILE_MASKS):
+            # Участок РЕАЛИЗАЦИЯ
             warehouse = dbf_filename[2:5]
             label += u'Реализация. ' + (u'' if warehouse == '000' or not warehouse.isdigit() else u'Склад %d. ' % int(warehouse))
             prefix = self.getMonthLabel(dbf_filename)
-        elif dbf_filename.startswith('Z'):
-            label += u'Затраты. ' + self.getSchetLabel(dbf_filename) + u' '
-            prefix = self.getMonthLabel(dbf_filename)
+            if dbf_filename[1:2].upper() == 'U' and file_ext == 'ASF':
+                label += u'Ремонт. СФ '
+            elif dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
+                label += u'Продажа. СФ '
+            elif dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
+                label += u'Покупка. СФ '
+            elif dbf_filename[1:2].upper() == 'T' and file_ext == 'ATT':
+                label += u'Продажа. ТТН '
+            elif dbf_filename[1:2].upper() == 'R' and file_ext == 'ATG':
+                label += u'Продажа. ТОРГ12 '
+            elif dbf_filename[1:2].upper() == 'P' and file_ext == 'ATG':
+                label += u'Покупка. ТОРГ12 '
+            elif dbf_filename[1:2].upper() == 'R' and file_ext == 'UP2':
+                label += u'Продажа. УПД2. '
+            elif dbf_filename[1:2].upper() == 'P' and file_ext == 'UP2':
+                label += u'Покупка. УПД2. '
+            else:
+                label += u'Документы '
+            
+        elif any([fnmatch.fnmatch(dbf_filename, file_mask) for file_mask in load_net_config.ZATRATY_FILE_MASKS]):
+            # Участок ЗАТРАТЫ/Акцептованные счета
+            label += u'Услуги. ' + self.getSchetLabel(dbf_filename) + u' '
+            prefix = self.getQuartalLabel(dbf_filename)
             log.debug(u'Затраты <%s>' % dbf_filename)
-        elif dbf_filename.startswith('M'):
+            if dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
+                label += u'Продажа. СФ '
+            elif dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
+                label += u'Покупка. СФ '
+            elif dbf_filename[1:2].upper() == 'O' and file_ext == 'ASF':
+                label += u'Счет-фактуры '
+            elif dbf_filename[1:2].upper() == 'O' and file_ext in ('AКТ', 'AKT'):
+                label += u'Акты '
+            elif dbf_filename[1:2].upper() == 'P' and file_ext in ('AКТ', 'AKT'):
+                label += u'Покупка. Акты '
+            elif dbf_filename[1:2].upper() == 'R' and file_ext in ('AКТ', 'AKT'):
+                label += u'Продажа. Акты '
+            elif dbf_filename[1:2].upper() == 'R' and file_ext == 'ARH':
+                # label += u'Продажа. Документы '
+                return None
+            elif dbf_filename[1:2].upper() == 'P' and file_ext == 'ARH':
+                # label += u'Покупка. Документы '
+                return None
+            elif dbf_filename[1:2].upper() == 'O' and file_ext == 'ARH':
+                label += u'Документы '
+            elif file_ext == 'ARX':
+                return None
+
+        elif fnmatch.fnmatch(dbf_filename, load_net_config.MATERIAL_FILE_MASKS):
+            # Участок материалы
             warehouse = dbf_filename[2:5]
             label += u'Материалы. ' + (u'' if warehouse == '000' or not warehouse.isdigit() else u'Склад %d. ' % int(warehouse))
             prefix = self.getMonthLabel(dbf_filename)
-        elif dbf_filename.startswith('O'):
+            if dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
+                label += u'Продажа. СФ '
+            elif dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
+                label += u'Покупка. СФ '
+            elif dbf_filename[1:2].upper() == 'R' and file_ext == 'ATG':
+                label += u'Продажа. ТОРГ12 '
+            elif dbf_filename[1:2].upper() == 'P' and file_ext == 'ATG':
+                label += u'Покупка. ТОРГ12 '
+            
+        elif fnmatch.fnmatch(dbf_filename, load_net_config.OSN_FILE_MASK):
+            # Участок ОСНОВНЫЕ СРЕДСТВА
             # label += u'Основные средства. '
             prefix = self.getOSNLabel(dbf_filename)
-        elif dbf_filename.startswith('U'):
+            if dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
+                label += u'Продажа. СФ. '
+            elif dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
+                label += u'Покупка. СФ. '
+            elif dbf_filename[1:2].upper() == 'R' and file_ext == 'ATG':
+                label += u'Продажа. Документы. '
+            elif dbf_filename[1:2].upper() == 'P' and file_ext == 'ATG':
+                label += u'Покупка. Документы. '
+            elif dbf_filename[1:2].upper() == 'R' and file_ext == 'APX':
+                return None
+            elif dbf_filename[1:2].upper() == 'P' and file_ext == 'APX':
+                return None
+            elif dbf_filename[1:2].upper() == 'R' and file_ext == 'ARH':
+                # label += u'Продажа. Документы '
+                pass
+            elif dbf_filename[1:2].upper() == 'P' and file_ext == 'ARH':
+                # label += u'Покупка. Документы '
+                pass
+            
+        elif fnmatch.fnmatch(dbf_filename, load_net_config.AREND_FILE_MASKS):
+            # Участок АРЕНДА
             label += u'Аренда. ' + self.getSchetLabel(dbf_filename) + u' '
             prefix = self.getQuartalLabel(dbf_filename)
+            if dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
+                label += u'Продажа. СФ '
+            elif dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
+                label += u'Покупка. СФ '
+            elif dbf_filename[1:2].upper() == 'O' and file_ext == 'ASF':
+                label += u'Счет-фактуры '
+            elif dbf_filename[1:2].upper() == 'O' and file_ext == 'ARX':
+                label += u'Документы '
+            elif dbf_filename[1:2].upper() == 'O' and file_ext == 'AКТ':
+                label += u'Акты '
+            elif dbf_filename[1:2].upper() == 'P' and file_ext == 'AКТ':
+                label += u'Продажа. Акты '
+            elif dbf_filename[1:2].upper() == 'R' and file_ext == 'AКТ':
+                label += u'Покупка. Акты '
+            elif dbf_filename[1:2].upper() == 'R' and file_ext == 'ARH':
+                label += u'Продажа. Документы '
+            elif dbf_filename[1:2].upper() == 'P' and file_ext == 'ARH':
+                label += u'Покупка. Документы '
+            elif dbf_filename[1:2].upper() == 'O' and file_ext == 'ARH':
+                label += u'Документы '
+            
+        elif any([fnmatch.fnmatch(dbf_filename, file_mask) for file_mask in load_net_config.USLUGI_FILE_MASKS]):
+            label += u'Услуги. ' + self.getSchetLabel(dbf_filename) + u' '
+            prefix = self.getQuartalLabel(dbf_filename)
+            if dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
+                label += u'Продажа. СФ '
+            elif dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
+                label += u'Покупка. СФ '
+            elif dbf_filename[1:2].upper() == 'O' and file_ext == 'ASF':
+                label += u'Счет-фактуры '
+            elif dbf_filename[1:2].upper() == 'O' and file_ext == 'ARX':
+                label += u'Документы '
+            elif dbf_filename[1:2].upper() == 'O' and file_ext in ('AКТ', 'AKT'):
+                label += u'Акты '
+            elif dbf_filename[1:2].upper() == 'P' and file_ext in ('AКТ', 'AKT'):
+                label += u'Покупка. Акты '
+            elif dbf_filename[1:2].upper() == 'R' and file_ext in ('AКТ', 'AKT'):
+                label += u'Продажа. Акты '
+            elif dbf_filename[1:2].upper() == 'R' and file_ext == 'ARH':
+                label += u'Продажа. Документы '
+            elif dbf_filename[1:2].upper() == 'P' and file_ext == 'ARH':
+                label += u'Покупка. Документы '
+            elif dbf_filename[1:2].upper() == 'O' and file_ext == 'ARH':
+                label += u'Документы '
+            else:
+                log.warning(u'Ошика определения типа файла <%s : %s>' % (dbf_filename, file_ext))
+
+        elif any([fnmatch.fnmatch(dbf_filename, file_mask) for file_mask in load_net_config.USLUGI7603_FILE_MASKS]):
+            label += u'Услуги. ' + self.getSchetLabel(dbf_filename) + u' '
+            prefix = self.getQuartalLabel(dbf_filename)
+            if dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
+                label += u'Продажа. СФ '
+            elif dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
+                label += u'Покупка. СФ '
+            elif dbf_filename[1:2].upper() == 'O' and file_ext == 'ASF':
+                label += u'Счет-фактуры '
+            elif dbf_filename[1:2].upper() == 'O' and file_ext == 'ARX':
+                label += u'Документы '
+            elif dbf_filename[1:2].upper() == 'O' and file_ext in ('AКТ', 'AKT'):
+                label += u'Акты '
+            elif dbf_filename[1:2].upper() == 'P' and file_ext in ('AКТ', 'AKT'):
+                label += u'Покупка. Акты '
+            elif dbf_filename[1:2].upper() == 'R' and file_ext in ('AКТ', 'AKT'):
+                label += u'Продажа. Акты '
+            elif dbf_filename[1:2].upper() == 'R' and file_ext == 'ARH':
+                label += u'Продажа. Документы '
+            elif dbf_filename[1:2].upper() == 'P' and file_ext == 'ARH':
+                label += u'Покупка. Документы '
+            elif dbf_filename[1:2].upper() == 'O' and file_ext == 'ARH':
+                label += u'Документы '
+            else:
+                log.warning(u'Ошибка определения типа файла <%s : %s>' % (dbf_filename, file_ext))
+            
         else:
             label += u'Не определенный участок. '
-
-        file_ext = dbf_filename[8:11].upper()
-        log.debug(u'Тип файла %s' % file_ext)
-        # Участок материалы
-        if dbf_filename.startswith('M') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
-            label += u'Продажа. СФ '
-        elif dbf_filename.startswith('M') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
-            label += u'Покупка. СФ '
-        elif dbf_filename.startswith('M') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ATG':
-            label += u'Продажа. ТОРГ12 '
-        elif dbf_filename.startswith('M') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ATG':
-            label += u'Покупка. ТОРГ12 '
-        # Участок ЗАТРАТЫ
-        elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
-            label += u'Продажа. СФ '
-        elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
-            label += u'Покупка. СФ '
-        elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'O' and file_ext == 'ASF':
-            label += u'Счет-фактуры '
-        elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'R' and file_ext == 'AKT':
-            label += u'Продажа. Акты '
-        elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'P' and file_ext == 'AKT':
-            label += u'Покупка. Акты '
-        elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'O' and file_ext == 'AKT':
-            label += u'Акты '
-        elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ARH':
-            # label += u'Продажа. Документы '
-            return None
-        elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ARH':
-            # label += u'Покупка. Документы '
-            return None
-        elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'O' and file_ext == 'ARH':
-            label += u'Документы '
-        elif dbf_filename.startswith('Z') and file_ext == 'ARX':
-            return None
-        # Участок АРЕНДА
-        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
-            label += u'Продажа. СФ '
-        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
-            label += u'Покупка. СФ '
-        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'O' and file_ext == 'ASF':
-            label += u'Счет-фактуры '
-        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'O' and file_ext == 'ARX':
-            label += u'Документы '
-        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'O' and file_ext == 'AКТ':
-            label += u'Акты '
-        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'P' and file_ext == 'AКТ':
-            label += u'Продажа. Акты '
-        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'R' and file_ext == 'AКТ':
-            label += u'Покупка. Акты '
-        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ARH':
-            label += u'Продажа. Документы '
-        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ARH':
-            label += u'Покупка. Документы '
-        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'O' and file_ext == 'ARH':
-            label += u'Документы '
-        # Участок ОСНОВНЫЕ СРЕДСТВА
-        elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
-            label += u'Продажа. СФ. '
-        elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
-            label += u'Покупка. СФ. '
-        elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ATG':
-            label += u'Продажа. Документы. '
-        elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ATG':
-            label += u'Покупка. Документы. '
-        elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'R' and file_ext == 'APX':
-            return None
-        elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'P' and file_ext == 'APX':
-            return None
-        # elif dbf_filename.startswith('O') and file_ext == 'ATG':
-        #    return None
-        elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ARH':
-            # label += u'Продажа. Документы '
-            pass
-        elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ARH':
-            # label += u'Покупка. Документы '
-            pass
-        # Участок РЕАЛИЗАЦИЯ
-        elif dbf_filename.startswith('R') and dbf_filename[1:2].upper() == 'U' and file_ext == 'ASF':
-            label += u'Ремонт. СФ '
-        elif dbf_filename.startswith('R') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
-            label += u'Продажа. СФ '
-        elif dbf_filename.startswith('R') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
-            label += u'Покупка. СФ '
-        elif dbf_filename.startswith('R') and dbf_filename[1:2].upper() == 'T' and file_ext == 'ATT':
-            label += u'Продажа. ТТН '
-        elif dbf_filename.startswith('R') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ATG':
-            label += u'Продажа. ТОРГ12 '
-        elif dbf_filename.startswith('R') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ATG':
-            label += u'Покупка. ТОРГ12 '
-        else:
-            label += u'Документы '
 
         try:
             arch_year = os.path.splitext(dbf_filename)[0][-4:]
@@ -239,12 +308,14 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
             label = u'Счет 76-01'
         elif schet == '766':
             label = u'Счет 76-06'
+        elif schet == '769':
+            label = u'Счет 76-05.3'
         elif schet == '762':
             label = u'Счет 76-12'
         elif schet == '767':
-            label = u'Счет 76-XX'
+            label = u'Счет 76-05.1'
         elif schet == '768':
-            label = u'Счет 76-00'
+            label = u'Счет 76-05.2'
         elif schet == '000':
             label = u'Прочие'
         return label
@@ -344,7 +415,7 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
 
         from_1c = dlgfunc.openAskBox(u'ЗАГРУЗКА', u'Загрузить данные из 1С?')
         self.downloadArchiveDBF(arch_year, arch_month, from_1c=from_1c)
-        filename = self.choiceLoadFileName('R', arch_year, arch_month)
+        filename = self.choiceLoadFileName(load_net_config.REALIZ_FILE_MASKS, arch_year, arch_month)
 
         if filename:
             manager = load_manager.icDBFDocLoadManager(self.pack_scan_panel)
@@ -359,15 +430,15 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
         """
         log.debug(u'Выбор пункта меню загрузки документов затрат на производство.')
 
-        arch_year, arch_month = self.getYearMonthDlg(bYear=False, bMonth=True)
+        arch_year, arch_quarter = self.getQuarterDlg()
         if not arch_year:
             if event:
                 event.Skip()
             return
 
         from_1c = dlgfunc.openAskBox(u'ЗАГРУЗКА', u'Загрузить данные из 1С?')
-        self.downloadArchiveDBF(arch_year, arch_month, from_1c=from_1c)
-        filename = self.choiceLoadFileName('Z', arch_year, arch_month)
+        self.downloadArchiveDBF(arch_year, arch_quarter, from_1c=from_1c)
+        filename = self.choiceLoadFileName(load_net_config.ZATRATY_FILE_MASKS, arch_year, arch_quarter)
 
         if filename:
             manager = load_manager.icDBFDocLoadManager(self.pack_scan_panel)
@@ -390,7 +461,7 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
 
         from_1c = dlgfunc.openAskBox(u'ЗАГРУЗКА', u'Загрузить данные из 1С?')
         self.downloadArchiveDBF(arch_year, arch_month, from_1c=from_1c)
-        filename = self.choiceLoadFileName('M', arch_year, arch_month)
+        filename = self.choiceLoadFileName(load_net_config.MATERIAL_FILE_MASKS, arch_year, arch_month)
 
         if filename:
             manager = load_manager.icDBFDocLoadManager(self.pack_scan_panel)
@@ -413,7 +484,7 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
 
         from_1c = dlgfunc.openAskBox(u'ЗАГРУЗКА', u'Загрузить данные из 1С?')
         self.downloadArchiveDBF(arch_year, arch_quarter, from_1c=from_1c)
-        filename = self.choiceLoadFileName('O', arch_year, arch_quarter)
+        filename = self.choiceLoadFileName(load_net_config.OSN_FILE_MASK, arch_year, arch_quarter)
 
         if filename:
             manager = load_manager.icDBFDocLoadManager(self.pack_scan_panel)
@@ -436,7 +507,53 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
 
         from_1c = dlgfunc.openAskBox(u'ЗАГРУЗКА', u'Загрузить данные из 1С?')
         self.downloadArchiveDBF(arch_year, arch_quarter, from_1c=from_1c)
-        filename = self.choiceLoadFileName('U', arch_year, arch_quarter)
+        filename = self.choiceLoadFileName(load_net_config.AREND_FILE_MASKS, arch_year, arch_quarter)
+
+        if filename:
+            manager = load_manager.icDBFDocLoadManager(self.pack_scan_panel)
+            manager.load_doc(filename, 'A', from_1c=from_1c)
+
+        if event:
+            event.Skip()
+
+    def onLoadUslDocMenuItemSelected(self, event):
+        """
+        Выбор пункта меню загрузки документов <Услуги>.
+        """
+        log.debug(u'Выбор пункта меню загрузки документов <Услуги>.')
+
+        arch_year, arch_quarter = self.getQuarterDlg()
+        if not arch_year:
+            if event:
+                event.Skip()
+            return
+
+        from_1c = dlgfunc.openAskBox(u'ЗАГРУЗКА', u'Загрузить данные из 1С?')
+        self.downloadArchiveDBF(arch_year, arch_quarter, from_1c=from_1c)
+        filename = self.choiceLoadFileName(load_net_config.USLUGI_FILE_MASKS, arch_year, arch_quarter)
+
+        if filename:
+            manager = load_manager.icDBFDocLoadManager(self.pack_scan_panel)
+            manager.load_doc(filename, 'U', from_1c=from_1c)
+
+        if event:
+            event.Skip()
+
+    def onLoadUsl7603DocMenuItemSelected(self, event):
+        """
+        Выбор пункта меню загрузки документов <Услуги. 76-03>.
+        """
+        log.debug(u'Выбор пункта меню загрузки документов <Услуги. 76-03>.')
+
+        arch_year, arch_quarter = self.getQuarterDlg()
+        if not arch_year:
+            if event:
+                event.Skip()
+            return
+
+        from_1c = dlgfunc.openAskBox(u'ЗАГРУЗКА', u'Загрузить данные из 1С?')
+        self.downloadArchiveDBF(arch_year, arch_quarter, from_1c=from_1c)
+        filename = self.choiceLoadFileName(load_net_config.USLUGI7603_FILE_MASKS, arch_year, arch_quarter)
 
         if filename:
             manager = load_manager.icDBFDocLoadManager(self.pack_scan_panel)

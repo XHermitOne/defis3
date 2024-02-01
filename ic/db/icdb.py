@@ -39,7 +39,7 @@ from .icMySQL import SPC_IC_MYSQL
 
 import ic
 
-__version__ = (1, 1, 2, 3)
+__version__ = (1, 1, 2, 4)
 
 DB_TYPES = (SQLITE_DB_TYPE, POSTGRES_DB_TYPE, MSSQL_DB_TYPE, MYSQL_DB_TYPE)
 
@@ -122,7 +122,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
     connections_pool = {}
     # Словарь функций преобразования типов описания к типу БД
     _connectionTypesCreate = {SQLITE_DB_TYPE: 'sqlite',
-                              POSTGRES_DB_TYPE: 'postgres',
+                              POSTGRES_DB_TYPE: 'postgresql',
                               MSSQL_DB_TYPE: 'mssql',
                               MYSQL_DB_TYPE: 'mysql',
                               }
@@ -277,7 +277,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
 
                 db_engine = sqlalchemy.create_engine(connection_url,
                                                      connect_args=connection_args,
-                                                     strategy='plain',
+                                                     # strategy='plain',
                                                      pool_size=20,
                                                      encoding=encoding,
                                                      convert_unicode=self.to_unicode)
@@ -287,7 +287,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
             except:
                 log.fatal(u'Ошибка создания связи с БД <%s>.' % db_resource['name'])
                 dlgfunc.openErrBox(u'ОШИБКА',
-                                u'Ошибка создания связи с БД <%s>. Проверте параметры подключения!' % db_resource['name'])
+                                   u'Ошибка создания связи с БД <%s>. Проверте параметры подключения!' % db_resource['name'])
                 return None
             return metadata
         except:
